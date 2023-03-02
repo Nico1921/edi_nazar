@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         if(isset($request->user()->id) && !empty($request->user()->id)){
-            $user = $request->user()::with('client')->get();
+            $user = $request->user()::with('client')->where('id','=',$request->user()->id)->get();
         }else {
             $user = '';
         }
