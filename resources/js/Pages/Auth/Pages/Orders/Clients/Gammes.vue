@@ -1,0 +1,328 @@
+<script setup>
+import { Head, usePage, useForm } from '@inertiajs/inertia-vue3';
+import { ref, onMounted, watchEffect } from 'vue';
+
+const templateVierge = new URL('../../../../../../fichiers/templates/Commercial/Template_Vierge_Com.xlsx', import.meta.url).href;
+const templateModele = new URL('../../../../../../fichiers/templates/Commercial/Template_Model_Com.xlsx', import.meta.url).href;
+const props = defineProps(['products','dimensions','client', 'produitsAchat']);
+const isOpen = ref(false);
+
+var products = ref(props.products);
+var dynamic = ref(usePage().props.value.dynamique_client);
+var produitsAchat = ref(props.produitsAchat.panier);
+var clientUser = ref(usePage().props.value.auth.user[0].client);
+
+let fileExist = ref(false);
+var typeVente = ref(usePage().props.value.session.typeVente);
+
+var fileImport = (input)=>{
+   if(input.target.value == ''){
+      document.getElementById("file_name_client").innerText = "";
+      document.getElementById("file_name_span_client").classList.add("hidden");
+      fileExist.value = false;
+   }else{
+      document.getElementById("file_name_client").innerText = input.target.files[0].name;
+      document.getElementById("file_name_span_client").classList.remove("hidden");     
+      fileExist.value = true;
+   }
+};
+
+var clickResetInputFile = ()=>{
+   document.getElementById("file_import_clients").value = null;
+   document.getElementById("file_name_client").innerText = "";
+   document.getElementById("file_name_span_client").classList.add("hidden");
+   fileExist.value = false;
+};
+
+const submit_file = () => {
+   var form = new FormData(document.getElementById('fileCartImport'));
+   axios.post('/products/panier/import',form).then((response) => {
+      console.log(response);
+      if(response.status){
+        document.location.href = "/cart";
+      }else{
+         Toast.fire({
+            icon: 'error',
+            title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
+         });
+      }
+   });
+};
+
+const lowercase = (nom) => {
+   return HtmlEntities.decode(nom.toLowerCase());
+};
+
+
+const find_dimensions = (id_gammes) => {
+   return props.dimensions.filter(({ id_gamme }) => id_gamme === id_gammes) 
+};
+
+var classPaginate = {
+   'previous' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
+   'previous_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
+   'next' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
+   'next_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
+   'number' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',
+   'number_active' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 bg-gray-100'
+}
+
+var perPage = () => {
+   const parsedUrl = new URL(window.location.href);
+   var targetNode = document.getElementById('per_page');
+   parsedUrl.searchParams.set('perPage',targetNode.value);
+   window.location.href = parsedUrl.href;
+};
+
+var perPageActual = () => {
+   const parsedUrl = new URL(window.location.href);
+   if(parsedUrl.searchParams.get('perPage') != null ){
+      return parsedUrl.searchParams.get('perPage');
+   }else{
+      return 12;
+   }
+};
+
+var searchGamme = (e) => {
+   var url = '/orders/clients/products?filter[nom_gamme]='+e.target.value;
+   axios.post(encodeURI(url)).then((response)=>{
+      if(response.status == 200){
+         const parsedUrl = new URL(window.location.href);
+         parsedUrl.searchParams.set('filter[nom_gamme]',e.target.value);
+            products.value = response.data.products;
+            window.history.replaceState('','',parsedUrl.href);
+      }
+   })
+};
+
+var deleteCommande = (id_panier_edi_list) =>{
+   Swal.fire({
+      title: 'Attention',
+      text: 'Etes-vous de supprimer cette article de la commande ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Non',
+      confirmButtonText: 'Oui',
+   }).then((result) => {
+      if (result.isConfirmed) {
+         const formProduit = useForm({
+            id_panier_edi_list: id_panier_edi_list,
+         });
+
+         formProduit.post('/orders/clients/products/action/delete', {
+            preserveScroll: true,
+            onSuccess: (e) => {
+               if(e.props.session.status){
+                  Toast.fire({
+                     icon: 'success',
+                     title: 'Le produit à bien été supprimer de la commande'
+                  })
+               }else{
+                  Toast.fire({
+                     icon: 'error',
+                     title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
+                  });
+               }
+               
+            },
+         });
+      }
+   });
+};
+
+var roundNumber = (e) => {
+   return (Math.round(e * 100) / 100).toFixed(2);
+};
+
+var calcul_prix_gamme = (prix_gamme) => {
+   var HT = prix_gamme;
+   if(clientUser.value.taux_remise > 0){
+      HT = HT - ((HT) * (clientUser.value.taux_remise /100));
+   }
+   return roundNumber(HT);
+};
+
+onMounted(() => {
+   var targetNode = document.getElementById('per_page');
+   targetNode.value = perPageActual();
+   const parsedUrl = new URL(window.location.href);
+   var input = document.getElementById("searchGamme");
+   input.value = parsedUrl.searchParams.get('filter[nom_gamme]');
+   
+});
+
+watchEffect(() => {
+   dynamic.value = usePage().props.value.dynamique_client;
+	axios.get('/orders/clients/products/action/view').then((response)=>{
+      if(response.data.produitsAchat != undefined){         
+         if(response.data.produitsAchat.panier != undefined){         
+            produitsAchat.value = response.data.produitsAchat.panier;
+         }else{
+            produitsAchat.value = [];
+         }
+      }
+   })
+});
+</script>
+<script >
+import Right from 'icons/ChevronRight.vue';
+import Left from 'icons/ChevronLeft.vue';
+import Close from 'icons/Close.vue';
+import Search from 'icons/Magnify.vue';
+import Excel from 'icons/MicrosoftExcel.vue';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import axios from 'axios';
+export default {
+   // Using a render function
+   layout: (h, page) => h(AuthenticatedLayout, () => child),
+   // Using the shorthand
+   layout: AuthenticatedLayout,
+};
+</script>
+
+<template>
+
+   <Head title="Products" />
+   <section class="container mx-auto mt-5">
+      <h1 class="font-semibold text-sm lg:text-2xl sm:text-lg text-gray-800 py-2">Products</h1>
+      <div class="bg-primary-50 p-5 rounded my-3 grid grid-cols-4">
+         <div class="col-span-1">
+            <h2 class="text-2xl text-gray-700">Information du client : </h2>
+            <div class="flex flex-col bg-primary-100 py-2 px-4 m-2 rounded-xl">
+               <h3 class="text-lg text-gray-600">Client : {{ client.prenom + " " + client.nom }}</h3>
+               <span>Adresse : {{ client.nom_adresse }}</span>
+               <div class="flex flex-col mb-2">
+                  <span></span>
+                  <span>{{ client.adresse1 }}</span>
+                  <span>{{ client.adresse2 }}</span>
+                  <span>{{ client.adresse3 }}</span>
+                  <span>{{ client.code_postal + ", " + client.ville }}</span>
+               </div>
+               <div class="my-3 flex items-center justify-center">
+                  <Link class="rounded p-4 bg-primary-200 hover:bg-primary-50 transition duration-300"
+                     href="/orders/clients/validation">Valider la commande</Link>
+               </div>
+            </div>
+         </div>
+         <div class="col-span-3 ">
+            <div class="grid grid-cols-4">
+               <h4 class="col-span-4 text-xl text-gray-500 ">Produits de la commandes :</h4>
+               <div v-for="(produit, key) in produitsAchat" :key="key" class="col-span-1 grid grid-cols-4 bg-primary-100 p-1 m-2 relative rounded-xl">
+                  <button @click="deleteCommande(produit.panier.id_panier_edi_list)" class="absolute right-2 top-1 hover:text-primary-200 transition duration-300" type="button"><Close /></button>
+                  <div class="col-span-1 flex items-center justify-center">
+                     <div v-if="produit.photo.img_produit != null"
+                        class="lg:w-[45px] lg:h-[75px] sm:w-[60px] sm:h-[90px] w-[70px] h-[100px]">
+                        <img  :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.photo.img_produit"
+                           :alt="produit.code_sku" class="w-full h-full object-cover" />
+                     </div>
+                     <div v-else>
+                        <span>Pas de photo pour ce produit !</span>
+                     </div>
+                  </div>
+                  <div class="flex flex-col col-span-3">
+                     <span>Gamme : {{ produit.gamme.nom_gamme }}</span>
+                     <span>Design : {{ produit.design.nom_design }}</span>
+                     <span>Couleur : {{ produit.couleur.nom_couleur }}</span>
+                     <span>Dimension : {{ produit.dimension.largeur +"x"+ produit.dimension.longueur  }}cm</span>
+                     <span>Quantiter : {{ produit.panier.quantiter }}</span>
+                     <span>Prix unitaire : {{ roundNumber(produit.prix_produit) }} €</span>
+                  </div>
+               </div>
+            </div>
+            
+         </div>
+      </div>
+      <div class="bg-primary-50 rounded mx-40 mb-5" v-if="typeVente == 1">
+         <h2 class="text-center text-xl text-primary-300 py-1 bg-primary-100 rounded-t-lg">Ajouter au panier via un fichier</h2>
+         <div class="p-4 flex flex-col items-center justify-items-center justify-center">
+            <form id="fileCartImport" class="grid grid-cols-4" @submit.prevent="submit_file">
+               <div :class="fileExist ? 'relative col-span-3 mx-2' : 'relative col-span-4 mx-2'">
+                  <label class="block cursor-pointer text-primary-500 bg-primary-200 p-3 rounded-lg" for="file_import_cart">Importer mon fichier de commandes <Excel /></label>
+                  <span class="hidden" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
+                  <input @change="fileImport" type="file" class="hidden" id="file_import_cart" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
+                  <p class="mt-1 text-sm text-gray-500" id="file_input_helper">.XLS,.XLSX</p>
+                  <span class="absolute bottom-0 right-0"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
+               </div>
+               <div class="col-span-1" v-if="fileExist">
+                  <button type="submit" class="p-3 rounded-lg text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
+               </div>
+            </form>       
+         </div>
+      </div>
+
+      <div class="flex flex-row w-full sm:w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 sm:mr-4">
+         <div class="relative flex-grow">
+            <input class="block w-full pl-9 text-sm rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" 
+            placeholder="Recherche..." id="searchGamme" type="text" name="global" @input="searchGamme">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+               <Search class="text-xl mb-1" />
+            </div>
+         </div>
+      </div>
+
+      <div class="grid grid-cols-4" id="gammes">
+         <a v-for="(produit, key) in products.data" :key="key" :href="'/orders/clients/products/'+lowercase(produit.nom_gamme)" class="col-span-1 group p-4 hover:scale-110 transition-full duration-300 cursor-pointer">
+            <div class="relative group">
+               <div v-if="produit.img_gamme != null" class="relative w-full h-60">
+                  <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + produit.img_gamme"
+                        :alt="produit.nom_gamme" 
+                        class="z-20 rounded relative  w-full h-full object-cover" />
+               </div>
+               <div v-else class="relative w-full h-60">
+                  <span>Pas de photo pour cette gamme !</span>
+               </div>
+
+               <div class="absolute bottom-0 z-30 w-full overflow-hidden">
+                 <div class="max-h-0 group-hover:max-h-60 group-hover:p-1 transition-full duration-500 bg-primary-100 text-center flex flex-col  bg-opacity-70 text-white">
+                  <span>Tapis {{ (produit.type_tapis == 0 ? 'intérieur' : produit.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
+                  <span>Poils {{ (produit.type_poils == 1 ? 'court' : 'long') }} - {{ (produit.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
+                  <span class="capitalize">{{ lowercase(produit.nom_special) }}</span>
+                  <div class="flex flex-wrap items-center justify-center text-center px-4 py-2">
+                     <span v-for="(dimension, key) in find_dimensions(produit.id_gamme)" :key="key" class="block text-center w-auto px-1">
+                         {{ (!Number.isInteger(key/3) && key != 0 ? ' - ' : '') }} {{ dimension.largeur }}x{{ dimension.longueur }}cm
+                     </span>
+                  </div>
+                  <span>Prix HT m² : {{ calcul_prix_gamme(produit.prix_vente_ht_m2) }} €</span>
+                 </div>
+                  
+               </div>
+            </div>
+
+            <div>
+               <h2 class="capitalize text-center font-semibold">Collection {{ lowercase(produit.nom_gamme) }}</h2>
+            </div>
+         </a>
+      </div>
+
+      <div class="flex justify-center items-center bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+         <div class="w-1/3">
+            <select id="per_page" name="per_page" dusk="per-page-full" @change="perPage" class="mr-5 focus:ring-indigo-500 focus:border-indigo-500 min-w-max shadow-sm text-sm border-gray-300 rounded-md">
+               <option value="8">8 par page</option>
+               <option value="12" >12 par page</option>
+               <option value="18" >18 par page</option>
+               <option value="50" >50 par page</option>
+               <option value="100">100 par page</option>
+            </select>
+            <span>Page {{ products.current_page }} sur {{ products.last_page }}</span>
+         </div>
+         
+         
+         <span class="w-1/3 text-center">{{ products.total }} Résultats</span>
+         <div class="flex justify-end w-1/3">
+            <nav class="relative z-0 inline-flex  rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+               <a v-for="(link, key) in products.links" :key="key"
+               :class="(key != 0 && key+1 != products.links.length ? (link.active ? classPaginate.number_active : classPaginate.number) : (key == 0 ? (products.current_page == 1 ? classPaginate.previous_disabled : classPaginate.previous) : (products.current_page == products.last_page ? classPaginate.next_disabled : classPaginate.next)))" 
+               :href="link.url">
+                  <span v-if="key != 0 && key+1 != products.links.length">{{ link.label }}</span>
+                  <Right v-if="key+1 == products.links.length" />
+                  <Left v-if="key == 0"/>
+               </a>
+            </nav>
+         </div>
+       </div>
+      
+   </section>
+</template>
+

@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["resources/js/*"],
+            "icons/*": ["node_modules/vue-material-design-icons/*"]
+        },
+        "jsx": "preserve"
+    },
+    "exclude": ["node_modules", "public"]
+}

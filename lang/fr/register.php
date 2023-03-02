@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Demande d\'inscription',
+    'text-titre'   => 'Demande d\'inscription',
+    'text-sous-titre'   => 'J\'effectue ma demande d\'insciption',
+    'text-btn-titre'   => 'Je me connecte',
+    'labelDiv1' => 'Général',
+    'labelNom' => 'Nom',
+    'labelPrenom' => 'Prénom',
+    'labelEmail' => 'Email (société)',
+    'labelEmailConfirm' => 'Confirmation email',
+    'labelTel' => 'Téléphone (société)',
+    'labelDiv2' => 'Société',
+    'labelNomSociete' => 'Raison social',
+    'labelNumTVA' => 'Numéro de TVA',
+    'labelAdresse' => 'Adresse',
+    'labelCP' => 'Code Postal',
+    'labelVille' => 'Ville',
+    'labelPays' => 'Pays',
+    'btnInscription' => 'Envoyer ma demande d\'inscription',
+    'btnMobileOr' => 'Je me connecte',
+    'messageValidation' => 'Votre inscription a bien été prise en compte et sera traitée par nos équipe dans les meilleurs délais. Une fois validée vous recevrez vos identifiants par e-mail.',
+    'messageValidationError' => 'Une erreur s\'est produite lors de votre demande d\'inscription, veuillez ressayer plus tard !',
+    'titleValidation' => 'Demande envoyée !',
+    'titleValidationError' => 'Une erreur est survenue !',
+];
