@@ -1,7 +1,6 @@
 <script setup>
    import { Head,Link } from '@inertiajs/inertia-vue3';
-   import { Table, setTranslations } from "@protonemedia/inertiajs-tables-laravel-query-builder";
-   import { ref } from 'vue';
+   import { Table, setTranslations,  } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 
    setTranslations({
       next: "Suivant",
@@ -122,6 +121,7 @@
    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
    import Delete from 'icons/Delete.vue';
    import Edit from 'icons/Pencil.vue';
+   import { ChevronDownIcon,ChevronUpIcon,ChevronUpDownIcon } from '@heroicons/vue/24/outline'; 
    export default {
       // Using a render function
       layout: (h, page) => h(AuthenticatedLayout, () => child),
@@ -137,47 +137,113 @@
       <h1 class="text-center xl:text-3xl lg:text-2xl sm:text-xl text-lg text-primary-300 my-4">Historique des commandes</h1>
 
       <h2 class="text-center text-1xl text-primary-300">Liste commande </h2>
-      <Table :meta="props.panierEdi" id="TabProducts" class="table">
+      <Table :meta="props.panierEdi" id="TabProducts" class="table mx-8">
+         <template v-slot:head="slotHead">
+                <tr class="font-medium text-xs uppercase text-left tracking-wider text-gray-500 py-3 px-6">
+                    <th class="table-cell">
+                        <div class="py-3 sm:px-6 px-2 w-full">
+                            <span class="flex flex-row items-center"><span class="uppercase">N° Commande</span></span>
+                        </div>
+                    </th>
+                    <th class="lg:table-cell hidden">
+                        <div class="py-3 px-6 w-full">
+                            <span class="flex flex-row items-center"><span class="uppercase">clients</span></span>
+                        </div>
+                    </th>
+                    <th class="table-cell" @click="slotHead.sortBy('date_commande')">
+                     <button class="py-3 sm:px-6 px-1 w-full flex flex-row items-center" dusk="sort-date_commande">
+                            <span class="flex flex-row items-center">
+                              <span class="uppercase">Date commande</span>
+                              <ChevronDownIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('date_commande').sorted == 'desc'" />
+                              <ChevronUpIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('date_commande').sorted == 'asc'" />
+                              <ChevronUpDownIcon class="w-3 h-3 ml-2 text-gray-400" v-if="slotHead.header('date_commande').sorted == false" />
+                           </span>
+                     </button>               
+                    </th>
+                    <th class="lg:table-cell hidden" @click="slotHead.sortBy('produits_total')">
+                        <button  class="py-3 px-6 w-full flex flex-row items-center" dusk="sort-produits_total">
+                            <span class="flex flex-row items-center"><span class="uppercase">Total produit</span></span>
+                            <ChevronDownIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('produits_total').sorted == 'desc'" />
+                              <ChevronUpIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('produits_total').sorted == 'asc'" />
+                              <ChevronUpDownIcon class="w-3 h-3 ml-2 text-gray-400" v-if="slotHead.header('produits_total').sorted == false" />
+                           </button>
+                    </th>
+                    <th class="xl:table-cell hidden" @click="slotHead.sortBy('poids_total')">
+                        <button class="py-3 px-6 w-full flex flex-row items-center" dusk="sort-poids_total">
+                            <span class="flex flex-row items-center"><span class="uppercase">Poids Total</span></span>
+                            <ChevronDownIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('poids_total').sorted == 'desc'" />
+                              <ChevronUpIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('poids_total').sorted == 'asc'" />
+                              <ChevronUpDownIcon class="w-3 h-3 ml-2 text-gray-400" v-if="slotHead.header('poids_total').sorted == false" />
+                           </button>
+                    </th>
+                    <th class="xl:table-cell hidden" @click="slotHead.sortBy('total_m2')">
+                        <button class="py-3 px-6 w-full flex flex-row items-center" dusk="sort-total_m2">
+                            <span class="flex flex-row items-center"><span class="uppercase">Total m²</span></span>
+                            <ChevronDownIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('total_m2').sorted == 'desc'" />
+                              <ChevronUpIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('total_m2').sorted == 'asc'" />
+                              <ChevronUpDownIcon class="w-3 h-3 ml-2 text-gray-400" v-if="slotHead.header('total_m2').sorted == false" />
+                           </button>
+                    </th>
+                    <th class="lg:table-cell hidden" @click="slotHead.sortBy('total_HT')">
+                        <button class="py-3 px-6 w-full flex flex-row items-center" dusk="sort-total_HT">
+                            <span class="flex flex-row items-center"><span class="uppercase">Total HT</span></span>
+                            <ChevronDownIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('total_HT').sorted == 'desc'" />
+                              <ChevronUpIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('total_HT').sorted == 'asc'" />
+                              <ChevronUpDownIcon class="w-3 h-3 ml-2 text-gray-400" v-if="slotHead.header('total_HT').sorted == false" />
+                           </button>
+                    </th>
+                    <th class="lg:table-cell hidden" @click="slotHead.sortBy('date_livraison')">
+                        <button class="py-3 px-6 w-full flex flex-row items-center"  dusk="sort-date-livraison-estimer">
+                            <span class="flex flex-row items-center"><span class="uppercase">Date livraison estimer</span></span>
+                            <ChevronDownIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('date_livraison').sorted == 'desc'" />
+                              <ChevronUpIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('date_livraison').sorted == 'asc'" />
+                              <ChevronUpDownIcon class="w-3 h-3 ml-2 text-gray-400" v-if="slotHead.header('date_livraison').sorted == false" />
+                           </button>
+                    </th>
+                    <th class="2xl:table-cell hidden">
+                        <div class="py-3 px-6 w-full">
+                            <span class="flex flex-row items-center"><span class="uppercase">Statut commande</span></span>
+                        </div>
+                    </th>
+                    <th class="table-cell">
+                        <div class="py-3 sm:px-6 px-1 w-full flex flex-row items-center">
+                            <span class="flex flex-row items-center "><span class="uppercase">Action</span></span>
+                        </div>
+                    </th>
+                </tr>
+         </template>
          <template #body>
             <tr v-for="(panier, key) in props.panierEdi.data" :key="key" :id="'order_'+panier.id_panier_edi">
-               <td data-label="TYPE COMMANDE" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
-                 <div v-if="panier.is_marketplace">
-                     <span>Dropshipping</span>
-                 </div>
-                 <div v-else>
-                     <span>Commercial</span>
-                 </div>
-               </td>
-               <td data-label="N° COMMANDE" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="N° COMMANDE" class="table-cell text-sm py-4 2xl:px-6 sm:px-5 px-2 text-gray-500 lg:text-center whitespace-nowrap">
                   {{panier.num_commande}}
                </td>
-               <td data-label="TOTAL CLIENTS" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="CLIENTS" class="lg:table-cell hidden text-sm py-4 2xl:px-6 sm:px-5 px-2  text-gray-500 lg:text-center whitespace-nowrap">
                   {{panier.nb_client}}
                </td>
-               <td data-label="DATE COMMANDE" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
-                  {{formatDate(panier.date_maj)}}
+               <td data-label="DATE COMMANDE" class="table-cell text-sm py-4 2xl:px-6 sm:px-5 px-1 text-gray-500 lg:text-center whitespace-nowrap">
+                  {{formatDate(panier.date_commande)}}
                </td>
-               <td data-label="TOTAL PRODUIT" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="TOTAL PRODUIT" class="lg:table-cell hidden text-sm py-4 2xl:px-6 sm:px-5 px-6  text-gray-500 lg:text-center whitespace-nowrap">
                   {{panier.produits_total}}
                </td>
-               <td data-label="POIDS TOTAL" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="POIDS TOTAL" class="xl:table-cell hidden text-sm py-4 2xl:px-6 sm:px-5 px-6 text-gray-500 lg:text-center whitespace-nowrap">
                   {{panier.poids_total}}
                </td>
-               <td data-label="TOTAL M²" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="TOTAL M²" class="xl:table-cell hidden text-sm py-4 2xl:px-6 sm:px-5 px-6 text-gray-500 lg:text-center whitespace-nowrap">
                   {{panier.total_m2}}
                </td>
-               <td data-label="TOTAL HT" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="TOTAL HT" class="lg:table-cell hidden text-sm py-4 2xl:px-6 sm:px-5 px-6 text-gray-500 lg:text-center whitespace-nowrap">
                   {{panier.total_HT}}
                </td> 
-               <td data-label="DATE LIVRAISON ESTIMER" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="DATE LIVRAISON ESTIMER" class="lg:table-cell hidden text-sm py-4 2xl:px-6 sm:px-5 px-6 lg:text-center text-gray-500 whitespace-nowrap">
                   {{(panier.date_livraison != null ? formatDate(panier.date_livraison) : 'Pas encore de date')}}
                </td> 
-               <td data-label="STATUT COMMANDE" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="STATUT COMMANDE" class="2xl:table-cell hidden text-sm py-4 2xl:px-6 sm:px-5 px-6text-gray-500 whitespace-nowrap">
                   {{(panier.is_validate ? 'Commande finalisée' : 'Commande non finalisée')}}
                </td> 
-               <td data-label="ACTION" class="text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
+               <td data-label="ACTION" class="table-cell text-sm py-4 2xl:px-6 sm:px-5 px-1 text-gray-500 whitespace-nowrap">
                   <div v-if="panier.is_validate">
-                     <Link class="rounded p-4 bg-primary-100 hover:bg-primary-200 transition duration-300" :href="'/shippings/order/clients/'+panier.num_commande">Voir détails</Link>
+                     <Link class="rounded 2xl:p-3 p-2 bg-primary-100 hover:bg-primary-200 transition duration-300" :href="'/shippings/order/clients/'+panier.num_commande">Voir détails</Link>
                   </div>
                   <div v-else-if="panier.is_marketplace">
                      <button @click="editCommande(panier.id_panier_edi)" class="rounded p-2 bg-primary-100 hover:bg-primary-200 transition duration-300"><Edit /></button>
@@ -193,29 +259,3 @@
       </Table>
    </section>
 </template>
-
-<style>
-@media (max-width: 1535px){
-.table thead {
-display: none;
-}
-
-.table tr{
-display: block;
-margin-bottom: 40px;
-border: 1px solid #c9c9c9;
-}
-
-.table td {
-display: block;
-text-align: right;
-border-bottom: 1px solid #c9c9c9;
-}
-
-.table td:before {
-content: attr(data-label);
-float: left;
-font-weight: bold;
-}
-}
-</style>

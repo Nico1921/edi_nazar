@@ -35,18 +35,18 @@ class ShippingsController extends Controller
                 Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
                         ->orWhere('panier_edi.num_commande', 'LIKE', "%{$value}%")
-                        ->orWhere('panier_edi.date_maj', 'LIKE', "%{$value}%");
+                        ->orWhere('panier_edi.date_commande', 'LIKE', "%{$value}%");
                 });
             });
         });
 
         $panierEdi = QueryBuilder::for(PanierEdi::class)
         ->defaultSort('date_maj')
-        ->select(['panier_edi.id_panier_edi','panier_edi.date_maj','panier_edi.num_commande','panier_edi.nb_client',
+        ->select(['panier_edi.id_panier_edi','panier_edi.date_commande','panier_edi.date_maj','panier_edi.num_commande','panier_edi.nb_client',
         'panier_edi.total_HT','panier_edi.total_ttc','panier_edi.poids_total','panier_edi.produits_total',
         'panier_edi.total_m2','panier_edi.date_livraison','panier_edi.total_payer','panier_edi.is_validate','panier_edi.is_marketplace'])
-        ->allowedSorts(['date_maj','num_commande','produits_total','total_m2','poids_total','total_ttc','is_marketplace','total_HT'])
-        ->allowedFilters([$globalSearch,'date_maj','num_commande','total_ttc'])
+        ->allowedSorts(['date_livraison','date_commande','num_commande','produits_total','total_m2','poids_total','total_ttc','is_marketplace','total_HT'])
+        ->allowedFilters([$globalSearch,'date_livraison','date_commande','num_commande','total_ttc'])
         ->where('is_marketplace','=',$where)
         ->where('id_users','=',Auth::id())
         ->paginate(request('perPage'))
@@ -59,17 +59,16 @@ class ShippingsController extends Controller
             $table
               ->withGlobalSearch()
               ->defaultSort('date_maj')
-              ->column(key: 'is_marketplace',label: 'Type commande', searchable: true, sortable: true)
-              ->column(key: 'num_commande',label: 'N° Commande', searchable: true, sortable: false)
-              ->column(key: 'nb_client',label: 'Total clients', searchable: false, sortable: false)
-              ->column(key: 'date_maj',label: 'Date commande', searchable: true, sortable: true)
-              ->column(key: 'produits_total',label: 'Total produit', searchable: true, sortable: true)
-              ->column(key: 'poids_total',label: 'Poids Total', searchable: true, sortable: true)
-              ->column(key: 'total_m2',label: 'Total m²', searchable: true, sortable: true)
-              ->column(key: 'total_HT',label: 'Total HT', searchable: true, sortable: true)
-              ->column(label: 'Date livraison estimer', searchable: false, sortable: true)
-              ->column(key: 'is_validate',label: 'Statut commande', searchable: false, sortable: false)
-              ->column(label: 'Action', searchable: false, sortable: false)
+              ->column(key: 'num_commande',label: 'N° Commande', searchable: true, sortable: false, canBeHidden:false)
+              ->column(key: 'nb_client',label: 'clients', searchable: false, sortable: false, canBeHidden:true)
+              ->column(key: 'date_commande',label: 'Date commande', searchable: true, sortable: true, canBeHidden:false)
+              ->column(key: 'produits_total',label: 'Total produit', searchable: true, sortable: true, canBeHidden:true)
+              ->column(key: 'poids_total',label: 'Poids Total', searchable: true, sortable: true, canBeHidden:true)
+              ->column(key: 'total_m2',label: 'Total m²', searchable: true, sortable: true, canBeHidden:true)
+              ->column(key: 'total_HT',label: 'Total HT', searchable: true, sortable: true, canBeHidden:true)
+              ->column(key: 'date_livraison',label: 'Date livraison estimer', searchable: false, sortable: true, canBeHidden:true)
+              ->column(key: 'is_validate',label: 'Statut commande', searchable: false, sortable: false, canBeHidden:true)
+              ->column(label: 'Action', searchable: false, sortable: false, canBeHidden:false)
               ;});
     }
 
