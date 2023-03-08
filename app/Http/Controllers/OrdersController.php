@@ -694,7 +694,10 @@ class OrdersController extends Controller
       $client = $request->session()->get('client_actuel');
       $produits = array();
       if(!empty($client)){
-         $produits = Produit::with(['photo','dimension','statsProduit'])->where('id_design','=',$id_design)->get();
+         $sort = 'asc';
+         $produits = Produit::with(['photo', 'dimension' => function($query) use ($sort) {
+            $query->orderBy('largeur',$sort);
+        }, 'statsProduit'])->join('dimension','dimension.id_dimension','=','produit.id_dimension')->orderBy('dimension.largeur',$sort)->orderBy('dimension.longueur',$sort)->where('id_design', '=', $id_design)->get();
          for($i=0;$i<count($produits);$i++){
             $produits[$i]->prixProduit = Produit::calcul_prix_produit($produits[$i]->id_produit);
             if(PanierEdiList::where('id_produit','=',$produits[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->exists()){

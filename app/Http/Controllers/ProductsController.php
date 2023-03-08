@@ -218,11 +218,14 @@ class ProductsController extends Controller
         } else {
             $clientUser = array();
         }
-
+        $sort = 'asc';
         $produits = array();
-        $produits = Produit::with(['photo', 'dimension', 'statsProduit'])->where('id_design', '=', $id_design)->get();
+        $produits = Produit::with(['photo', 'dimension' => function($query) use ($sort) {
+            $query->orderBy('largeur',$sort);
+        }, 'statsProduit'])->join('dimension','dimension.id_dimension','=','produit.id_dimension')->orderBy('dimension.largeur',$sort)->orderBy('dimension.longueur',$sort)->where('id_design', '=', $id_design)->get();
         if (!empty($clientUser)) {
             for ($i = 0; $i < count($produits); $i++) {
+                Log::debug($produits[$i]->dimension->largeur);
                 $produits[$i]->prixProduit = Produit::calcul_prix_produit($produits[$i]->id_produit,0);
                 if (PanierEdiList::where('id_produit', '=', $produits[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
                     $panier = PanierEdiList::where('id_produit', '=', $produits[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
@@ -235,6 +238,7 @@ class ProductsController extends Controller
             }
         } else {
             for ($i = 0; $i < count($produits); $i++) {
+                Log::debug($produits[$i]->dimension->largeur);
                 $produits[$i]->prixProduit = Produit::calcul_prix_produit($produits[$i]->id_produit,0);
                 $produits[$i]->panier = array("quantiter" => 0);
                 $produits[$i]->isInPanier = false;

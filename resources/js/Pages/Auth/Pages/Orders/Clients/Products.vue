@@ -323,7 +323,7 @@ export default {
                            <Eye class="text-lg text-black" />
                         </div>
                         <img @click="openModal(produit.img_produit,produit.nom_gamme,produit.nom_design,produit.nom_couleur)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.img_produit"
-                           :alt="produit.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-content" />
+                           :alt="produit.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
                      </div>
                      <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
                      <ImageOff />
