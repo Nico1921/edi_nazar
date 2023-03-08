@@ -88,7 +88,7 @@ class OrdersController extends Controller
 
      if (!$request->session()->has('panier_mkp')) {
       $num_commande = PanierEdi::generateNumOrder();
-      $panierMarketplace = ([
+      $panierMarketplace = PanierEdi::create([
          'date_ajout' => date('Y-m-d H:i:s'),
          'date_maj' => date('Y-m-d H:i:s'),
          'num_commande' => $num_commande,
