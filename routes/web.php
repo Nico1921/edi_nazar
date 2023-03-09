@@ -76,6 +76,7 @@ Route::middleware(['auth', 'verified','type-vente'])->group(function () {
       Route::post('/cart/products/delete', [CartController::class, 'delete_card_product'])->name('cart/products/delete');
       Route::get('/cart/adresses', [CartController::class, 'create_adresses'])->name('cart/adresses');
       Route::post('/cart/adresses', [CartController::class, 'add_adresse_commande'])->name('cart/adresses');
+      Route::post('/cart/payment/cb', [CartController::class, 'generate_form_payment_cb'])->name('cart/payment/cb');
       Route::get('/cart/adresses/validation', [CartController::class, 'create_adresses_validation'])->name('cart/adresses/validation');
       Route::post('/cart/adresses/validation/order', [CartController::class, 'confirmation_panier_com'])->name('cart/adresses/validation/order');
    });
@@ -107,9 +108,7 @@ Route::middleware(['auth', 'verified','type-vente'])->group(function () {
       Route::post('/orders/clients/edit', [OrdersController::class, 'edit_order_client'])->name('orders/clients/edit');
 
       Route::post('/shippings/edit', [ShippingsController::class, 'edit_commande'])->name('shippings/edit');
-      Route::post('/shippings/delete', [ShippingsController::class, 'delete_commande'])->name('shippings/delete');
-
-      
+      Route::post('/shippings/delete', [ShippingsController::class, 'delete_commande'])->name('shippings/delete');  
       Route::post('/shippings/order/clients/{num_commande}/products', [ShippingsController::class, 'get_order_client'])->name('shippings/order/clients/{num_commande}/products');
    });
 
@@ -117,8 +116,6 @@ Route::middleware(['auth', 'verified','type-vente'])->group(function () {
    Route::get('/shippings/order/clients/{num_commande}/visuel', [ShippingsController::class, 'get_visuel_order_zip'])->name('shippings/order/clients/{num_commande}/visuel');
    Route::get('/shippings/order/clients/{num_commande}/pdf/facture', [PDFController::class, 'generatePDF_facture'])->name('shippings/order/clients/{num_commande}/pdf/facture');
    Route::get('/shippings/order/clients/{num_commande}/pdf/proforma', [PDFController::class, 'generatePDF_proforma'])->name('shippings/order/clients/{num_commande}/pdf/proforma');
-   
-   
 });
 
 Route::get('language/{language}', function ($language) {
