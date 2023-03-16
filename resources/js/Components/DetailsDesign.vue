@@ -25,7 +25,7 @@ var addCommande = (e,isPanier) => {
       id_panier_edi_list: formData.get("id_panier_edi_list"),
    });
    
-   formProduit.post(route('products/panier/add'), {
+   formProduit.post(route('order_entrepot/panier/add'), {
       preserveScroll: true,
       preserveState:true,
       onSuccess: (e) => {
@@ -68,7 +68,7 @@ var deleteCommande = (id_panier_edi_list,key) =>{
             id_panier_edi_list: id_panier_edi_list,
          });
 
-         formProduit.post(route('products/panier/delete'), {
+         formProduit.post(route('order_entrepot/panier/delete'), {
             preserveScroll: true,
             onSuccess: (e) => {
                if(e.props.session.status){

@@ -43,6 +43,9 @@ var calcul_prix_gamme = (prix_gamme) => {
 var verifCheck = (e,type) => {
     if(e.target.checked){
       paymentType.value = type;
+      if(type == 2){
+         axios.post('/cart/payment/cb')
+      }
     }else{
       paymentType.value = 0;
     }
@@ -50,6 +53,7 @@ var verifCheck = (e,type) => {
 </script>
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import axios from 'axios';
 export default {
    // Using a render function
    layout: (h, page) => h(AuthenticatedLayout, () => child),
@@ -147,8 +151,8 @@ export default {
                </div>
                <form class="grid grid-cols-4 bg-primary-50 rounded px-4 py-2 mb-4">
                   <div class="lg:my-0 my-2 lg:col-span-2 col-span-4 flex items-center justify-center">
-                    <!-- <input @click="verifCheck($event,2)" id="paymentCard" name="paymentType" type="radio" value="2" class="w-4 h-4 text-primary-200 bg-gray-100 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100"> -->
-                    <input disabled id="paymentCard" name="paymentType" type="radio" value="2" class="w-4 h-4 cursor-not-allowed text-primary-200 bg-gray-200 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100">
+                    <input @click="verifCheck($event,2)" id="paymentCard" name="paymentType" type="radio" value="2" class="w-4 h-4 text-primary-200 bg-gray-100 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100">
+                    <!-- <input disabled id="paymentCard" name="paymentType" type="radio" value="2" class="w-4 h-4 cursor-not-allowed text-primary-200 bg-gray-200 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100"> -->
                     <label for="paymentCard" class="ml-2 text-lg font-medium text-gray-900 ">Paiement par CB</label>
                   </div>
                   <div class="lg:my-0 my-2 lg:col-span-2 col-span-4 flex items-center justify-center">

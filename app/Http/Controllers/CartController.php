@@ -19,8 +19,10 @@ use App\Models\Gamme;
 use App\Models\Produit;
 use App\Models\PanierEdiList;
 use App\Models\StatsProduit;
+use App\Models\TransactionPaiement;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
+use Sebastienheyd\Systempay\Systempay;
 
 class CartController extends Controller
 {
@@ -223,6 +225,42 @@ class CartController extends Controller
         }
 
         return Inertia::render('Auth/Pages/Cart/Validation',['client' => $clientEDI,'panier' => $panierCom, 'produits' => $produits]);
+    }
+
+    public function generate_form_payment_cb(Request $request){
+        $html = '';
+        if($request->session()->has('panier_commercial') && $request->session()->has('client_commercial')){
+            $panierCommercial = $request->session()->get('panier_commercial');
+            $panier = PanierEdi::where('id_panier_edi','=',$panierCommercial->id_panier_edi)->find();
+            if(isset($panier->id_panier_edi) && !empty($panier->id_panier_edi)){
+                if($panier->total_ttc > 0){
+                    $trans_id = TransactionPaiement::generate_id_transaction();
+                    if(!empty($trans_id)){
+                        $paiement = new Systempay();
+                        $paiement->set([
+                            'amount' => $panier->total_ttc,
+                            'trans_id' => $trans_id
+                        ]);
+                        $html = $paiement->render();
+                    }else{
+                        return ['statut' => false,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
+                    }     
+                }else{
+                    return ['statut' => false,'msg' => 'Une erreur est survenue, vérifier que votre panier n\'est pas vide ou que vous êtes encore connecté !'];
+                }
+            }else{
+                return ['statut' => false,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement, vérifier que vous êtes encore connecté !'];
+            }
+            
+        }else{
+            return ['statut' => false,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement, vérifier que vous êtes encore connecté !'];
+        }
+
+        if(!empty($html)){
+            return ['statut' => true,'formpay' => $html];
+        }else{
+            return ['statut' => false,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
+        }
     }
 
     /**

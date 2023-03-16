@@ -22,8 +22,13 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class ProductsController extends Controller
+class OrderEntrepotController extends Controller
 {
+
+    public function create_type_vente(Request $request){
+        $request->session()->put('typeVente', 1);
+        return redirect('/order_entrepot/gamme');
+    }
 
     /**
      * Display the registration view.
@@ -206,8 +211,7 @@ class ProductsController extends Controller
     }
 
     public function create_redirect_product($gamme,Request $request){
-        return redirect('/products'.'/'.$gamme.'?'.$request->getQueryString());
-
+        return redirect('/order_entrepot/gamme'.'/'.$gamme.'?'.$request->getQueryString());
     }
 
     public function getProductsDesign(Request $request)

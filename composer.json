@@ -17,6 +17,7 @@
         "propaganistas/laravel-phone": "^4.3",
         "protonemedia/inertiajs-tables-laravel-query-builder": "^2.0",
         "psr/simple-cache": "2.0",
+        "sebastienheyd/laravel-systempay": "^1.2",
         "spatie/laravel-query-builder": "^5.0",
         "tightenco/ziggy": "^1.0"
     },

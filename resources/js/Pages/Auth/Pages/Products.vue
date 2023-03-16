@@ -34,7 +34,7 @@ var clickResetInputFile = ()=>{
 
 const submit_file = () => {
    var form = new FormData(document.getElementById('fileCartImport'));
-   axios.post('/products/panier/import',form).then((response) => {
+   axios.post('/order_entrepot/panier/import',form).then((response) => {
       console.log(response);
       if(response.status){
         document.location.href = "/cart";
@@ -82,7 +82,7 @@ var perPageActual = () => {
 };
 
 var searchGamme = (e) => {
-   var url = '/products?filter[nom_gamme]='+e.target.value;
+   var url = '/order_entrepot/gamme?filter[nom_gamme]='+e.target.value;
    axios.post(encodeURI(url)).then((response)=>{
       if(response.status == 200){
          const parsedUrl = new URL(window.location.href);
@@ -165,7 +165,7 @@ export default {
       </div>
 
       <div class="grid grid-cols-4" id="gammes">
-         <a v-for="(produit, key) in products.data" :key="key" :href="'/products/'+lowercase(produit.nom_gamme)" class="z-30 lg:col-span-1 col-span-2 group p-4 hover:scale-110 transition-full duration-300 cursor-pointer">
+         <a v-for="(produit, key) in products.data" :key="key" :href="'/order_entrepot/gamme/'+lowercase(produit.nom_gamme)" class="z-30 lg:col-span-1 col-span-2 group p-4 hover:scale-110 transition-full duration-300 cursor-pointer">
             <div class="relative group z-20">
                <div v-if="produit.img_gamme != null" class="relative w-full lg:h-60 sm:h-52 h-40 z-20">
                   <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + produit.img_gamme"

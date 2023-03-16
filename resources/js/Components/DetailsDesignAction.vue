@@ -1,7 +1,15 @@
 <script setup>
 import InputNumber from '@/Components/InputNumber.vue';
+import InputError from '@/Components/InputError.vue';
 import { useForm,usePage } from '@inertiajs/inertia-vue3';
 import { ref, watchEffect, onMounted } from 'vue';
+import {
+   TransitionRoot,
+   TransitionChild,
+   Dialog,
+   DialogPanel,
+   DialogTitle,
+  } from '@headlessui/vue'
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import "swiper/css";
@@ -11,9 +19,46 @@ import 'swiper/css/pagination';
 var props = defineProps(['designs','gamme']);
 var designs = ref(props.designs);
 var typeVente = ref(usePage().props.value.session.typeVente);
+var isOpen = ref(false);
+var formClient = useForm({
+   ref_externe: '',
+});
+
+var setIsOpen = (e,value) => {
+    isOpen.value = value;
+    var formData = new FormData(e.target);
+    document.getElementById('id_produit_modal').value = formData.get("id_produit");
+    document.getElementById('qte_modal').value = formData.get("qte");
+    document.getElementById('key_tab_modal').value = formData.get("key_tab");
+}
 
 watchEffect(() => {
 	typeVente.value = usePage().props.value.session.typeVente;
+   var dataClient = usePage().props.value.PanierDrop.panier.clients;
+   if(dataClient != undefined && dataClient.length != 0){
+      for(var d=0;d < designs.value.length;d++){
+         var find = false;
+         dataClient.forEach(elP => {
+            if(elP.client.id_client_edi == usePage().props.value.PanierDrop.panier.clientActuel.id_client_edi){
+               var produitsClient = elP.produits;
+               produitsClient.forEach(element => {
+                  if(designs.value[d].id_produit == element.id_produit){
+                     designs.value[d].isInPanier = true;
+                     designs.value[d].panier.quantiter = element.quantiter;
+                     designs.value[d].panier.id_panier_edi_list = element.id_panier_edi_list;
+                     find = true;
+                  }
+               });
+            }
+         });
+
+         if(!find){
+            designs.value[d].isInPanier = false;
+            designs.value[d].panier.quantiter = 0;
+            designs.value[d].panier.id_panier_edi_list = 0;
+         }
+      }
+   } 
 });
 
 var addCommande = (e,isPanier) => {
@@ -26,8 +71,7 @@ var addCommande = (e,isPanier) => {
       id_panier_edi_list: formData.get("id_panier_edi_list"),
       id_client_edi: formData.get("id_client_edi"),
    });
-   console.log(props.gamme);
-   formProduit.post('/orders/clients/products/'+props.gamme.nom_gamme+'/add', {
+   formProduit.post('/dropshipping/panier/add', {
       preserveScroll: true,
       preserveState:true,
       onSuccess: (e) => {
@@ -70,7 +114,7 @@ var deleteCommande = (id_panier_edi_list,key) =>{
             id_panier_edi_list: id_panier_edi_list,
          });
 
-         formProduit.post('/orders/clients/products/'+props.gamme+'/delete', {
+         formProduit.post('/dropshipping/panier/delete', {
             preserveScroll: true,
             onSuccess: (e) => {
                if(e.props.session.status){
@@ -94,22 +138,58 @@ var deleteCommande = (id_panier_edi_list,key) =>{
    });
 };
 
+var addRefClient = (event) => {
+   var formData = new FormData(event.target);
+   Inertia.post('/dropshipping/clients/add',{ref_externe: formData.get("ref_externe")}, {
+      preserveScroll: true,
+      preserveState:true,
+      onSuccess : (e) => {
+         if(e.props.session.statut){
+            var id_client_edi = e.props.session.id_client_edi;
+            const formProduit = useForm({
+               idProduit: formData.get("id_produit_modal"),
+               quantiter: formData.get("qte_modal"),
+               id_panier_edi_list: 0,
+               id_client_edi: id_client_edi,
+            });
+            formProduit.post('/dropshipping/panier/add', {
+               preserveScroll: true,
+               preserveState:true,
+               onSuccess: (e) => {
+                  if(e.props.session.status){
+                     designs.value[formData.get("key_tab_modal")].panier.id_panier_edi_list = e.props.session.id_panier_edi_list;
+                     designs.value[formData.get("key_tab_modal")].isInPanier = true;
+                     designs.value[formData.get("key_tab_modal")].panier.quantiter = formData.get("qte_modal");
+                     for(var i=0;i<designs.value.length;i++){
+                        designs.value[i].id_client_edi = id_client_edi;
+                     }
+                     isOpen.value = false;
+                     Toast.fire({
+                        icon: 'success',
+                        title: 'Le produit à bien ajouter au panier'
+                     });
+                  }else{
+                     Toast.fire({
+                        icon: 'error',
+                        title: e.props.session.message
+                     });
+                  }
+                  
+               },
+            });
+         }else{
+            Toast.fire({
+               icon: 'error',
+               title: e.props.session.msg
+            });
+         }
+      }
+   });
+}
+
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
-
-onMounted(() => {
-   const swiperEl = document.querySelector('.swiper').swiper;
-   swiperEl.setBreakpoint({
-      640: {
-        slidesPerView: 2,
-      },
-      1024: {
-        slidesPerView: 3,
-      },
-    });
-   swiperEl.update();
-});
 </script>
 
 <script>
@@ -119,6 +199,7 @@ import Edit from 'icons/Pencil.vue';
 import ImageOff from 'icons/ImageOff.vue';
 import Left from 'icons/MenuLeft.vue';
 import Right from 'icons/MenuRight.vue';
+import { Inertia } from '@inertiajs/inertia';
 
 
 </script>
@@ -183,13 +264,13 @@ import Right from 'icons/MenuRight.vue';
                                     </div>
                               </div>
                            </div>
-                           <div v-if="typeVente == 2" class="mt-2">
+                           <div v-if="typeVente == 2 && design.id_client_edi != ''" class="mt-2">
                               <form @submit.prevent="addCommande($event,(design.panier.quantiter > 0 ? true : false))" class="grid grid-cols-8"
                                  v-if="design.stats_produit.stock_restant > 0 && !design.isInPanier">
                                  <input type="hidden" name="id_produit" :value="design.id_produit" />
-                        <input type="hidden" name="id_client_edi" :value="design.id_client_edi" />
-                        <input type="hidden" name="id_panier_edi_list" :value="(design.panier.id_panier_edi_list != undefined ? design.panier.id_panier_edi_list : 0)" />
-                        <input type="hidden" name="key_tab" :value="key" />
+                                 <input type="hidden" name="id_client_edi" :value="design.id_client_edi" />
+                                 <input type="hidden" name="id_panier_edi_list" :value="(design.panier.id_panier_edi_list != undefined ? design.panier.id_panier_edi_list : 0)" />
+                                 <input type="hidden" name="key_tab" :value="key" />
                                  <div class="xsm:col-span-3 col-span-8 xsm:mr-2">
                                     <InputNumber class="sm:h-10 h-8 sm:w-full w-full" name="qte" :max="design.stats_produit.stock_restant" :value="(design.panier.quantiter > 0 ? design.panier.quantiter : 1)" />
                                  </div>
@@ -225,12 +306,86 @@ import Right from 'icons/MenuRight.vue';
                                  </div>
                               </div>
                            </div>
+                           <div v-else-if="typeVente == 2" class="mt-2">
+                              <form @submit.prevent="setIsOpen($event,true)" class="grid grid-cols-8"
+                                 v-if="design.stats_produit.stock_restant > 0 && !design.isInPanier">
+                                 <input type="hidden" name="id_produit" :value="design.id_produit" />
+                                 <input type="hidden" name="key_tab" :value="key" />
+                                 <div class="xsm:col-span-3 col-span-8 xsm:mr-2">
+                                    <InputNumber class="sm:h-10 h-8 sm:w-full w-full" name="qte" :max="design.stats_produit.stock_restant" :value="(design.panier.quantiter > 0 ? design.panier.quantiter : 1)" />
+                                 </div>
+                                 <div class="xsm:col-span-5 col-span-8 xsm:mt-0 mt-2">
+                                    <div class="h-10 flex items-start">
+                                       <button type="submit" class="2xl:text-sm xl:text-[0.700rem] lg:text-sm text-[0.700rem] font-bold sm:h-full h-3/4 w-full sm:px-3 px-2 bg-primary-50 rounded hover:bg-primary-100 transition duration-300">Ajouter à la commande</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
    </div>
+
+
+   <TransitionRoot v-if="typeVente == 2 && designs[0].id_client_edi == ''" appear :show="isOpen" as="template" :unmount="false">
+    <Dialog as="div" class="relative z-50">
+      <TransitionChild
+        as="template"
+        enter="duration-300 ease-out"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="duration-200 ease-in"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+        :unmount="false"
+      >
+        <div class="fixed inset-0 bg-black bg-opacity-25" />
+      </TransitionChild>
+
+      <div class="fixed inset-0 overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4 text-center">
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95" :unmount="false">
+            <DialogPanel class="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all" >
+              <DialogTitle as="h3" class="lg:text-lg text-sm font-medium leading-6 text-gray-900">
+                  Pour continuer, veuillez saisir la référence de la commande client concernée. 
+              </DialogTitle>
+               <form @submit.prevent="addRefClient">
+                  <input type="hidden" name="id_produit_modal" id="id_produit_modal"/>
+                  <input type="hidden" name="key_tab_modal" id="key_tab_modal"/>
+                  <input type="hidden" name="qte_modal" id="qte_modal"/>
+                  <div class="mt-2">
+                     <div class="text-sm text-gray-500">
+                        <label class="lg:text-lg text-sm" for="ref"> Référence : </label> 
+                        <input class="lg:text-lg text-sm transition duration-300 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" id="ref" type="text" name="ref_externe" placeholder="Saisissez la référence de la commande">
+                        <InputError class="mt-2" :message="formClient.errors.ref_externe" />
+                     </div>
+                  </div>
+
+                  <div class="mt-4 flex flex-row-reverse">
+                     <button type="submit" class="mx-1 inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 transition duration-300">
+                        Valider
+                     </button>
+                     <button @click="isOpen = false;" type="button" class="mx-1 inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition duration-300">
+                        Fermer
+                     </button>
+                  </div>
+              </form>
+             
+            </DialogPanel>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
 
 <style>

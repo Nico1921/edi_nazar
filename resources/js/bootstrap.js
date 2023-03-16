@@ -326,6 +326,7 @@ HtmlEntities.encode = function(string) {
 window.HtmlEntities = HtmlEntities;
 window.HtmlEntities.encode = HtmlEntities.encode;
 window.HtmlEntities.decode = HtmlEntities.decode;
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

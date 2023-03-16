@@ -37,6 +37,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $request->session()->put('typeVente', 1);
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
