@@ -36,7 +36,7 @@ var clickResetInputFile = ()=>{
 
 const submit_file = () => {
    var form = new FormData(document.getElementById('fileCartImport'));
-   axios.post('/products/panier/import',form).then((response) => {
+   axios.post('/dropshipping/panier/import',form).then((response) => {
       console.log(response);
       if(response.status){
         document.location.href = "/cart";
@@ -155,7 +155,7 @@ onMounted(() => {
 
 watchEffect(() => {
    dynamic.value = usePage().props.value.dynamique_client;
-	axios.get('/orders/clients/products/action/view').then((response)=>{
+	axios.get('/dropshipping/panier/view').then((response)=>{
       if(response.data.produitsAchat != undefined){         
          if(response.data.produitsAchat.panier != undefined){         
             produitsAchat.value = response.data.produitsAchat.panier;
@@ -187,7 +187,7 @@ export default {
    <Head title="Products" />
    <section class="container mx-auto mt-5">
       <h1 class="font-semibold text-sm lg:text-2xl sm:text-lg text-gray-800 py-2">Products</h1>
-      <div class="bg-primary-50 p-5 rounded my-3 grid grid-cols-4">
+      <div v-if="client.id_client_edi != undefined" class="bg-primary-50 p-5 rounded my-3 grid grid-cols-4">
          <div class="col-span-1">
             <h2 class="text-2xl text-gray-700">Information du client : </h2>
             <div class="flex flex-col bg-primary-100 py-2 px-4 m-2 rounded-xl">
@@ -234,7 +234,7 @@ export default {
             
          </div>
       </div>
-      <div class="bg-primary-50 rounded mx-40 mb-5" v-if="typeVente == 1">
+      <div class="bg-primary-50 rounded mx-40 mb-5" v-if="typeVente == 2">
          <h2 class="text-center text-xl text-primary-300 py-1 bg-primary-100 rounded-t-lg">Ajouter au panier via un fichier</h2>
          <div class="p-4 flex flex-col items-center justify-items-center justify-center">
             <form id="fileCartImport" class="grid grid-cols-4" @submit.prevent="submit_file">
@@ -263,7 +263,7 @@ export default {
       </div>
 
       <div class="grid grid-cols-4" id="gammes">
-         <a v-for="(produit, key) in products.data" :key="key" :href="'/orders/clients/products/'+lowercase(produit.nom_gamme)" class="col-span-1 group p-4 hover:scale-110 transition-full duration-300 cursor-pointer">
+         <a v-for="(produit, key) in products.data" :key="key" :href="'/dropshipping/gamme/'+lowercase(produit.nom_gamme)" class="col-span-1 group p-4 hover:scale-110 transition-full duration-300 cursor-pointer">
             <div class="relative group">
                <div v-if="produit.img_gamme != null" class="relative w-full h-60">
                   <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + produit.img_gamme"

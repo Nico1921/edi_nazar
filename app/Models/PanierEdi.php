@@ -73,7 +73,7 @@ class PanierEdi extends Model
      */
     public function client_edi_list()
     {
-        return $this->belongsTo(ClientEDI::class,'id_panier_edi','id_panier_edi');
+        return $this->hasMany(ClientEDI::class,'id_panier_edi','id_panier_edi');
     }
 
     public static function calculPrixPanier($id_panier){

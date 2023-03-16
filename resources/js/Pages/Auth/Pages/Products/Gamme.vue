@@ -71,10 +71,10 @@ var searchGamme = (e) => {
    parsedUrl.href = urlBase;
    console.log(urlBase);
    parsedUrl.searchParams.set('filter[global]',e.target.value);
-   if(per != ''){
+   if(per != '' && per  != undefined){
       parsedUrl.searchParams.set('perPage',per);
    }
-   if(page != ''){
+   if(page != '' && page != undefined){
       parsedUrl.searchParams.set('page',page);
    }
    var url = parsedUrl.href;
@@ -110,7 +110,7 @@ var clickResetInputFile = ()=>{
 
 const submit_file = () => {
    var form = new FormData(document.getElementById('fileCartImport'));
-   axios.post('/products/panier/import',form).then((response) => {
+   axios.post('/order_entrepot/panier/import',form).then((response) => {
       console.log(response);
       if(response.status){
         document.location.href = "/cart";
@@ -151,7 +151,7 @@ const getVariant = (idDesign) => {
       var keyCheck = checkExist.dataset.positiontab;
       var checkExist = checkExist.nextSibling;
       if (checkExist.id != "viewDetailsDesign") {
-         axios.post('/products/design', { id_design: idDesign }).then((response) => {
+         axios.post('/order_entrepot/gamme/design', { id_design: idDesign }).then((response) => {
             if (response.status == 200) {
                if (document.getElementById("viewDetailsDesign") != null) {
                   if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {

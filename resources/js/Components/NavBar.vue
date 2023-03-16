@@ -175,11 +175,8 @@ export default {
 				</button>
 			</div>
 			<Link class="text-2xl flex items-center lg:justify-start justify-center w-full font-bold leading-none" href="/">
-			<img alt="Logo Nazar" :src="imageUrl" width="100" height="100" />
+				<img alt="Logo Nazar" :src="imageUrl" width="100" height="100" />
 			</Link>
-			<div class="sm:absolute left-10 bottom-1 lg:block hidden" :class="(typeVente == 1 ? 'right-32' : 'right-20')">
-				<button class="text-primary-300 font-semibold" @click="confirmChangeTypeVente">{{ (typeVente == 2 ? "B to C" : "B to B") }}</button>
-			</div>
 			<ul
 				class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
 				<li>
@@ -191,19 +188,19 @@ export default {
 					<dotsVertical />
 				</li>
 				<li>
-					<Link href="/products" :class="{ 'text-primary-500': $page.url.startsWith('/products') }"
+					<Link href="/order_entrepot" :class="{ 'text-primary-500': $page.url.startsWith('/order_entrepot') }"
 						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
-					{{ $t('navbar.produits') }}</Link>
+					Commande Entrepôt</Link>
 				</li>
 				<li class="text-primary-300">
 					<dotsVertical />
 				</li>
-				<li v-if="typeVente == 2">
-					<Link href="/orders" :class="{ 'text-primary-500': $page.url.startsWith('/orders') }"
+				<li>
+					<Link href="/dropshipping" :class="{ 'text-primary-500': $page.url.startsWith('/dropshipping') }"
 						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
-					{{ $t('navbar.commandes') }}</Link>
+					Dropshipping</Link>
 				</li>
-				<li v-if="typeVente == 2" class="text-primary-300">
+				<li class="text-primary-300">
 					<dotsVertical />
 				</li>
 				<li>
@@ -232,12 +229,6 @@ export default {
 						<MenuItem>
 						<Link href="/settings" :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-gray-700']">
 						{{ $t('navbar.profile') }}</Link>
-						</MenuItem>
-						<MenuItem>
-						<Link class="block  py-2 text-sm text-gray-700"
-							:href="(typeVente == 1 ? '/type_order/customers' : '/type_order/warehouse')">Passer au {{ (typeVente
-									== 1 ? "B to C" : "B to B")
-							}}</Link>
 						</MenuItem>
 						<MenuItem>
 						<div class="flex items-center">
@@ -334,9 +325,6 @@ export default {
 					<a class="mr-auto text-3xl font-bold leading-none" href="/">
 						<img alt="Logo Nazar" :src="imageUrl" width="150" height="150" />
 					</a>
-					<div class="sm:hidden block absolute -bottom-3 left-5 w-20 bg-primary-100 text-center rounded-lg" :class="(typeVente == 1 ? 'right-32' : 'right-20')">
-						<button @click="confirmChangeTypeVente" class="text-primary-300 font-semibold w-full" >{{ (typeVente == 2 ? "B to C" : "B to B") }}</button>
-					</div>
 					<button class="navbar-close text-[20px]" @click="active = (active ? false : true)">
 						<close />
 					</button>
@@ -349,14 +337,14 @@ export default {
 							{{ $t('navbar.aPropos') }}</Link>
 						</li>
 						<li class="mb-1">
-							<Link href="/products" :class="{ 'text-primary-500': $page.url.startsWith('/products') }"
+							<Link href="/order_entrepot" :class="{ 'text-primary-500': $page.url.startsWith('/order_entrepot') }"
 								class="block p-4 text-sm font-semibold text-gray-400 hover:text-gray-600 rounded">
-							{{ $t('navbar.produits') }}</Link>
+							Commande Entrepôt</Link>
 						</li>
-						<li v-if="typeVente == 2" class="mb-1">
-							<Link href="/orders" :class="{ 'text-primary-500': $page.url.startsWith('/orders') }"
+						<li class="mb-1">
+							<Link href="/dropshipping" :class="{ 'text-primary-500': $page.url.startsWith('/dropshipping') }"
 								class="block p-4 text-sm font-semibold text-gray-400 hover:text-gray-600 rounded">
-							{{ $t('navbar.commandes') }}</Link>
+							Dropshipping</Link>
 						</li>
 						<li class="mb-1">
 							<a :class="{ 'text-primary-500': $page.url.startsWith('/shippings') }"

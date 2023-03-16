@@ -77,6 +77,54 @@ class HandleInertiaRequests extends Middleware
                 }
                 return ['count' => $panierCount,'panier' => $produitsAchat];
             },
+            'PanierDrop' => function() use($request) {
+                $panierCountF = 0;
+                $produitsAchat = new \stdClass;
+                if($request->session()->has('typeVente') && $request->session()->get('typeVente') == 2){
+                    if($request->session()->has('panier_mkp') && !empty($request->session()->get('panier_mkp'))){
+                        $panier = $request->session()->get('panier_mkp');
+                        $panierGet = PanierEdi::with('client_edi_list')->find($panier->id_panier_edi);
+                        $produitsAchat->id_panier_edi = $panier->id_panier_edi;
+                        if(isset($panierGet->client_edi_list) && $panierGet->client_edi_list != null ){
+                            $clientList = $panierGet->client_edi_list;
+                            for($i=0;$i<count($clientList);$i++){  
+                                $id_client_edi = $clientList[$i]->id_client_edi;
+                                $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
+                                $panierCountF = $panierCountF + $panierCount; 
+                                $panierList = PanierEdiList::with(["produit" => function($query) {
+                                    $query->with(['photo','dimension','statsProduit','design' => function($query2) {
+                                        $query2->with('gamme');
+                                    },'couleur']);
+                                }])->where('id_client_edi','=',$id_client_edi)->get();
+                                $produits =array();
+                                for($j=0;$j<count($panierList);$j++){
+                                    $list = $panierList[$j];
+                                    $produit = $list->produit;
+                                    $gamme =  $produit->design->gamme;
+                                    $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
+                                    $produit->prixProduit = Produit::calcul_prix_produit($produit->id_produit);
+                                    $produit->gamme = $gamme;
+                                    $produit->panier = $panier;
+                                    $produit->isInPanier = true;
+                                    $produit->quantiter = $list->quantiter;
+                                    $produit->id_panier_edi_list = $list->id_panier_edi_list;
+                                    array_push($produits,$produit);
+                                }
+                                $produitsAchat->clients[$i] = ["client"=>$clientList[$i],"produits" => $produits,'nbProduit' => $panierCount];
+                                if ($request->session()->has('client_actuel')) {
+                                    $client = $request->session()->get('client_actuel');
+                                }else{
+                                    $client = new \stdClass;
+                                }
+                                $produitsAchat->clientActuel = $client; 
+                            } 
+                        }
+
+
+                    }
+                }
+                return ['count' => $panierCountF,'panier' => $produitsAchat];
+            },
             'session' => function () use ($request) {
                 return $request->session()->all();
             },

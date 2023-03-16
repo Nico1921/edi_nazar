@@ -28,6 +28,7 @@ class ClientEDI extends Model
         'email',
         'tel',
         'date_commande',
+        'ref_externe',
         'nom_adresse',
         'adresse1',
         'adresse2',
@@ -83,7 +84,7 @@ class ClientEDI extends Model
      */
     public function panier()
     {
-        return $this->hasOne(PanierEdi::class,'id_panier_edi','id_panier_edi');
+        return $this->belongsTo(PanierEdi::class,'id_panier_edi','id_panier_edi');
     }
 
     public static function genNumCommande($id_panier){

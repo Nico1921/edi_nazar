@@ -1,6 +1,5 @@
 <script setup>
-import { Head, Link, usePage, useForm } from '@inertiajs/inertia-vue3';
-import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
+import { Head, usePage, useForm, } from '@inertiajs/inertia-vue3';
 import { createApp, onMounted,ref, watchEffect } from 'vue';
 import {
   TransitionRoot,
@@ -10,17 +9,19 @@ import {
   DialogTitle,
 } from '@headlessui/vue';
 import DetailsDesign from '@/Components/DetailsDesignAction.vue';
+import ListClients from '@/Components/ListClients.vue';
 
-const prop = defineProps(['client', 'products', 'produitsAchat','gamme']);
+const prop = defineProps(['products', 'produitsAchat','gamme']);
 
 var dynamic = ref(usePage().props.value.dynamique_client);
+var panierDrop = ref(usePage().props.value.PanierDrop);
+var client = ref(panierDrop.value.panier.clientActuel);
 var produitsAchat = ref(prop.produitsAchat.panier);
 var productsSearch = ref(prop.products.data);
 var products = ref(prop.products);
 var countP = 0;
 
 const isOpen = ref(false);
-
 function closeModal() {
   isOpen.value = false;
 }
@@ -28,7 +29,6 @@ function closeModal() {
 function openModal(img,gamme,design,couleur) {
   isOpen.value = true;
   var nomProduit = gamme+" "+design+" "+couleur;
-  console.log(document.getElementById("visuelImage"));
   document.getElementById("visuelImage").setAttribute('src','https://gestion.tapis-nazar.fr/img/produit/'+img);
   document.getElementById("visuelImage").setAttribute('alt',nomProduit);
   document.getElementById("nomVisuelImage").textContent = nomProduit;
@@ -40,7 +40,7 @@ const getVariant = (idDesign) => {
       var keyCheck = checkExist.dataset.positiontab;
       var checkExist = checkExist.nextSibling;
       if (checkExist.id != "viewDetailsDesign") {
-         axios.post('/orders/design', { id_design: idDesign }).then((response) => {
+         axios.post('/dropshipping/gamme/design', { id_design: idDesign }).then((response) => {
             if (response.status == 200) {
                if (document.getElementById("viewDetailsDesign") != null) {
                   if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
@@ -48,7 +48,6 @@ const getVariant = (idDesign) => {
                   }
                   document.getElementById("viewDetailsDesign").remove();
                }
-
                var detailsDesign = createApp(DetailsDesign, { designs: response.data, gamme: prop.gamme });
                var trNew = document.createElement('div');
                trNew.id = "viewDetailsDesign";
@@ -65,7 +64,7 @@ const getVariant = (idDesign) => {
                document.getElementById("tab_idDesign" + idDesign).parentNode.insertBefore(trNew, document.getElementById("tab_idDesign" + idDesign).nextSibling)
                detailsDesign.mount(document.getElementById("viewDetailsDesign"));
             }
-         })
+         });
       } else if (checkExist.id == "viewDetailsDesign") {
          if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
             document.getElementById("viewDetailsDesign").__vue_app__.unmount();
@@ -104,7 +103,7 @@ var deleteCommande = (id_panier_edi_list) =>{
             id_panier_edi_list: id_panier_edi_list,
          });
 
-         formProduit.post('/orders/clients/products/'+prop.gamme+'/delete', {
+         formProduit.post('/dropshipping/panier/delete', {
             preserveScroll: true,
             onSuccess: (e) => {
                if(e.props.session.status){
@@ -129,7 +128,7 @@ var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
 
-onMounted(() => {
+onMounted(async () => {
    var targetNode = document.getElementById('TabProducts');
    var config = { attributes: true, childList: true, subtree: true };
    var observer = new MutationObserver(checkIsOnList);
@@ -144,8 +143,9 @@ onMounted(() => {
 
 watchEffect(() => {
    dynamic.value = usePage().props.value.dynamique_client;
-	axios.get('/orders/clients/products/'+prop.gamme+'/view').then((response)=>{
-      console.log(response);
+   panierDrop.value = usePage().props.value.PanierDrop;
+   client.value = panierDrop.value.panier.clientActuel;
+	axios.get('/dropshipping/panier/view').then((response)=>{
       if(response.data.produitsAchat != undefined){         
          if(response.data.produitsAchat.panier != undefined){         
             produitsAchat.value = response.data.produitsAchat.panier;
@@ -203,7 +203,6 @@ var searchGamme = (e) => {
    parsedUrl.searchParams.delete('page');
    var urlBase = parsedUrl.href+'/search';
    parsedUrl.href = urlBase;
-   console.log(urlBase);
    parsedUrl.searchParams.set('filter[global]',e.target.value);
    if(per != '' && per  != undefined){
       parsedUrl.searchParams.set('perPage',per);
@@ -255,23 +254,11 @@ export default {
    <Head title="Orders Products Clients" />
    <section class="container mx-auto mt-5">
       <h1 class="text-center text-3xl text-gray-800">Sélectionner les produits pour votre client.</h1>
-      <div class="bg-primary-50 p-5 rounded my-3 grid grid-cols-4">
+      <!-- <div v-if="client.id_client_edi != undefined" class="bg-primary-50 p-5 rounded my-3 grid grid-cols-4">
          <div class="col-span-1">
-            <h2 class="text-2xl text-gray-700">Information du client : </h2>
+            <h2 class="text-2xl text-gray-700">Information de la commande : </h2>
             <div class="flex flex-col bg-primary-100 py-2 px-4 m-2 rounded-xl">
-               <h3 class="text-lg text-gray-600">Client : {{ client.prenom + " " + client.nom }}</h3>
-               <span>Adresse : {{ client.nom_adresse }}</span>
-               <div class="flex flex-col mb-2">
-                  <span></span>
-                  <span>{{ client.adresse1 }}</span>
-                  <span>{{ client.adresse2 }}</span>
-                  <span>{{ client.adresse3 }}</span>
-                  <span>{{ client.code_postal + ", " + client.ville }}</span>
-               </div>
-               <div class="my-3 flex items-center justify-center">
-                  <Link class="rounded p-4 bg-primary-200 hover:bg-primary-50 transition duration-300"
-                     href="/orders/clients/validation">Valider la commande</Link>
-               </div>
+               <h3 class="text-lg text-gray-600">Commande client N° : {{ client.ref_externe }}</h3>
             </div>
          </div>
          <div class="col-span-3 ">
@@ -280,13 +267,15 @@ export default {
                <div v-for="(produit, key) in produitsAchat" :key="key" class="col-span-1 grid grid-cols-4 bg-primary-100 p-1 m-2 relative rounded-xl">
                   <button @click="deleteCommande(produit.panier.id_panier_edi_list)" class="absolute right-2 top-1 hover:text-primary-200 transition duration-300" type="button"><Close /></button>
                   <div class="col-span-1 flex items-center justify-center">
-                     <div v-if="produit.photo.img_produit != null"
+                     <div v-if="produit.photo != null && produit.photo.img_produit != null"
                         class="lg:w-[45px] lg:h-[75px] sm:w-[60px] sm:h-[90px] w-[70px] h-[100px]">
                         <img  :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.photo.img_produit"
                            :alt="produit.code_sku" class="w-full h-full object-cover" />
                      </div>
-                     <div v-else>
-                        <span>Pas de photo pour ce produit !</span>
+                     <div v-else class="h-full w-full py-2 px-1">
+                        <div class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
+                           <ImageOff />
+                        </div>
                      </div>
                   </div>
                   <div class="flex flex-col col-span-3">
@@ -300,6 +289,16 @@ export default {
                </div>
             </div>
             
+         </div>
+      </div> -->
+
+      <div v-if="client != undefined " class="flex justify-between sm:flex-row flex-col ">
+         <div v-if="client.id_client_edi != undefined" class="flex items-center px-2">
+            <h3 class="text-lg text-gray-600">Commande client N° : {{ client.ref_externe }}</h3>
+         </div>
+
+         <div v-if="client.id_client_edi != undefined" class="mb-4 px-2">
+            <ListClients :data="panierDrop.panier" />
          </div>
       </div>
 
@@ -326,8 +325,8 @@ export default {
                            :alt="produit.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
                      </div>
                      <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
-                     <ImageOff />
-                  </div>
+                        <ImageOff />
+                     </div>
                </div>
                <div class="xl:col-span-7 sm:col-span-8 col-span-10 flex flex-col ml-3">
                   <span class="font-bold xl:text-xl sm:text-lg text-sm text-gray-600">{{ produit.nom_design }}</span>
