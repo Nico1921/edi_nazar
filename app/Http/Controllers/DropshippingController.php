@@ -896,7 +896,7 @@ class DropshippingController extends Controller
          $client = ClientEDI::where('id_client_edi','=',$request->id_client_edi)->first();
          if(!empty($client->id_client_edi)){
             $stock = StatsProduit::where('id_produit','=',$request->idProduit)->first();
-            if(isset($stock->stock_restant) && $stock->stock_restant > $request->quantiter) {
+            if(isset($stock->stock_restant) && $stock->stock_restant >= $request->quantiter) {
                if(isset($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0){
                   $panierList = PanierEdiList::where('id_panier_edi_list','=',$request->id_panier_edi_list)->first();
                   if(isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)){

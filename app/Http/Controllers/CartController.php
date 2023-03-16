@@ -199,7 +199,7 @@ class CartController extends Controller
             $clientEDI =  $request->session()->get('client_commercial');
             if(!empty($client->adresse1) && !empty($client->ville) && !empty($client->code_postal) && !empty($client->pays) && !empty($client->nom_adresse)){
                 $panierCom = $request->session()->get('panier_commercial');
-                $id_client_edi = $panierCom->client_edi_list->id_client_edi;
+                $id_client_edi = $panierCom->client_edi_list[0]->id_client_edi;
                 $produits = new \stdClass;
                 if(!empty($id_client_edi)){
                    $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
