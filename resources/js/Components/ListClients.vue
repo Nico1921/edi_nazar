@@ -154,13 +154,16 @@ var addRefClient = (event) => {
       });
 }
 
-var selectRefClient = (id_client_edi) => {
+var selectRefClient = (id_client_edi,isModal=false) => {
    Inertia.post('/dropshipping/clients/edit',{id_client_edi: id_client_edi},{
       preserveScroll: true,
       preserveState:true,   
       onSuccess:(e) => {
          if(e.props.session.status){
             setIsOpen(false);
+            if(isModal){
+               closeModal();
+            }
             Toast.fire({
                   icon: 'info',
                   title: 'La commande '+data.value.clientActuel.ref_externe+' a été sélectionner !'
@@ -236,10 +239,10 @@ import { Inertia } from '@inertiajs/inertia';
                   {{ client.client.ref_externe }}
                 </span>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-1">
-                  <button @click="openModal($event,client)" class="w-full h-full px-2">
+                  <button @click.stop="openModal($event,client)" class="w-full h-full px-2">
                      <span class="rounded-full bg-blue-200 hover:bg-blue-400 text-blue-500 hover:text-blue-700 transition duration-300 p-1 block"><EyeIcon class="h-4 w-4 " /></span>
                   </button>
-                  <button @click="deleteClient($event,client.client.id_client_edi,client.client.ref_externe)" class="w-full h-full px-2">
+                  <button @click.stop="deleteClient($event,client.client.id_client_edi,client.client.ref_externe)" class="w-full h-full px-2">
                      <span class="rounded-full bg-red-200 hover:bg-red-400 text-red-500 hover:text-red-700 transition duration-300 p-1 block"><TrashIcon class="h-4 w-4 " /></span></button>
                 </div>
               </li>
@@ -320,7 +323,7 @@ import { Inertia } from '@inertiajs/inertia';
               </div>
 
               <div class="mt-4">
-                <button v-if="clientModal.client.id_client_edi != data.clientActuel.id_client_edi" type="button"  
+                <button @click="selectRefClient(clientModal.client.id_client_edi,true)" v-if="clientModal.client.id_client_edi != data.clientActuel.id_client_edi" type="button"  
                 class="inline-flex justify-center rounded-md border border-transparent bg-green-200 px-4 py-2 
                 text-sm font-medium text-green-900 hover:bg-green-300 transition duration-300 mx-1
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2">
@@ -397,4 +400,11 @@ import { Inertia } from '@inertiajs/inertia';
       </div>
     </Dialog>
   </TransitionRoot>
+
+  <div class="fixed bottom-10 right-10 z-[50] overflow-hidden">
+      <button @click="setIsOpen(true)" class="group flex items-center justify-center text-white hover:px-4 w-10 hover:w-auto h-10 bg-green-600 rounded-full hover:bg-green-700 active:shadow-lg mouse shadow transition-all ease-in duration-300 focus:outline-none">
+         <PlusIcon class="w-5 h-5 group-hover:mr-1" />
+         <span class=" translate-x-full group-hover:relative absolute group-hover:translate-x-0 transition-all ease-in-out duration-100 ">Ajouter commande client</span>
+      </button>
+   </div>
 </template>
