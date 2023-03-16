@@ -59,7 +59,7 @@ class HandleInertiaRequests extends Middleware
                 $panierCount = 0;
                 $produitsAchat = new \stdClass;
                 if($request->session()->has('panier_commercial') && !empty($request->session()->get('panier_commercial'))){
-                    $id_client_edi = $request->session()->get('panier_commercial')->client_edi_list->id_client_edi;
+                    $id_client_edi = $request->session()->get('panier_commercial')->client_edi_list[0]->id_client_edi;
                     $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
                     $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
                     foreach($panierList as $list){
