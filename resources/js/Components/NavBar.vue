@@ -2,6 +2,7 @@
 import { ref, watchEffect, } from 'vue';
 import { Link, usePage, useForm } from '@inertiajs/inertia-vue3';
 import { Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
+import { ShoppingBagIcon,ShoppingCartIcon } from '@heroicons/vue/20/solid';
 import InputNumber from '@/Components/InputNumberVertical.vue';
 import Langue from '@/Components/LangueChoice.vue';
 
@@ -12,11 +13,13 @@ var user = ref(usePage().props.value.auth.user);
 var typeVente = ref(usePage().props.value.session.typeVente);
 var countPanier = ref(usePage().props.value.Panier.count);
 var panier = ref(usePage().props.value.Panier.panier.panier);
+var panierDrop = ref(usePage().props.value.PanierDrop);
 
 watchEffect(() => {
 	countPanier.value = usePage().props.value.Panier.count;
 	typeVente.value = usePage().props.value.session.typeVente;
 	panier.value = usePage().props.value.Panier.panier.panier;
+	panierDrop.value = usePage().props.value.PanierDrop;
 });
 
 const imgBase64 = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDQwMDAgNDAwMCIgd2lkdGg9IjEwMDAiIGhlaWdodD0iMTAwMCI+PHN0eWxlPi5he2ZpbGw6I2EzYTNhM30uYntmaWxsOiNmZmZ9PC9zdHlsZT48cGF0aCBjbGFzcz0iYSIgZD0ibTQwMDAgNDAwMGgtNDAwMHYtNDAwMGg0MDAweiIvPjxwYXRoIGNsYXNzPSJiIiBkPSJtMzI2NSAzMDQ2Ljh2MjY1LjJoLTI1MzB2LTI2NS4yYzAtNDg5IDU2Ni40LTg4NS41IDEyNjUtODg1LjUgNjk4LjYgMCAxMjY1IDM5Ni41IDEyNjUgODg1LjV6Ii8+PHBhdGggY2xhc3M9ImIiIGQ9Im0yNjI0LjEgMTMxMi4xYzAgMzQ0LjYtMjc5LjQgNjI0LTYyNC4xIDYyNC0zNDQuNyAwLTYyNC4xLTI3OS40LTYyNC4xLTYyNCAwLTM0NC43IDI3OS40LTYyNC4xIDYyNC4xLTYyNC4xIDM0NC43IDAgNjI0LjEgMjc5LjQgNjI0LjEgNjI0LjF6Ii8+PC9zdmc+";
@@ -134,6 +137,43 @@ var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
    })
 };
 
+var deleteCommandeDrop = (id_panier_edi_list) =>{
+   Swal.fire({
+      title: 'Attention',
+      text: 'Etes-vous de supprimer cette article de la commande ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Non',
+      confirmButtonText: 'Oui',
+   }).then((result) => {
+      if (result.isConfirmed) {
+         const formProduit = useForm({
+            id_panier_edi_list: id_panier_edi_list,
+         });
+
+         formProduit.post('/dropshipping/panier/delete', {
+            preserveScroll: true,
+            onSuccess: (e) => {
+               if(e.props.session.status){
+                  Toast.fire({
+                     icon: 'success',
+                     title: 'Le produit à bien été supprimer de la commande'
+                  })
+               }else{
+                  Toast.fire({
+                     icon: 'error',
+                     title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
+                  });
+               }
+               
+            },
+         });
+      }
+   });
+};
+
 var confirmChangeTypeVente = () => {
 	Swal.fire({
       title: 'Attention',
@@ -167,7 +207,7 @@ export default {
 
 <template>
 	<div class="nav" v-if="typeVente != undefined && user != ''">
-		<nav class="relative px-4 lg:py-4 py-0 flex justify-between items-center bg-primary-50 z-40">
+		<nav class="relative px-4 lg:py-4 py-0 flex justify-between items-center bg-primary-50 z-50">
 			<div class="lg:hidden absolute left-5">
 				<button @click="active = (active ? false : true)"
 					class="navbar-burger flex items-center text-primary-300 text-[20px] p-3 hover:text-primary-500 transition duration-300">
@@ -211,7 +251,7 @@ export default {
 			</ul>
 
 			
-			<Menu as="div" class="absolute" :class="(typeVente == 1 ? 'right-20' : 'right-10')">
+			<Menu as="div" class="absolute right-20">
 				<div>
 					<MenuButton
 						class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -243,25 +283,25 @@ export default {
 					</MenuItems>
 				</transition>
 			</Menu>
-			<div class="absolute right-10" v-if="typeVente == 1">
+			<div class="absolute right-10" >
 				<Popover class="relative" v-slot="{ open }">
-					<div @mouseleave="onMouseLeave(open)">
+					<div @mouseleave="onMouseLeave(open)" class="mt-2">
 						<PopoverButton class="outline-none" ref="buttonRef" @mouseenter="onMouseEnter(open)">
-							<Cart class=" text-2xl text-primary-300 hover:text-primary-500 transition duration-300" />
+							<ShoppingCartIcon v-if="typeVente == 1" class="w-6 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
+							<ShoppingBagIcon v-if="typeVente == 2" class="w-7 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
 							<div
-								class=" rounded-full bg-primary-200 absolute -top-2 -right-2 w-5 h-5 flex justify-center items-center">
-								<span class="text-xs text-primary-500">{{ countPanier }}</span>
+								class=" rounded-full bg-primary-200 absolute -top-2 -right-3 w-5 h-5 flex justify-center items-center">
+								<span class="text-xs text-primary-500">{{ (typeVente == 1 ? countPanier : panierDrop.count) }}</span>
 							</div>
 						</PopoverButton>
-
 						<transition enter-active-class="transition duration-200 ease-out"
 							enter-from-class="translate-y-1 opacity-0" enter-to-class="translate-y-0 opacity-100"
 							leave-active-class="transition duration-150 ease-in" leave-from-class="translate-y-0 opacity-100"
 							leave-to-class="translate-y-1 opacity-0">
 							<PopoverPanel @mouseenter="onMouseEnter(open)" @mouseleave="onMouseLeave(open)"
-								class="absolute z-20 right-0 mt-2 w-72 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+								class="absolute z-[80] right-0 mt-2 w-72 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 								<div class="max-h-80 overflow-auto scrollbarCustom">
-									<div class=" px-1 py-1 grid grid-cols-6" v-if="panier != undefined" v-for="(produit, key) in panier" :key="key">
+									<div class="z-[80] relative px-1 py-1 grid grid-cols-6" v-if="typeVente == 1 && panier != undefined" v-for="(produit, key) in panier" :key="key">
 										<div class="col-span-1 flex items-center justify-center">
 											<div v-if="produit.photo.img_produit != null"
 												class="lg:w-[45px] lg:h-[75px] sm:w-[60px] sm:h-[90px] w-[70px] h-[100px]">
@@ -303,13 +343,59 @@ export default {
 											
 										</div>
 									</div>
+									<div class="z-[80] relative px-1 py-1" v-else-if="typeVente == 2 && panierDrop.panier.clients != undefined && panierDrop.count > 0" v-for="(client, keyDrop) in panierDrop.panier.clients" :key="keyDrop">
+											<div class="flex flex-col items-center justify-center" v-if="client.nbProduit > 0">
+												<span class="text-left w-full">Commande : {{ client.client.ref_externe }}</span>
+												<div class="ml-4 mt-1 grid grid-cols-6" v-for="(produit, keyProduit) in client.produits" :key="keyProduit">
+													<div class="col-span-1 flex items-center justify-center">
+													<div v-if="produit.photo.img_produit != null"
+														class="lg:w-[45px] lg:h-[75px] sm:w-[60px] sm:h-[90px] w-[70px] h-[100px]">
+														<img :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.photo.img_produit"
+															:alt="produit.code_sku" class="w-full h-full object-cover" />
+													</div>
+													<div v-else>
+														<span>Pas de photo pour ce produit !</span>
+													</div>
+												</div>
+												<div class="col-span-3 flex flex-col ml-1">
+													<span>{{ produit.design.nom_design }}</span>
+													<span>{{ strUcFirst(produit.couleur.nom_couleur) }}</span>
+													<span>{{ produit.dimension.largeur + "x" + produit.dimension.longueur }}cm</span>
+												</div>
+												<div class="col-span-2 flex items-center justify-evenly">
+													<div class="col-span-2 h-full">
+														<form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm">
+															<InputNumber @change="modifQte($event, produit.design.nom_design + produit.dimension.largeur + 'x' + produit.dimension.longueur)" name="qte"
+																:max="produit.stats_produit.stock_restant"
+																:value="(produit.panier.quantiter > 0 ? produit.panier.quantiter : 1)" />
+															<input type="hidden" name="id_produit" :value="produit.id_produit" />
+															<input type="hidden" name="id_panier_edi_list"
+																:value="(produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0)" />
+															<input type="hidden" name="key_tab" :value="key" />
+															<input type="hidden" name="id_panier_edi"
+																:value="(produit.id_panier_edi != undefined ? produit.id_panier_edi : 0)" />
+															<input type="hidden" name="id_client_edi"
+																:value="(produit.panier.id_client_edi != undefined ? produit.panier.id_client_edi : 0)" />
+														</form>
+													</div>
+													<div class="col-span-2 mx-2">
+														<button type="button"
+															@click="deleteCommandeDrop((produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0))"
+															class="p-2 bg-red-500 text-white rounded hover:bg-red-300 transition duration-300  h-10">
+															<Delete class="text-white" />
+														</button>
+													</div>
+												</div>
+												</div>
+											</div>
+										</div>
 									<div class="h-28 w-full flex items-center justify-center px-1 py-1" v-else>
 										<span class="w-full text-center">Votre panier est vide</span>
 									</div>
 								</div>
 								
 								<div class="px-1 py-1 rounded-md text-center bg-primary-100 hover:bg-primary-50 transition duration-300 border drop-shadow cursor-pointer">
-									<Link href="/cart" class="w-full block text-center">Voir mon panier</Link>
+									<Link :href="(typeVente == 1 ? '/cart' : '/dropshipping/cart')" class="w-full block text-center">Voir mon panier</Link>
 								</div>
 							</PopoverPanel>
 						</transition>

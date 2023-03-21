@@ -33,7 +33,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
-Route::middleware(['auth', 'verified','type-vente'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
    Route::get('/', function () {return Inertia::render('Auth/Pages/Home');});
    Route::get('/home', function () {return Inertia::render('Auth/Pages/Home');})->name('home');
    Route::get('/about-us', function () {return Inertia::render('Auth/Pages/AboutUs');})->name('about-us');
@@ -44,8 +44,6 @@ Route::middleware(['auth', 'verified','type-vente'])->group(function () {
    Route::post('/settings/save/company', [SettingsController::class, 'edit_societe'])->name('settings/save/company');
    Route::post('/settings/save/profil', [SettingsController::class, 'edit_profil'])->name('settings/save/profil');
    Route::post('/settings/save/sociaux', [SettingsController::class, 'edit_sociaux'])->name('settings/save/sociaux');
-
-   Route::get('/shippings', [ShippingsController::class, 'create'])->name('shippings');
 
    Route::get('/order_entrepot', [OrderEntrepotController::class, 'create_type_vente'])->name('order_entrepot');
    Route::middleware(['type-entrepot'])->group(function () {
@@ -58,9 +56,6 @@ Route::middleware(['auth', 'verified','type-vente'])->group(function () {
       Route::post('/order_entrepot/panier/add', [OrderEntrepotController::class, 'add_product_commande'])->name('order_entrepot/panier/add');
       Route::post('/order_entrepot/panier/delete', [OrderEntrepotController::class, 'delete_product_commande'])->name('order_entrepot/panier/delete');
       Route::post('/order_entrepot/panier/import', [OrderEntrepotController::class, 'import_panier_commande'])->name('order_entrepot/panier/import');
-
-      Route::post('/shippings/panier/edit', [ShippingsController::class, 'edit_panier'])->name('shippings/panier/edit');
-      Route::post('/shippings/panier/delete', [ShippingsController::class, 'delete_commande'])->name('shippings/panier/delete');
 
       Route::get('/cart', [CartController::class, 'create'])->name('cart');
       Route::post('/cart/products/edit', [CartController::class, 'edit_qte'])->name('cart/products/edit');
@@ -103,11 +98,23 @@ Route::middleware(['auth', 'verified','type-vente'])->group(function () {
       Route::post('/dropshipping/clients/delete', [DropshippingController::class, 'delete_order_client'])->name('orders/clients/delete');
       Route::post('/dropshipping/clients/edit', [DropshippingController::class, 'edit_order_client'])->name('orders/clients/edit');
 
-      Route::post('/shippings/edit', [ShippingsController::class, 'edit_commande'])->name('shippings/edit');
-      Route::post('/shippings/delete', [ShippingsController::class, 'delete_commande'])->name('shippings/delete');  
-      Route::post('/shippings/order/clients/{num_commande}/products', [ShippingsController::class, 'get_order_client'])->name('shippings/order/clients/{num_commande}/products');
+      Route::get('/dropshipping/cart', [CartController::class, 'create'])->name('dropshipping/cart');
+      Route::post('/dropshipping/cart/products/edit', [CartController::class, 'edit_qte_drop'])->name('dropshipping/cart/products/edit');
+      Route::post('/dropshipping/cart/products/delete', [CartController::class, 'delete_card_product_drop'])->name('dropshipping/cart/products/delete');
+      Route::post('/dropshipping/cart/client/delete', [CartController::class, 'delete_order_client_drop'])->name('dropshipping/cart/client/delete');
+      Route::get('/dropshipping/cart/adresses', [CartController::class, 'create_adresse_drop'])->name('dropshipping/cart/adresses');
+      Route::post('/dropshipping/cart/adresses', [CartController::class, 'add_adresse_commande_drop'])->name('dropshipping/cart/adresses');
+      Route::post('/dropshipping/cart/payment/cb', [CartController::class, 'generate_form_payment_cb'])->name('dropshipping/cart/payment/cb');
+      Route::get('/dropshipping/cart/validation', [CartController::class, 'create_adresses_validation'])->name('dropshipping/cart/validation');
+      Route::post('/dropshipping/cart/validation/order', [CartController::class, 'confirmation_panier_com'])->name('dropshipping/cart/validation/order');
    });
 
+   Route::get('/shippings', [ShippingsController::class, 'create'])->name('shippings');
+   Route::post('/shippings/panier/edit', [ShippingsController::class, 'edit_panier'])->name('shippings/panier/edit');
+   Route::post('/shippings/panier/delete', [ShippingsController::class, 'delete_commande'])->name('shippings/panier/delete');
+   Route::post('/shippings/edit', [ShippingsController::class, 'edit_commande'])->name('shippings/edit');
+   Route::post('/shippings/delete', [ShippingsController::class, 'delete_commande'])->name('shippings/delete');  
+   Route::post('/shippings/order/clients/{num_commande}/products', [ShippingsController::class, 'get_order_client'])->name('shippings/order/clients/{num_commande}/products');
    Route::get('/shippings/order/clients/{num_commande}', [ShippingsController::class, 'create_order'])->name('shippings/order/clients/{num_commande}');
    Route::get('/shippings/order/clients/{num_commande}/visuel', [ShippingsController::class, 'get_visuel_order_zip'])->name('shippings/order/clients/{num_commande}/visuel');
    Route::get('/shippings/order/clients/{num_commande}/pdf/facture', [PDFController::class, 'generatePDF_facture'])->name('shippings/order/clients/{num_commande}/pdf/facture');

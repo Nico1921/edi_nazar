@@ -20,8 +20,9 @@ var produitsAchat = ref(prop.produitsAchat.panier);
 var productsSearch = ref(prop.products.data);
 var products = ref(prop.products);
 var countP = 0;
-
 const isOpen = ref(false);
+var imgBackground  = "background-image: url('https://gestion.tapis-nazar.fr/img/produit/gamme/"+prop.gamme.img_gamme+"');";
+
 function closeModal() {
   isOpen.value = false;
 }
@@ -48,7 +49,7 @@ const getVariant = (idDesign) => {
                   }
                   document.getElementById("viewDetailsDesign").remove();
                }
-               var detailsDesign = createApp(DetailsDesign, { designs: response.data, gamme: prop.gamme });
+               var detailsDesign = createApp(DetailsDesign, { designs: response.data, gamme: prop.gamme.nom_gamme });
                var trNew = document.createElement('div');
                trNew.id = "viewDetailsDesign";
                trNew.dataset.idDesign = idDesign;
@@ -87,42 +88,42 @@ const checkIsOnList = () => {
    }
 };
 
-var deleteCommande = (id_panier_edi_list) =>{
-   Swal.fire({
-      title: 'Attention',
-      text: 'Etes-vous de supprimer cette article de la commande ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Non',
-      confirmButtonText: 'Oui',
-   }).then((result) => {
-      if (result.isConfirmed) {
-         const formProduit = useForm({
-            id_panier_edi_list: id_panier_edi_list,
-         });
+// var deleteCommande = (id_panier_edi_list) =>{
+//    Swal.fire({
+//       title: 'Attention',
+//       text: 'Etes-vous de supprimer cette article de la commande ?',
+//       icon: 'warning',
+//       showCancelButton: true,
+//       confirmButtonColor: '#3085d6',
+//       cancelButtonColor: '#d33',
+//       cancelButtonText: 'Non',
+//       confirmButtonText: 'Oui',
+//    }).then((result) => {
+//       if (result.isConfirmed) {
+//          const formProduit = useForm({
+//             id_panier_edi_list: id_panier_edi_list,
+//          });
 
-         formProduit.post('/dropshipping/panier/delete', {
-            preserveScroll: true,
-            onSuccess: (e) => {
-               if(e.props.session.status){
-                  Toast.fire({
-                     icon: 'success',
-                     title: 'Le produit à bien été supprimer de la commande'
-                  })
-               }else{
-                  Toast.fire({
-                     icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
-                  });
-               }
+//          formProduit.post('/dropshipping/panier/delete', {
+//             preserveScroll: true,
+//             onSuccess: (e) => {
+//                if(e.props.session.status){
+//                   Toast.fire({
+//                      icon: 'success',
+//                      title: 'Le produit à bien été supprimer de la commande'
+//                   })
+//                }else{
+//                   Toast.fire({
+//                      icon: 'error',
+//                      title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
+//                   });
+//                }
                
-            },
-         });
-      }
-   });
-};
+//             },
+//          });
+//       }
+//    });
+// };
 
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
@@ -180,9 +181,9 @@ var perPage = () => {
    window.location.href = parsedUrl.href;
 };
 
-const lowercase = (nom) => {
-   return HtmlEntities.decode(nom.toLowerCase());
-};
+// const lowercase = (nom) => {
+//    return HtmlEntities.decode(nom.toLowerCase());
+// };
 
 var perPageActual = () => {
    const parsedUrl = new URL(window.location.href);
@@ -252,45 +253,17 @@ export default {
 <template>
 
    <Head title="Orders Products Clients" />
+   <section :style="imgBackground" class="h-52 relative">
+      <span class="absolute top-1 left-5 text-white ">Accueil / Gamme / ACAPULCO</span>
+      <div class="flex items-center h-full">
+         <h1 class="text-white text-3xl font-bold ml-5">{{ prop.gamme.nom_gamme }}</h1>
+      </div>
+   </section>
    <section class="container mx-auto mt-5">
-      <h1 class="text-center text-3xl text-gray-800">Sélectionner les produits pour votre client.</h1>
-      <!-- <div v-if="client.id_client_edi != undefined" class="bg-primary-50 p-5 rounded my-3 grid grid-cols-4">
-         <div class="col-span-1">
-            <h2 class="text-2xl text-gray-700">Information de la commande : </h2>
-            <div class="flex flex-col bg-primary-100 py-2 px-4 m-2 rounded-xl">
-               <h3 class="text-lg text-gray-600">Commande client N° : {{ client.ref_externe }}</h3>
-            </div>
-         </div>
-         <div class="col-span-3 ">
-            <div class="grid grid-cols-4">
-               <h4 class="col-span-4 text-xl text-gray-500 ">Produits de la commandes :</h4>
-               <div v-for="(produit, key) in produitsAchat" :key="key" class="col-span-1 grid grid-cols-4 bg-primary-100 p-1 m-2 relative rounded-xl">
-                  <button @click="deleteCommande(produit.panier.id_panier_edi_list)" class="absolute right-2 top-1 hover:text-primary-200 transition duration-300" type="button"><Close /></button>
-                  <div class="col-span-1 flex items-center justify-center">
-                     <div v-if="produit.photo != null && produit.photo.img_produit != null"
-                        class="lg:w-[45px] lg:h-[75px] sm:w-[60px] sm:h-[90px] w-[70px] h-[100px]">
-                        <img  :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.photo.img_produit"
-                           :alt="produit.code_sku" class="w-full h-full object-cover" />
-                     </div>
-                     <div v-else class="h-full w-full py-2 px-1">
-                        <div class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
-                           <ImageOff />
-                        </div>
-                     </div>
-                  </div>
-                  <div class="flex flex-col col-span-3">
-                     <span>Gamme : {{ produit.gamme.nom_gamme }}</span>
-                     <span>Design : {{ produit.design.nom_design }}</span>
-                     <span>Couleur : {{ produit.couleur.nom_couleur }}</span>
-                     <span>Dimension : {{ produit.dimension.largeur +"x"+ produit.dimension.longueur  }}cm</span>
-                     <span>Quantiter : {{ produit.panier.quantiter }}</span>
-                     <span>Prix unitaire : {{ roundNumber(produit.prix_produit) }} €</span>
-                  </div>
-               </div>
-            </div>
-            
-         </div>
-      </div> -->
+      <div class="bg-primary-50 rounded mx-1 py-2">
+         <h1 class="text-center text-3xl text-gray-800">Sélectionner les produits pour votre client.</h1>
+      </div>
+      
 
       <div v-if="client != undefined " class="flex justify-between sm:flex-row flex-col ">
          <div v-if="client.id_client_edi != undefined" class="flex items-center px-2">

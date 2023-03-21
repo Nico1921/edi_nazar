@@ -8,10 +8,7 @@ var classEtape = {
    etapeNotPass : 'w-1/3 flex' 
 };
 </script>
-<script>
-import Triangle from 'icons/Triangle.vue';
-import Check from 'icons/Check.vue';
-</script>
+
 <template>
    <div class="xl:block hidden h-full ">
       <div class="flex items-center">

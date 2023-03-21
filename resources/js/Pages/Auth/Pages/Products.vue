@@ -134,7 +134,7 @@ export default {
 
    <Head title="Products" />
    <section class="container mx-auto mt-5">
-      <h1 class="font-semibold mx-1 lg:text-2xl text-lg text-gray-800 py-2">Produits</h1>
+      <h1 class="font-semibold mx-1 lg:text-2xl text-lg text-gray-800 py-2">Commande Entrepôt - Gamme</h1>
 
       <div class="bg-primary-50 rounded xl:mx-40 mb-5" v-if="typeVente == 1">
          <h2 class="text-center lg:text-xl text-lg text-primary-300 py-1 bg-primary-100 rounded-t-lg">Ajouter au panier via un fichier</h2>

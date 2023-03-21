@@ -86,6 +86,7 @@ class PanierEdi extends Model
         foreach($clientsPanier as $client){ 
             $panier = DB::table('panier_edi_list')->where('id_client_edi','=',$client->id_client_edi)->sum('prix_ttc_total');
             $quantiter = DB::table('panier_edi_list')->where('id_client_edi','=',$client->id_client_edi)->sum('quantiter');
+            Log::debug($quantiter);
             $total_ttc += $panier;
             $quantiterTotal += $quantiter;
                
@@ -103,6 +104,8 @@ class PanierEdi extends Model
 
         $total_ht = round($total_ttc / 1.2,2);
         $total_tva = $total_ttc - $total_ht;
+        
+        $m2TT = round($m2TT,2);
 
         $panierFinal = PanierEdi::find($id_panier);
         $panierFinal->total_HT = $total_ht;
@@ -110,7 +113,7 @@ class PanierEdi extends Model
         $panierFinal->total_ttc = $total_ttc;
         $panierFinal->total_m2 = $m2TT;
         $panierFinal->poids_total = $poidsTT;
-        $panierFinal->produits_total = $quantiterTotal;
+        $panierFinal->produits_total = $quantiterTotal;    
         $panierFinal->save();
 
         // return true;

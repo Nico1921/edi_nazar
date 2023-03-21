@@ -229,7 +229,6 @@ class OrderEntrepotController extends Controller
         }, 'statsProduit'])->join('dimension','dimension.id_dimension','=','produit.id_dimension')->orderBy('dimension.largeur',$sort)->orderBy('dimension.longueur',$sort)->where('id_design', '=', $id_design)->get();
         if (!empty($clientUser)) {
             for ($i = 0; $i < count($produits); $i++) {
-                Log::debug($produits[$i]->dimension->largeur);
                 $produits[$i]->prixProduit = Produit::calcul_prix_produit($produits[$i]->id_produit,0);
                 if (PanierEdiList::where('id_produit', '=', $produits[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
                     $panier = PanierEdiList::where('id_produit', '=', $produits[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
@@ -242,7 +241,6 @@ class OrderEntrepotController extends Controller
             }
         } else {
             for ($i = 0; $i < count($produits); $i++) {
-                Log::debug($produits[$i]->dimension->largeur);
                 $produits[$i]->prixProduit = Produit::calcul_prix_produit($produits[$i]->id_produit,0);
                 $produits[$i]->panier = array("quantiter" => 0);
                 $produits[$i]->isInPanier = false;
@@ -263,6 +261,7 @@ class OrderEntrepotController extends Controller
             $panier = PanierEdi::create([
                 'date_ajout' => date('Y-m-d H:i:s'),
                 'date_maj' => date('Y-m-d H:i:s'),
+                'date_commande' => date('Y-m-d'),
                 'num_commande' => $num_commande,
                 'nb_client' => '1',
                 'total_HT' => '0',
@@ -278,14 +277,7 @@ class OrderEntrepotController extends Controller
                 'id_etape' => '1',
                 'id_users' => Auth::user()->getAuthIdentifier(),
             ]);
-        } else {
-            $panier = $request->session()->get('panier_commercial');
-        }
-        
 
-        if ($request->session()->has('client_commercial')) {
-            $client = $request->session()->get('client_commercial');
-        } else {
             if (isset($panier->id_panier_edi) && !empty($panier->id_panier_edi)) {
                 $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
                 if (isset($user->id) && !empty($user->id) && isset($user->client->id_client) && !empty($user->client->id_client)) {
@@ -329,7 +321,6 @@ class OrderEntrepotController extends Controller
                         'total_m2' => 0,
                         'id_panier_edi' => $panier->id_panier_edi
                     ]);
-                    Log::debug($client);
                     $clientGet = ClientEDI::with('panier')->where('id_client_edi', '=', $client->id_client_edi)->first();
                     $request->session()->put('client_commercial', $clientGet);
                 } else {
@@ -338,6 +329,15 @@ class OrderEntrepotController extends Controller
             } else {
                 $client = '';
             }
+        } else {
+            $panier = $request->session()->get('panier_commercial');
+        }
+        
+
+        if ($request->session()->has('client_commercial')) {
+            $client = $request->session()->get('client_commercial');
+        } else {
+            $client = '';
         }
         $status = false;
         $id_panier_edi_list = 0;
@@ -430,6 +430,7 @@ class OrderEntrepotController extends Controller
             $panier = PanierEdi::create([
                 'date_ajout' => date('Y-m-d H:i:s'),
                 'date_maj' => date('Y-m-d H:i:s'),
+                'date_commande' => date('Y-m-d'),
                 'num_commande' => $num_commande,
                 'nb_client' => '1',
                 'total_HT' => '0',
@@ -445,13 +446,7 @@ class OrderEntrepotController extends Controller
                 'id_etape' => '1',
                 'id_users' => Auth::user()->getAuthIdentifier(),
             ]);
-        } else {
-            $panier = $request->session()->get('panier_commercial');
-        }
 
-        if ($request->session()->has('client_commercial')) {
-            $client = $request->session()->get('client_commercial');
-        } else {
             if (isset($panier->id_panier_edi) && !empty($panier->id_panier_edi)) {
                 $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
                 if (isset($user->id) && !empty($user->id) && isset($user->client->id_client) && !empty($user->client->id_client)) {
@@ -503,6 +498,14 @@ class OrderEntrepotController extends Controller
             } else {
                 $client = '';
             }
+        } else {
+            $panier = $request->session()->get('panier_commercial');
+        }
+
+        if ($request->session()->has('client_commercial')) {
+            $client = $request->session()->get('client_commercial');
+        } else {
+            $client = '';
         }
 
         foreach ($imports[0] as $import) {

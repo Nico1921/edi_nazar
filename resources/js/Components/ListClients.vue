@@ -13,6 +13,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from '@headlessui/vue';
+import InputError from '@/Components/InputError.vue';
 import { CheckIcon, ChevronUpDownIcon,PlusIcon,TrashIcon,EyeIcon,XMarkIcon } from '@heroicons/vue/20/solid';
 
 var prop =  defineProps(['data']);
@@ -134,7 +135,7 @@ var roundNumber = (e) => {
 
 var addRefClient = (event) => {
    var formData = new FormData(event.target);
-   Inertia.post('/dropshipping/clients/add',{ref_externe: formData.get("ref_externe")},{
+   formClient.post('/dropshipping/clients/add',{
       preserveScroll: true,
       preserveState:true,   
       onSuccess:(e) => {
@@ -179,8 +180,10 @@ var selectRefClient = (id_client_edi,isModal=false) => {
 }
 
 watch(data,()=>{
-   indexClientActuel = clients.value.findIndex(client => client.client.id_client_edi == data.value.clientActuel.id_client_edi);
+   if(clients.value != undefined){
+      indexClientActuel = clients.value.findIndex(client => client.client.id_client_edi == data.value.clientActuel.id_client_edi);
    selected.value = clients.value[(indexClientActuel != -1 ? indexClientActuel : 0)];
+   }
 })
 
 watchEffect(() => {
@@ -379,7 +382,7 @@ import { Inertia } from '@inertiajs/inertia';
                   <div class="mt-2">
                      <div class="text-sm text-gray-500">
                         <label class="lg:text-lg text-sm" for="ref"> Référence : </label> 
-                        <input class="lg:text-lg text-sm transition duration-300 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" id="ref" type="text" name="ref_externe" placeholder="Saisissez la référence de la commande">
+                        <input v-model="formClient.ref_externe" class="lg:text-lg text-sm transition duration-300 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" id="ref" type="text" name="ref_externe" placeholder="Saisissez la référence de la commande">
                         <InputError class="mt-2" :message="formClient.errors.ref_externe" />
                      </div>
                   </div>

@@ -50,28 +50,29 @@ class DropshippingController extends Controller
      */
    public function create_client_gamme(Request $request)
    {
-
       if ($request->session()->has('client_actuel')) {
          $client = $request->session()->get('client_actuel');
          $panier = PanierEdi::where('id_panier_edi','=',$client->id_panier_edi)->first();
          if(isset($panier->id_panier_edi) && !empty($panier->id_panier_edi) && !$panier->is_validate){
             $produitsAchat = new \stdClass;
             $panierList = PanierEdiList::where('id_client_edi','=',$client->id_client_edi)->get();
-                  foreach($panierList as $list){
-                     $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
-                     for($i=0;$i<count($produit);$i++){
-                        $produit[$i]->prix_produit = Produit::calcul_prix_produit($produit[$i]->id_produit);
-                        $gamme = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
-                        $panier = PanierEdiList::where('id_produit','=',$produit[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
-                        $produit[$i]->gamme = $gamme;
-                        $produit[$i]->panier = $panier;
-                        $produit[$i]->isInPanier = true;
-                        $produitsAchat->panier[] = $produit[$i];
-                     }
-                  }
+            foreach($panierList as $list){
+               $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
+               for($i=0;$i<count($produit);$i++){
+                  $produit[$i]->prix_produit = Produit::calcul_prix_produit($produit[$i]->id_produit);
+                  $gammeGet = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
+                  $panier = PanierEdiList::where('id_produit','=',$produit[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
+                  $produit[$i]->gamme = $gammeGet;
+                  $produit[$i]->panier = $panier;
+                  $produit[$i]->isInPanier = true;
+                  $produitsAchat->panier[] = $produit[$i];
+               }
+            }
+         }else{
+            $panier = new \stdClass;
+            $produitsAchat = new \stdClass;
          }
       }else{
-         $client = new \stdClass;
          $panier = new \stdClass;
          $produitsAchat = new \stdClass;
       }
@@ -113,7 +114,6 @@ class DropshippingController extends Controller
         return Inertia::render('Auth/Pages/Dropshipping/Clients/Gammes', [
             'products' => $products,
             'dimensions' => $dimensions,
-            'client'=>$client,
             'produitsAchat' => $produitsAchat,
         ]);
    } 
@@ -193,12 +193,12 @@ class DropshippingController extends Controller
            ->paginate(request('perPage'))
            ->withQueryString();
 
-          
+          $gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
    
            return Inertia::render('Auth/Pages/Dropshipping/Clients/Products', [
                'products' => $products,
                'produitsAchat' => $produitsAchat,
-               'gamme' => $gamme,
+               'gamme' => $gammeSearch,
            ])->table(function (InertiaTable $table) {
                $table
                  ->withGlobalSearch()
@@ -369,6 +369,7 @@ class DropshippingController extends Controller
          $panierMarketplace = PanierEdi::create([
             'date_ajout' => date('Y-m-d H:i:s'),
             'date_maj' => date('Y-m-d H:i:s'),
+            'date_commande' => date('Y-m-d'),
             'num_commande' => $num_commande,
             'nb_client' => '1',
             'total_HT' => '0',
@@ -528,6 +529,7 @@ class DropshippingController extends Controller
       $panierMarketplace = PanierEdi::create([
          'date_ajout' => date('Y-m-d H:i:s'),
          'date_maj' => date('Y-m-d H:i:s'),
+         'date_commande' => date('Y-m-d'),
          'num_commande' => $num_commande,
          'nb_client' => '1',
          'total_HT' => '0',
@@ -774,6 +776,7 @@ class DropshippingController extends Controller
          $panierMarketplace = PanierEdi::create([
             'date_ajout' => date('Y-m-d H:i:s'),
             'date_maj' => date('Y-m-d H:i:s'),
+            'date_commande' => date('Y-m-d'),
             'num_commande' => $num_commande,
             'nb_client' => '1',
             'total_HT' => '0',
@@ -942,6 +945,8 @@ class DropshippingController extends Controller
                      if(isset($addProducts->id_panier_edi_list) && !empty($addProducts->id_panier_edi_list)){
                         PanierEdi::calculPrixPanier($client->id_panier_edi);
                         ClientEDI::calculPrixPanier($client->id_client_edi);
+                        $panierGet = PanierEdi::with('client_edi_list')->where('id_panier_edi','=',$client->id_panier_edi)->first();
+                        $request->session()->put('panier_mkp',$panierGet);
                         $status = true;
                      }
                   }

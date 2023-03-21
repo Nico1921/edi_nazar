@@ -8,6 +8,7 @@ use App\Models\PanierEdiList;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
 
@@ -58,20 +59,24 @@ class HandleInertiaRequests extends Middleware
             'Panier' => function () use ($request){
                 $panierCount = 0;
                 $produitsAchat = new \stdClass;
-                if($request->session()->has('panier_commercial') && !empty($request->session()->get('panier_commercial'))){
-                    $id_client_edi = $request->session()->get('panier_commercial')->client_edi_list[0]->id_client_edi;
-                    $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
-                    $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
-                    foreach($panierList as $list){
-                        $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
-                        for($i=0;$i<count($produit);$i++){
-                            $gamme = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
-                            $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                            $produit[$i]->gamme = $gamme;
-                            $produit[$i]->panier = $panier;
-                            $produit[$i]->id_panier_edi = $request->session()->get('panier_commercial')->id_panier_edi;
-                            $produit[$i]->isInPanier = true;
-                            $produitsAchat->panier[] = $produit[$i];
+                if($request->session()->has('typeVente') && $request->session()->get('typeVente') == 1){
+                    if($request->session()->has('panier_commercial') && !empty($request->session()->get('panier_commercial'))){
+                        if(isset($request->session()->get('panier_commercial')->client_edi_list[0]->id_client_edi)){
+                            $id_client_edi = $request->session()->get('panier_commercial')->client_edi_list[0]->id_client_edi;
+                            $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
+                            $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
+                            foreach($panierList as $list){
+                                $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
+                                for($i=0;$i<count($produit);$i++){
+                                    $gamme = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
+                                    $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
+                                    $produit[$i]->gamme = $gamme;
+                                    $produit[$i]->panier = $panier;
+                                    $produit[$i]->id_panier_edi = $request->session()->get('panier_commercial')->id_panier_edi;
+                                    $produit[$i]->isInPanier = true;
+                                    $produitsAchat->panier[] = $produit[$i];
+                                }
+                            }
                         }
                     }
                 }
@@ -85,8 +90,10 @@ class HandleInertiaRequests extends Middleware
                         $panier = $request->session()->get('panier_mkp');
                         $panierGet = PanierEdi::with('client_edi_list')->find($panier->id_panier_edi);
                         $produitsAchat->id_panier_edi = $panier->id_panier_edi;
+                        $produitsAchat->panierActuel = $panier;
                         if(isset($panierGet->client_edi_list) && $panierGet->client_edi_list != null ){
                             $clientList = $panierGet->client_edi_list;
+                            $allAddValide = true;
                             for($i=0;$i<count($clientList);$i++){  
                                 $id_client_edi = $clientList[$i]->id_client_edi;
                                 $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
@@ -110,6 +117,40 @@ class HandleInertiaRequests extends Middleware
                                     $produit->id_panier_edi_list = $list->id_panier_edi_list;
                                     array_push($produits,$produit);
                                 }
+                                
+                                $validator = Validator::make([
+                                    'nom' => $clientList[$i]->nom,
+                                    'prenom' => $clientList[$i]->prenom,
+                                    'email' => $clientList[$i]->email,
+                                    'tel' => $clientList[$i]->tel,
+                                    'nom_adresse' => $clientList[$i]->nom_adresse,
+                                    'adresse1' => $clientList[$i]->adresse1,
+                                    'adresse2' => $clientList[$i]->adresse2,
+                                    'adresse3' => $clientList[$i]->adresse3,
+                                    'pays' => $clientList[$i]->pays,
+                                    'code_postal' => $clientList[$i]->code_postal,
+                                    'ville' => $clientList[$i]->ville,
+                                ], [
+                                    'nom' => 'required|string|max:255',
+                                    'prenom' => 'required|string|max:255',
+                                    'email' => 'required|string|email|max:255',
+                                    'tel' => 'required|numeric|phone:AUTO,FR',
+                                    'nom_adresse' => 'required|string|max:255',
+                                    'adresse1' => 'required|string|max:32',
+                                    'adresse2' => 'nullable|string|max:32',
+                                    'adresse3' => 'nullable|string|max:32',
+                                    'pays' => 'required|country_name',
+                                    'code_postal' => 'required|postal_code:pays',
+                                    'ville' => 'required|string|max:32',
+                                ]);
+
+                                if ($validator->fails()) {
+                                    $clientList[$i]->adresseValide = false;
+                                    $allAddValide = false;
+                                }else{
+                                    $clientList[$i]->adresseValide = true;
+                                }
+
                                 $produitsAchat->clients[$i] = ["client"=>$clientList[$i],"produits" => $produits,'nbProduit' => $panierCount];
                                 if ($request->session()->has('client_actuel')) {
                                     $client = $request->session()->get('client_actuel');
@@ -118,6 +159,7 @@ class HandleInertiaRequests extends Middleware
                                 }
                                 $produitsAchat->clientActuel = $client; 
                             } 
+                            $produitsAchat->addresses_valid = $allAddValide;
                         }
 
 

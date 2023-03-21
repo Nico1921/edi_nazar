@@ -34,6 +34,16 @@ module.exports = {
                   500: '#2F4858',
                 },
             },
+            animation: {
+                scale: 'scale 0.3s ease-in-out',
+            },
+            keyframes: {
+                scale :{
+                    '0%' : {transform: 'scale(1)'},
+                    '50%' : {transform: 'scale(1.1)'},
+                    '100%' : {transform: 'scale(1)'},
+                }
+            },
         },
     },
     

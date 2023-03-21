@@ -18,6 +18,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ShippingsController extends Controller
 {
@@ -28,7 +29,6 @@ class ShippingsController extends Controller
      */
     public function create(Request $request)
     {
-        $where = ($request->session()->get('typeVente') == 1 ? 0 : 1);
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -47,7 +47,6 @@ class ShippingsController extends Controller
         'panier_edi.total_m2','panier_edi.date_livraison','panier_edi.total_payer','panier_edi.is_validate','panier_edi.is_marketplace'])
         ->allowedSorts(['date_livraison','date_commande','num_commande','produits_total','total_m2','poids_total','total_ttc','is_marketplace','total_HT'])
         ->allowedFilters([$globalSearch,'date_livraison','date_commande','num_commande','total_ttc'])
-        ->where('is_marketplace','=',$where)
         ->where('id_users','=',Auth::id())
         ->paginate(request('perPage'))
         ->withQueryString();
@@ -68,14 +67,18 @@ class ShippingsController extends Controller
               ->column(key: 'total_HT',label: 'Total HT', searchable: true, sortable: true, canBeHidden:true)
               ->column(key: 'date_livraison',label: 'Date livraison estimer', searchable: false, sortable: true, canBeHidden:true)
               ->column(key: 'is_validate',label: 'Statut commande', searchable: false, sortable: false, canBeHidden:true)
+              ->column(key: 'is_marketplace',label: 'Type Commande', searchable: false, sortable: true, canBeHidden:true)
               ->column(label: 'Action', searchable: false, sortable: false, canBeHidden:false)
               ;});
     }
 
     public function edit_commande(Request $request){
         if(isset($request->id_panier_edi) && !empty($request->id_panier_edi)){
+            $request->session()->put('typeVente', 2);
             $panierGet = PanierEdi::with('client_edi_list')->where('id_panier_edi','=',$request->id_panier_edi)->first();
             $request->session()->put('panier_mkp',$panierGet);
+            $clientGet = ClientEDI::with('panier')->where('id_panier_edi','=',$request->id_panier_edi)->first();
+            $request->session()->put('client_actuel',$clientGet);
             return true;
         }else{
             return false;
@@ -99,13 +102,10 @@ class ShippingsController extends Controller
 
     public function edit_panier(Request $request){
         if(isset($request->id_panier_edi) && !empty($request->id_panier_edi)){
+            $request->session()->put('typeVente', 1);
             $panierGet = PanierEdi::with('client_edi_list')->where('id_panier_edi','=',$request->id_panier_edi)->first();
             $request->session()->put('panier_commercial',$panierGet);
-            if(is_array($panierGet->client_edi_list) && count($panierGet->client_edi_list) > 1){
-                $request->session()->put('client_commercial',$panierGet->client_edi_list[0]);
-            }else{
-                $request->session()->put('client_commercial',$panierGet->client_edi_list);
-            }
+            $request->session()->put('client_commercial',$panierGet->client_edi_list[0]);
             
             return true;
         }else{
