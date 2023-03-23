@@ -45,7 +45,7 @@ export default {
             <EtapeOrder :etape="1" :nbEtape="3" :listeEtape="listeEtape" />
          </div>
          <div class="xl:col-span-2 lg:col-span-3 col-span-4 flex flex-col items-start justify-center">
-            <div v-if="!panierDrop.panier.panier_valid" class="w-full bg-yellow-200 px-4 py-2 rounded flex items-center">
+            <div v-if="(!panierDrop.panier.panier_valid && typeVente == 2) " class="w-full bg-yellow-200 px-4 py-2 rounded flex items-center">
                <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
                <span class="pl-2 text-yellow-600">Pour continuer, veuillez ajouter au minimum un produit pour chaque commande.</span>
             </div>  

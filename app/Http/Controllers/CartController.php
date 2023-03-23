@@ -789,7 +789,6 @@ class CartController extends Controller
                     if($client->quantiter == 0){
                         $isvalid = false;
                     }
-                    Log::debug($client);
                 }
                 if(!$isvalid){
                     return Redirect::route('dropshipping/cart');
