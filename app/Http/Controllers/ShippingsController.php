@@ -41,7 +41,7 @@ class ShippingsController extends Controller
         });
 
         $panierEdi = QueryBuilder::for(PanierEdi::class)
-        ->defaultSort('date_maj')
+        ->defaultSort('date_commande')
         ->select(['panier_edi.id_panier_edi','panier_edi.date_commande','panier_edi.date_maj','panier_edi.num_commande','panier_edi.nb_client',
         'panier_edi.total_HT','panier_edi.total_ttc','panier_edi.poids_total','panier_edi.produits_total',
         'panier_edi.total_m2','panier_edi.date_livraison','panier_edi.total_payer','panier_edi.is_validate','panier_edi.is_marketplace'])
