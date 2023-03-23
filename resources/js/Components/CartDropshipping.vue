@@ -155,6 +155,7 @@ watchEffect(() => {
 </script>
 <script>
 import Delete from 'icons/Delete.vue';
+import ImageOff from 'icons/ImageOff.vue';
 import { Inertia } from '@inertiajs/inertia';
 </script>
 <template>
@@ -175,8 +176,8 @@ import { Inertia } from '@inertiajs/inertia';
                            <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+produit.photo.img_produit"
                               :alt="produit.code_sku" class="w-full h-full object-cover rounded-xl" />
                         </div>
-                        <div v-else>
-                           <span>Pas de photo pour ce produit !</span>
+                        <div v-else class="text-3xl m-2 lg:h-[150px] sm:h-[130px] h-full w-full flex items-stretch justify-center bg-gray-300">
+                           <ImageOff />
                         </div>
                      </div>
                      <div class="sm:col-span-10 xsm:col-span-9 col-span-8 flex flex-col xl:text-lg text-sm">

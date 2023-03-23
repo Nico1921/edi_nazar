@@ -94,6 +94,7 @@ class HandleInertiaRequests extends Middleware
                         if(isset($panierGet->client_edi_list) && $panierGet->client_edi_list != null ){
                             $clientList = $panierGet->client_edi_list;
                             $allAddValide = true;
+                            $allPanierValide = true;
                             for($i=0;$i<count($clientList);$i++){  
                                 $id_client_edi = $clientList[$i]->id_client_edi;
                                 $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
@@ -116,6 +117,10 @@ class HandleInertiaRequests extends Middleware
                                     $produit->quantiter = $list->quantiter;
                                     $produit->id_panier_edi_list = $list->id_panier_edi_list;
                                     array_push($produits,$produit);
+                                }
+
+                                if(count($panierList) == 0){
+                                    $allPanierValide = false;
                                 }
                                 
                                 $validator = Validator::make([
@@ -160,6 +165,7 @@ class HandleInertiaRequests extends Middleware
                                 $produitsAchat->clientActuel = $client; 
                             } 
                             $produitsAchat->addresses_valid = $allAddValide;
+                            $produitsAchat->panier_valid = $allPanierValide;
                         }
 
 

@@ -349,7 +349,7 @@ export default {
 									</div>
 									<div class="z-[80] relative px-1 py-1" v-else-if="typeVente == 2 && panierDrop.panier.clients != undefined && panierDrop.count > 0" v-for="(client, keyDrop) in panierDrop.panier.clients" :key="keyDrop">
 											<div class="flex flex-col items-center justify-center" v-if="client.nbProduit > 0">
-												<span class="text-left w-full">Commande : {{ client.client.ref_externe }}</span>
+												<span class="font-bold text-left w-full">Commande : {{ client.client.ref_externe }}</span>
 												<div class="ml-4 mt-1 grid grid-cols-6" v-for="(produit, keyProduit) in client.produits" :key="keyProduit">
 													<div class="col-span-1 flex items-center justify-center">
 													<div v-if="produit.photo != null"
@@ -390,6 +390,12 @@ export default {
 														</button>
 													</div>
 												</div>
+												</div>
+											</div>
+											<div v-else-if="client.client.ref_externe != undefined">
+												<span class="text-left w-full font-bold">Commande : {{ client.client.ref_externe }}</span>
+												<div class="ml-4 mt-1">
+													<span class="font-semibold w-full text-center">Le panier est vide !</span>
 												</div>
 											</div>
 										</div>

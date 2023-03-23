@@ -262,6 +262,16 @@ class CartController extends Controller
             $id_client_edi = $panier->client_edi_list[0]->id_client_edi;
             if(empty($id_client_edi)){
                 return Redirect::route('dropshipping/cart');
+            }else{
+                $isvalid = true;
+                foreach($panier->client_edi_list as $client){
+                    if($client->quantiter == 0){
+                        $isvalid = false;
+                    }
+                }
+                if(!$isvalid){
+                    return Redirect::route('dropshipping/cart');
+                }
             }
         }else{
             return Redirect::route('dropshipping/cart');
@@ -734,6 +744,27 @@ class CartController extends Controller
     }
 
     public function create_adresse_drop(Request $request){
+        if($request->session()->has('panier_mkp')){
+            $panier = $request->session()->get('panier_mkp');
+            $id_client_edi = $panier->client_edi_list[0]->id_client_edi;
+            if(empty($id_client_edi)){
+                return Redirect::route('dropshipping/cart');
+            }else{
+                $isvalid = true;
+                foreach($panier->client_edi_list as $client){
+                    if($client->quantiter == 0){
+                        $isvalid = false;
+                    }
+                    Log::debug($client);
+                }
+                if(!$isvalid){
+                    return Redirect::route('dropshipping/cart');
+                }
+            }
+        }else{
+            return Redirect::route('dropshipping/cart');
+        }
+
         return Inertia::render('Auth/Pages/Cart/AdressesDrop');
     }
 
