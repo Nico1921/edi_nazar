@@ -253,15 +253,22 @@ export default {
 <template>
 
    <Head title="Orders Products Clients" />
-   <section :style="imgBackground" class="h-52 relative">
-      <span class="absolute top-1 left-5 text-white ">Accueil / Gamme / ACAPULCO</span>
-      <div class="flex items-center h-full">
-         <h1 class="text-white text-3xl font-bold ml-5">{{ prop.gamme.nom_gamme }}</h1>
+   <section :style="imgBackground" class="h-52 relative container mx-auto bg-cover bg-[center_bottom_-15rem]">
+      <div class="absolute top-1 left-0 text-white p-5 py-2 rounded-r-lg bg-primary-50">
+         <a class="underline" href="/">Accueil</a> / <a class="underline" href="/dropshipping/gamme">Gamme</a> / ACAPULCO
+      </div>
+      <div class="flex items-center h-full ">
+         <h1 class="text-white text-3xl font-bold px-5 py-2 rounded-r-lg bg-primary-50">{{ prop.gamme.nom_gamme }}</h1>
+      </div>
+      <div class="absolute bottom-0 right-0 py-2">
+         <a href="/dropshipping/gamme" class="transition-all duration-300 bg-gradient-to-r from-blue-400 to-indigo-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 text-white font-bold py-2 px-4 rounded shadow-md ">
+            Retourner aux gammes
+         </a>
       </div>
    </section>
    <section class="container mx-auto mt-5">
       <div class="bg-primary-50 rounded mx-1 py-2">
-         <h1 class="text-center text-3xl text-gray-800">Sélectionner les produits pour votre client.</h1>
+         <h2 class="text-center text-3xl text-gray-800">Sélectionner les produits pour votre client.</h2>
       </div>
       
 

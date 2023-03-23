@@ -11,8 +11,7 @@ var user = ref(usePage().props.value.auth.user);
 <template>
     <div class="min-h-full relative pb-20" >
         <NavBar>
-            <div class="container mx-auto mt-5" v-if="$page.url != '/' && user != ''">
-                <!-- Breadcrumb -->
+            <!-- <div class="container mx-auto mt-5" v-if="$page.url != '/' && user != ''">
                 <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg " aria-label="Breadcrumb">
                     <ol class="flex items-center ">
                         <li class="flex items-center" v-if="!$page.url.startsWith('/type_order')">
@@ -53,7 +52,7 @@ var user = ref(usePage().props.value.auth.user);
                         </li>
                     </ol>
                 </nav>
-            </div>
+            </div> -->
 
             <slot />
         </NavBar>

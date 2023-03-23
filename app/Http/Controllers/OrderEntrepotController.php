@@ -158,11 +158,11 @@ class OrderEntrepotController extends Controller
             ->paginate(request('perPage'))
             ->withQueryString();
 
-
+            $gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
         // error_log(print_r($products));
         return Inertia::render('Auth/Pages/Products/Gamme', [
             'products' => $products,
-            'gamme' => $gamme,
+            'gamme' => $gammeSearch,
         ]);
     }
 

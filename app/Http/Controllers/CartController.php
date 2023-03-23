@@ -422,18 +422,49 @@ class CartController extends Controller
                 $id_client_edi = $panierCom->client_edi_list[0]->id_client_edi;
                 $produits = new \stdClass;
                 if(!empty($id_client_edi)){
-                   $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
-                   foreach($panierList as $list){
-                      $produit = Produit::with(['photo','dimension','statsProduit','design'])->where('id_produit','=',$list->id_produit)->get();
-                      for($i=0;$i<count($produit);$i++){
-                         $gamme = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
-                         $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                         $produit[$i]->gamme = $gamme;
-                         $produit[$i]->panier = $panier;
-                         $produit[$i]->isInPanier = true;
-                         $produits->panier[] = $produit[$i];
-                      }
-                   }
+                    $validator = Validator::make([
+                        'nom' => $panierCom->client_edi_list[0]->nom,
+                        'prenom' => $panierCom->client_edi_list[0]->prenom,
+                        'email' => $panierCom->client_edi_list[0]->email,
+                        'tel' => $panierCom->client_edi_list[0]->tel,
+                        'nom_adresse' => $panierCom->client_edi_list[0]->nom_adresse,
+                        'adresse1' => $panierCom->client_edi_list[0]->adresse1,
+                        'adresse2' => $panierCom->client_edi_list[0]->adresse2,
+                        'adresse3' => $panierCom->client_edi_list[0]->adresse3,
+                        'pays' => $panierCom->client_edi_list[0]->pays,
+                        'code_postal' => $panierCom->client_edi_list[0]->code_postal,
+                        'ville' => $panierCom->client_edi_list[0]->ville,
+                    ], [
+                        'nom' => 'required|string|max:255',
+                        'prenom' => 'required|string|max:255',
+                        'email' => 'required|string|email|max:255',
+                        'tel' => 'required|numeric|phone:AUTO,FR',
+                        'nom_adresse' => 'required|string|max:255',
+                        'adresse1' => 'required|string|max:32',
+                        'adresse2' => 'nullable|string|max:32',
+                        'adresse3' => 'nullable|string|max:32',
+                        'pays' => 'required|country_name',
+                        'code_postal' => 'required|postal_code:pays',
+                        'ville' => 'required|string|max:32',
+                    ]);
+
+                    if ($validator->fails()) {
+                        return Redirect::route('cart');
+                    }else{
+                        $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
+                        foreach($panierList as $list){
+                           $produit = Produit::with(['photo','dimension','statsProduit','design'])->where('id_produit','=',$list->id_produit)->get();
+                           for($i=0;$i<count($produit);$i++){
+                              $gamme = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
+                              $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
+                              $produit[$i]->gamme = $gamme;
+                              $produit[$i]->panier = $panier;
+                              $produit[$i]->isInPanier = true;
+                              $produits->panier[] = $produit[$i];
+                           }
+                        }
+                    }
+                   
                 }else{
                     return Redirect::route('cart');
                 }
