@@ -236,7 +236,7 @@ export default {
    <section class="container mx-auto">
       <section :style="imgBackground" class="h-52 relative container mx-auto bg-cover bg-[center_bottom_-15rem]">
          <div class="absolute top-1 left-0 text-white p-5 py-2 rounded-r-lg bg-primary-50">
-            <a class="underline" href="/">Accueil</a> / <a class="underline" href="/order_entrepot/gamme">Gamme</a> / ACAPULCO
+            <a class="underline" href="/">Accueil</a> / <a class="underline" href="/order_entrepot/gamme">Gamme</a> / {{ props.gamme.nom_gamme }}
          </div>
          <div class="flex items-center h-full ">
             <h1 class="text-white text-3xl font-bold px-5 py-2 rounded-r-lg bg-primary-50">{{ props.gamme.nom_gamme }}</h1>
