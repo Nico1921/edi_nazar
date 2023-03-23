@@ -57,7 +57,7 @@ class ShippingsController extends Controller
         ])->table(function (InertiaTable $table) {
             $table
               ->withGlobalSearch()
-              ->defaultSort('date_maj')
+              ->defaultSort('date_commande')
               ->column(key: 'num_commande',label: 'N° Commande', searchable: true, sortable: false, canBeHidden:false)
               ->column(key: 'nb_client',label: 'clients', searchable: false, sortable: false, canBeHidden:true)
               ->column(key: 'date_commande',label: 'Date commande', searchable: true, sortable: true, canBeHidden:false)
