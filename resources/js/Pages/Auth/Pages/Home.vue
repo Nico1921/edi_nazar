@@ -1,6 +1,7 @@
 <script setup>
-    import { Head,Link } from '@inertiajs/inertia-vue3';
+    import { Head,Link,usePage } from '@inertiajs/inertia-vue3';
     import { ref } from 'vue';
+    var typeVente = ref(usePage().props.value.session.typeVente);
     const imgAccueil = {
         cosy: new URL('../../../../images/Accueil/Collection_COSY.webp', import.meta.url).href,
         carry: new URL('../../../../images/Accueil/Collection_CARRY.webp', import.meta.url).href,
@@ -39,20 +40,20 @@
                         <div class="lg:col-span-1 col-span-3 m-2 ">
                             <div :style="{'background-image':'url('+imgAccueil.cosy+')'}" class="relative bg-cover bg-no-repeat h-full w-full">
                                 <h3 class="text-white xl:text-3xl lg:text-2xl sm:text-xl text-lg text-center pt-5">Collection Cosy</h3>
-                                <Link class="absolute bottom-5 left-1/4 right-1/4 text-center xl:text-2xl lg:text-xl sm:text-lg text-sm text-white bg-primary-100 hover:bg-primary-50 transition duration-300 rounded-xl py-2 xl:px-4 px-2 hover:bg-primary-100 transition duration-300" href="/order_entrepot/gamme/cosy">Je découvre</Link>
+                                <Link class="absolute bottom-5 left-1/4 right-1/4 text-center xl:text-2xl lg:text-xl sm:text-lg text-sm text-white bg-primary-100 hover:bg-primary-50 transition duration-300 rounded-xl py-2 xl:px-4 px-2 hover:bg-primary-100 transition duration-300" :href="(typeVente == 1 ? '/order_entrepot' : '/dropshipping')+'/gamme/cosy'">Je découvre</Link>
                             </div>
                         </div>
                         <div class="lg:col-span-2 col-span-3 grid grid-rows-2 m-2 ">
                             <div class="col-span-1 mb-2">
                                 <div :style="{'background-image':'url('+imgAccueil.carry+')'}" class="relative bg-cover bg-no-repeat h-full w-full">
                                     <h3 class="text-white xl:text-3xl lg:text-2xl sm:text-xl text-lg text-center pt-5">Collection Carry</h3>
-                                    <Link class="absolute bottom-5 left-1/4 right-1/4 text-center xl:text-2xl lg:text-xl sm:text-lg text-sm text-white bg-primary-100 hover:bg-primary-50 transition duration-300 rounded-xl py-2 xl:px-4 px-2 hover:bg-primary-100 transition duration-300" href="/order_entrepot/gamme/carry">Je découvre</Link>
+                                    <Link class="absolute bottom-5 left-1/4 right-1/4 text-center xl:text-2xl lg:text-xl sm:text-lg text-sm text-white bg-primary-100 hover:bg-primary-50 transition duration-300 rounded-xl py-2 xl:px-4 px-2 hover:bg-primary-100 transition duration-300" :href="(typeVente == 1 ? '/order_entrepot' : '/dropshipping')+'/gamme/carry'">Je découvre</Link>
                                 </div>
                             </div>
                             <div class="col-span-1 mt-2">
                                 <div :style="{'background-image':'url('+imgAccueil.bianca+')'}" class="relative bg-cover bg-no-repeat h-full w-full">
                                     <h3 class="text-white xl:text-3xl lg:text-2xl sm:text-xl text-lg text-center pt-5">Collection Bianca</h3>
-                                    <Link class="absolute bottom-5 left-1/4 right-1/4 text-center xl:text-2xl lg:text-xl sm:text-lg text-sm text-white bg-primary-100 hover:bg-primary-50 transition duration-300 rounded-xl py-2 xl:px-4 px-2 hover:bg-primary-100 transition duration-300" href="/order_entrepot/gamme/bianca">Je découvre</Link>
+                                    <Link class="absolute bottom-5 left-1/4 right-1/4 text-center xl:text-2xl lg:text-xl sm:text-lg text-sm text-white bg-primary-100 hover:bg-primary-50 transition duration-300 rounded-xl py-2 xl:px-4 px-2 hover:bg-primary-100 transition duration-300" :href="(typeVente == 1 ? '/order_entrepot' : '/dropshipping')+'/gamme/bianca'">Je découvre</Link>
                                 </div>
                             </div>
                         </div>
@@ -124,17 +125,17 @@
                             <span >nos meilleures ventes</span>
                         </div>
                         <div class="lg:col-span-1 col-span-3 m-3 hover:drop-shadow-2xl hover:m-2 transition-full duration-300">
-                            <Link class="" href="/order_entrepot/gamme/asma">
+                            <Link class="" :href="(typeVente == 1 ? '/order_entrepot' : '/dropshipping')+'/gamme/asma'">
                                 <img :src="imgAccueil.asma" alt="Collection Asma" />
                             </Link>
                         </div>
                         <div class="lg:col-span-1 col-span-3 m-3 hover:drop-shadow-2xl hover:m-2 transition-full duration-300">
-                            <Link class="" href="/order_entrepot/gamme/harmonie">
+                            <Link class="" :href="(typeVente == 1 ? '/order_entrepot' : '/dropshipping')+'/gamme/harmonie'">
                                 <img :src="imgAccueil.harmonie" alt="Collection Harmonie" />
                             </Link>
                         </div>
                         <div class="lg:col-span-1 col-span-3 m-3 hover:drop-shadow-2xl hover:m-2 transition-full duration-300">
-                            <Link class="" href="/order_entrepot/gamme/stampa">
+                            <Link class="" :href="(typeVente == 1 ? '/order_entrepot' : '/dropshipping')+'/gamme/stampa'">
                                 <img :src="imgAccueil.stampa" alt="Collection Stampa" />
                             </Link>
                         </div>

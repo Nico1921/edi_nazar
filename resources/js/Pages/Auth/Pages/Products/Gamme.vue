@@ -242,9 +242,16 @@ export default {
             <h1 class="text-white text-3xl font-bold px-5 py-2 rounded-r-lg bg-primary-50">{{ props.gamme.nom_gamme }}</h1>
          </div>
          <div class="absolute bottom-0 right-0 py-2">
-         <a href="/order_entrepot/gamme" class="transition-all duration-300 bg-gradient-to-r from-blue-400 to-indigo-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-indigo-600 text-white font-bold py-2 px-4 rounded shadow-md ">
-            Retourner aux gammes
-         </a>
+            <div class="relative  rounded bg-gradient-to-r from-blue-400 to-indigo-500">
+               <a href="/order_entrepot/gamme" class="group rounded bg-gradient-to-r from-blue-400 to-indigo-500">
+                  <div class="bg-gradient-to-r to-blue-400 from-indigo-500 text-white font-bold py-2 px-4 rounded shadow-md transition duration-500 ease-in-out opacity-0 group-hover:opacity-100">
+                     <span class="opacity-100 text-white font-bold">Retourner aux gammes</span>
+                  </div>
+                  <div class="absolute flex items-center justify-center w-full h-full top-0 left-0 opacity-100 group-hover:opacity-0 transition duration-500 ease-in-out">
+                     <span class="opacity-100 text-white font-bold">Retourner aux gammes</span>
+                  </div>
+               </a>
+            </div>
       </div>
       </section>
 
