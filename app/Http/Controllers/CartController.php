@@ -23,6 +23,7 @@ use App\Models\TransactionPaiement;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
 use Sebastienheyd\Systempay\Systempay;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -264,13 +265,46 @@ class CartController extends Controller
                 return Redirect::route('dropshipping/cart');
             }else{
                 $isvalid = true;
+                $isvalidAdresse = true;
                 foreach($panier->client_edi_list as $client){
-                    if($client->quantiter == 0){
+                    if($client->quantiter == 0 ){
                         $isvalid = false;
+                    }
+
+                    $validator = Validator::make([
+                        'nom' => $client->nom,
+                        'prenom' => $client->prenom,
+                        'email' => $client->email,
+                        'tel' => $client->tel,
+                        'nom_adresse' => $client->nom_adresse,
+                        'adresse1' => $client->adresse1,
+                        'adresse2' => $client->adresse2,
+                        'adresse3' => $client->adresse3,
+                        'pays' => $client->pays,
+                        'code_postal' => $client->code_postal,
+                        'ville' => $client->ville,
+                    ], [
+                        'nom' => 'required|string|max:255',
+                        'prenom' => 'required|string|max:255',
+                        'email' => 'required|string|email|max:255',
+                        'tel' => 'required|numeric|phone:AUTO,FR',
+                        'nom_adresse' => 'required|string|max:255',
+                        'adresse1' => 'required|string|max:32',
+                        'adresse2' => 'nullable|string|max:32',
+                        'adresse3' => 'nullable|string|max:32',
+                        'pays' => 'required|country_name',
+                        'code_postal' => 'required|postal_code:pays',
+                        'ville' => 'required|string|max:32',
+                    ]);
+
+                    if ($validator->fails()) {
+                        $isvalidAdresse = false;
                     }
                 }
                 if(!$isvalid){
                     return Redirect::route('dropshipping/cart');
+                }else if(!$isvalidAdresse){
+                    return Redirect::route('dropshipping/cart/adresses');
                 }
             }
         }else{
