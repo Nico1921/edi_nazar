@@ -90,10 +90,10 @@ export default {
             </div>
          </div>
          <div class="lg:hidden block col-span-4">
-            <ResumeOrderVertical :disabled="!allValid" :linkEtapeSuivant="(panierDrop.panier.addresses_valid ? '/dropshipping/cart/validation' : '')" :titreLink="'Valider mon adresse'" :panier="(panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined)" :isButtonSubmit="true" />
+            <ResumeOrderVertical :disabled="!allValid" :linkEtapeSuivant="(panierDrop.panier.addresses_valid ? '/dropshipping/cart/validation' : '')" :titreLink="'Valider mon adresse'" :panier="(panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined)" :isButtonSubmit="false" />
          </div>
          <div class="lg:block hidden col-span-1 ml-5">
-            <ResumeOrder :disabled="!allValid" :linkEtapeSuivant="(panierDrop.panier.addresses_valid ? '/dropshipping/cart/validation' : '')" :titreLink="'Valider mon adresse'" :panier="(panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined)" :isButtonSubmit="true" />
+            <ResumeOrder :disabled="!allValid" :linkEtapeSuivant="(panierDrop.panier.addresses_valid ? '/dropshipping/cart/validation' : '')" :titreLink="'Valider mon adresse'" :panier="(panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined)" :isButtonSubmit="false" />
          </div>
       </div>
    </section>

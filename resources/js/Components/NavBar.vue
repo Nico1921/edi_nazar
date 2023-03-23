@@ -194,6 +194,7 @@ var confirmChangeTypeVente = () => {
 <script>
 import Delete from 'icons/Delete.vue';
 import Cart from 'icons/Cart.vue';
+import ImageOff from 'icons/ImageOff.vue';
 import menuHamburger from 'icons/Menu.vue';
 import dotsVertical from 'icons/DotsVertical.vue';
 import close from 'icons/Close.vue';
@@ -214,9 +215,12 @@ export default {
 					<menuHamburger />
 				</button>
 			</div>
-			<Link class="text-2xl flex items-center lg:justify-start justify-center w-full font-bold leading-none" href="/">
-				<img alt="Logo Nazar" :src="imageUrl" width="100" height="100" />
-			</Link>
+			<div class="flex items-center lg:justify-start justify-center">
+				<Link class="text-2xl  font-bold leading-none" href="/">
+					<img alt="Logo Nazar" :src="imageUrl" width="100" height="100" />
+				</Link>
+			</div>
+			
 			<ul
 				class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
 				<li>
@@ -308,8 +312,8 @@ export default {
 												<img :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.photo.img_produit"
 													:alt="produit.code_sku" class="w-full h-full object-cover" />
 											</div>
-											<div v-else>
-												<span>Pas de photo pour ce produit !</span>
+											<div v-else class="text-3xl h-full w-full flex items-stretch justify-center bg-gray-300">
+												<ImageOff />
 											</div>
 										</div>
 										<div class="col-span-3 flex flex-col ml-1">
@@ -348,13 +352,13 @@ export default {
 												<span class="text-left w-full">Commande : {{ client.client.ref_externe }}</span>
 												<div class="ml-4 mt-1 grid grid-cols-6" v-for="(produit, keyProduit) in client.produits" :key="keyProduit">
 													<div class="col-span-1 flex items-center justify-center">
-													<div v-if="produit.photo.img_produit != null"
+													<div v-if="produit.photo != null"
 														class="lg:w-[45px] lg:h-[75px] sm:w-[60px] sm:h-[90px] w-[70px] h-[100px]">
 														<img :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.photo.img_produit"
 															:alt="produit.code_sku" class="w-full h-full object-cover" />
 													</div>
-													<div v-else>
-														<span>Pas de photo pour ce produit !</span>
+													<div v-else class="text-3xl h-full w-full flex items-stretch justify-center bg-gray-300">
+														<ImageOff />
 													</div>
 												</div>
 												<div class="col-span-3 flex flex-col ml-1">

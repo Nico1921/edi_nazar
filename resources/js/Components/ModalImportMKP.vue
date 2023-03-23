@@ -49,9 +49,9 @@ var viewDetails = (key) => {
 };
 
 var confirmImport = () => {
-  axios.post('/orders/clients/import/validation',{clients: props.importMKP}).then((response) => {
+  axios.post('/dropshipping/clients/import/validation',{clients: props.importMKP}).then((response) => {
     if(response.status){
-      document.location.href = "/orders/clients/validation";
+      document.location.href = "/dropshipping/gamme";
     }else{
       Toast.fire({
         icon: 'error',
@@ -70,7 +70,7 @@ import Alert from 'icons/Alert.vue';
 
 <template>
 <TransitionRoot appear :show="isOpen" as="template">
-   <Dialog as="div" @close="closeModal" class="relative z-10">
+   <Dialog as="div" @close="closeModal" class="relative z-[100]">
      <TransitionChild
        as="template"
        enter="duration-300 ease-out"

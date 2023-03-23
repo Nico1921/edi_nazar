@@ -1,10 +1,11 @@
 <script setup>
 import { Head, usePage, useForm } from '@inertiajs/inertia-vue3';
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onMounted, watchEffect,createApp } from 'vue';
 import ListClients from '@/Components/ListClients.vue';
+import ModalImportMKP from '@/Components/ModalImportMKP.vue';
 
-const templateVierge = new URL('../../../../../../fichiers/templates/Commercial/Template_Vierge_Com.xlsx', import.meta.url).href;
-const templateModele = new URL('../../../../../../fichiers/templates/Commercial/Template_Model_Com.xlsx', import.meta.url).href;
+const templateVierge = new URL('../../../../../../fichiers/templates/Drop/Template_Vierge_Drop.xlsx', import.meta.url).href;
+const templateModele = new URL('../../../../../../fichiers/templates/Drop/Template_Model_Drop.xlsx', import.meta.url).href;
 const props = defineProps(['products','dimensions', 'produitsAchat']);
 const isOpen = ref(false);
 
@@ -38,11 +39,19 @@ var clickResetInputFile = ()=>{
 };
 
 const submit_file = () => {
-   var form = new FormData(document.getElementById('fileCartImport'));
-   axios.post('/dropshipping/panier/import',form).then((response) => {
+   var form = new FormData(document.getElementById('fileClientImport'));
+   axios.post('/dropshipping/clients/import',form).then((response) => {
       console.log(response);
       if(response.status){
-        document.location.href = "/cart";
+         if (document.getElementById("modalImport") != null) {
+            if (document.getElementById("modalImport").__vue_app__ != undefined) {
+               document.getElementById("modalImport").__vue_app__.unmount();
+            }
+         }
+         var data = response.data;
+         var modalImportMKP = createApp(ModalImportMKP, { isOpen: true,importMKP: data.importCommandes,reussi: data.valider,erreur: data.erreur,
+            qteFinal: data.qteFinal,m2Final: data.m2Final, prixHT_TT: data.prixHT_TT, prixTVA_TT: data.prixTVA_TT, prixTTC_TT: data.prixTTC_TT, stockInvalide: data.stockInvalide });
+            modalImportMKP.mount(document.getElementById("modalImport"));
       }else{
          Toast.fire({
             icon: 'error',
@@ -98,43 +107,6 @@ var searchGamme = (e) => {
    })
 };
 
-var deleteCommande = (id_panier_edi_list) =>{
-   Swal.fire({
-      title: 'Attention',
-      text: 'Etes-vous de supprimer cette article de la commande ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Non',
-      confirmButtonText: 'Oui',
-   }).then((result) => {
-      if (result.isConfirmed) {
-         const formProduit = useForm({
-            id_panier_edi_list: id_panier_edi_list,
-         });
-
-         formProduit.post('/orders/clients/products/action/delete', {
-            preserveScroll: true,
-            onSuccess: (e) => {
-               if(e.props.session.status){
-                  Toast.fire({
-                     icon: 'success',
-                     title: 'Le produit à bien été supprimer de la commande'
-                  })
-               }else{
-                  Toast.fire({
-                     icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
-                  });
-               }
-               
-            },
-         });
-      }
-   });
-};
-
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
@@ -153,7 +125,11 @@ onMounted(() => {
    const parsedUrl = new URL(window.location.href);
    var input = document.getElementById("searchGamme");
    input.value = parsedUrl.searchParams.get('filter[nom_gamme]');
-   
+   if (document.getElementById("modalImport") != null) {
+      if (document.getElementById("modalImport").__vue_app__ != undefined) {
+         document.getElementById("modalImport").__vue_app__.unmount();
+      }
+   }
 });
 
 watchEffect(() => {
@@ -206,11 +182,11 @@ export default {
       <div class="bg-primary-50 rounded mx-40 mb-5" v-if="typeVente == 2">
          <h2 class="text-center text-xl text-primary-300 py-1 bg-primary-100 rounded-t-lg">Ajouter au panier via un fichier</h2>
          <div class="p-4 flex flex-col items-center justify-items-center justify-center">
-            <form id="fileCartImport" class="grid grid-cols-4" @submit.prevent="submit_file">
+            <form id="fileClientImport" class="grid grid-cols-4" @submit.prevent="submit_file">
                <div :class="fileExist ? 'relative col-span-3 mx-2' : 'relative col-span-4 mx-2'">
-                  <label class="block cursor-pointer text-primary-500 bg-primary-200 p-3 rounded-lg" for="file_import_cart">Importer mon fichier de commandes <Excel /></label>
+                  <label class="block cursor-pointer text-primary-500 bg-primary-200 p-3 rounded-lg" for="file_Client_Import">Importer mon fichier de commandes <Excel /></label>
                   <span class="hidden" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
-                  <input @change="fileImport" type="file" class="hidden" id="file_import_cart" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
+                  <input @change="fileImport" type="file" class="hidden" id="file_Client_Import" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
                   <p class="mt-1 text-sm text-gray-500" id="file_input_helper">.XLS,.XLSX</p>
                   <span class="absolute bottom-0 right-0"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
                </div>
@@ -293,5 +269,8 @@ export default {
        </div>
       
    </section>
+
+   <div id="modalImport"></div>
+   <div id="productClientView"></div>
 </template>
 

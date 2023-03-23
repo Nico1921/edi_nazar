@@ -104,9 +104,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::post('/dropshipping/cart/client/delete', [CartController::class, 'delete_order_client_drop'])->name('dropshipping/cart/client/delete');
       Route::get('/dropshipping/cart/adresses', [CartController::class, 'create_adresse_drop'])->name('dropshipping/cart/adresses');
       Route::post('/dropshipping/cart/adresses', [CartController::class, 'add_adresse_commande_drop'])->name('dropshipping/cart/adresses');
-      Route::post('/dropshipping/cart/payment/cb', [CartController::class, 'generate_form_payment_cb'])->name('dropshipping/cart/payment/cb');
-      Route::get('/dropshipping/cart/validation', [CartController::class, 'create_adresses_validation'])->name('dropshipping/cart/validation');
-      Route::post('/dropshipping/cart/validation/order', [CartController::class, 'confirmation_panier_com'])->name('dropshipping/cart/validation/order');
+      Route::post('/dropshipping/cart/payment/cb', [CartController::class, 'generate_form_payment_cb_drop'])->name('dropshipping/cart/payment/cb');
+      Route::get('/dropshipping/cart/validation', [CartController::class, 'create_adresses_validation_drop'])->name('dropshipping/cart/validation');
+      Route::post('/dropshipping/cart/validation/order', [CartController::class, 'confirmation_order_clients_drop'])->name('dropshipping/cart/validation/order');
    });
 
    Route::get('/shippings', [ShippingsController::class, 'create'])->name('shippings');
