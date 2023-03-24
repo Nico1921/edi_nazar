@@ -532,7 +532,7 @@ class CartController extends Controller
                             'url_cancel' => url('/').'/dropshipping/cart/validation',
                             'url_refused' => url('/').'/dropshipping/cart/validation',
                             'url_success' => url('/').'/shippings/order/clients/'.$panier->num_commande,
-                            'url_check' => url('/').'/dropshipping/cart/validation/payment',
+                            'url_check' => url('/').'/cart/validation/payment',
                         ]);
                         $html = $paiement->render();
                     }else{
