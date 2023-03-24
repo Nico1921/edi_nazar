@@ -6,6 +6,6 @@ return [
         'key'     => env('SYSTEMPAY_SITE_KEY', 'G5wZJJkAPukJJ5LB'),
         'env'     => env('SYSTEMPAY_ENV', 'TEST'),
         'currency' => '978',
-        'payment_config' => 'SINGLE'
+        'payment_config' => 'SINGLE',
     ],
 ];

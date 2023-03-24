@@ -117,43 +117,47 @@ class ShippingsController extends Controller
         if(!empty($request->num_commande)){
             $order = PanierEdi::where('num_commande','=',$request->num_commande)->where('id_users','=', Auth::id())->first();
             if(isset($order->id_panier_edi) && !empty($order->id_panier_edi)){
-                $clients = ClientEDI::where('id_panier_edi','=',$order->id_panier_edi)->get();
-                if(!empty($clients) && count($clients) > 0){
-                    $dataReturn = array();
-                    if($order->is_marketplace == 1 ){
-                        $dataReturn = [
-                            'order' => $order,
-                            'clients' => $clients
-                        ];
-                    }else{
-                        $id_client_edi = $clients[0]->id_client_edi;
-                        $produits = new \stdClass;
-                        if(!empty($id_client_edi)){
-                        $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
-                        foreach($panierList as $list){
-                            $panierG = PanierEdi::where('id_panier_edi','=',$list->panier->id_panier_edi)->first();
-                            $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
-                            for($i=0;$i<count($produit);$i++){
-                                $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                                $client = ClientEDI::where('id_client_edi','=',$id_client_edi)->first();
-                                $commande = Commande::where('num_commande_interne','=',$client->num_commande)->first();
-                                $produit[$i]->panier = $panier;
-                                $produit[$i]->panierG = $panierG;
-                                $produit[$i]->commande = $commande;
-                                $produit[$i]->isInPanier = true;
-                                $produits->panier[] = $produit[$i];
-                            }           
-                        }        
+                if($order->is_validate){
+                    $clients = ClientEDI::where('id_panier_edi','=',$order->id_panier_edi)->get();
+                    if(!empty($clients) && count($clients) > 0){
+                        $dataReturn = array();
+                        if($order->is_marketplace == 1 ){
+                            $dataReturn = [
+                                'order' => $order,
+                                'clients' => $clients
+                            ];
+                        }else{
+                            $id_client_edi = $clients[0]->id_client_edi;
+                            $produits = new \stdClass;
+                            if(!empty($id_client_edi)){
+                            $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
+                            foreach($panierList as $list){
+                                $panierG = PanierEdi::where('id_panier_edi','=',$list->panier->id_panier_edi)->first();
+                                $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
+                                for($i=0;$i<count($produit);$i++){
+                                    $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
+                                    $client = ClientEDI::where('id_client_edi','=',$id_client_edi)->first();
+                                    $commande = Commande::where('num_commande_interne','=',$client->num_commande)->first();
+                                    $produit[$i]->panier = $panier;
+                                    $produit[$i]->panierG = $panierG;
+                                    $produit[$i]->commande = $commande;
+                                    $produit[$i]->isInPanier = true;
+                                    $produits->panier[] = $produit[$i];
+                                }           
+                            }        
+                            }
+                            $dataReturn = [
+                                'order' => $order,
+                                'clients' => $clients[0],
+                                'produits' => $produits,
+                            ];
                         }
-                        $dataReturn = [
-                            'order' => $order,
-                            'clients' => $clients[0],
-                            'produits' => $produits,
-                        ];
+                        return Inertia::render('Auth/Pages/Shippings/Orders',$dataReturn);
+                    }else{
+                        abort(500);
                     }
-                    return Inertia::render('Auth/Pages/Shippings/Orders',$dataReturn);
                 }else{
-                    abort(500);
+                    return redirect('/shippings');
                 }
             }else{
                 abort(404);

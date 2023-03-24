@@ -526,7 +526,12 @@ class CartController extends Controller
                         $paiement = new Systempay();
                         $paiement->set([
                             'amount' => $panier->total_ttc,
-                            'trans_id' => $trans_id
+                            'trans_id' => $trans_id,
+                            'url_return' => url('/').'/dropshipping/cart/validation',
+                            'url_cancel' => url('/').'/dropshipping/cart/validation',
+                            'url_refused' => url('/').'/dropshipping/cart/validation',
+                            'url_success' => url('/').'/shippings/order/clients/'.$panier->num_commande,
+                            'url_check' => url('/').'/dropshipping/cart/validation/payment',
                         ]);
                         $html = $paiement->render();
                     }else{
@@ -548,6 +553,10 @@ class CartController extends Controller
         }else{
             return ['statut' => false,'erreur'=>1,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
         }
+    }
+
+    public function confirmation_payment_drop(Request $request){
+        Log::debug($request->post());
     }
 
     /**
