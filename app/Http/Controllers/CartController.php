@@ -527,6 +527,7 @@ class CartController extends Controller
                         $paiement->set([
                             'amount' => $panier->total_ttc,
                             'trans_id' => $trans_id,
+                            'type_vente' => 2,
                             'url_return' => url('/').'/dropshipping/cart/validation',
                             'url_cancel' => url('/').'/dropshipping/cart/validation',
                             'url_refused' => url('/').'/dropshipping/cart/validation',
@@ -555,7 +556,7 @@ class CartController extends Controller
         }
     }
 
-    public function confirmation_payment_drop(Request $request){
+    public function confirmation_payment(Request $request){
         Log::debug($request->post());
     }
 

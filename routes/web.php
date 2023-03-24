@@ -106,7 +106,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::post('/dropshipping/cart/adresses', [CartController::class, 'add_adresse_commande_drop'])->name('dropshipping/cart/adresses');
       Route::post('/dropshipping/cart/payment/cb', [CartController::class, 'generate_form_payment_cb_drop'])->name('dropshipping/cart/payment/cb');
       Route::get('/dropshipping/cart/validation', [CartController::class, 'create_adresses_validation_drop'])->name('dropshipping/cart/validation');
-      Route::post('/dropshipping/cart/validation/payment', [CartController::class, 'confirmation_payment_drop'])->name('dropshipping/cart/validation/payment');
       Route::post('/dropshipping/cart/validation/order', [CartController::class, 'confirmation_order_clients_drop'])->name('dropshipping/cart/validation/order');
    });
 
@@ -126,5 +125,7 @@ Route::get('language/{language}', function ($language) {
    Session::put('locale', $language);
    return true;
 })->name('language');
+
+Route::post('/cart/validation/payment', [CartController::class, 'confirmation_payment'])->name('cart/validation/payment');
 
 require __DIR__.'/auth.php';
