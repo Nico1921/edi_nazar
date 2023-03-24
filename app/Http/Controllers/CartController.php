@@ -557,7 +557,7 @@ class CartController extends Controller
     }
 
     public function confirmation_payment(Request $request){
-        Log::debug($request->all());
+        // Log::debug($request->all());
         Log::debug('Test ');
     }
 

@@ -86,7 +86,6 @@ class PanierEdi extends Model
         foreach($clientsPanier as $client){ 
             $panier = DB::table('panier_edi_list')->where('id_client_edi','=',$client->id_client_edi)->sum('prix_ttc_total');
             $quantiter = DB::table('panier_edi_list')->where('id_client_edi','=',$client->id_client_edi)->sum('quantiter');
-            Log::debug($quantiter);
             $total_ttc += $panier;
             $quantiterTotal += $quantiter;
                
