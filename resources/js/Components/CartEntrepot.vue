@@ -1,5 +1,5 @@
 <script setup>
-import { usePage } from '@inertiajs/inertia-vue3';
+import { usePage, useForm  } from '@inertiajs/inertia-vue3';
 import { ref, watchEffect } from 'vue';
 import InputNumber from '@/Components/InputNumber.vue';
 

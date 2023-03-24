@@ -260,7 +260,7 @@ export default {
       <div class="flex items-center h-full ">
          <h1 class="text-white text-3xl font-bold px-5 py-2 rounded-r-lg bg-primary-50">{{ prop.gamme.nom_gamme }}</h1>
       </div>
-      <div class="absolute bottom-0 right-0 py-2">
+      <div class="absolute bottom-0 left-0 py-2">
          <div class="relative  rounded bg-gradient-to-r from-blue-400 to-indigo-500">
                <a href="/dropshipping/gamme" class="group rounded bg-gradient-to-r from-blue-400 to-indigo-500">
                   <div class="bg-gradient-to-r to-blue-400 from-indigo-500 text-white font-bold py-2 px-4 rounded shadow-md transition duration-500 ease-in-out opacity-0 group-hover:opacity-100">
