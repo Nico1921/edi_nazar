@@ -203,16 +203,43 @@ export default {
             <div class="my-5">
                <div class="bg-white py-10 px-5">
                   <!-- What is term -->
-                  <div class="transition hover:bg-primary-100 border shadow-sm ">
+                  <div class="rounded-lg bg-primary-100">
                      <!-- header -->
-                     <div class="accordion-header cursor-pointer transition flex space-x-5 px-2 items-center py-1 relative">
-                        <div class="absolute left-3 lg:col-span-11 col-span-12 relative">
-                           <div class="grid grid-cols-12 ml-5 my-1">
-                              <h3  class="xl:col-span-3 sm:col-span-5 col-span-12 mx-1">n° : {{clients.num_commande}}</h3>
-                              <span class="xl:col-span-3 sm:col-span-5 col-span-12  mx-1">Client : {{clients.nom+" "+clients.prenom}}</span>
-                              <span class="xl:col-span-3 sm:col-span-5 col-span-12  mx-1">Nombre de produit : {{clients.quantiter}}</span>
-                              <span class="xl:col-span-3 sm:col-span-5 col-span-12  mx-1">Total_ttc : {{clients.total_ttc}} €</span>
+                     <div class="accordion-header cursor-pointer transition border my-2 px-2 py-4 rounded-lg shadow-lg hover:shadow-xl transition relative transition duration-300 hover:bg-primary-100">
+                        <div class=" lg:col-span-11 col-span-12 relative">
+                           <div class="ml-10">
+                              <div class="flex flex-col justify-between  mb-2">
+                                 <h3 class="lg:text-xl text-sm font-bold">N° commande : {{clients.num_commande}}</h3>
+                                 <h4 class="lg:text-xl text-sm font-bold">{{ clients.prenom+" "+clients.nom }}</h4>
+                              </div>
+                              <div class="flex items-center mb-2">  
+                                 <img :src="imgBase64" alt="Logo client" class="w-12 h-12 rounded-full mr-4">
+                                 <div class="grid grid-cols-12 w-full">
+                                    <div class="lg:col-span-8 col-span-12">
+                                       <p class="font-bold">{{ clients.nom_adresse }}</p>
+                                       <p class="text-gray-600">
+                                          {{ clients.adresse1 }}, 
+                                          {{ (clients.adresse2 != '' && clients.adresse2 != null ? clients.adresse2+"," : '') }} 
+                                          {{ (clients.adresse3 != '' && clients.adresse3 != null ? clients.adresse3+"," : '') }}
+                                       </p>
+                                       <p class="text-gray-600">
+                                          {{ clients.code_postal }} {{ clients.ville }}, 
+                                          {{ clients.pays }}
+                                       </p>
+                                    </div>
+                                    <div class="lg:col-span-4 col-span-12">
+                                       <p class="text-gray-600">Nombre de produit : {{clients.quantiter}}</p>
+                                       <p class="text-gray-600">Total_ttc : {{clients.total_ttc}} €</p>
+                                    </div>
+
+                                   
+                                 </div>
+                              </div>
                            </div>
+                           
+                        </div>
+                        <div class="border-b border-gray-300 mb-1">
+
                         </div>
                      </div>
                      <!-- Content -->
