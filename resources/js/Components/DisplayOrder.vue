@@ -32,25 +32,27 @@ var roundNumber = (e) => {
          </div>
          <div class="swiper-pagination-custom flex items-center justify-center py-2"></div>
             <swiper-slide :class="hBlock" v-for="(design, key) in products" :key="key">
-               <div class=" bg-gray-200 grid grid-cols-12 px-2 py-4" :class="hBlock" >
-                  <div :class="props.classGridImage" class="flex items-stretch justify-center w-full">
-                     <div v-if="design.photo != null" class=" w-full" >
-                        <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+design.photo.img_produit" :alt="design.code_sku" class="w-full h-full object-content"/>
+               <div class="flex bg-gray-200 px-2 py-4 max-h-full" :class="hBlock" >
+                  <div class="grid grid-cols-12 auto-rows-fr">
+                     <div :class="props.classGridImage" class="flex items-stretch justify-center w-full">
+                        <div v-if="design.photo != null" class=" w-full" >
+                           <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+design.photo.img_produit" :alt="design.code_sku" class="w-full h-full object-contain"/>
+                        </div>
+                        <div v-else class="text-3xl w-full flex items-stretch justify-center bg-gray-300">
+                           <ImageOff />
+                        </div>
                      </div>
-                     <div v-else class="text-3xl  w-full flex items-stretch justify-center bg-gray-300">
-                        <ImageOff />
-                     </div>
-                  </div>
-                  <div :class="props.classGridText" class="px-2 grid grid-cols-1">
-                     <span class="sm:text-sm text-[0.700rem] font-bold">SKU : {{design.code_sku}}</span>
-                     <span class="sm:text-sm text-[0.700rem] font-bold">Taille : {{design.dimension.largeur}}x{{design.dimension.longueur}}cm</span>
-                     <span class="sm:text-sm text-[0.700rem] font-bold">EAN : {{design.gencode}}</span>
-                     <span class="sm:text-sm text-[0.700rem] font-bold">Quantiter : {{design.panier.quantiter}}</span>
-                     <span class="sm:text-sm text-[0.700rem] font-bold">Prix : {{ roundNumber(design.panier.prix_ht_total) }} € HT</span>
-                     <div v-if="design.panierG.is_marketplace == 1" class="sm:text-sm text-[0.700rem] font-bold whitespace-nowrap">
-                        <span class="sm:text-sm text-[0.700rem] font-bold">Statut : {{decode(design.commande.etape.nom_etape)}}</span>
-                        <div v-if="design.commande.etape.id_etape >= 4">
-                           <span>Suivi GLS : <a rel="noopener" target="_blank" class="text-blue-500 hover:text-blue-300 transition duration-150" :href="'https://gls-group.eu/FR/fr/suivi-colis?match='+design.commande.commande_stock.tracking">{{design.commande.commande_stock.tracking}}</a></span>
+                     <div :class="props.classGridText" class="px-2 grid grid-cols-1">
+                        <span class="sm:text-sm text-[0.700rem] font-bold">SKU : {{design.code_sku}}</span>
+                        <span class="sm:text-sm text-[0.700rem] font-bold">Taille : {{design.dimension.largeur}}x{{design.dimension.longueur}}cm</span>
+                        <span class="sm:text-sm text-[0.700rem] font-bold">EAN : {{design.gencode}}</span>
+                        <span class="sm:text-sm text-[0.700rem] font-bold">Quantiter : {{design.panier.quantiter}}</span>
+                        <span class="sm:text-sm text-[0.700rem] font-bold">Prix : {{ roundNumber(design.panier.prix_ht_total) }} € HT</span>
+                        <div v-if="design.panierG.is_marketplace == 1" class="sm:text-sm text-[0.700rem] font-bold whitespace-nowrap">
+                           <span class="sm:text-sm text-[0.700rem] font-bold">Statut : {{decode(design.commande.etape.nom_etape)}}</span>
+                           <div v-if="design.commande.etape.id_etape >= 4">
+                              <span>Suivi GLS : <a rel="noopener" target="_blank" class="text-blue-500 hover:text-blue-300 transition duration-150" :href="'https://gls-group.eu/FR/fr/suivi-colis?match='+design.commande.commande_stock.tracking">{{design.commande.commande_stock.tracking}}</a></span>
+                           </div>
                         </div>
                      </div>
                   </div>
