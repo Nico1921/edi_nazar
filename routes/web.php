@@ -126,6 +126,6 @@ Route::get('language/{language}', function ($language) {
    return true;
 })->name('language');
 
-Route::post('/cart/validation/payment', [CartController::class, 'confirmation_payment'])->name('cart/validation/payment');
+Route::get('/cart/validation/payment', [CartController::class, 'confirmation_payment'])->name('cart/validation/payment');
 
 require __DIR__.'/auth.php';
