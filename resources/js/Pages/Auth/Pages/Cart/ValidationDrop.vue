@@ -133,7 +133,7 @@ export default {
                </div>
 
                
-               <div class="max-h-96 sm:px-6 overflow-auto grid grid-cols-1 flex items-center justify-center my-4 mx-2">
+               <div class="xl:max-h-[calc(100vh-550px)] lg:max-h-[calc(100vh-250px)] max-h-screen  sm:px-6 overflow-auto grid grid-cols-1 flex items-center justify-center my-4 mx-2">
                   <div v-for="(client,key) in clients" :key="key" class="my-2">
                      <div class="border p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
                         <div class="flex justify-between items-center mb-4">
