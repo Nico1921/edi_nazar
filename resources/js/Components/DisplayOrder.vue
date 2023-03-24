@@ -14,6 +14,12 @@ var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
 </script>
+<script>
+import ImageOff from 'icons/ImageOff.vue';
+import Left from 'icons/MenuLeft.vue';
+import Right from 'icons/MenuRight.vue';
+
+</script>
 <template>
          <div class="bg-gray-100 shadow-lg">
       <swiper  :modules="[Navigation, Pagination, Scrollbar, A11y]"

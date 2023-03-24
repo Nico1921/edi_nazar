@@ -31,17 +31,19 @@ class ShippingsController extends Controller
     {
 
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->join('client_edi','client_edi.id_panier_edi','panier_edi.id_panier_edi');
             $query->where(function ($query) use ($value) {
                 Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
                         ->orWhere('panier_edi.num_commande', 'LIKE', "%{$value}%")
+                        ->orWhere('client_edi.ref_externe', 'LIKE', "%{$value}%")
                         ->orWhere('panier_edi.date_commande', 'LIKE', "%{$value}%");
                 });
             });
         });
 
         $panierEdi = QueryBuilder::for(PanierEdi::class)
-        ->defaultSort('date_commande')
+        ->defaultSort('-date_commande')
         ->select(['panier_edi.id_panier_edi','panier_edi.date_commande','panier_edi.date_maj','panier_edi.num_commande','panier_edi.nb_client',
         'panier_edi.total_HT','panier_edi.total_ttc','panier_edi.poids_total','panier_edi.produits_total',
         'panier_edi.total_m2','panier_edi.date_livraison','panier_edi.total_payer','panier_edi.is_validate','panier_edi.is_marketplace'])
@@ -57,7 +59,7 @@ class ShippingsController extends Controller
         ])->table(function (InertiaTable $table) {
             $table
               ->withGlobalSearch()
-              ->defaultSort('date_commande')
+              ->defaultSort('-date_commande')
               ->column(key: 'num_commande',label: 'N° Commande', searchable: true, sortable: false, canBeHidden:false)
               ->column(key: 'nb_client',label: 'clients', searchable: false, sortable: false, canBeHidden:true)
               ->column(key: 'date_commande',label: 'Date commande', searchable: true, sortable: true, canBeHidden:false)

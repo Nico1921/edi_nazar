@@ -215,7 +215,7 @@ export default {
 					<menuHamburger />
 				</button>
 			</div>
-			<div class="flex items-center lg:justify-start justify-center">
+			<div class="w-full flex items-center lg:justify-start justify-center">
 				<Link class="text-2xl  font-bold leading-none" href="/">
 					<img alt="Logo Nazar" :src="imageUrl" width="100" height="100" />
 				</Link>

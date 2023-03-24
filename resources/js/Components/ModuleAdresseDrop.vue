@@ -86,7 +86,6 @@ const formClient = useForm({
 });
 
 var validationAdresse = () => {
-   console.log(formClient.data());
    formClient.post('/dropshipping/cart/adresses',{
       onSuccess: (e) => {
            if(e.props.session.status == true){
@@ -195,7 +194,7 @@ export default {
 
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="sm:text-lg text-sm block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="nom_adresse_client"><span class="pr-2"><City /></span> Nom adresse :</label>
+                           <label class="sm:text-lg text-sm block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="nom_adresse_client"><span class="pr-2"><City /></span> Contact :</label>
                         </div>
                         <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
                            <input type="text" id="nom_adresse_client"
@@ -207,7 +206,7 @@ export default {
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="sm:text-lg text-sm block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="adresse_client"><span class="pr-2"><City /></span> Adresse 1 :</label>
+                           <label class="sm:text-lg text-sm block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="adresse_client"><span class="pr-2"><City /></span> Adresse :</label>
                         </div>
                         <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
                            <input type="text" id="adresse_client"

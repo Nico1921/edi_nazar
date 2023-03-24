@@ -10,6 +10,7 @@ const classListe = {
    gridBlock : "2xl:col-span-9 xl:col-span-8 lg:col-span-9 sm:col-span-10 xsm:col-span-9 col-span-8",
    hBlock : "lg:!h-52 sm:!h-42 !h-42"
 }
+const imgBase64 = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDQwMDAgNDAwMCIgd2lkdGg9IjEwMDAiIGhlaWdodD0iMTAwMCI+PHN0eWxlPi5he2ZpbGw6I2EzYTNhM30uYntmaWxsOiNmZmZ9PC9zdHlsZT48cGF0aCBjbGFzcz0iYSIgZD0ibTQwMDAgNDAwMGgtNDAwMHYtNDAwMGg0MDAweiIvPjxwYXRoIGNsYXNzPSJiIiBkPSJtMzI2NSAzMDQ2Ljh2MjY1LjJoLTI1MzB2LTI2NS4yYzAtNDg5IDU2Ni40LTg4NS41IDEyNjUtODg1LjUgNjk4LjYgMCAxMjY1IDM5Ni41IDEyNjUgODg1LjV6Ii8+PHBhdGggY2xhc3M9ImIiIGQ9Im0yNjI0LjEgMTMxMi4xYzAgMzQ0LjYtMjc5LjQgNjI0LTYyNC4xIDYyNC0zNDQuNyAwLTYyNC4xLTI3OS40LTYyNC4xLTYyNCAwLTM0NC43IDI3OS40LTYyNC4xIDYyNC4xLTYyNC4xIDM0NC43IDAgNjI0LjEgMjc5LjQgNjI0LjEgNjI0LjF6Ii8+PC9zdmc+";
 
 const checkElementInClassArray = (array,elementSearch) =>{
    var status = false;
@@ -40,7 +41,6 @@ const eventClick = (header,id_client_edi,num_commande) => {
                   if(document.getElementById("orders_" + id_client_edi).__vue_app__ != undefined){
                      document.getElementById("orders_" + id_client_edi).__vue_app__.unmount();
                   }
-                  console.log(response.data);
                   var displayOrder = createApp(DisplayOrder, { products: response.data.panier,ifEdit:false,
                      slidePerView: { 1280:{ slidesPerView:2}, 1024:{ slidesPerView:1}, 0:{ slidesPerView:1} },
                      classGridImage : classListe.gridImage,
@@ -96,14 +96,14 @@ export default {
 
    <Head :title="'Commande N°'+props.order.num_commande" />
 
-   <section class="container mx-auto px-7 mt-5">
+   <section class="container mx-auto px-2 mt-5">
 
       <div class="p-4 bg-primary-50">
          <h1 class="lg:text-xl text-lg font-bold">Commande n°{{props.order.num_commande}}</h1>
       </div>
 
    <TabGroup>
-    <TabList class="flex space-x-1 rounded-xl  p-1 bg-primary-50 my-5">
+    <TabList class="overflow-hidden flex space-x-1 rounded-xl  p-1 bg-primary-50 my-5">
       <Tab v-slot="{ selected }" class="relative outline-none">
          <button class="z-30 w-full rounded-lg p-5 relative ring-0"> 
             Commande
@@ -123,7 +123,7 @@ export default {
          </Tab>
       <Tab v-slot="{ selected }" class="relative outline-none">
           <button class="z-30 w-full rounded-lg p-5 relative ring-0"> 
-            Documents
+            Documents et visuels
           </button>
           <TransitionRoot :show="selected" class="z-10 transition duration-700 " >
             <TransitionChild
@@ -147,20 +147,46 @@ export default {
             <div class="my-5">
                <div class="bg-white py-10 px-5">
                   <!-- What is term -->
-                  <div v-for="(client, key) in props.clients" :key="key" :id="'ordersResum_'+client.id_client_edi"
-                     class="transition hover:bg-primary-100 border shadow-sm ">
+                  <div class="rounded-lg" v-for="(client, key) in props.clients" :key="key" :id="'ordersResum_'+client.id_client_edi">
                      <!-- header -->
                      <div @click="eventClick($event,client.id_client_edi)"
-                        class="accordion-header cursor-pointer transition flex space-x-5 px-2 items-center py-1 relative">
-                        <div class="absolute left-3 lg:col-span-11 col-span-12 relative">
-                           <i class="mdi absolute top-1"> <Plus /> </i>
-                           <div class="grid grid-cols-12 ml-5 my-1">
-                              <h3  class="xl:col-span-3 sm:col-span-5 col-span-12 mx-1">n° : {{client.num_commande}}</h3>
-                              <span class="xl:col-span-3 sm:col-span-5 col-span-12  mx-1">Client : {{client.nom+" "+client.prenom}}</span>
-                              <span class="xl:col-span-3 sm:col-span-5 col-span-12  mx-1">Nombre de produit : {{client.quantiter}}</span>
-                              <span class="xl:col-span-3 sm:col-span-5 col-span-12  mx-1">Total_ttc : {{client.total_ttc}} €</span>
+                        class="accordion-header cursor-pointer transition border my-2 px-2 py-4 rounded-lg shadow-lg hover:shadow-xl transition relative transition duration-300 hover:bg-primary-100">
+                        <div class=" lg:col-span-11 col-span-12 relative">
+                           <i class="mdi absolute top-0 text-xl"> <Plus /> </i>
+                           <div class="ml-10">
+                              <div class="flex flex-col justify-between  mb-2">
+                                 <h3 class="lg:text-xl text-sm font-bold">N° Nazar : {{client.num_commande}}</h3>
+                                 <h4 class="lg:text-xl text-sm font-bold">N° Client : {{client.ref_externe}}</h4>
+                                 <h5 class="lg:text-xl text-sm font-bold">{{ client.prenom+" "+client.nom }}</h5>
+                              </div>
+                              <div class="flex items-center mb-2">  
+                                 <img :src="imgBase64" alt="Logo client" class="w-12 h-12 rounded-full mr-4">
+                                 <div class="grid grid-cols-12 w-full">
+                                    <div class="lg:col-span-8 col-span-12">
+                                       <p class="font-bold">{{ client.nom_adresse }}</p>
+                                       <p class="text-gray-600">
+                                          {{ client.adresse1 }}, 
+                                          {{ (client.adresse2 != '' && client.adresse2 != null ? client.adresse2+"," : '') }} 
+                                          {{ (client.adresse3 != '' && client.adresse3 != null ? client.adresse3+"," : '') }}
+                                       </p>
+                                       <p class="text-gray-600">
+                                          {{ client.code_postal }} {{ client.ville }}, 
+                                          {{ client.pays }}
+                                       </p>
+                                    </div>
+                                    <div class="lg:col-span-4 col-span-12">
+                                       <p class="text-gray-600">Nombre de produit : {{client.quantiter}}</p>
+                                       <p class="text-gray-600">Total_ttc : {{client.total_ttc}} €</p>
+                                    </div>
+
+                                   
+                                 </div>
+                              </div>
                            </div>
                            
+                        </div>
+                        <div class="border-b border-gray-300 mb-1">
+
                         </div>
                      </div>
                      <!-- Content -->
