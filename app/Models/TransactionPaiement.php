@@ -64,16 +64,25 @@ class TransactionPaiement extends Model
     public static function verifySystempaySignature(array $parameters, string $signature)
     {
         // Retrieve the secret key from the configuration file
-        $secretKey = config('systempay.key');
+        $secretKey = config('systempay.default.key');
 
         // Sort the parameters by name
         ksort($parameters);
 
-        $message = implode('+', $parameters) . '+' . $secretKey;
+        // Concatenate the sorted parameters with the secret key
+        $concatenatedParameters = '';
+        foreach ($parameters as $name => $value) {
+            if ($name !== 'signature') {
+                $concatenatedParameters .= $name . '=' . $value . '+';
+            }
+        }
+        $concatenatedParameters .= $secretKey;
 
-        $computedSignature = base64_encode(hash_hmac('sha256', $message, $secretKey, true));
+        // Hash the concatenated string using SHA-256
+        $hashedString = hash('sha256', $concatenatedParameters);
 
-        return $computedSignature === $signature;
+        // Compare the computed signature with the one provided in the request
+        return $signature === $hashedString;
     }
 
 
