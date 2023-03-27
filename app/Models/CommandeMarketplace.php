@@ -350,7 +350,7 @@ class CommandeMarketplace extends Model
                 $panierEdi->is_validate = 1;
                 $panierEdi->id_etape = $etape;
                 $panierEdi->total_payer = ($paymentType == 2 ? $panierGet->total_ttc : '0');
-                $panierEdi->paymentType = $paymentType;
+                $panierEdi->payment_type = $paymentType;
                 $panierEdi->date_commande = date('Y-m-d');
                 $panierEdi->date_livraison = ($paymentType == 2 ? date('Y-m-d', strtotime('NOW + 72 HOURS')) : '');
                 $panierEdi->save();

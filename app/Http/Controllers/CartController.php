@@ -616,7 +616,7 @@ class CartController extends Controller
                         $panierEdi->is_validate = 1;
                         $panierEdi->id_etape = 2;
                         $panierEdi->total_payer = $panierGet->total_ttc;
-                        $panierEdi->paymentType = 2;
+                        $panierEdi->payment_type = 2;
                         $panierEdi->date_commande = date('Y-m-d');
                         $panierEdi->date_livraison = date('Y-m-d', strtotime('NOW + 14 DAYS'));
                         $panierEdi->save();
@@ -669,7 +669,7 @@ class CartController extends Controller
                 $panierEdi = PanierEdi::where('id_panier_edi', '=', $panierCommercial->id_panier_edi)->first();
                 $panierEdi->is_validate = 1;
                 $panierEdi->id_etape = $etape;
-                $panierEdi->paymentType = $request->paymentType;
+                $panierEdi->payment_type = $request->paymentType;
                 $panierEdi->date_commande = date('Y-m-d');
                 $panierEdi->date_livraison = ($request->paymentType == 2 ? date('Y-m-d', strtotime('NOW + 14 DAYS')) : '');
                 $panierEdi->save();
