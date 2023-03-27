@@ -598,6 +598,7 @@ class CartController extends Controller
         }else{
             if(!empty($systempayParameters['vads_payment_certificate']) && $systempayParameters['vads_payment_certificate'] != null && is_string($systempayParameters['vads_payment_certificate'])){
                 if($systempayParameters['vads_ext_info_type_vente'] == 2){
+                    $status = false;
                     if(isset($systempayParameters['vads_ext_info_id_panier_edi']) && !empty($systempayParameters['vads_ext_info_id_panier_edi']) && isset($request->paymentType) && !empty($request->paymentType)){
                         $status = CommandeMarketplace::add_commande(2,$systempayParameters['vads_ext_info_id_panier_edi'],2);
                     }
