@@ -604,18 +604,18 @@ class CartController extends Controller
                 if($systempayParameters['vads_ext_info_type_vente'] == 2){
                     $status = false;
                     if(isset($systempayParameters['vads_ext_info_id_panier_edi']) && !empty($systempayParameters['vads_ext_info_id_panier_edi']) ){
-                        $status = CommandeMarketplace::add_commande(2,$systempayParameters['vads_ext_info_id_panier_edi'],2,$systempayParameters['ext_info_id_distributeur']);
+                        $status = CommandeMarketplace::add_commande(2,$systempayParameters['vads_ext_info_id_panier_edi'],2,$systempayParameters['vads_ext_info_id_distributeur']);
                     }
                   
                     if($status){
-                         Commande::create_facture($systempayParameters['vads_ext_info_id_panier_edi'],2,$systempayParameters['ext_info_id_distributeur']);
+                         Commande::create_facture($systempayParameters['vads_ext_info_id_panier_edi'],2,$systempayParameters['vads_ext_info_id_distributeur']);
                     }else{
                         Log::debug('Erreur Création Commande : '.$systempayParameters['vads_ext_info_id_panier_edi']);
                     }
                 }else{
                     $panierGet = PanierEdi::where('id_panier_edi', '=', $systempayParameters['vads_ext_info_id_panier_edi'])->first();
                     if(isset($panierGet->id_panier_edi) && $panierGet->id_panier_edi > 0){
-                        $status = Commande::create_facture($panierGet->id_panier_edi,2,$systempayParameters['ext_info_id_distributeur']);
+                        $status = Commande::create_facture($panierGet->id_panier_edi,2,$systempayParameters['vads_ext_info_id_distributeur']);
                         $panierEdi = PanierEdi::where('id_panier_edi', '=', $panierGet->id_panier_edi)->first();
                         $panierEdi->is_validate = 1;
                         $panierEdi->id_etape = 2;
