@@ -491,7 +491,16 @@ class CartController extends Controller
                         $paiement = new Systempay();
                         $paiement->set([
                             'amount' => $panier->total_ttc,
-                            'trans_id' => $trans_id
+                            'trans_id' => $trans_id,
+                            'order_id' => $panier->num_commande,
+                            'ext_info_id_panier_edi' => $panier->id_panier_edi,
+                            'ext_info_type_vente' => 1,
+                            'ext_info_id_distributeur' => Auth::id(),
+                            'url_return' => url('/').'/cart/validation',
+                            'url_cancel' => url('/').'/cart/validation',
+                            'url_refused' => url('/').'/cart/validation',
+                            'url_success' => url('/').'/shippings/order/clients/'.$panier->num_commande,
+                            'url_check' => url('/').'/cart/validation/payment',
                         ]);
                         $html = $paiement->render();
                     }else{

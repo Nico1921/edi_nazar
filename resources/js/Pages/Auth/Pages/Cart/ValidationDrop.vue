@@ -76,7 +76,7 @@ var verifCheck = (e,type) => {
                title: 'Une erreur s\'est produite lors de la génération du formulaire de paiement, veuillez ressayer !'
             });
          };
-   });
+         });
       }
     }else{
       paymentType.value = 0;

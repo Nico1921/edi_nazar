@@ -44,7 +44,24 @@ var verifCheck = (e,type) => {
     if(e.target.checked){
       paymentType.value = type;
       if(type == 2){
-         axios.post('/cart/payment/cb')
+         axios.post('/cart/payment/cb',{paymentType: paymentType.value}).then((response) => {
+           if(response.status == 200){
+            if(response.data.statut){
+               document.getElementById('paymentCB').innerHTML =response.data.formpay;
+            }else{
+               Toast.fire({
+               icon: 'error',
+               title: response.data.msg
+            });
+            }
+            console.log(response);
+           }else {
+            Toast.fire({
+               icon: 'error',
+               title: 'Une erreur s\'est produite lors de la génération du formulaire de paiement, veuillez ressayer !'
+            });
+         };
+         });
       }
     }else{
       paymentType.value = 0;
@@ -160,6 +177,9 @@ export default {
                      <label for="paymentVirement" class="ml-2 text-lg font-medium text-gray-900 ">Paiement par Virement Bancaire</label>
                   </div>
                </form>
+               <div id="paymentCB">
+
+               </div>
                <div class="flex justify-center mb-5">
                   <button :disabled="(paymentType == 0 ? true : false)" @click="validationCommande" type="button" class="p-2 border border-primary-300 rounded bg-primary-50 
                      hover:bg-primary-100 transition duration-300 disabled:cursor-not-allowed disabled:bg-primary-200">Finaliser la commande</button>
