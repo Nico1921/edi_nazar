@@ -573,7 +573,7 @@ class CartController extends Controller
             'vads_capture_delay' => 'required|integer',
             'vads_ext_info_id_panier_edi' => 'required|integer',
             'vads_ext_info_type_vente' => 'required|integer',
-            'ext_info_id_distributeur' => 'required|integer',
+            'vads_ext_info_id_distributeur' => 'required|integer',
             'signature' => 'required|string',
         ]);
     
