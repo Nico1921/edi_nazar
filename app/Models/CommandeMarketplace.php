@@ -213,6 +213,8 @@ class CommandeMarketplace extends Model
                     'is_relai' => '',
                  ]);
  
+                 $userLogin = User::find($id_distributeur);
+ 
                  $commandeMarketplace = CommandeMarketplace::create([
                     'id_user' => 0,
                     'id_user_maj' => 0,
@@ -251,7 +253,7 @@ class CommandeMarketplace extends Model
                     'date_envoie' => NULL,
                     'env_order' => 0,
                     'CGV' => 0,
-                    'id_distributeur' => $id_distributeur,
+                    'id_distributeur' => $userLogin->id_client,
                     'md5_commande' => '',
                     'ref_externe' => $clientOne->num_commande,
                     'commission_p' => 0,
