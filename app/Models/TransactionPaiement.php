@@ -66,6 +66,8 @@ class TransactionPaiement extends Model
         // Retrieve the secret key from the configuration file
         $secretKey = config('systempay.default.key');
 
+        unset($parameters['signature']);
+
         // Sort the parameters by name
         ksort($parameters);
 
