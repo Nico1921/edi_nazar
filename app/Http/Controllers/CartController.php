@@ -528,7 +528,9 @@ class CartController extends Controller
                         $paiement->set([
                             'amount' => $panier->total_ttc,
                             'trans_id' => $trans_id,
-                            'type_vente' => 2,
+                            'order_id' => $panier->num_commande,
+                            'ext_info_id_panier_edi' => $panier->id_panier_edi,
+                            'ext_info_type_vente' => 2,
                             'url_return' => url('/').'/dropshipping/cart/validation',
                             'url_cancel' => url('/').'/dropshipping/cart/validation',
                             'url_refused' => url('/').'/dropshipping/cart/validation',
@@ -558,6 +560,7 @@ class CartController extends Controller
     }
 
     public function confirmation_payment(Request $request){
+        Log::debug($request->all());
         $validator = Validator::make($request->all(), [
             'vads_order_id' => 'required|string',
             'vads_trans_id' => 'required|string',
@@ -572,6 +575,7 @@ class CartController extends Controller
         ]);
     
         if ($validator->fails()) {
+            Log::debug('Error Request');
             return response('Invalid Request', Response::HTTP_BAD_REQUEST);
         }
     

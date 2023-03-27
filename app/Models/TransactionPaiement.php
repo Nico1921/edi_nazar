@@ -69,20 +69,11 @@ class TransactionPaiement extends Model
         // Sort the parameters by name
         ksort($parameters);
 
-        // Concatenate the sorted parameters with the secret key
-        $concatenatedParameters = '';
-        foreach ($parameters as $name => $value) {
-            if ($name !== 'signature') {
-                $concatenatedParameters .= $name . '=' . $value . '+';
-            }
-        }
-        $concatenatedParameters .= $secretKey;
+        $message = implode('+', $parameters) . '+' . $secretKey;
 
-        // Hash the concatenated string using SHA-256
-        $hashedString = hash('sha256', $concatenatedParameters);
+        $computedSignature = base64_encode(hash_hmac('sha256', $message, $secretKey, true));
 
-        // Compare the computed signature with the one provided in the request
-        return $signature === $hashedString;
+        return $computedSignature === $signature;
     }
 
 
