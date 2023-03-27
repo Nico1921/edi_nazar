@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
 use Sebastienheyd\Systempay\Systempay;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends Controller
 {
@@ -557,10 +558,50 @@ class CartController extends Controller
     }
 
     public function confirmation_payment(Request $request){
-        Log::debug('Test ');
-        Log::debug($request->all());
-        return true;
+        $validator = Validator::make($request->all(), [
+            'vads_order_id' => 'required|string',
+            'vads_trans_id' => 'required|string',
+            'vads_trans_date' => 'required|date_format:YmdHis',
+            'vads_result' => 'required|in:00,02,05,17',
+            'vads_payment_config' => 'required|string',
+            'vads_site_id' => 'required|string',
+            'vads_auth_result' => 'required|string',
+            'vads_capture_delay' => 'required|integer',
+            'vads_payment_certificate' => 'required|string',
+            'signature' => 'required|string',
+        ]);
+    
+        if ($validator->fails()) {
+            return response('Invalid Request', Response::HTTP_BAD_REQUEST);
+        }
+    
+        $systempayParameters = $request->all();
+        $signature = $systempayParameters['signature'];
+    
+        // Check the signature
+        $isValidSignature = TransactionPaiement::verifySystempaySignature($systempayParameters, $signature);
+    
+        if (!$isValidSignature) {
+            Log::debug('Error Signature');
+            return response('Invalid Signature', Response::HTTP_BAD_REQUEST);
+        }
+    
+        // Check the status of the payment
+        $paymentStatus = $systempayParameters['vads_result'];
+    
+        if ($paymentStatus !== '00') {
+            Log::debug('Error payment not success');
+        }else{
+            Log::debug('Succes payment');
+        }
+    
+        // Payment successful
+        // ...
+    
+        return response('OK', Response::HTTP_OK);
     }
+
+   
 
     /**
     * Permet de confirmer la commande des clients en l'ajoutant aux commandes à préparer

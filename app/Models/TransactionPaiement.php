@@ -61,5 +61,29 @@ class TransactionPaiement extends Model
         return substr('edi'.md5(uniqid(mt_rand(), true)), 0, $l);
     }
 
+    public static function verifySystempaySignature(array $parameters, string $signature)
+    {
+        // Retrieve the secret key from the configuration file
+        $secretKey = config('systempay.key');
+
+        // Sort the parameters by name
+        ksort($parameters);
+
+        // Concatenate the sorted parameters with the secret key
+        $concatenatedParameters = '';
+        foreach ($parameters as $name => $value) {
+            if ($name !== 'signature') {
+                $concatenatedParameters .= $name . '=' . $value . '+';
+            }
+        }
+        $concatenatedParameters .= $secretKey;
+
+        // Hash the concatenated string using SHA-256
+        $hashedString = hash('sha256', $concatenatedParameters);
+
+        // Compare the computed signature with the one provided in the request
+        return $signature === $hashedString;
+    }
+
 
 }
