@@ -146,7 +146,7 @@ class CommandeMarketplace extends Model
         return $num_commande;
     }
 
-    public static function add_commande($etape,$id_panier_edi,$paymentType){
+    public static function add_commande($etape,$id_panier_edi,$paymentType,$id_distributeur){
         $clientsList = ClientEDI::where('id_panier_edi','=',$id_panier_edi)->get();
         $status = false;
         if(!empty($clientsList) && count($clientsList) > 0) {
@@ -213,8 +213,6 @@ class CommandeMarketplace extends Model
                     'is_relai' => '',
                  ]);
  
-                 $userLogin = User::find(Auth::id());
- 
                  $commandeMarketplace = CommandeMarketplace::create([
                     'id_user' => 0,
                     'id_user_maj' => 0,
@@ -253,7 +251,7 @@ class CommandeMarketplace extends Model
                     'date_envoie' => NULL,
                     'env_order' => 0,
                     'CGV' => 0,
-                    'id_distributeur' => $userLogin->id_client,
+                    'id_distributeur' => $id_distributeur,
                     'md5_commande' => '',
                     'ref_externe' => $clientOne->num_commande,
                     'commission_p' => 0,

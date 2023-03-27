@@ -524,6 +524,7 @@ class CartController extends Controller
                 if($panier->total_ttc > 0){
                     $trans_id = TransactionPaiement::generate_id_transaction();
                     if(!empty($trans_id)){
+                        $userLogin = User::find(Auth::id());
                         $paiement = new Systempay();
                         $paiement->set([
                             'amount' => $panier->total_ttc,
@@ -531,6 +532,7 @@ class CartController extends Controller
                             'order_id' => $panier->num_commande,
                             'ext_info_id_panier_edi' => $panier->id_panier_edi,
                             'ext_info_type_vente' => 2,
+                            'ext_info_id_distributeur' => $userLogin->id_client,
                             'url_return' => url('/').'/dropshipping/cart/validation',
                             'url_cancel' => url('/').'/dropshipping/cart/validation',
                             'url_refused' => url('/').'/dropshipping/cart/validation',
@@ -571,11 +573,13 @@ class CartController extends Controller
             'vads_capture_delay' => 'required|integer',
             'vads_ext_info_id_panier_edi' => 'required|integer',
             'vads_ext_info_type_vente' => 'required|integer',
+            'ext_info_id_distributeur' => 'required|integer',
             'signature' => 'required|string',
         ]);
     
         if ($validator->fails()) {
             Log::debug('Error Request');
+            Log::debug($request->all());
             return response('Invalid Request', Response::HTTP_BAD_REQUEST);
         }
     
@@ -599,19 +603,19 @@ class CartController extends Controller
             if(!empty($systempayParameters['vads_payment_certificate']) && $systempayParameters['vads_payment_certificate'] != null && is_string($systempayParameters['vads_payment_certificate'])){
                 if($systempayParameters['vads_ext_info_type_vente'] == 2){
                     $status = false;
-                    if(isset($systempayParameters['vads_ext_info_id_panier_edi']) && !empty($systempayParameters['vads_ext_info_id_panier_edi']) && isset($request->paymentType) && !empty($request->paymentType)){
-                        $status = CommandeMarketplace::add_commande(2,$systempayParameters['vads_ext_info_id_panier_edi'],2);
+                    if(isset($systempayParameters['vads_ext_info_id_panier_edi']) && !empty($systempayParameters['vads_ext_info_id_panier_edi']) ){
+                        $status = CommandeMarketplace::add_commande(2,$systempayParameters['vads_ext_info_id_panier_edi'],2,$systempayParameters['ext_info_id_distributeur']);
                     }
                   
                     if($status){
-                         Commande::create_facture($systempayParameters['vads_ext_info_id_panier_edi'],2);
+                         Commande::create_facture($systempayParameters['vads_ext_info_id_panier_edi'],2,$systempayParameters['ext_info_id_distributeur']);
                     }else{
                         Log::debug('Erreur Création Commande : '.$systempayParameters['vads_ext_info_id_panier_edi']);
                     }
                 }else{
                     $panierGet = PanierEdi::where('id_panier_edi', '=', $systempayParameters['vads_ext_info_id_panier_edi'])->first();
                     if(isset($panierGet->id_panier_edi) && $panierGet->id_panier_edi > 0){
-                        $status = Commande::create_facture($panierGet->id_panier_edi,2);
+                        $status = Commande::create_facture($panierGet->id_panier_edi,2,$systempayParameters['ext_info_id_distributeur']);
                         $panierEdi = PanierEdi::where('id_panier_edi', '=', $panierGet->id_panier_edi)->first();
                         $panierEdi->is_validate = 1;
                         $panierEdi->id_etape = 2;
@@ -643,12 +647,19 @@ class CartController extends Controller
     }else{
        $etape = 1;
     }
-    if(isset($panierMarketplace->id_panier_edi) && !empty($panierMarketplace->id_panier_edi) && isset($request->paymentType) && !empty($request->paymentType)){
-      $status = CommandeMarketplace::add_commande($etape,$panierMarketplace->id_panier_edi,$request->paymentType);
+    if($request->paymentType == 1){
+        if(isset($panierMarketplace->id_panier_edi) && !empty($panierMarketplace->id_panier_edi) && isset($request->paymentType) && !empty($request->paymentType)){
+            $userLogin = User::find(Auth::id());
+            $status = CommandeMarketplace::add_commande($etape,$panierMarketplace->id_panier_edi,$request->paymentType,$userLogin->id_client);
+          }
+    }else{
+        $status = CommandeMarketplace::add_commande(2,$panierMarketplace->id_panier_edi,2);
     }
+    
 
     if($status){
-       Commande::create_facture($panierMarketplace->id_panier_edi,$request->paymentType);
+        $userLogin = User::find(Auth::id());
+       Commande::create_facture($panierMarketplace->id_panier_edi,$request->paymentType,$userLogin->id_client);
        return ['status'=>$status,'num_commande' => $panierMarketplace->num_commande];
     }else{
        return ['status'=>$status];
@@ -665,7 +676,8 @@ class CartController extends Controller
         if($request->paymentType == 1){
             $etape = 1;
             if (isset($panierCommercial->id_panier_edi) && !empty($panierCommercial->id_panier_edi) && isset($request->paymentType) && !empty($request->paymentType)) {
-                $status = Commande::create_facture($panierCommercial->id_panier_edi,$request->paymentType);
+                $userLogin = User::find(Auth::id());
+                $status = Commande::create_facture($panierCommercial->id_panier_edi,$request->paymentType,$userLogin->id_client);
                 $panierEdi = PanierEdi::where('id_panier_edi', '=', $panierCommercial->id_panier_edi)->first();
                 $panierEdi->is_validate = 1;
                 $panierEdi->id_etape = $etape;

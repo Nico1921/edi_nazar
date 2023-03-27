@@ -76,10 +76,10 @@ class Commande extends Model
         return $num_commande;
     }
 
-    public static function create_facture($id_panier_edi,$paymentType = 1){
+    public static function create_facture($id_panier_edi,$paymentType = 1,$id_distributeur){
         $panier = PanierEdi::where('id_panier_edi','=',$id_panier_edi)->first();
         if(!empty($panier->id_panier_edi) && $panier->id_panier_edi > 0){
-            $id_client = User::with('client')->where('id','=',auth()->id())->first(); 
+            $id_client = User::with('client')->where('id','=',$id_distributeur)->first(); 
                         Adresse::create([
                             'date_ajout' => date('Y-m-d H:i:s'),
                             'date_maj' => date('Y-m-d H:i:s'),
