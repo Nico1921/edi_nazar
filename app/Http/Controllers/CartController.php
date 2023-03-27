@@ -560,7 +560,6 @@ class CartController extends Controller
     }
 
     public function confirmation_payment(Request $request){
-        Log::debug($request->all());
         $validator = Validator::make($request->all(), [
             'vads_order_id' => 'required|string',
             'vads_trans_id' => 'required|string',
@@ -570,7 +569,8 @@ class CartController extends Controller
             'vads_site_id' => 'required|string',
             'vads_auth_result' => 'required|string',
             'vads_capture_delay' => 'required|integer',
-            'vads_payment_certificate' => 'required|string',
+            'vads_ext_info_id_panier_edi' => 'required|integer',
+            'vads_ext_info_type_vente' => 'required|integer',
             'signature' => 'required|string',
         ]);
     
@@ -596,12 +596,25 @@ class CartController extends Controller
         if ($paymentStatus !== '00') {
             Log::debug('Error payment not success');
         }else{
-            Log::debug('Succes payment');
+            if(!empty($systempayParameters['vads_payment_certificate']) && $systempayParameters['vads_payment_certificate'] != null && is_string($systempayParameters['vads_payment_certificate'])){
+                $panierGet = PanierEdi::where('id_panier_edi', '=', $systempayParameters['vads_ext_info_id_panier_edi'])->first();
+                if(isset($panierGet->id_panier_edi) && $panierGet->id_panier_edi > 0){
+                    $status = Commande::create_facture($panierGet->id_panier_edi,2);
+                    $panierEdi = PanierEdi::where('id_panier_edi', '=', $panierGet->id_panier_edi)->first();
+                    $panierEdi->is_validate = 1;
+                    $panierEdi->id_etape = 2;
+                    $panierEdi->total_payer = $panierGet->total_ttc;
+                    $panierEdi->paymentType = 2;
+                    $panierEdi->date_commande = date('Y-m-d');
+                    $panierEdi->date_livraison = date('Y-m-d', strtotime('NOW + 14 DAYS'));
+                    $panierEdi->save();
+                }
+                
+            }else{
+                Log::debug('Erreur payment');
+            }
         }
-    
-        // Payment successful
-        // ...
-    
+
         return response('OK', Response::HTTP_OK);
     }
 
@@ -841,28 +854,30 @@ class CartController extends Controller
     {
         $panierCommercial = $request->session()->get('panier_commercial');
         $status = false;
-        if($request->paymentType == 2){
-            $etape = 2;
-         }else{
+        if($request->paymentType == 1){
             $etape = 1;
-         }
-        if (isset($panierCommercial->id_panier_edi) && !empty($panierCommercial->id_panier_edi) && isset($request->paymentType) && !empty($request->paymentType)) {
-            $status = Commande::create_facture($panierCommercial->id_panier_edi,$request->paymentType);
-            $panierEdi = PanierEdi::where('id_panier_edi', '=', $panierCommercial->id_panier_edi)->first();
-            $panierEdi->is_validate = 1;
-            $panierEdi->id_etape = $etape;
-            $panierEdi->date_commande = date('Y-m-d');
-            $panierEdi->date_livraison = ($request->paymentType == 2 ? date('Y-m-d', strtotime('NOW + 14 DAYS')) : '');
-            $panierEdi->save();
-        }
-
-        if ($status) {
-            $request->session()->forget('client_commercial');
-            $request->session()->forget('panier_commercial');
-            return ['status' => $status, 'num_commande' => $panierCommercial->num_commande];
-        } else {
+            if (isset($panierCommercial->id_panier_edi) && !empty($panierCommercial->id_panier_edi) && isset($request->paymentType) && !empty($request->paymentType)) {
+                $status = Commande::create_facture($panierCommercial->id_panier_edi,$request->paymentType);
+                $panierEdi = PanierEdi::where('id_panier_edi', '=', $panierCommercial->id_panier_edi)->first();
+                $panierEdi->is_validate = 1;
+                $panierEdi->id_etape = $etape;
+                $panierEdi->paymentType = $request->paymentType;
+                $panierEdi->date_commande = date('Y-m-d');
+                $panierEdi->date_livraison = ($request->paymentType == 2 ? date('Y-m-d', strtotime('NOW + 14 DAYS')) : '');
+                $panierEdi->save();
+            }
+    
+            if ($status) {
+                $request->session()->forget('client_commercial');
+                $request->session()->forget('panier_commercial');
+                return ['status' => $status, 'num_commande' => $panierCommercial->num_commande];
+            } else {
+                return ['status' => $status];
+            }
+        }else {
             return ['status' => $status];
         }
+        
     }
 
     public function create_adresse_drop(Request $request){
