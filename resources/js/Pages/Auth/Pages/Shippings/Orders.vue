@@ -99,7 +99,7 @@ export default {
 
    <section class="container mx-auto px-2 mt-5">
 
-      <div v-if="usePage().props.value.session.messageValidation" class="w-full bg-green-200 px-4 py-2 rounded flex items-center mb-4">
+      <div v-if="usePage().props.value.session.messageValidation != undefined" class="w-full bg-green-200 px-4 py-2 rounded flex items-center mb-4">
          <CheckCircleIcon class="h-8 w-8 text-green-600" />
          <span class="pl-2 text-green-600">{{usePage().props.value.session.messageValidation}}</span>
       </div> 
