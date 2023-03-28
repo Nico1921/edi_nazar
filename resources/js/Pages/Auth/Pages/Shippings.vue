@@ -248,7 +248,7 @@
                   {{panier.total_HT}}
                </td> 
                <td data-label="DATE LIVRAISON ESTIMER" class="lg:table-cell hidden text-sm py-4 2xl:px-6 sm:px-5 px-6 lg:text-center text-gray-500 whitespace-nowrap">
-                  {{(panier.date_livraison != null ? formatDate(panier.date_livraison) : 'Pas encore de date')}}
+                  {{(panier.date_livraison != null && panier.date_livraison != '0000-00-00' ? formatDate(panier.date_livraison) : 'Pas encore de date')}}
                </td> 
                <td data-label="STATUT COMMANDE" class="2xl:table-cell hidden text-sm py-4 2xl:px-5 sm:px-5 px-6text-gray-500 whitespace-nowrap">
                   {{(panier.is_validate ? 'Commande finalisée' : 'Commande non finalisée')}}

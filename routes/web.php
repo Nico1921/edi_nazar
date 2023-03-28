@@ -99,6 +99,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::post('/dropshipping/clients/edit', [DropshippingController::class, 'edit_order_client'])->name('orders/clients/edit');
 
       Route::get('/dropshipping/cart', [CartController::class, 'create'])->name('dropshipping/cart');
+      Route::get('/dropshipping/cart/payment/cb/valid', [CartController::class, 'redirect_cb_validation_drop'])->name('dropshipping/cart/payment/cb/valid');
       Route::middleware(['check-panier-drop'])->group(function () {
          Route::post('/dropshipping/cart/products/edit', [CartController::class, 'edit_qte_drop'])->name('dropshipping/cart/products/edit');
          Route::post('/dropshipping/cart/products/delete', [CartController::class, 'delete_card_product_drop'])->name('dropshipping/cart/products/delete');
@@ -106,7 +107,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
          Route::get('/dropshipping/cart/adresses', [CartController::class, 'create_adresse_drop'])->name('dropshipping/cart/adresses');
          Route::post('/dropshipping/cart/adresses', [CartController::class, 'add_adresse_commande_drop'])->name('dropshipping/cart/adresses');
          Route::post('/dropshipping/cart/payment/cb', [CartController::class, 'generate_form_payment_cb_drop'])->name('dropshipping/cart/payment/cb');
-         Route::get('/dropshipping/cart/payment/cb/valid', [CartController::class, 'redirect_cb_validation_drop'])->name('dropshipping/cart/payment/cb/valid');
          Route::get('/dropshipping/cart/payment/cb/error', [CartController::class, 'redirect_cb_error_drop'])->name('dropshipping/cart/payment/cb/error');
          Route::get('/dropshipping/cart/validation', [CartController::class, 'create_adresses_validation_drop'])->name('dropshipping/cart/validation');
          Route::post('/dropshipping/cart/validation/order', [CartController::class, 'confirmation_order_clients_drop'])->name('dropshipping/cart/validation/order');

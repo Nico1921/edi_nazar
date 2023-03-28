@@ -644,13 +644,14 @@ class CartController extends Controller
 
     public function redirect_cb_validation_drop(Request $request){
         $message = "Votre commande a été validée avec succès. Vous pouvez retrouver toutes les informations la concernant sur cette page.";
+        
         if($request->session()->has('panier_mkp')){
             $panier = PanierEdi::where('id_panier_edi','=',$request->session()->get('panier_mkp')->id_panier_edi)->first();
             $request->session()->forget('client_actuel');
             $request->session()->forget('panier_mkp');
             return redirect('/shippings/order/clients/'.$panier->num_commande)->with(['messageValidation' => $message]);
         }else{
-            redirect('/');
+            return redirect('/');
         }
     }
 
@@ -659,7 +660,7 @@ class CartController extends Controller
         if($request->session()->has('panier_mkp')){
             return redirect('/dropshipping/cart')->with(['messageError' => $message]);
         }else{
-            redirect('/');
+            return redirect('/');
         }
     }
 
