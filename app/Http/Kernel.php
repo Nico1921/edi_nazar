@@ -69,6 +69,6 @@ class Kernel extends HttpKernel
         'type-entrepot' => \App\Http\Middleware\TypeEntrepot::class,
         'type-client' => \App\Http\Middleware\TypeClients::class,
         'check-panier-drop' => \App\Http\Middleware\CheckPanierDropValide::class,
-        'check-panier-entrepot' => \App\Http\Middleware\CheckPanierEntrepotValide::class,
+        'check-panier-com' => \App\Http\Middleware\CheckPanierEntrepotValide::class,
     ];
 }

@@ -8,7 +8,6 @@ import CartDropshipping from '@/Components/CartDropshipping.vue';
 import { ref, watchEffect } from 'vue';
 
 const props = defineProps(['panier', 'produits']);
-console.log(usePage().props.value.session);
 
 var produits = ref(usePage().props.value.Panier.panier.panier);
 var panierDrop = ref(usePage().props.value.PanierDrop);

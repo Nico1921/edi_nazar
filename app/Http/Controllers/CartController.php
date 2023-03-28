@@ -498,8 +498,8 @@ class CartController extends Controller
                             'ext_info_id_distributeur' => Auth::id(),
                             'url_return' => url('/').'/cart/validation',
                             'url_cancel' => url('/').'/cart/validation',
-                            'url_refused' => url('/').'/cart/validation',
-                            'url_success' => url('/').'/shippings/order/clients/'.$panier->num_commande,
+                            'url_refused' => url('/').'/cart/payment/cb/error',
+                            'url_success' => url('/').'/cart/payment/cb/valid',
                             'url_check' => url('/').'/cart/validation/payment',
                         ]);
                         $html = $paiement->render();
@@ -661,6 +661,28 @@ class CartController extends Controller
         $message = "La commande n'a pas pu être payée en raison d'une erreur. Veuillez réessayer ultérieurement. Si l'erreur persiste, veuillez vérifier que vous disposez des fonds suffisants pour effectuer le paiement.";
         if($request->session()->has('panier_mkp')){
             return redirect('/dropshipping/cart')->with(['messageError' => $message]);
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function redirect_cb_validation_com(Request $request){
+        $message = "Votre commande a été validée avec succès. Vous pouvez retrouver toutes les informations la concernant sur cette page.";
+        
+        if($request->session()->has('panier_commercial')){
+            $panier = PanierEdi::where('id_panier_edi','=',$request->session()->get('panier_commercial')->id_panier_edi)->first();
+            $request->session()->forget('client_commercial');
+            $request->session()->forget('panier_commercial');
+            return redirect('/shippings/order/clients/'.$panier->num_commande)->with(['messageValidation' => $message]);
+        }else{
+            return redirect('/');
+        }
+    }
+
+    public function redirect_cb_error_com(Request $request){
+        $message = "La commande n'a pas pu être payée en raison d'une erreur. Veuillez réessayer ultérieurement. Si l'erreur persiste, veuillez vérifier que vous disposez des fonds suffisants pour effectuer le paiement.";
+        if($request->session()->has('panier_commercial')){
+            return redirect('/cart')->with(['messageError' => $message]);
         }else{
             return redirect('/');
         }

@@ -59,13 +59,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::post('/order_entrepot/panier/import', [OrderEntrepotController::class, 'import_panier_commande'])->name('order_entrepot/panier/import');
 
       Route::get('/cart', [CartController::class, 'create'])->name('cart');
-      Route::post('/cart/products/edit', [CartController::class, 'edit_qte'])->name('cart/products/edit');
-      Route::post('/cart/products/delete', [CartController::class, 'delete_card_product'])->name('cart/products/delete');
-      Route::get('/cart/adresses', [CartController::class, 'create_adresses'])->name('cart/adresses');
-      Route::post('/cart/adresses', [CartController::class, 'add_adresse_commande'])->name('cart/adresses');
-      Route::post('/cart/payment/cb', [CartController::class, 'generate_form_payment_cb'])->name('cart/payment/cb');
-      Route::get('/cart/adresses/validation', [CartController::class, 'create_adresses_validation'])->name('cart/adresses/validation');
-      Route::post('/cart/adresses/validation/order', [CartController::class, 'confirmation_panier_com'])->name('cart/adresses/validation/order');
+      Route::get('/cart/payment/cb/valid', [CartController::class, 'redirect_cb_validation_com'])->name('cart/payment/cb/valid');
+      Route::middleware(['check-panier-com'])->group(function () {
+         Route::post('/cart/products/edit', [CartController::class, 'edit_qte'])->name('cart/products/edit');
+         Route::post('/cart/products/delete', [CartController::class, 'delete_card_product'])->name('cart/products/delete');
+         Route::get('/cart/adresses', [CartController::class, 'create_adresses'])->name('cart/adresses');
+         Route::post('/cart/adresses', [CartController::class, 'add_adresse_commande'])->name('cart/adresses');
+         Route::post('/cart/payment/cb', [CartController::class, 'generate_form_payment_cb'])->name('cart/payment/cb');
+         Route::get('/cart/payment/cb/error', [CartController::class, 'redirect_cb_error_com'])->name('cart/payment/cb/error');
+         Route::get('/cart/adresses/validation', [CartController::class, 'create_adresses_validation'])->name('cart/adresses/validation');
+         Route::post('/cart/adresses/validation/order', [CartController::class, 'confirmation_panier_com'])->name('cart/adresses/validation/order');
+      });
    });
 
    Route::get('/dropshipping', [DropshippingController::class, 'create_type_vente'])->name('dropshipping');
