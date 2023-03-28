@@ -488,11 +488,11 @@
 </template>
 
 <style>
-  ol {
+  .first-list {
     counter-reset: section;
     list-style-type: none;
   }
-  li::before {
+  .first-list li::before {
     counter-increment: section;
     content: counters(section, ".") " - ";
   }
