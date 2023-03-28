@@ -8,6 +8,7 @@ import CartDropshipping from '@/Components/CartDropshipping.vue';
 import { ref, watchEffect } from 'vue';
 
 const props = defineProps(['panier', 'produits']);
+console.log(usePage().props.value);
 
 var produits = ref(usePage().props.value.Panier.panier.panier);
 var panierDrop = ref(usePage().props.value.PanierDrop);
@@ -22,7 +23,7 @@ watchEffect(() => {
 </script>
 <script >
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { ExclamationCircleIcon } from '@heroicons/vue/20/solid';
+import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 export default {
    // Using a render function
    layout: (h, page) => h(AuthenticatedLayout, () => child),
@@ -44,7 +45,11 @@ export default {
          <div class="xl:col-span-1 col-span-4">
             <EtapeOrder :etape="1" :nbEtape="3" :listeEtape="listeEtape" />
          </div>
-         <div class="xl:col-span-2 lg:col-span-3 col-span-4 flex flex-col items-start justify-center">
+         <div class="xl:col-span-2 lg:col-span-3 col-span-4 flex flex-col items-start mt-2">
+            <div v-if="usePage().props.value.session.messageError" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
+               <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
+               <span class="pl-2 text-red-600">{{usePage().props.value.session.messageError}}</span>
+            </div>  
             <div v-if="(!panierDrop.panier.panier_valid && typeVente == 2) " class="w-full bg-yellow-200 px-4 py-2 rounded flex items-center">
                <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
                <span class="pl-2 text-yellow-600">Pour continuer, veuillez ajouter au minimum un produit pour chaque commande.</span>

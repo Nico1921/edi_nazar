@@ -1,5 +1,5 @@
 <script setup>
-import { Head,Link } from '@inertiajs/inertia-vue3';
+import { Head,usePage } from '@inertiajs/inertia-vue3';
 import { createApp } from 'vue';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel,TransitionRoot,TransitionChild } from '@headlessui/vue';
 import DisplayOrder from '@/Components/DisplayOrder.vue';
@@ -83,6 +83,7 @@ import Plus from 'icons/Plus.vue';
 import Minus from 'icons/Minus.vue';
 import Bill from 'icons/Receipt.vue';
 import ImagesIcon from 'icons/Image.vue';
+import { CheckCircleIcon } from '@heroicons/vue/20/solid';
 
 export default {
    // Using a render function
@@ -97,6 +98,11 @@ export default {
    <Head :title="'Commande N°'+props.order.num_commande" />
 
    <section class="container mx-auto px-2 mt-5">
+
+      <div v-if="usePage().props.value.session.messageValidation" class="w-full bg-green-200 px-4 py-2 rounded flex items-center">
+         <CheckCircleIcon class="h-8 w-8 text-green-600" />
+         <span class="pl-2 text-green-600">{{usePage().props.value.session.messageValidation}}</span>
+      </div> 
 
       <div class="p-4 bg-primary-50">
          <h1 class="lg:text-xl text-lg font-bold">Commande n°{{props.order.num_commande}}</h1>

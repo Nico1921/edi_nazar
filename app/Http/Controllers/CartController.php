@@ -543,8 +543,8 @@ class CartController extends Controller
                             'ext_info_id_distributeur' => Auth::id(),
                             'url_return' => url('/').'/dropshipping/cart/validation',
                             'url_cancel' => url('/').'/dropshipping/cart/validation',
-                            'url_refused' => url('/').'/dropshipping/cart/validation',
-                            'url_success' => url('/').'/shippings/order/clients/'.$panier->num_commande,
+                            'url_refused' => url('/').'/dropshipping/cart/payment/cb/error',
+                            'url_success' => url('/').'/dropshipping/cart/payment/cb/valid',
                             'url_check' => url('/').'/cart/validation/payment',
                         ]);
                         $html = $paiement->render();
@@ -642,6 +642,27 @@ class CartController extends Controller
         return response('OK', Response::HTTP_OK);
     }
 
+    public function redirect_cb_validation_drop(Request $request){
+        $message = "Votre commande a été validée avec succès. Vous pouvez retrouver toutes les informations la concernant sur cette page.";
+        if($request->session()->has('panier_mkp')){
+            $panier = PanierEdi::where('id_panier_edi','=',$request->session()->get('panier_mkp')->id_panier_edi)->first();
+            $request->session()->forget('client_actuel');
+            $request->session()->forget('panier_mkp');
+            return redirect('/shippings/order/clients/'.$panier->num_commande)->with(['messageValidation' => $message]);
+        }else{
+            redirect('/');
+        }
+    }
+
+    public function redirect_cb_error_drop(Request $request){
+        $message = "La commande n'a pas pu être payée en raison d'une erreur. Veuillez réessayer ultérieurement. Si l'erreur persiste, veuillez vérifier que vous disposez des fonds suffisants pour effectuer le paiement.";
+        if($request->session()->has('panier_mkp')){
+            return redirect('/dropshipping/cart')->with(['messageError' => $message]);
+        }else{
+            redirect('/');
+        }
+    }
+
    
 
     /**
@@ -666,6 +687,8 @@ class CartController extends Controller
 
     if($status){
        Commande::create_facture($panierMarketplace->id_panier_edi,$request->paymentType,Auth::id());
+       $request->session()->forget('client_actuel');
+       $request->session()->forget('panier_mkp');
        return ['status'=>$status,'num_commande' => $panierMarketplace->num_commande];
     }else{
        return ['status'=>$status];
