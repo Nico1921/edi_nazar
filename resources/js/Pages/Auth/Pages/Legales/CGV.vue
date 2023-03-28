@@ -25,6 +25,8 @@
             Conditions de Vente ») établissent les termes
             conformément auxquels nous fournissons les
             produits (« Produit » ou « Produits »).
+         </p>
+         <p>
             Lisez attentivement les présentes Conditions de
             Vente avant de commander les Produits de
             notre marque.
@@ -488,11 +490,11 @@
 </template>
 
 <style>
-  .first-list {
+  .first-list, .first-list ol {
     counter-reset: section;
     list-style-type: none;
   }
-  .first-list li::before {
+  .first-list  li::before {
     counter-increment: section;
     content: counters(section, ".") " - ";
   }
