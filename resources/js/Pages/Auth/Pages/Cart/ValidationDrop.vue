@@ -59,24 +59,31 @@ var verifCheck = (e,type) => {
     if(e.target.checked){
       paymentType.value = type;
       if(type == 2){
-         axios.post('/dropshipping/cart/payment/cb',{paymentType: paymentType.value}).then((response) => {
-           if(response.status == 200){
-            if(response.data.statut){
-               document.getElementById('paymentCB').innerHTML =response.data.formpay;
-            }else{
-               Toast.fire({
-               icon: 'error',
-               title: response.data.msg
+         console.log(document.getElementById('paymentCB').innerHTML);
+         if(document.getElementById('paymentCB').innerHTML === ''){
+            axios.post('/dropshipping/cart/payment/cb',{paymentType: paymentType.value}).then((response) => {
+               if(response.status == 200){
+                  if(response.data.statut){
+                     document.getElementById('paymentCB').innerHTML =response.data.formpay;
+                     document.getElementById('submitPayButton').classList.add('text-blue-900','bg-blue-100','hover:bg-blue-200','border', 
+                     'border-blue-200', 'focus:ring-4', 'focus:outline-none', 'focus:ring-blue-100', 'font-medium', 'rounded-lg', 'text-sm', 
+                     'px-5', 'py-4', 'text-center', 'inline-flex', 'items-center', 'mr-2',
+                      'mb-2', 'transition', 'duration-300');
+                  }else{
+                     Toast.fire({
+                     icon: 'error',
+                     title: response.data.msg
+                  });
+                  }
+                  console.log(response);
+               }else {
+                  Toast.fire({
+                     icon: 'error',
+                     title: 'Une erreur s\'est produite lors de la génération du formulaire de paiement, veuillez ressayer !'
+                  });
+               };
             });
-            }
-            console.log(response);
-           }else {
-            Toast.fire({
-               icon: 'error',
-               title: 'Une erreur s\'est produite lors de la génération du formulaire de paiement, veuillez ressayer !'
-            });
-         };
-         });
+         } 
       }
     }else{
       paymentType.value = 0;
@@ -200,10 +207,10 @@ export default {
                      <label for="paymentVirement" class="ml-2 text-lg font-medium text-gray-900 ">Paiement par Virement Bancaire</label>
                   </div>
                </form>
-               <div id="paymentCB">
+               <div v-show="paymentType == 2" id="paymentCB" class="flex items-center justify-center mb-5">
 
                </div>
-               <div class="flex justify-center mb-5">
+               <div v-if="paymentType == 1 || paymentType == 0" class="flex justify-center mb-5">
                   <button :disabled="(paymentType == 0 ? true : false)" @click="validationCommande" type="button" class="p-2 border border-primary-300 rounded bg-primary-50 
                      hover:bg-primary-100 transition duration-300 disabled:cursor-not-allowed disabled:bg-primary-200">Finaliser la commande</button>
                </div>

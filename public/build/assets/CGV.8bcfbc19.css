@@ -1,0 +1,1 @@
+ol{counter-reset:section;list-style-type:none}li:before{counter-increment:section;content:counters(section,".") " - "}.first-list>li{font-weight:700;margin-top:1rem;font-size:1.2rem}.first-list>li>ol>li{font-weight:lighter;margin-top:.5rem;font-size:1rem}
