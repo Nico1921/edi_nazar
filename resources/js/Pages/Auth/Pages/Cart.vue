@@ -13,6 +13,7 @@ var produits = ref(usePage().props.value.Panier.panier.panier);
 var panierDrop = ref(usePage().props.value.PanierDrop);
 var typeVente = ref(usePage().props.value.session.typeVente);
 
+
 var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
 watchEffect(() => {
 	produits.value = usePage().props.value.Panier.panier.panier;
@@ -46,6 +47,11 @@ export default {
          </div>
          <div class="xl:col-span-2 lg:col-span-3 col-span-4 flex flex-col items-start mt-2">
             <div v-if="usePage().props.value.session.messageError != undefined" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
+               <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
+               <span class="pl-2 text-red-600">{{usePage().props.value.session.messageError}}</span>
+            </div>
+            {{  }}
+            <div v-if="panierDrop.panier.panierActuel != undefined " class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
                <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
                <span class="pl-2 text-red-600">{{usePage().props.value.session.messageError}}</span>
             </div>  

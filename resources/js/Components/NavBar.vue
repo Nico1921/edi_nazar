@@ -305,6 +305,9 @@ export default {
 							<PopoverPanel @mouseenter="onMouseEnter(open)" @mouseleave="onMouseLeave(open)"
 								class="absolute z-[80] right-0 mt-2 w-72 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 								<div class="max-h-80 overflow-auto scrollbarCustom">
+									<div class="col-span-6 flex items-center justify-center mb-1 bg-primary-50">
+											<span class="font-bold text-lg">{{ typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping'}}</span>
+										</div>
 									<div class="z-[80] relative px-1 py-1 grid grid-cols-6" v-if="typeVente == 1 && panier != undefined" v-for="(produit, key) in panier" :key="key">
 										<div class="col-span-1 flex items-center justify-center">
 											<div v-if="produit.photo.img_produit != null"
@@ -348,7 +351,7 @@ export default {
 										</div>
 									</div>
 									<div class="z-[80] relative px-1 py-1" v-else-if="typeVente == 2 && panierDrop.panier.clients != undefined && panierDrop.count > 0" v-for="(client, keyDrop) in panierDrop.panier.clients" :key="keyDrop">
-											<div class="flex flex-col items-center justify-center" v-if="client.nbProduit > 0">
+										<div class="flex flex-col items-center justify-center" v-if="client.nbProduit > 0">
 												<span class="font-bold text-left w-full">Commande : {{ client.client.ref_externe }}</span>
 												<div class="ml-4 mt-1 grid grid-cols-6" v-for="(produit, keyProduit) in client.produits" :key="keyProduit">
 													<div class="col-span-1 flex items-center justify-center">
