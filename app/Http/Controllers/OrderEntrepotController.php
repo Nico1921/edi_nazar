@@ -256,6 +256,7 @@ class OrderEntrepotController extends Controller
      */
     public function add_product_commande(Request $request)
     {
+        $message ='';
         if (!$request->session()->has('panier_commercial')) {
             $num_commande = PanierEdi::generateNumOrder();
             $panier = PanierEdi::create([
@@ -341,7 +342,7 @@ class OrderEntrepotController extends Controller
         }
         $status = false;
         $id_panier_edi_list = 0;
-        if (!empty($request->idProduit) && !empty($request->quantiter) && !empty($client)) {
+        if (!$panier->is_validate && !empty($request->idProduit) && !empty($request->quantiter) && !empty($client)) {
             if (isset($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0) {
                 $panierList = PanierEdiList::where('id_panier_edi_list', '=', $request->id_panier_edi_list)->first();
                 if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
@@ -392,10 +393,16 @@ class OrderEntrepotController extends Controller
                     }
                 }
             }
+        }else{
+            if($panier->is_validate){
+                $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+            }else{
+                $message = "Une erreur c'est produit lors de l'ajout du produit."; 
+            }
         }
         $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $panier->id_panier_edi)->first();
         $request->session()->put('panier_commercial', $panierGet);
-        return redirect()->back()->with(['status' => $status, 'id_panier_edi_list' => $id_panier_edi_list]);
+        return redirect()->back()->with(['status' => $status, 'id_panier_edi_list' => $id_panier_edi_list, 'message' => $message]);
     }
 
     /**
@@ -403,20 +410,30 @@ class OrderEntrepotController extends Controller
      */
     public function delete_product_commande(Request $request) {
         $status = false;
+        $message = '';
         if(!empty($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0){
            $panierList = PanierEdiList::where('id_panier_edi_list','=',$request->id_panier_edi_list)->first();
            if(isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)){
-              $client = ClientEDI::where('id_client_edi','=',$panierList->id_client_edi)->first();
-              $panierList->forceDelete();
-              PanierEdi::calculPrixPanier($client->id_panier_edi);
-              ClientEDI::calculPrixPanier($client->id_client_edi);
-              $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();
-              $request->session()->put('panier_commercial', $panierGet);
-              $status = true;
+             $client = ClientEDI::where('id_client_edi','=',$panierList->id_client_edi)->first();  
+             $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();  
+            if(!$panier->is_validate){
+                $panierList->forceDelete();
+                PanierEdi::calculPrixPanier($client->id_panier_edi);
+                ClientEDI::calculPrixPanier($client->id_client_edi);
+                $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();
+                $request->session()->put('panier_commercial', $panierGet);
+                $status = true;
+            }else{
+                if($panier->is_validate){
+                    $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                }else{
+                    $message = "Une erreur c'est produit lors de la supression du produit du panier"; 
+                }
+            }
            }
         }
   
-        return redirect()->back()->with(['status'=>$status]);
+        return redirect()->back()->with(['status'=>$status,'message' => $message]);
     }
 
     public function import_panier_commande(Request $request)

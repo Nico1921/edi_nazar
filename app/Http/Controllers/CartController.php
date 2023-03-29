@@ -55,19 +55,24 @@ class CartController extends Controller
             if(isset($stock->stock_restant) && $stock->stock_restant > $request->quantiter) {
                 if (isset($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0) {
                     $panierList = PanierEdiList::where('id_panier_edi_list', '=', $request->id_panier_edi_list)->first();
-                    if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
-                        $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
-                        $prix_HT_TT = round($prix_TTC_TT / 1.2,2);;
-                        $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
-                        $panierList->quantiter = $request->quantiter;
-                        $panierList->prix_ttc_total = $prix_TTC_TT;
-                        $panierList->prix_taxe_total = $prix_TVA_TT;
-                        $panierList->prix_ht_total = $prix_HT_TT;
-                        $panierList->save();
-                        PanierEdi::calculPrixPanier($request->id_panier_edi);
-                        ClientEDI::calculPrixPanier($request->id_client_edi);
-                        $status = true;
-                        $id_panier_edi_list = $panierList->id_panier_edi_list;
+                    $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();  
+                    if(!$panier->is_validate){
+                        if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
+                            $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
+                            $prix_HT_TT = round($prix_TTC_TT / 1.2,2);;
+                            $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
+                            $panierList->quantiter = $request->quantiter;
+                            $panierList->prix_ttc_total = $prix_TTC_TT;
+                            $panierList->prix_taxe_total = $prix_TVA_TT;
+                            $panierList->prix_ht_total = $prix_HT_TT;
+                            $panierList->save();
+                            PanierEdi::calculPrixPanier($request->id_panier_edi);
+                            ClientEDI::calculPrixPanier($request->id_client_edi);
+                            $status = true;
+                            $id_panier_edi_list = $panierList->id_panier_edi_list;
+                        }
+                    }else{
+                        $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
                     }
                 } 
             }else{
@@ -88,19 +93,24 @@ class CartController extends Controller
             if(isset($stock->stock_restant) && $stock->stock_restant > $request->quantiter) {
                 if (isset($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0) {
                     $panierList = PanierEdiList::where('id_panier_edi_list', '=', $request->id_panier_edi_list)->first();
-                    if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
-                        $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
-                        $prix_HT_TT = round($prix_TTC_TT / 1.2,2);;
-                        $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
-                        $panierList->quantiter = $request->quantiter;
-                        $panierList->prix_ttc_total = $prix_TTC_TT;
-                        $panierList->prix_taxe_total = $prix_TVA_TT;
-                        $panierList->prix_ht_total = $prix_HT_TT;
-                        $panierList->save();
-                        PanierEdi::calculPrixPanier($request->id_panier_edi);
-                        ClientEDI::calculPrixPanier($request->id_client_edi);
-                        $status = true;
-                        $id_panier_edi_list = $panierList->id_panier_edi_list;
+                    $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();  
+                    if(!$panier->is_validate){
+                        if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
+                            $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
+                            $prix_HT_TT = round($prix_TTC_TT / 1.2,2);;
+                            $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
+                            $panierList->quantiter = $request->quantiter;
+                            $panierList->prix_ttc_total = $prix_TTC_TT;
+                            $panierList->prix_taxe_total = $prix_TVA_TT;
+                            $panierList->prix_ht_total = $prix_HT_TT;
+                            $panierList->save();
+                            PanierEdi::calculPrixPanier($request->id_panier_edi);
+                            ClientEDI::calculPrixPanier($request->id_client_edi);
+                            $status = true;
+                            $id_panier_edi_list = $panierList->id_panier_edi_list;
+                        }
+                    }else{
+                        $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
                     }
                 } 
             }else{
@@ -115,39 +125,59 @@ class CartController extends Controller
     public function delete_card_product(Request $request)
     {
         $status = false;
+        $message = '';
         if(!empty($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0){
            $panierList = PanierEdiList::where('id_panier_edi_list','=',$request->id_panier_edi_list)->first();
            if(isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)){
               $client = ClientEDI::where('id_client_edi','=',$panierList->id_client_edi)->first();
-              $panierList->forceDelete();
-              PanierEdi::calculPrixPanier($client->id_panier_edi);
-              ClientEDI::calculPrixPanier($client->id_client_edi);
-              $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();
-              $request->session()->put('panier_commercial', $panierGet);
-              $status = true;
+              $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();  
+              if(!$panier->is_validate){
+                $panierList->forceDelete();
+                PanierEdi::calculPrixPanier($client->id_panier_edi);
+                ClientEDI::calculPrixPanier($client->id_client_edi);
+                $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();
+                $request->session()->put('panier_commercial', $panierGet);
+                $status = true;
+            }else{
+                if($panier->is_validate){
+                    $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                }else{
+                    $message = "Une erreur c'est produit lors de la supression du produit du panier"; 
+                }
+            }
            }
         }
 
-        return redirect()->back()->with(['status'=>$status]);
+        return redirect()->back()->with(['status'=>$status,'message' => $message]);
     }
 
     public function delete_card_product_drop(Request $request)
     {
         $status = false;
+        $message = '';
         if(!empty($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0){
            $panierList = PanierEdiList::where('id_panier_edi_list','=',$request->id_panier_edi_list)->first();
            if(isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)){
               $client = ClientEDI::where('id_client_edi','=',$panierList->id_client_edi)->first();
-              $panierList->forceDelete();
-              PanierEdi::calculPrixPanier($client->id_panier_edi);
-              ClientEDI::calculPrixPanier($client->id_client_edi);
-              $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();
-              $request->session()->put('panier_mkp', $panierGet);
-              $status = true;
+              $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();  
+              if(!$panier->is_validate){
+                $panierList->forceDelete();
+                PanierEdi::calculPrixPanier($client->id_panier_edi);
+                ClientEDI::calculPrixPanier($client->id_client_edi);
+                $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();
+                $request->session()->put('panier_mkp', $panierGet);
+                $status = true;
+              }else{
+                if($panier->is_validate){
+                    $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                }else{
+                    $message = "Une erreur c'est produit lors de la supression du produit du panier"; 
+                }
+            }
            }
         }
 
-        return redirect()->back()->with(['status'=>$status]);
+        return redirect()->back()->with(['status'=>$status,'message' => $message]);
     }
 
     /**

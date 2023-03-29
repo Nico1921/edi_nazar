@@ -127,7 +127,7 @@ var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
                } else {
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit du panier'
+                     title: e.props.session.message
                   });
                }
 
@@ -164,7 +164,7 @@ var deleteCommandeDrop = (id_panier_edi_list) =>{
                }else{
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
+                     title: e.props.session.message
                   });
                }
                
@@ -172,6 +172,41 @@ var deleteCommandeDrop = (id_panier_edi_list) =>{
          });
       }
    });
+};
+
+var modifQteDrop = (e,nomProduit) => {
+   e.preventDefault();
+
+   var form = findElementInClassArray(e.path, 'editQteForm');
+   if (form != undefined) {
+      var formData = new FormData(form);
+      const formProduit = useForm({
+         idProduit: formData.get("id_produit"),
+         quantiter: formData.get("qte"),
+         id_panier_edi_list: formData.get("id_panier_edi_list"),
+         id_panier_edi: formData.get("id_panier_edi"),
+         id_client_edi: formData.get("id_client_edi"),
+      });
+
+      formProduit.post('/dropshipping/cart/products/edit', {
+         preserveScroll: true,
+         preserveState: true,
+         onSuccess: (e) => {
+            if (e.props.session.status) {
+               Toast.fire({
+                  icon: 'success',
+                  title: 'La quantiter du produit '+nomProduit+' à bien été modifier'
+               });
+            } else {
+               Toast.fire({
+                  icon: 'error',
+                  title: e.props.session.message
+               });
+            }
+
+         },
+      });
+   }
 };
 
 var confirmChangeTypeVente = () => {
@@ -372,7 +407,7 @@ export default {
 												<div class="col-span-2 flex items-center justify-evenly">
 													<div class="col-span-2 h-full">
 														<form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm">
-															<InputNumber @change="modifQte($event, produit.design.nom_design + produit.dimension.largeur + 'x' + produit.dimension.longueur)" name="qte"
+															<InputNumber @change="modifQteDrop($event, produit.design.nom_design + produit.dimension.largeur + 'x' + produit.dimension.longueur)" name="qte"
 																:max="produit.stats_produit.stock_restant"
 																:value="(produit.panier.quantiter > 0 ? produit.panier.quantiter : 1)" />
 															<input type="hidden" name="id_produit" :value="produit.id_produit" />
@@ -380,7 +415,7 @@ export default {
 																:value="(produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0)" />
 															<input type="hidden" name="key_tab" :value="key" />
 															<input type="hidden" name="id_panier_edi"
-																:value="(produit.id_panier_edi != undefined ? produit.id_panier_edi : 0)" />
+																:value="(produit.panierActuel.id_panier_edi != undefined ? produit.panierActuel.id_panier_edi : 0)" />
 															<input type="hidden" name="id_client_edi"
 																:value="(produit.panier.id_client_edi != undefined ? produit.panier.id_client_edi : 0)" />
 														</form>

@@ -133,7 +133,7 @@ var deleteCommande = (id_panier_edi_list,key) =>{
                }else{
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
+                     title: e.props.session.message
                   });
                }
                

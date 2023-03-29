@@ -74,6 +74,7 @@ class HandleInertiaRequests extends Middleware
                                     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
                                     $produit[$i]->gamme = $gamme;
                                     $produit[$i]->panier = $panier;
+                                    $produit[$i]->panierActuel = $panierGet;
                                     $produit[$i]->id_panier_edi = $request->session()->get('panier_commercial')->id_panier_edi;
                                     $produit[$i]->isInPanier = true;
                                     $produitsAchat->panier[] = $produit[$i];
@@ -116,6 +117,7 @@ class HandleInertiaRequests extends Middleware
                                     $produit->prixProduit = Produit::calcul_prix_produit($produit->id_produit);
                                     $produit->gamme = $gamme;
                                     $produit->panier = $panier;
+                                    $produit->panierActuel = $panierGet;
                                     $produit->isInPanier = true;
                                     $produit->quantiter = $list->quantiter;
                                     $produit->id_panier_edi_list = $list->id_panier_edi_list;

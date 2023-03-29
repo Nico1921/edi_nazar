@@ -1,1 +1,0 @@
-import o from"./Login.fcfb8f9d.js";import{o as r,Q as t}from"./app.63fbc94d.js";import"./GuestLayout.acc5f4b8.js";import"./LangueChoice.de2ad0a4.js";import"./Linkedin.eb051c4c.js";import"./InputError.88716968.js";const f={__name:"Welcome",setup(e){return(m,p)=>(r(),t(o))}};export{f as default};
