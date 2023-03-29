@@ -63,6 +63,8 @@ class HandleInertiaRequests extends Middleware
                     if($request->session()->has('panier_commercial') && !empty($request->session()->get('panier_commercial'))){
                         if(isset($request->session()->get('panier_commercial')->client_edi_list[0]->id_client_edi)){
                             $id_client_edi = $request->session()->get('panier_commercial')->client_edi_list[0]->id_client_edi;
+                            $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+                            $request->session()->put('panier_commercial', $panierGet);
                             $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
                             $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
                             foreach($panierList as $list){
@@ -89,6 +91,7 @@ class HandleInertiaRequests extends Middleware
                     if($request->session()->has('panier_mkp') && !empty($request->session()->get('panier_mkp'))){
                         $panier = $request->session()->get('panier_mkp');
                         $panierGet = PanierEdi::with('client_edi_list')->find($panier->id_panier_edi);
+                        $request->session()->put('panier_mkp',$panierGet);
                         $produitsAchat->id_panier_edi = $panier->id_panier_edi;
                         $produitsAchat->panierActuel = $panier;
                         if(isset($panierGet->client_edi_list) && $panierGet->client_edi_list != null ){

@@ -115,6 +115,7 @@ var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
 watchEffect(() => {
 	produits.value = usePage().props.value.Panier.panier.panier;
 });
+console.log(prop.panier);
 </script>
 <script>
 import Delete from 'icons/Delete.vue';
