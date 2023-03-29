@@ -222,7 +222,7 @@ export default {
 			</div>
 			
 			<ul
-				class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
+				class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:justify-center lg:items-center lg:w-full lg:space-x-6">
 				<li>
 					<Link href="/about-us" :class="{ 'text-primary-500': $page.url.startsWith('/about-us') }"
 						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">

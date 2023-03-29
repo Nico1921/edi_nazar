@@ -9,7 +9,7 @@ var user = ref(usePage().props.value.auth.user);
 </script>
 
 <template>
-    <div class="min-h-full relative pb-20" >
+    <div class="min-h-full relative lg:pb-20 pb-24" >
         <NavBar>
             <!-- <div class="container mx-auto mt-5" v-if="$page.url != '/' && user != ''">
                 <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg " aria-label="Breadcrumb">
@@ -57,7 +57,7 @@ var user = ref(usePage().props.value.auth.user);
             <slot />
         </NavBar>
     </div>
-        <footer class="bg-primary-50 grid grid-cols-12 items-center justify-center text-center w-full absolute bottom-0 h-16">
+        <footer class="bg-primary-50 grid grid-cols-12 items-center justify-center text-center w-full absolute bottom-0 lg:h-16 h-24">
             <div class="lg:absolute left-5 lg:block hidden">
                 <a href="/politique-confidentialite" class="text-gray-400 underline hover:text-[1.1rem] cursor-pointer transition-all duration-300">Politique de confidentialité</a>
             </div>

@@ -119,8 +119,13 @@ watchEffect(() => {
 <script>
 import Delete from 'icons/Delete.vue';
 import ImageOff from 'icons/ImageOff.vue';
+import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 </script>
 <template>
+         <div v-if="prop.panier.is_validate" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
+               <ExclamationTriangleIcon v-if="prop.panier.is_validate" class="h-8 w-8 text-red-600" />
+               <span v-if="prop.panier.is_validate" class="pl-2 text-red-600">Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.</span>
+            </div>
             <div v-if="produits != undefined" class="w-full h-90 ">
                <div v-for="(produit, key) in produits" :key="key" class="w-full lg:p-4 sm:p-3 p-2  grid bg-gray-100 rounded grid-cols-12 my-2" >
                   <div class="sm:col-span-2 xsm:col-span-3 col-span-4 flex items-center justify-center">

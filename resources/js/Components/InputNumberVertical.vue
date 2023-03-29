@@ -33,7 +33,7 @@ function decrement(e) {
    <div class="custom-number-input h-full">
       <div class="flex flex-col h-10 w-full rounded-lg relative bg-transparent mt-1">
         <button data-action="increment" @click="increment($event);$emit('change',$event)" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-5 w-full rounded-t cursor-pointer">
-         <span class="mx-auto -mt-2 text-lg font-thin">+</span>
+         <span class="mx-auto h-full flex items-center justify-center  text-lg font-thin">+</span>
          </button>
          <input type="number" required
          class="p-0 border-none outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black md:text-basecursor-default flex items-center text-gray-700 outline-none" 
@@ -43,7 +43,7 @@ function decrement(e) {
          @change="$emit('change',$event)"
          :value="value" />
          <button data-action="decrement" @click="decrement($event);$emit('change',$event)" class=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-5 w-full rounded-b cursor-pointer outline-none">
-            <span class="m-auto text-lg font-thin">−</span>
+            <span class="m-auto h-full flex items-center justify-center text-lg font-thin">−</span>
          </button>
       </div>
    </div>

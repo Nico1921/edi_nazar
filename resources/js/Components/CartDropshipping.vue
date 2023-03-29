@@ -6,6 +6,7 @@ import InputNumber from '@/Components/InputNumber.vue';
 var prop = defineProps(['panier']);
 var panier = ref(prop.panier);
 var clientUser = ref(usePage().props.value.auth.user[0].client);
+var isValidatePanier = (panier.value.panier.panierActuel != undefined ? panier.value.panier.panierActuel.is_validate : undefined);
 
 const roundResult = (number, nbVirugule) => {
    return number.toFixed(nbVirugule);
@@ -151,14 +152,19 @@ var deleteClient = (e,id_client_edi,ref_externe) => {
 watchEffect(() => {
 	panier.value = usePage().props.value.PanierDrop.panier;
 });
-
+console.log(isValidatePanier);
 </script>
 <script>
 import Delete from 'icons/Delete.vue';
 import ImageOff from 'icons/ImageOff.vue';
 import { Inertia } from '@inertiajs/inertia';
+import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 </script>
 <template>
+            <div v-if="isValidatePanier != undefined && isValidatePanier" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
+               <ExclamationTriangleIcon v-if="isValidatePanier" class="h-8 w-8 text-red-600" />
+               <span v-if="isValidatePanier" class="pl-2 text-red-600">Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.</span>
+            </div>
             <div v-if="panier.clients != undefined" class="w-full h-90 ">
                <div v-for="(client, key1) in panier.clients" :key="key1" class="w-full lg:p-4 sm:p-3 p-2 my-2 bg-gray-100 rounded">
                   <div class="flex items-center justify-center">
