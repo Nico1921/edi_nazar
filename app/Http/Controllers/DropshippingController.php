@@ -1007,6 +1007,12 @@ class DropshippingController extends Controller
       return redirect()->back()->with(['status'=>$status,'message' => $message]);
     }
 
+    public function empty_commande(Request $request){
+      $request->session()->forget('client_actuel');
+      $request->session()->forget('panier_mkp');
+      return redirect()->back()->with(['status'=>true]);
+    }
+
     /**
     * Visualise les produits de la commande du client
     */

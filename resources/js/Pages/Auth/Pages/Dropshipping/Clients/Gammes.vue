@@ -119,6 +119,40 @@ var calcul_prix_gamme = (prix_gamme) => {
    return roundNumber(HT);
 };
 
+var deletePanier = () =>{
+   Swal.fire({
+      title: 'Attention',
+      text: 'Êtes-vous de vider votre panier ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Non',
+      confirmButtonText: 'Oui',
+   }).then((result) => {
+      if (result.isConfirmed) {
+         Inertia.post('/dropshipping/panier/empty',{}, {
+            preserveScroll: true,
+            onSuccess: (e) => {
+               console.log(e);
+               if(e.props.session.status){
+                  Toast.fire({
+                     icon: 'success',
+                     title: 'Le panier a bien été vider !'
+                  });
+               }else{
+                  Toast.fire({
+                     icon: 'error',
+                     title: 'Une erreur est survenue, pour vider votre panier, vous pouvez aussi vous déconnecter et vous reconnecter.'
+                  });
+               }
+               
+            },
+         });
+      }
+   });
+};
+
 onMounted(() => {
    var targetNode = document.getElementById('per_page');
    targetNode.value = perPageActual();
@@ -153,8 +187,10 @@ import Left from 'icons/ChevronLeft.vue';
 import Close from 'icons/Close.vue';
 import Search from 'icons/Magnify.vue';
 import Excel from 'icons/MicrosoftExcel.vue';
+import {BackspaceIcon} from '@heroicons/vue/24/outline';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import axios from 'axios';
+import { Inertia } from '@inertiajs/inertia';
 export default {
    // Using a render function
    layout: (h, page) => h(AuthenticatedLayout, () => child),
@@ -179,7 +215,7 @@ export default {
          </div>
       </div>
 
-      <div class="bg-primary-50 rounded mx-40 mb-5" v-if="typeVente == 2">
+      <div class="bg-primary-50 rounded xl:mx-40 mb-5" v-if="typeVente == 2">
          <h2 class="text-center text-xl text-primary-300 py-1 bg-primary-100 rounded-t-lg">Ajouter au panier via un fichier</h2>
          <div class="p-4 flex flex-col items-center justify-items-center justify-center">
             <form id="fileClientImport" class="grid grid-cols-4" @submit.prevent="submit_file">
@@ -197,7 +233,7 @@ export default {
          </div>
       </div>
 
-      <div class="flex flex-row w-full sm:w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 sm:mr-4">
+      <div class="flex sm:flex-row flex-col w-full sm:w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 sm:mr-4 sm:px-0 px-2">
          <div class="relative flex-grow">
             <input class="block w-full pl-9 text-sm rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" 
             placeholder="Recherche..." id="searchGamme" type="text" name="global" @input="searchGamme">
@@ -205,6 +241,10 @@ export default {
                <Search class="text-xl mb-1" />
             </div>
          </div>
+         <div class="sm:w-auto w-full sm:pl-2 pl-0 sm:pt-0 pt-2">
+            <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
+         </div>
+         
       </div>
 
       <div class="grid grid-cols-4" id="gammes">

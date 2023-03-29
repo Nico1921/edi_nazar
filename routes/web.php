@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::get('/cart/payment/cb/valid', [CartController::class, 'redirect_cb_validation_com'])->name('cart/payment/cb/valid');
       Route::post('/cart/products/edit', [CartController::class, 'edit_qte'])->name('cart/products/edit');
       Route::post('/cart/products/delete', [CartController::class, 'delete_card_product'])->name('cart/products/delete');
+      Route::post('/cart/empty', [CartController::class, 'empty_card'])->name('cart/empty');
       Route::middleware(['check-panier-com'])->group(function () {
          Route::get('/cart/adresses', [CartController::class, 'create_adresses'])->name('cart/adresses');
          Route::post('/cart/adresses', [CartController::class, 'add_adresse_commande'])->name('cart/adresses');
@@ -91,6 +92,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
       Route::post('/dropshipping/panier/add', [DropshippingController::class, 'add_product_commande'])->name('dropshipping/panier/add');
       Route::post('/dropshipping/panier/delete', [DropshippingController::class, 'delete_product_commande'])->name('dropshipping/panier/delete');
+      Route::post('/dropshipping/panier/empty', [DropshippingController::class, 'empty_commande'])->name('dropshipping/panier/empty');
       Route::get('/dropshipping/panier/view', [DropshippingController::class, 'view_product_commande'])->name('dropshipping/panier/view');
       Route::get('/dropshipping/panier/get', [DropshippingController::class, 'getPanierDrop'])->name('dropshipping/panier/get');
    

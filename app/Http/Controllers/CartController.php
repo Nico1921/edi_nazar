@@ -203,6 +203,12 @@ class CartController extends Controller
         return redirect()->back()->with(['status'=>$status]);
     }
 
+    public function empty_card(Request $request){
+        $request->session()->forget('client_commercial');
+        $request->session()->forget('panier_commercial');
+        return redirect()->back()->with(['status'=>true]);
+      }
+
     public function add_adresse_commande_drop(Request $request){
         $status = false;
         $validation = array();
