@@ -259,15 +259,15 @@ export default {
 			<ul
 				class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:justify-center lg:items-center lg:w-full lg:space-x-6">
 				<li>
-					<Link href="/about-us" :class="{ 'text-primary-500': $page.url.startsWith('/about-us') }"
-						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
+					<Link href="/about-us" :class="{ '!text-gray-800': $page.url.startsWith('/about-us') }"
+						class="text-sm  text-primary-300 hover:text-primary-500 transition duration-300">
 					{{ $t('navbar.aPropos') }}</Link>
 				</li>
 				<li class="text-primary-300">
 					<dotsVertical />
 				</li>
 				<li>
-					<Link href="/order_entrepot" :class="{ 'text-primary-500': $page.url.startsWith('/order_entrepot') }"
+					<Link href="/order_entrepot" :class="{ '!text-gray-800': $page.url.startsWith('/order_entrepot') }"
 						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
 					Commande Entrepôt</Link>
 				</li>
@@ -275,7 +275,7 @@ export default {
 					<dotsVertical />
 				</li>
 				<li>
-					<Link href="/dropshipping" :class="{ 'text-primary-500': $page.url.startsWith('/dropshipping') }"
+					<Link href="/dropshipping" :class="{ '!text-gray-800': $page.url.startsWith('/dropshipping') }"
 						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
 					Dropshipping</Link>
 				</li>
@@ -283,7 +283,7 @@ export default {
 					<dotsVertical />
 				</li>
 				<li>
-					<Link href="/shippings" :class="{ 'text-primary-500': $page.url.startsWith('/shippings') }"
+					<Link href="/shippings" :class="{ '!text-gray-800': $page.url.startsWith('/shippings') }"
 						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
 					{{ $t('navbar.expeditions') }}</Link>
 				</li>
