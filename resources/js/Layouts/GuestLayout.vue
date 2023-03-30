@@ -42,7 +42,7 @@ defineProps(['TextTitre','SousTitre','TextBouttonTitre','hrefBtnTitre']);
         </div>
         <div class="lg:w-1/2 w-full flex sm:items-center items-start justify-center text-center md:px-16 px-0 z-0 bg-primary-50 relative">
             <div class="w-full z-20">
-                <div class="absolute right-5 top-5"><Langue class="w-20" /></div>
+                <!-- <div class="absolute right-5 top-5"><Langue class="w-20" /></div> -->
                 <slot />
             </div>
         </div>
