@@ -1,1 +1,0 @@
-import{q as c,b as r,s}from"./app.1ea95840.js";const _=(a,n)=>{const e=a.__vccOpts||a;for(const[t,o]of n)e[t]=o;return e};const i={__name:"LangueChoice",setup(a){const n=c(),e=[{name:"fr",icon:"fi fi-fr"},{name:"en",icon:"fi fi-gb"}];return r({language:""}),s(e[1]),n=="fr"?s(e[0]):n=="en"?s(e[1]):s(e[1]),(t,o)=>null}};export{_,i as a};

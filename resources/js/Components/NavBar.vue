@@ -309,12 +309,12 @@ export default {
 						<Link href="/settings" :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-gray-700']">
 						{{ $t('navbar.profile') }}</Link>
 						</MenuItem>
-						<MenuItem>
+						<!-- <MenuItem>
 						<div class="flex items-center">
 							<span class="block pr-2 pt-1 text-sm text-gray-700">Langue : </span>
 							<Langue class="relative w-1/2" />
 						</div>
-						</MenuItem>
+						</MenuItem> -->
 						<MenuItem>
 						<Link :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-red-700']"
 							:href="route('logout')" method="post" as="button">{{ $t('navbar.deconnexion') }}</Link>
