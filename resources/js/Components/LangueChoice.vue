@@ -40,7 +40,7 @@ if(lang == 'fr'){
 </script>
 
 <template>
-   <div class="relative">
+   <!-- <div class="relative">
       <Listbox v-model="selectedonePays">
          <div class="relative mt-1">
             <ListboxButton
@@ -67,7 +67,7 @@ if(lang == 'fr'){
             </transition>
          </div>
       </Listbox>
-   </div>
+   </div> -->
 </template>
  
 
