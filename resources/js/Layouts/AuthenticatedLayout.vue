@@ -9,7 +9,7 @@ var user = ref(usePage().props.value.auth.user);
 </script>
 
 <template>
-    <div class="min-h-full relative lg:pb-20 pb-24" >
+    <div class="min-h-full relative xl:pb-12 lg:pb-20 pb-24" >
         <NavBar>
             <!-- <div class="container mx-auto mt-5" v-if="$page.url != '/' && user != ''">
                 <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg " aria-label="Breadcrumb">

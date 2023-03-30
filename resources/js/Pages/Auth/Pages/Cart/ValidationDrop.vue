@@ -2,6 +2,13 @@
 import { Head, usePage } from '@inertiajs/inertia-vue3';
 import EtapeOrder from '@/Components/EtapeOrder.vue';
 import { ref } from 'vue';
+import BoutonPaiement from '@/Components/BouttonPaiement.vue';
+import {
+  RadioGroup,
+  RadioGroupLabel,
+  RadioGroupDescription,
+  RadioGroupOption,
+} from '@headlessui/vue';
 
 const props = defineProps(['client','panier', 'produits']);
 
@@ -56,26 +63,20 @@ var calcul_prix_gamme = (prix_gamme) => {
 };
 
 var verifCheck = (e,type) => {
-    if(e.target.checked){
-      paymentType.value = type;
       if(type == 2){
-         console.log(document.getElementById('paymentCB').innerHTML);
-         if(document.getElementById('paymentCB').innerHTML === ''){
+         if(document.getElementById('paymentCB').getElementsByTagName('form').length === 0){
             axios.post('/dropshipping/cart/payment/cb',{paymentType: paymentType.value}).then((response) => {
                if(response.status == 200){
                   if(response.data.statut){
+                     var btn = document.getElementById('bouttonPaiement');
                      document.getElementById('paymentCB').innerHTML =response.data.formpay;
-                     document.getElementById('submitPayButton').classList.add('text-blue-900','bg-blue-100','hover:bg-blue-200','border', 
-                     'border-blue-200', 'focus:ring-4', 'focus:outline-none', 'focus:ring-blue-100', 'font-medium', 'rounded-lg', 'text-sm', 
-                     'px-5', 'py-4', 'text-center', 'inline-flex', 'items-center', 'mr-2',
-                      'mb-2', 'transition', 'duration-300');
+                     document.getElementById('submitPayButton').appendChild(btn);
                   }else{
                      Toast.fire({
-                     icon: 'error',
-                     title: response.data.msg
-                  });
+                        icon: 'error',
+                        title: response.data.msg
+                     });
                   }
-                  console.log(response);
                }else {
                   Toast.fire({
                      icon: 'error',
@@ -85,14 +86,12 @@ var verifCheck = (e,type) => {
             });
          } 
       }
-    }else{
-      paymentType.value = 0;
-    }
 };
 </script>
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import axios from 'axios';
+import {CreditCardIcon,BuildingLibraryIcon,CheckCircleIcon,ArrowRightCircleIcon} from '@heroicons/vue/24/outline';
 export default {
    // Using a render function
    layout: (h, page) => h(AuthenticatedLayout, () => child),
@@ -196,23 +195,72 @@ export default {
                      </div>
                   </div>
                </div>
-               <form class="grid grid-cols-4 bg-primary-50 rounded px-4 py-2 mb-4">
-                  <div class="lg:my-0 my-2 lg:col-span-2 col-span-4 flex items-center justify-center">
-                    <input @click="verifCheck($event,2)" id="paymentCard" name="paymentType" type="radio" value="2" class="w-4 h-4 text-primary-200 bg-gray-100 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100">
-                    <!-- <input disabled id="paymentCard" name="paymentType" type="radio" value="2" class="w-4 h-4 cursor-not-allowed text-primary-200 bg-gray-200 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100"> -->
-                    <label for="paymentCard" class="ml-2 text-lg font-medium text-gray-900 ">Paiement par CB</label>
+               <div class="bg-gray-100 rounded-b-lg">
+                  <div class="text-center bg-primary-50 rounded-t-lg py-1">
+                     <h2 class="text-lg font-bold">Moyen de paiement</h2>
                   </div>
-                  <div class="lg:my-0 my-2 lg:col-span-2 col-span-4 flex items-center justify-center">
-                     <input @click="verifCheck($event,1)" id="paymentVirement" name="paymentType" type="radio" value="1" class="w-4 h-4 text-primary-200 bg-gray-100 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100">
-                     <label for="paymentVirement" class="ml-2 text-lg font-medium text-gray-900 ">Paiement par Virement Bancaire</label>
-                  </div>
-               </form>
-               <div v-show="paymentType == 2" id="paymentCB" class="flex items-center justify-center mb-5">
 
-               </div>
-               <div v-if="paymentType == 1 || paymentType == 0" class="flex justify-center mb-5">
-                  <button :disabled="(paymentType == 0 ? true : false)" @click="validationCommande" type="button" class="p-2 border border-primary-300 rounded bg-primary-50 
-                     hover:bg-primary-100 transition duration-300 disabled:cursor-not-allowed disabled:bg-primary-200">Finaliser la commande</button>
+                  <div class="mx-auto w-full my-2">
+                     <RadioGroup v-model="paymentType">
+                        <RadioGroupLabel class="sr-only">Type de paiement</RadioGroupLabel>
+                        <div class="flex sm:flex-row flex-col w-full sm:justify-evenly justify-center items-center">
+                           <RadioGroupOption as="template" value="2" v-slot="{ active, checked }" @click="verifCheck($event,2)">
+                              <div :class="[active ? 'ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-300' : '',
+                                 checked ? 'bg-blue-900 bg-opacity-75 text-white ' : 'bg-white ',
+                              ]"
+                              class="relative sm:my-0 my-2 mx-2 w-full sm:max-w-sm max-w-xs flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none">
+                              <div class="flex w-full items-center justify-between">
+                                 <div class="flex items-center">
+                                    <div class="text-sm">
+                                    <RadioGroupDescription as="span" :class="checked ? 'text-blue-100' : 'text-gray-500'" class="inline flex items-center">
+                                       <CreditCardIcon class="h-6 w-6" viewBox="0 0 24 24" fill="none" />
+                                       <span class="ml-2"> Carte Bancaire</span>
+                                    </RadioGroupDescription>
+                                    </div>
+                                 </div>
+                                 <div v-show="checked" class="shrink-0 text-white">
+                                    <CheckCircleIcon class="h-6 w-6" viewBox="0 0 24 24" fill="none"/>
+                                 </div>
+                              </div>
+                              </div>
+                           </RadioGroupOption>
+                           <RadioGroupOption as="template" value="1" v-slot="{ active, checked }" @click="verifCheck($event,1)">
+                              <div :class="[active
+                                    ? 'ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-300'
+                                    : '',
+                                 checked ? 'bg-blue-900 bg-opacity-75 text-white ' : 'bg-white ',
+                              ]"
+                              class="relative w-full sm:my-0 my-2 mx-2 sm:max-w-sm max-w-xs flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none"
+                              >
+                              <div class="flex w-full items-center justify-between">
+                                 <div class="flex items-center">
+                                    <div class="text-sm">
+                                    <RadioGroupDescription as="span" :class="checked ? 'text-blue-100' : 'text-gray-500'" class="inline flex items-center">
+                                       <BuildingLibraryIcon class="h-6 w-6" viewBox="0 0 24 24" fill="none" />
+                                       <span class="ml-2"> Virement Bancaire</span>
+                                    </RadioGroupDescription>
+                                    </div>
+                                 </div>
+                                 <div v-show="checked" class="shrink-0 text-white">
+                                    <CheckCircleIcon class="h-6 w-6" viewBox="0 0 24 24" fill="none"/>
+                                 </div>
+                              </div>
+                              </div>
+                           </RadioGroupOption>
+                        </div>
+                     </RadioGroup>
+                  </div>
+                  <div class="py-2">
+                     <div v-show="paymentType == 2" id="paymentCB" class="flex items-center justify-center mb-5">
+                        <BoutonPaiement id="bouttonPaiement" />
+                     </div>
+                     <div v-if="paymentType == 1 || paymentType == 0" class="flex justify-center mb-5">
+                        <button :disabled="(paymentType == 0 ? true : false)" @click="validationCommande" type="button" 
+                        class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                           hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
+                            disabled:bg-green-300">Finaliser la commande <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" /></button>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>

@@ -540,7 +540,7 @@ class CartController extends Controller
                             'url_success' => url('/').'/cart/payment/cb/valid',
                             'url_check' => url('/').'/cart/validation/payment',
                         ]);
-                        $html = $paiement->render();
+                        $html = $paiement->render('<div id="submitPayButton"></div>');
                     }else{
                         return ['statut' => false,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
                     }     
@@ -585,9 +585,7 @@ class CartController extends Controller
                             'url_success' => url('/').'/dropshipping/cart/payment/cb/valid',
                             'url_check' => url('/').'/cart/validation/payment',
                         ]);
-                        $html = $paiement->render('<button type="submit" id="submitPayButton">
-                            Payer ma commande
-                        </button>');
+                        $html = $paiement->render('<div id="submitPayButton"></div>');
                     }else{
                         return ['statut' => false,'erreur'=>5,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
                     }     
