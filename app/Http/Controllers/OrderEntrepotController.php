@@ -441,7 +441,7 @@ class OrderEntrepotController extends Controller
         $request->validate(['fileImport' => 'required|file|mimes:xls,xlsx']);
 
         $imports = Excel::import(new CommandeImport, $request->file('fileImport')->store('temp'))->toCollection(new CommandeImport, $request->file('fileImport')->store('temp'));
-
+Log::debug($imports);
         if (!$request->session()->has('panier_commercial')) {
             $num_commande = PanierEdi::generateNumOrder();
             $panier = PanierEdi::create([

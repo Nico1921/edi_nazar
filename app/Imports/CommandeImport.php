@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 
-class CommandeImport implements ToCollection,WithHeadingRow,WithValidation
+class CommandeImport implements ToCollection,WithHeadingRow,WithValidation,SkipsEmptyRows
 {
     /**
     * @param Collection $collection
@@ -21,7 +22,7 @@ class CommandeImport implements ToCollection,WithHeadingRow,WithValidation
     public function rules(): array 
     {
         return [
-            'ean_product' => 'required|numeric',
+            'ean_product' => 'required|numeric|max_digits:13',
             'qte' => 'required|numeric|max:255'
         ];
     }
