@@ -96,7 +96,7 @@ var perPageActual = () => {
 };
 
 var searchGamme = (e) => {
-   var url = '/orders/clients/products?filter[nom_gamme]='+e.target.value;
+   var url = '/dropshipping/gamme?filter[nom_gamme]='+e.target.value;
    axios.post(encodeURI(url)).then((response)=>{
       if(response.status == 200){
          const parsedUrl = new URL(window.location.href);

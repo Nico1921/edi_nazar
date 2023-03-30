@@ -251,13 +251,13 @@ export default {
 				</button>
 			</div>
 			<div class="w-full flex items-center lg:justify-start justify-center">
-				<Link class="text-2xl  font-bold leading-none" href="/">
+				<Link class="text-2xl z-50 font-bold leading-none" href="/">
 					<img alt="Logo Nazar" :src="imageUrl" width="100" height="100" />
 				</Link>
 			</div>
 			
 			<ul
-				class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:justify-center lg:items-center lg:w-full lg:space-x-6">
+				class="hidden z-40 absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:justify-center lg:items-center lg:w-full lg:space-x-6">
 				<li>
 					<Link href="/about-us" :class="{ '!text-gray-800': $page.url.startsWith('/about-us') }"
 						class="text-sm  text-primary-300 hover:text-primary-500 transition duration-300">
@@ -290,7 +290,7 @@ export default {
 			</ul>
 
 			
-			<Menu as="div" class="absolute right-20">
+			<Menu as="div" class="absolute right-20 z-50">
 				<div>
 					<MenuButton
 						class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -322,7 +322,7 @@ export default {
 					</MenuItems>
 				</transition>
 			</Menu>
-			<div class="absolute right-10" >
+			<div class="absolute right-10 z-50" >
 				<Popover class="relative" v-slot="{ open }">
 					<div @mouseleave="onMouseLeave(open)" class="mt-2">
 						<PopoverButton class="outline-none" ref="buttonRef" @mouseenter="onMouseEnter(open)">

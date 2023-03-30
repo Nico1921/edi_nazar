@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 
-class CommandeMarketplaceImport implements ToCollection,WithHeadingRow,WithValidation
+class CommandeMarketplaceImport implements ToCollection,WithHeadingRow,WithValidation,SkipsEmptyRows
 {
     /**
     * @param Collection $collection
@@ -41,7 +42,7 @@ class CommandeMarketplaceImport implements ToCollection,WithHeadingRow,WithValid
             'city_bill' => 'required|string|max:32',
             'phone_bill' => 'required|numeric|phone:AUTO,FR',
             'mail_bill' => 'required|string|email|max:255',
-            'ean_product' => 'required|string',
+            'ean_product' => 'required|numeric',
             'qte' => 'required|numeric|max:255'
         ];
     }
