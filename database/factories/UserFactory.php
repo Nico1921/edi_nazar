@@ -30,10 +30,10 @@ final class UserFactory extends Factory
         return [
             'img_profil' => fake()->text,
             'email' => fake()->safeEmail,
-            'password' => bcrypt(fake()->password),
+            'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
             'id_client' => fake()->randomNumber(),
-            'statut' => fake()->boolean,
+            'statut' => 1,
         ];
     }
 }

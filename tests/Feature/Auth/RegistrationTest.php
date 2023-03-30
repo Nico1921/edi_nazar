@@ -20,13 +20,42 @@ class RegistrationTest extends TestCase
     public function test_new_users_can_register()
     {
         $response = $this->post('/register', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'nom' => 'test',
+            'prenom' => 'test',
+            'email' => 'test@test.fr',
+            'email_confirmation' => 'test@test.fr',
+            'tel' => '0765566776',
+            'nom_societe' => 'test',
+            'numTVA' => 'grddfdsffefesd',
+            'adresse' => '4 rue du puys',
+            'pays' => 'France',
+            'cp' => '45000',
+            'ville' => 'orléans',
+            'nameFileKbis' => 'test',
+            'nameFileIdentiter' => 'test',
         ]);
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertStatus(200);
+    }
+
+    public function test_new_users_cant_register()
+    {
+        $response = $this->post('/register', [
+            'nom' => '',
+            'prenom' => 'test',
+            'email' => 'test@test.fr',
+            'email_confirmation' => 'test@test.fr',
+            'tel' => '0765566776',
+            'nom_societe' => 'test',
+            'numTVA' => 'grddfdsffefesd',
+            'adresse' => '4 rue du puys',
+            'pays' => 'France',
+            'cp' => '45000',
+            'ville' => 'orléans',
+            'nameFileKbis' => 'test',
+            'nameFileIdentiter' => 'test',
+        ]);
+
+        $response->assertStatus(302);
     }
 }

@@ -23,8 +23,8 @@ createInertiaApp({
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({ el, app, props, plugin }) {
         el.classList.add(classBody.position);
-        el.classList.add(classBody.paddingLg);
-        el.classList.add(classBody.padding);
+        // el.classList.add(classBody.paddingLg);
+        // el.classList.add(classBody.padding);
         el.classList.add(classBody.height);
         return createApp({ render: () => h(app, props) })
             .use(plugin)
