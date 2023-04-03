@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/inertia-vue3';
-const props = defineProps(['nbEtape','etape','listeEtape']);
+const props = defineProps(['nbEtape','etape','listeEtape','hrefEtape']);
 
 var classEtape = {
    etapeActual : 'w-1/3 flex justify-between h-1 items-center relative',
@@ -8,9 +8,13 @@ var classEtape = {
    etapeNotPass : 'w-1/3 flex' 
 };
 </script>
+<script>
+import { CheckIcon } from '@heroicons/vue/24/solid';
+import Triangle from 'icons/Triangle.vue';
+</script>
 
 <template>
-   <div class="xl:block hidden h-full ">
+   <div class="hidden h-full ">
       <div class="flex items-center">
          <span
             :class="[props.etape == 1 || props.etape > 1 ? 'bg-primary-300' : 'bg-primary-100'] + ' block w-10 h-10 rounded-full flex items-center justify-center border-2 border-primary-200'">1</span>
@@ -33,7 +37,7 @@ var classEtape = {
          <span class="pl-3">Finaliser commande</span>
       </div>
    </div>
-   <div class="xl:hidden block sm:pb-20 lg:pb-18 pb-24 pt-5 sm:mx-5 mx-14">
+   <div class="block sm:pb-20 lg:pb-18 pb-24 pt-5 sm:mx-5 mx-14">
       <div class="w-11/12 mx-auto">
          <div class="bg-primary-50 h-1 flex items-center justify-between">
             <div v-for="n in props.nbEtape" :class="(props.etape == n ? classEtape.etapeActual : (props.etape > n ? (n == 1 ? classEtape.etapePass : classEtape.etapePass+' justify-center mr-1') : (n != 1 && n != props.nbEtape ? classEtape.etapeNotPass + ' justify-center' : classEtape.etapeNotPass + ' justify-end')))"> 
@@ -52,9 +56,9 @@ var classEtape = {
                   </div>
                </div>
                
-               <div v-else-if="props.etape > n" :class="n != 1 ? 'ml-1' : ''" class=" bg-primary-100 h-6 w-6 rounded-full shadow flex items-center justify-center">
-                  <Check class="text-white mb-1" />
-               </div>
+               <a :href="hrefEtape[n-1]" v-else-if="props.etape > n" :class="n != 1 ? 'ml-1' : ''" class="bg-primary-100 hover:bg-primary-50 transition duration-300 h-6 w-6 rounded-full shadow flex items-center justify-center">
+                  <CheckIcon class="h-4 w-4  text-white" />
+               </a>
                <div v-else class="bg-primary-50 h-6 w-6 rounded-full shadow -mr-1"></div>
             </div>
          </div>

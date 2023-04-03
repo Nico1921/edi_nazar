@@ -16,7 +16,9 @@ var clientUser = ref(usePage().props.value.auth.user[0].client);
 var clients = ref(usePage().props.value.PanierDrop.panier.clients);
 var panier = ref(usePage().props.value.PanierDrop.panier.panierActuel);
 var panierDrop = ref(usePage().props.value.PanierDrop);
-var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
+var hrefEtape = ['/dropshipping/cart', '/dropshipping/cart/adresses', '/dropshipping/cart/validation'];var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
+
+
 const imgBase64 = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDQwMDAgNDAwMCIgd2lkdGg9IjEwMDAiIGhlaWdodD0iMTAwMCI+PHN0eWxlPi5he2ZpbGw6I2EzYTNhM30uYntmaWxsOiNmZmZ9PC9zdHlsZT48cGF0aCBjbGFzcz0iYSIgZD0ibTQwMDAgNDAwMGgtNDAwMHYtNDAwMGg0MDAweiIvPjxwYXRoIGNsYXNzPSJiIiBkPSJtMzI2NSAzMDQ2Ljh2MjY1LjJoLTI1MzB2LTI2NS4yYzAtNDg5IDU2Ni40LTg4NS41IDEyNjUtODg1LjUgNjk4LjYgMCAxMjY1IDM5Ni41IDEyNjUgODg1LjV6Ii8+PHBhdGggY2xhc3M9ImIiIGQ9Im0yNjI0LjEgMTMxMi4xYzAgMzQ0LjYtMjc5LjQgNjI0LTYyNC4xIDYyNC0zNDQuNyAwLTYyNC4xLTI3OS40LTYyNC4xLTYyNCAwLTM0NC43IDI3OS40LTYyNC4xIDYyNC4xLTYyNC4xIDM0NC43IDAgNjI0LjEgMjc5LjQgNjI0LjEgNjI0LjF6Ii8+PC9zdmc+";
 
 
@@ -116,10 +118,10 @@ export default {
    <section class="container mx-auto mt-5">
       
       <div class="grid grid-cols-4">
-         <div class="xl:col-span-1 col-span-4">
-            <EtapeOrder :etape="3" :nbEtape="3" :listeEtape="listeEtape" />
+         <div class="col-span-4">
+            <EtapeOrder :hrefEtape="hrefEtape" :etape="3" :nbEtape="3" :listeEtape="listeEtape" />
          </div>
-         <div class="xl:col-span-3 col-span-4">
+         <div class="col-span-4 xl:mx-16 lg:mx-8">
             <h1 class="text-center text-3xl text-primary-300">Finalisation de la commande</h1>
             <div class="m-5">
                <div class="bg-primary-50 rounded m-2 p-4">
@@ -263,12 +265,13 @@ export default {
                            </RadioGroupOption>
                         </div>
                      </RadioGroup>
-                  </div>
-
-                  <div class="flex items-center my-6 2xl:mx-28 xl:mx-12 lg:mx-[4.4rem] sm:mx-2 xsm:mx-14 mx-auto max-w-sm">
+                     <div class="flex items-center my-6 mx-auto max-w-sm">
                     <input @click="verifCheckVenteCondition" id="checkVenteCondition" type="checkbox" value="1" class="w-4 h-4 text-primary-200 bg-gray-100 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100">
                     <label for="checkVenteCondition" class="ml-2 sm:text-lg text-sm font-medium text-gray-900 ">J'accepte les <a href="/cgv" class="text-gray-400 underline hover:text-[1.15rem] cursor-pointer transition-all duration-300">conditions générales de vente</a></label>
                   </div>
+                  </div>
+
+                  
 
                   <div class="py-2">
                      <div v-show="paymentType == 2" id="paymentCB" class="flex items-center justify-center mb-5">

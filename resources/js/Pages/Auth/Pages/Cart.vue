@@ -15,6 +15,8 @@ var typeVente = ref(usePage().props.value.session.typeVente);
 
 
 var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
+var hrefEtape = ['/cart', '/cart/adresses', '/cart/validation'];
+var hrefEtapeDrop = ['/dropshipping/cart', '/dropshipping/cart/adresses', '/dropshipping/cart/validation'];
 watchEffect(() => {
 	produits.value = usePage().props.value.Panier.panier.panier;
    panierDrop.value = usePage().props.value.PanierDrop;
@@ -42,10 +44,11 @@ export default {
       <h1 class="font-semibold text-lg lg:text-2xl sm:text-xl text-gray-800 text-center py-2">Panier - {{ (typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping') }}</h1>
 
       <div class="grid grid-cols-4">
-         <div class="xl:col-span-1 col-span-4">
-            <EtapeOrder :etape="1" :nbEtape="3" :listeEtape="listeEtape" />
+         <div class="col-span-4">
+            <EtapeOrder :hrefEtape="(typeVente == 1 ? hrefEtape : hrefEtapeDrop)" :etape="1" :nbEtape="3" :listeEtape="listeEtape" />
          </div>
-         <div class="xl:col-span-2 lg:col-span-3 col-span-4 flex flex-col items-start mt-2">
+         <div class="col-span-4 grid grid-cols-4 xl:mx-16 ">
+            <div class="lg:col-span-3 col-span-4 flex flex-col items-start mt-2">
             <div v-if="usePage().props.value.session.messageError != undefined" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
                <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
                <span class="pl-2 text-red-600">{{usePage().props.value.session.messageError}}</span>
@@ -63,6 +66,8 @@ export default {
          <div class="lg:block hidden col-span-1 ml-5">
             <ResumeOrder :disabled="(typeVente == 2 && panierDrop.panier != undefined ? !panierDrop.panier.panier_valid : false)" :linkEtapeSuivant="(typeVente == 1 ? '/cart/adresses' : '/dropshipping/cart/adresses')" :titreLink="'Valider la commande'" :panier="(typeVente == 1 ? props.panier : (panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined))" :isButtonSubmit="false" />
          </div>
+         </div>
+         
       </div>
    </section>
 </template>

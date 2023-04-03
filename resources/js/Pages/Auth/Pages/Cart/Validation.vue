@@ -14,6 +14,8 @@ const props = defineProps(['client','panier', 'produits']);
 
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
+var hrefEtape = ['/cart', '/cart/adresses', '/cart/validation'];
+
 const roundResult = (number, nbVirugule) => {
    return number.toFixed(nbVirugule);
 };
@@ -100,10 +102,10 @@ export default {
    <section class="container mx-auto mt-5">
       
       <div class="grid grid-cols-4">
-         <div class="xl:col-span-1 col-span-4">
-            <EtapeOrder :etape="3" :nbEtape="3" :listeEtape="listeEtape" />
+         <div class="col-span-4">
+            <EtapeOrder :hrefEtape="hrefEtape" :etape="3" :nbEtape="3" :listeEtape="listeEtape" />
          </div>
-         <div class="xl:col-span-3 col-span-4">
+         <div class="col-span-4 xl:mx-16 lg:mx-8">
             <h1 class="text-center text-3xl text-primary-300">Finalisation de la commande</h1>
             <div class="m-5">
                <div class="grid grid-cols-2">

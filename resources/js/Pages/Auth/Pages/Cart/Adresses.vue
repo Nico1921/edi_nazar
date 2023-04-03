@@ -48,6 +48,7 @@ const pays = [
 ];
 
 var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
+var hrefEtape = ['/cart', '/cart/adresses', '/cart/validation'];
 
 let query = ref('');
 
@@ -133,10 +134,11 @@ export default {
 
       <h1 class="text-center text-3xl text-primary-300">Adresse de livraison / Facturation de la commande</h1>
       <form @submit.prevent="validationAdresse" class="grid grid-cols-4">
-         <div class="xl:col-span-1 col-span-4">
-            <EtapeOrder :etape="2" :nbEtape="3" :listeEtape="listeEtape" />
+         <div class="col-span-4">
+            <EtapeOrder :hrefEtape="hrefEtape" :etape="2" :nbEtape="3" :listeEtape="listeEtape" />
          </div>
-         <div class="xl:col-span-2 lg:col-span-3 col-span-4">
+         <div class="col-span-4 grid grid-cols-4 xl:mx-16 ">
+         <div class="lg:col-span-3 col-span-4 xl:ml-0 lg:ml-16 lg:mx-0 sm:mx-12">
             <div class="bg-primary-50 rounded mb-5">
                <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-100 rounded-t-lg w-full">Information générale</h2>
                <div  class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
@@ -436,6 +438,7 @@ export default {
          <div class="lg:block hidden col-span-1 ml-5">
             <ResumeOrder :linkEtapeSuivant="'/cart/adresses/validation'" :titreLink="'Valider mon adresse'" :panier="props.panier" :isButtonSubmit="true" />
          </div>
+      </div>
       </form>
 
    </section>
