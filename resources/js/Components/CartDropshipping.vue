@@ -178,7 +178,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                   <div v-if="client.nbProduit > 0" v-for="(produit, key2) in client.produits" :key="key2" class="grid grid-cols-12 py-4" >
                      <div class="sm:col-span-2 xsm:col-span-3 col-span-4 flex items-center justify-center">
                         <div v-if="produit.photo != null"
-                           class="lg:h-[150px] sm:h-[130px] h-full w-full px-2">
+                           class=" h-full w-full lg:max-h-52 max-h-42 px-2">
                            <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+produit.photo.img_produit"
                               :alt="produit.code_sku" class="w-full h-full object-cover rounded-xl" />
                         </div>
@@ -187,13 +187,13 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                         </div>
                      </div>
                      <div class="sm:col-span-10 xsm:col-span-9 col-span-8 flex flex-col xl:text-lg text-sm">
-                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
-                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
+                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
+                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
                            produit.dimension.longueur }}</span>
-                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ calcul_prix_gamme(produit.gamme.prix_vente_ht_m2) }} € HT</span>
-                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * calcul_prix_gamme(produit.gamme.prix_vente_ht_m2),2)}} €</span>
-                        <div class="grid grid-cols-8">               
+                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix du M² : {{ calcul_prix_gamme(produit.gamme.prix_vente_ht_m2) }} € HT</span>
+                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
+                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * calcul_prix_gamme(produit.gamme.prix_vente_ht_m2),2)}} €</span>
+                        <div class="grid grid-cols-8 lg:w-1/2">               
                            <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
                               <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">
                                  <InputNumber @change="modifQte($event,produit.design.nom_design + produit.dimension.largeur + 'x' + produit.dimension.longueur,key1)" name="qte"

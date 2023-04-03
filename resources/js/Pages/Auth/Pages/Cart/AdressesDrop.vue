@@ -31,11 +31,11 @@ function openModal(ref_externe,client) {
   isOpen.value = true
 }
 var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
+var hrefEtape = ['/dropshipping/cart', '/dropshipping/cart/adresses', '/dropshipping/cart/validation'];
 watchEffect(() => {
    clients.value = usePage().props.value.PanierDrop.panier.clients;
    panierDrop.value = usePage().props.value.PanierDrop;
    allValid.value = usePage().props.value.PanierDrop.panier.addresses_valid;
-   console.log(allValid.value);
 });
 </script>
 <script >
@@ -53,47 +53,49 @@ export default {
    <Head title="Adresse de livraison / facturation des commandes - Panier" />
    <section class="container mx-auto mt-5">
       <div class="grid grid-cols-4">
-         <div class="xl:col-span-1 col-span-4">
-            <EtapeOrder :etape="2" :nbEtape="3" :listeEtape="listeEtape" />
+         <div class="col-span-4 ">
+            <EtapeOrder :hrefEtape="hrefEtape" :etape="2" :nbEtape="3" :listeEtape="listeEtape" />
          </div>
-         <div class="xl:col-span-2 lg:col-span-3 col-span-4">
-         <h1 class="text-center text-3xl text-primary-300">Adresse de livraison / Facturation des commandes</h1>
-         <div v-if="!allValid" class="bg-yellow-200 px-4 py-2 rounded flex items-center">
-            <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
-            <span class="pl-2 text-yellow-600">Pour continuer, veuillez saisir l'adresse pour chaque commande.</span>
-         </div>   
-         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
-               <div v-for="(client, key) in clients"
-                  :key="key" class="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
-                  <div class="flex flex-row justify-between items-center">
-                     <div class="flex flex-row items-center">
-                        <Tooltip>
-                           <template #header>
-                              <XMarkIcon class="w-8 h-8 text-red-500" v-if="!client.client.adresseValide" />
-                              <CheckIcon class="w-8 h-8 text-green-500" v-if="client.client.adresseValide" />
-                           </template>
-                           <template #body>
-                              <span v-if="!client.client.adresseValide" class="text-red-500">Invalide</span>
-                              <span v-if="client.client.adresseValide" class="text-green-500">Valide</span>
-                           </template>
-                        </Tooltip>
-                        <span class="text-lg font-bold">{{ client.client.ref_externe }}</span>
-                     </div>
-                     
-                     <div class="">
-                        <button @click="openModal(client.client.ref_externe,client.client)" class="text-gray-500 hover:text-gray-300 flex bg-primary-50 hover:bg-primary-100 group px-4 py-1 rounded-2xl  transition duration-300 ease-in-out">
-                           <PencilIcon class="pt-1 w-5 h-5 text-primary-200 group-hover:text-primary-50" /> <span>Modifier</span>
-                        </button>
+         <div class="col-span-4 grid grid-cols-4 xl:mx-16 ">
+            <div class="lg:col-span-3 col-span-4 ">
+               <h1 class="text-center text-3xl text-primary-300">Adresse de livraison / Facturation des commandes</h1>
+               <div v-if="!allValid" class="bg-yellow-200 px-4 py-2 rounded flex items-center">
+                  <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
+                  <span class="pl-2 text-yellow-600">Pour continuer, veuillez saisir l'adresse pour chaque commande.</span>
+               </div>   
+               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8 ">
+                  <div v-for="(client, key) in clients"
+                     :key="key" class="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                     <div class="flex flex-row justify-between items-center">
+                        <div class="flex flex-row items-center">
+                           <Tooltip>
+                              <template #header>
+                                 <XMarkIcon class="w-8 h-8 text-red-500" v-if="!client.client.adresseValide" />
+                                 <CheckIcon class="w-8 h-8 text-green-500" v-if="client.client.adresseValide" />
+                              </template>
+                              <template #body>
+                                 <span v-if="!client.client.adresseValide" class="text-red-500">Invalide</span>
+                                 <span v-if="client.client.adresseValide" class="text-green-500">Valide</span>
+                              </template>
+                           </Tooltip>
+                           <span class="text-lg font-bold">{{ client.client.ref_externe }}</span>
+                        </div>
+                        
+                        <div class="">
+                           <button @click="openModal(client.client.ref_externe,client.client)" class="text-gray-500 hover:text-gray-300 flex bg-primary-50 hover:bg-primary-100 group px-4 py-1 rounded-2xl  transition duration-300 ease-in-out">
+                              <PencilIcon class="pt-1 w-5 h-5 text-primary-200 group-hover:text-primary-50" /> <span>Modifier</span>
+                           </button>
+                        </div>
                      </div>
                   </div>
                </div>
             </div>
-         </div>
-         <div class="lg:hidden block col-span-4">
-            <ResumeOrderVertical :disabled="!allValid" :linkEtapeSuivant="(panierDrop.panier.addresses_valid ? '/dropshipping/cart/validation' : '')" :titreLink="'Valider mon adresse'" :panier="(panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined)" :isButtonSubmit="false" />
-         </div>
-         <div class="lg:block hidden col-span-1 ml-5">
-            <ResumeOrder :disabled="!allValid" :linkEtapeSuivant="(panierDrop.panier.addresses_valid ? '/dropshipping/cart/validation' : '')" :titreLink="'Valider mon adresse'" :panier="(panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined)" :isButtonSubmit="false" />
+            <div class="lg:hidden block col-span-4">
+               <ResumeOrderVertical :disabled="!allValid" :linkEtapeSuivant="(panierDrop.panier.addresses_valid ? '/dropshipping/cart/validation' : '')" :titreLink="'Valider mon adresse'" :panier="(panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined)" :isButtonSubmit="false" />
+            </div>
+            <div class="lg:block hidden col-span-1 ml-5 ">
+               <ResumeOrder :disabled="!allValid" :linkEtapeSuivant="(panierDrop.panier.addresses_valid ? '/dropshipping/cart/validation' : '')" :titreLink="'Valider mon adresse'" :panier="(panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined)" :isButtonSubmit="false" />
+            </div>
          </div>
       </div>
    </section>
