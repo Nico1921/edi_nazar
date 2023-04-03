@@ -18,6 +18,7 @@ const roundResult = (number, nbVirugule) => {
    return number.toFixed(nbVirugule);
 };
 
+var venteCondition = ref(0);
 var paymentType = ref(0);
 
 var validationCommande = () => {
@@ -71,10 +72,18 @@ var verifCheck = (e,type) => {
          } 
       }
 };
+
+var verifCheckVenteCondition = (e) => {
+    if(e.target.checked){
+      venteCondition.value = true;
+    }else{
+      venteCondition.value = false;
+    } 
+};
 </script>
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {CreditCardIcon,BuildingLibraryIcon,CheckCircleIcon,ArrowRightCircleIcon} from '@heroicons/vue/24/outline';
+import {ExclamationCircleIcon,CreditCardIcon,BuildingLibraryIcon,CheckCircleIcon,ArrowRightCircleIcon} from '@heroicons/vue/24/outline';
 import axios from 'axios';
 export default {
    // Using a render function
@@ -176,7 +185,12 @@ export default {
                      <h2 class="text-lg font-bold">Moyen de paiement</h2>
                   </div>
 
-                  <div class="mx-auto w-full my-2">
+                  <div v-if="paymentType == 0 || !venteCondition" class="bg-yellow-200 px-4 py-2 rounded flex items-center">
+                     <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
+                     <span class="pl-2 text-yellow-600">Pour continuer, veuillez sélectionner votre moyen de paiement et accepter les CGV.</span>
+                  </div>  
+
+                  <div class="mx-auto w-full my-4">
                      <RadioGroup v-model="paymentType">
                         <RadioGroupLabel class="sr-only">Type de paiement</RadioGroupLabel>
                         <div class="flex sm:flex-row flex-col w-full sm:justify-evenly justify-center items-center">
@@ -226,12 +240,16 @@ export default {
                         </div>
                      </RadioGroup>
                   </div>
+                  <div class="flex items-center my-6 2xl:mx-28 xl:mx-12 lg:mx-[4.4rem] sm:mx-2 xsm:mx-14 mx-auto max-w-sm">
+                    <input @click="verifCheckVenteCondition" id="checkVenteCondition" type="checkbox" value="1" class="w-4 h-4 text-primary-200 bg-gray-100 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100">
+                    <label for="checkVenteCondition" class="ml-2 sm:text-lg text-sm font-medium text-gray-900 ">J'accepte les <a href="/cgv" class="text-gray-400 underline hover:text-[1.15rem] cursor-pointer transition-all duration-300">conditions générales de vente</a></label>
+                  </div>
                   <div class="py-2">
                      <div v-show="paymentType == 2" id="paymentCB" class="flex items-center justify-center mb-5">
-                        <BoutonPaiement id="bouttonPaiement" />
+                        <BoutonPaiement :disabled="((paymentType == 0 || !venteCondition) ? true : false)" id="bouttonPaiement" />
                      </div>
                      <div v-if="paymentType == 1 || paymentType == 0" class="flex justify-center mb-5">
-                        <button :disabled="(paymentType == 0 ? true : false)" @click="validationCommande" type="button" 
+                        <button :disabled="((paymentType == 0 || !venteCondition) ? true : false)" @click="validationCommande" type="button" 
                         class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">Finaliser la commande <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" /></button>
