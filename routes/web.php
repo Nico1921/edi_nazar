@@ -68,8 +68,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
          Route::post('/cart/adresses', [CartController::class, 'add_adresse_commande'])->name('cart/adresses');
          Route::post('/cart/payment/cb', [CartController::class, 'generate_form_payment_cb'])->name('cart/payment/cb');
          Route::get('/cart/payment/cb/error', [CartController::class, 'redirect_cb_error_com'])->name('cart/payment/cb/error');
-         Route::get('/cart/adresses/validation', [CartController::class, 'create_adresses_validation'])->name('cart/adresses/validation');
-         Route::post('/cart/adresses/validation/order', [CartController::class, 'confirmation_panier_com'])->name('cart/adresses/validation/order');
+         Route::get('/cart/validation', [CartController::class, 'create_adresses_validation'])->name('cart/adresses/validation');
+         Route::post('/cart/validation/order', [CartController::class, 'confirmation_panier_com'])->name('cart/adresses/validation/order');
       });
    });
 
