@@ -24,7 +24,7 @@ var venteCondition = ref(0);
 var paymentType = ref(0);
 
 var validationCommande = () => {
-   axios.post('/cart/adresses/validation/order',{paymentType: paymentType.value}).then((response) => {
+   axios.post('/cart/validation/order',{paymentType: paymentType.value}).then((response) => {
            if(response.status == 200){
             document.location.href = "/shippings/order/clients/"+response.data.num_commande;
            }else {

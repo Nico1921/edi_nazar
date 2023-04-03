@@ -92,7 +92,7 @@ var validationAdresse = () => {
    formClient.post(route('cart/adresses'),{
       onSuccess: (e) => {
            if(e.props.session.status == true){
-            document.location.href = "/cart/adresses/validation";
+            document.location.href = "/cart/validation";
            }else if(e.props.session.status == false){
 
             Toast.fire({
@@ -433,10 +433,10 @@ export default {
             </div>
          </div>
          <div class="lg:hidden block col-span-4">
-            <ResumeOrderVertical :linkEtapeSuivant="'/cart/adresses/validation'" :titreLink="'Valider mon adresse'" :panier="props.panier" :isButtonSubmit="true" />
+            <ResumeOrderVertical :linkEtapeSuivant="'/cart/validation'" :titreLink="'Valider mon adresse'" :panier="props.panier" :isButtonSubmit="true" />
          </div>
          <div class="lg:block hidden col-span-1 ml-5">
-            <ResumeOrder :linkEtapeSuivant="'/cart/adresses/validation'" :titreLink="'Valider mon adresse'" :panier="props.panier" :isButtonSubmit="true" />
+            <ResumeOrder :linkEtapeSuivant="'/cart/validation'" :titreLink="'Valider mon adresse'" :panier="props.panier" :isButtonSubmit="true" />
          </div>
       </div>
       </form>
