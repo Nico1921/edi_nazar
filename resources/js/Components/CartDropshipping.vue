@@ -161,7 +161,7 @@ import { Inertia } from '@inertiajs/inertia';
 import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 </script>
 <template>
-            <div v-if="isValidatePanier != undefined && isValidatePanier" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
+            <div v-if="isValidatePanier != undefined && isValidatePanier" class="w-full bg-red-200 px-4 py-2 rounded flex items-center my-2">
                <ExclamationTriangleIcon v-if="isValidatePanier" class="h-8 w-8 text-red-600" />
                <span v-if="isValidatePanier" class="pl-2 text-red-600">Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.</span>
             </div>

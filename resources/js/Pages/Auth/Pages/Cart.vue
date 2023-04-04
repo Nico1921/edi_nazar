@@ -55,17 +55,17 @@ export default {
                   <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
                   <span class="pl-2 text-red-600">{{usePage().props.value.session.messageError}}</span>
                </div>
-               <div v-if="(!panierDrop.panier.panier_valid && typeVente == 2) " class="w-full bg-yellow-200 px-4 py-2 rounded flex items-center">
+               <div v-if="(!panierDrop.panier.panier_valid && typeVente == 2) " class="w-full bg-yellow-200 px-4 py-2 my-2 rounded flex items-center">
                   <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
                   <span class="pl-2 text-yellow-600">Pour continuer, veuillez ajouter au minimum un produit pour chaque commande.</span>
                </div> 
                <div class="relative grid grid-cols-12 w-full">
                   <a :href="(typeVente == 1 ? '/order_entrepot/gamme' : '/dropshipping/gamme')" 
-                  class="transition duration-300 flex items-center 2xl:col-span-3 lg:col-span-4 col-span-12 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded-full">
+                  class="lg:absolute left-0 top-1/4 bottom-1/4 transition duration-300 flex items-center lg:col-span-4 col-span-12 lg:text-lg text-sm lg:w-4/12 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded-full">
                      <ArrowLeftIcon class="w-5 h-4 inline-block mr-2" fill="none" stroke="currentColor"  />
                      Poursuivre mes achats
                   </a>
-                  <h1 class="2xl:col-span-9 lg:col-span-8 col-span-12 w-full font-semibold text-lg lg:text-2xl sm:text-xl text-gray-800 text-center py-2">Panier - {{ (typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping') }}</h1>
+                  <h1 class="col-span-12 w-full font-semibold text-lg lg:text-2xl sm:text-xl text-gray-800 text-center py-2 ml-12">Panier - {{ (typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping') }}</h1>
                </div>      
                <CartEntrepot v-if="typeVente == 1" :produits="produits" :panier="props.panier" />
                <CartDropshipping v-if="typeVente == 2" :panier="panierDrop" />

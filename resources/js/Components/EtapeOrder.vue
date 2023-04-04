@@ -37,7 +37,7 @@ import Triangle from 'icons/Triangle.vue';
          <span class="pl-3">Finaliser commande</span>
       </div>
    </div>
-   <div class="block sm:pb-20 lg:pb-18 pb-24 pt-5 sm:mx-5 mx-14">
+   <div class="block sm:pb-20 lg:pb-16 pb-24 pt-5 sm:mx-5 mx-14">
       <div class="w-11/12 mx-auto">
          <div class="bg-primary-50 h-1 flex items-center justify-between">
             <div v-for="n in props.nbEtape" :class="(props.etape == n ? classEtape.etapeActual : (props.etape > n ? (n == 1 ? classEtape.etapePass : classEtape.etapePass+' justify-center mr-1') : (n != 1 && n != props.nbEtape ? classEtape.etapeNotPass + ' justify-center' : classEtape.etapeNotPass + ' justify-end')))"> 
