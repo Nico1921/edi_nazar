@@ -3,6 +3,25 @@ import { Head,usePage } from '@inertiajs/inertia-vue3';
 import { createApp } from 'vue';
 import { TabGroup, TabList, Tab, TabPanels, TabPanel,TransitionRoot,TransitionChild } from '@headlessui/vue';
 import DisplayOrder from '@/Components/DisplayOrder.vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import { HomeIcon,DocumentTextIcon  } from '@heroicons/vue/24/solid';
+      
+var links = [{
+      title: 'Accueil',
+      link: '/',
+      icon: HomeIcon,
+      active: false
+   },{
+      title: 'Historique des commandes',
+      link: '/shippings',
+      icon: DocumentTextIcon,
+      active: false
+   },{
+      title: 'Commande N° '+props.order.num_commande,
+      link: '/shippings/order/clients/'+props.order.num_commande,
+      icon: '',
+      active: true
+   }];
 
 const props = defineProps(['order', 'clients','produits']);
 const classListe = {
@@ -98,7 +117,7 @@ export default {
    <Head :title="'Commande N°'+props.order.num_commande" />
 
    <section class="container mx-auto px-2 mt-5">
-
+      <Breadcrumbs :links="links" />
       <div v-if="usePage().props.value.session.messageValidation != undefined" class="w-full bg-green-200 px-4 py-2 rounded flex items-center mb-4">
          <CheckCircleIcon class="h-8 w-8 text-green-600" />
          <span class="pl-2 text-green-600">{{usePage().props.value.session.messageValidation}}</span>

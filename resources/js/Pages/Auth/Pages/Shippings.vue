@@ -1,7 +1,21 @@
 <script setup>
    import { Head,Link } from '@inertiajs/inertia-vue3';
    import { Table, setTranslations,  } from "@protonemedia/inertiajs-tables-laravel-query-builder";
-
+   import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+   import { HomeIcon,DocumentTextIcon  } from '@heroicons/vue/24/solid';
+      
+   var links = [{
+         title: 'Accueil',
+         link: '/',
+         icon: HomeIcon,
+         active: false
+      },{
+         title: 'Historique des commandes',
+         link: '/shippings',
+         icon: DocumentTextIcon,
+         active: true
+   }];
+   
    setTranslations({
       next: "Suivant",
       no_results_found: "Aucun résultat",
@@ -138,6 +152,7 @@
    <Head title="Expédition Clients" />
 
    <section class="container mx-auto">
+      <Breadcrumbs :links="links" />
       <h1 class="text-center xl:text-3xl lg:text-2xl sm:text-xl text-lg text-primary-300 my-4">Historique des commandes</h1>
 
       <h2 class="text-center text-1xl text-primary-300">Liste commande </h2>

@@ -1,5 +1,18 @@
 <script setup>
     import { Head } from '@inertiajs/inertia-vue3';
+    import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+   import { HomeIcon,LightBulbIcon  } from '@heroicons/vue/24/solid';
+    var links = [{
+        title: 'Accueil',
+        link: '/',
+        icon: HomeIcon,
+        active: false
+    },{
+      title: 'Politique de confidentialité',
+      link: '/politique-confidentialite',
+      icon: LightBulbIcon,
+      active: true
+   }];
  </script>
 <script >
 
@@ -17,6 +30,7 @@
 <template>
    <Head :title="'Politique de confidentialité'" /> 
    <section class="container mx-auto mt-5">
+      <Breadcrumbs :links="links" />
       <h1 class="font-bold lg:text-3xl sm:text-xl text-lg text-gray-800 text-center pb-1 pt-5 px-2">Politique de confidentialité</h1>
       <article>
          <h2 class="font-bold lg:text-2xl sm:text-lg text-sm text-gray-800 text-center pb-1 pt-5 px-2">Politique de confidentialité</h2>

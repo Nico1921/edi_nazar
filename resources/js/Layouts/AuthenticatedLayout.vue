@@ -11,49 +11,6 @@ var user = ref(usePage().props.value.auth.user);
 <template>
     <div class="min-h-full relative xl:pb-24 lg:pb-28 pb-24" >
         <NavBar>
-            <!-- <div class="container mx-auto mt-5" v-if="$page.url != '/' && user != ''">
-                <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg " aria-label="Breadcrumb">
-                    <ol class="flex items-center ">
-                        <li class="flex items-center" v-if="!$page.url.startsWith('/type_order')">
-                            <Link href="/" class="text-sm font-medium text-gray-700 hover:text-gray-900"><Home /> Accueil</Link>
-                        </li>
-                        <li class="flex items-center" v-if="$page.url.startsWith('/type_order')">
-                            <Link href="/" class="text-sm font-medium text-gray-700 hover:text-gray-900"><Home /> Choix Type Commande</Link>
-                        </li>
-                        <li class="flex items-center text-sm" v-if="$page.url != '/'"><Right class="bottom-initial" /></li>
-                        <li aria-current="page" class="flex items-center" v-if="$page.url.startsWith('/products')">
-                            <span class="text-sm font-medium text-gray-500" > {{$t('navbar.produits')}} </span>
-                        </li>
-                        <li aria-current="page" class="flex items-center" v-if="$page.url == '/about-us' || $page.url.startsWith('/type_order/about-us')">
-                            <span class="text-sm font-medium text-gray-500"> {{$t('navbar.aPropos')}} </span>
-                        </li>
-                        <li aria-current="page" class="flex items-center" v-if="$page.url == '/settings'">
-                            <span class="text-sm font-medium text-gray-500">Mon profil</span>
-                        </li>
-                        <li aria-current="page" class="flex items-center" v-if="$page.url.startsWith('/orders')">
-                            <span class="text-sm font-medium text-gray-500" v-if="$page.url == '/orders'"> {{$t('navbar.commandes')}} </span>
-                            <Link href="/orders" class="text-sm font-medium text-gray-700 hover:text-gray-900" v-if="$page.url.startsWith('/orders/')">{{$t('navbar.commandes')}}</Link>
-                        </li>
-                        <li class="flex items-center text-sm" v-if="$page.url.startsWith('/orders/')"><Right class="bottom-initial" /></li>
-                        <li aria-current="page" class="flex items-center" v-if="$page.url.startsWith('/orders/entrepots')">
-                            <span class="text-sm font-medium text-gray-500" v-if="$page.url == '/orders/entrepots'"> Entrepots </span>
-                            <Link href="/orders" class="text-sm font-medium text-gray-700 hover:text-gray-900" v-if="$page.url.startsWith('/orders/entrepots/')"> Entrepots </Link>
-                        </li>
-                        <li aria-current="page" class="flex items-center" v-if="$page.url.startsWith('/orders/clients')">
-                            <span class="text-sm font-medium text-gray-500" v-if="$page.url == '/orders/clients'"> Clients </span>
-                            <Link href="/orders/clients" class="text-sm font-medium text-gray-700 hover:text-gray-900" v-if="$page.url.startsWith('/orders/clients/')"> Clients </Link>
-                        </li>
-                        <li class="flex items-center text-sm" v-if="$page.url.startsWith('/orders/clients/')"><Right class="bottom-initial" /></li>
-                        <li aria-current="page" class="flex items-center" v-if="$page.url.startsWith('/orders/clients/validation')">
-                            <span class="text-sm font-medium text-gray-500" v-if="$page.url == '/orders/clients/validation'"> Validation </span>
-                        </li>
-                        <li aria-current="page" class="flex items-center" v-if="$page.url.startsWith('/cart')">
-                            <span class="text-sm font-medium text-gray-500" v-if="$page.url == '/cart'"> Panier </span>
-                        </li>
-                    </ol>
-                </nav>
-            </div> -->
-
             <slot />
         </NavBar>
     </div>

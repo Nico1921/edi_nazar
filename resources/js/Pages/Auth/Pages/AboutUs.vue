@@ -1,7 +1,19 @@
 <script setup>
 import { Head } from '@inertiajs/inertia-vue3';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import { HomeIcon,LightBulbIcon  } from '@heroicons/vue/24/solid';
 const schema = new URL('../../../../images/AboutUs/schema.webp', import.meta.url).href;
-
+var links = [{
+        title: 'Accueil',
+        link: '/',
+        icon: HomeIcon,
+        active: false
+    },{
+      title: 'A propos',
+      link: '/about-us',
+      icon: LightBulbIcon,
+      active: true
+}];
 
 </script>
 <script>
@@ -19,6 +31,7 @@ export default {
 <template>
     <Head title="About Us" />
     <section class="container mx-auto px-7 mt-5">
+        <Breadcrumbs :links="links" />
         <h1 class="font-semibold text-sm lg:text-xl sm:text-lg text-gray-800 text-center py-5">
             Drop Shipping - Moteur de croissance
         </h1>
