@@ -2,6 +2,20 @@
 import { Head,usePage,useForm } from '@inertiajs/inertia-vue3';
 import InputError from '@/Components/InputError.vue';
 import { ref } from 'vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import { HomeIcon,Cog6ToothIcon  } from '@heroicons/vue/24/solid';
+      
+var links = [{
+      title: 'Accueil',
+      link: '/',
+      icon: HomeIcon,
+      active: false
+   },{
+      title: 'Votre profil',
+      link: '/settings',
+      icon: Cog6ToothIcon,
+      active: true
+}];
 
 var user = ref(usePage().props.value.auth.user[0]);
 var client = ref(usePage().props.value.auth.user[0].client);
@@ -274,6 +288,7 @@ export default {
 <template>
     <Head title="Mon profil" />
     <section class="container mx-auto sm:px-7 mt-5">
+      <Breadcrumbs :links="links" />
       <div class="grid grid-cols-4">
          <div class="col-span-4 m-2 relative w-full pt-20 mr-2 pr-4 lg:hidden block">
             <form class="w-full flex items-center justify-center absolute top-0 z-30">

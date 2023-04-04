@@ -3,7 +3,20 @@ import { Head, usePage, useForm } from '@inertiajs/inertia-vue3';
 import { ref, onMounted, watchEffect,createApp } from 'vue';
 import ListClients from '@/Components/ListClients.vue';
 import ModalImportMKP from '@/Components/ModalImportMKP.vue';
-
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import { HomeIcon,ListBulletIcon  } from '@heroicons/vue/24/solid';
+    
+var links = [{
+        title: 'Accueil',
+        link: '/',
+        icon: HomeIcon,
+        active: false
+    },{
+      title: 'Dropshipping - Gamme',
+      link: '/dropshipping/gamme',
+      icon: ListBulletIcon,
+      active: true
+}];
 const templateVierge = new URL('../../../../../../fichiers/templates/Drop/Template_Vierge_Drop.xlsx', import.meta.url).href;
 const templateModele = new URL('../../../../../../fichiers/templates/Drop/Template_Model_Drop.xlsx', import.meta.url).href;
 const props = defineProps(['products','dimensions', 'produitsAchat']);
@@ -203,6 +216,7 @@ export default {
 
    <Head title="Products" />
    <section class="container mx-auto mt-5">
+      <Breadcrumbs :links="links" />
       <h1 class="font-semibold text-sm lg:text-2xl sm:text-lg text-gray-800 py-2">Dropshipping - Gamme</h1>
 
       <div v-if="client != undefined " class="flex justify-between sm:flex-row flex-col ">

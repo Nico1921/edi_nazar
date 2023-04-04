@@ -30,6 +30,7 @@
 
 <template>
        <Head :title="$t('accueil.titre')" /> 
+       
            <section class="container mx-auto mt-5 ">
                <h1 class="font-bold lg:text-3xl sm:text-xl text-lg text-gray-800 text-center pb-1 pt-5 px-2">
                {{$page.props.auth.user[0].client.nom_societe}} - {{$t('accueil.titre_principal')}}

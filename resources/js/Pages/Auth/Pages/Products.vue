@@ -1,6 +1,20 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/inertia-vue3';
 import { ref, onMounted } from 'vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import { HomeIcon,ListBulletIcon  } from '@heroicons/vue/24/solid';
+    
+var links = [{
+        title: 'Accueil',
+        link: '/',
+        icon: HomeIcon,
+        active: false
+    },{
+      title: 'Commande Entrepôt - Gamme',
+      link: '/order_entrepot/gamme',
+      icon: ListBulletIcon,
+      active: true
+}];
 
 const templateVierge = new URL('../../../../fichiers/templates/Commercial/Template_Vierge_Com.xlsx', import.meta.url).href;
 const templateModele = new URL('../../../../fichiers/templates/Commercial/Template_Model_Com.xlsx', import.meta.url).href;
@@ -169,8 +183,9 @@ export default {
 
 <template>
 
-   <Head title="Products" />
+   <Head title="Produits" />
    <section class="container mx-auto mt-5">
+      <Breadcrumbs :links="links" />
       <h1 class="font-semibold mx-1 lg:text-2xl text-lg text-gray-800 py-2">Commande Entrepôt - Gamme</h1>
 
       <div class="bg-primary-50 rounded xl:mx-40 mb-5" v-if="typeVente == 1">

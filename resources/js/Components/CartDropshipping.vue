@@ -165,7 +165,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                <ExclamationTriangleIcon v-if="isValidatePanier" class="h-8 w-8 text-red-600" />
                <span v-if="isValidatePanier" class="pl-2 text-red-600">Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.</span>
             </div>
-            <div v-if="panier.clients != undefined" class="w-full h-90 ">
+            <div v-if="panier.clients != undefined" class="sm:my-4 rounded-lg border shadow-lg p-10 w-full h-90 ">
                <div v-for="(client, key1) in panier.clients" :key="key1" class="w-full lg:p-4 sm:p-3 p-2 my-2 bg-gray-100 rounded">
                   <div class="flex items-center justify-center">
                      <h2 class="font-bold text-center text-xl py-1">Commande : {{client.client.ref_externe}}</h2>
@@ -226,7 +226,24 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                </div>
                
             </div>
-            <div v-else class="flex items-center justify-center h-full">
-               <span>Votre panier est vide !</span>
+            <div v-else class="sm:my-4 flex items-center justify-center w-full h-full">
+               <div class="rounded-lg border p-8 sm:m-0 m-4 shadow-lg flex flex-col items-center justify-center w-full h-full">
+                  <span class="material-design-icon cart-remove-icon !w-24 !h-24 text-gray-400" role="img">
+                     <svg class="material-design-icon__svg !w-24 !h-24"
+                           width="24"
+                           height="24"
+                           viewBox="0 0 24 24">
+                        <path d="M14.12,8.53L12,6.41L9.88,8.54L8.46,7.12L10.59,5L8.47,2.88L9.88,1.47L12,3.59L14.12,1.46L15.54,2.88L13.41,5L15.53,7.12L14.12,8.53M7,18A2,2 0 0,1 9,20A2,2 0 0,1 7,22A2,2 0 0,1 5,20A2,2 0 0,1 7,18M17,18A2,2 0 0,1 19,20A2,2 0 0,1 17,22A2,2 0 0,1 15,20A2,2 0 0,1 17,18M7.17,14.75A0.25,0.25 0 0,0 7.42,15H19V17H7A2,2 0 0,1 5,15C5,14.65 5.09,14.32 5.25,14.04L6.6,11.59L3,4H1V2H4.27L5.21,4L6.16,6L8.4,10.73L8.53,11H15.55L18.31,6L19.41,4H19.42L21.16,4.96L17.3,11.97C16.96,12.59 16.3,13 15.55,13H8.1L7.2,14.63L7.17,14.75Z">
+                        </path>
+                     </svg>
+                  </span>
+                  <h2 class="mt-6 text-3xl font-medium text-gray-900">Votre panier est vide</h2>
+                  
+                  <p class="mt-4 text-gray-500 text-center">Vous n'avez pas encore ajouté d'articles à votre panier.</p>
+                  
+                  <a href="/dropshipping/gamme" class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded mt-6 sm:w-auto animate-bounce transition-all duration-300">
+                  Ajouter au panier
+                  </a>
+               </div>
             </div>
 </template>
