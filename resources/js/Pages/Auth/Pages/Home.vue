@@ -32,11 +32,11 @@
        <Head :title="$t('accueil.titre')" /> 
        
            <section class="container mx-auto mt-5 ">
-               <h1 class="font-bold lg:text-3xl sm:text-xl text-lg text-gray-800 text-center pb-1 pt-5 px-2">
+               <h1 class="font-bold lg:text-2xl sm:text-xl text-lg text-gray-800 text-center pb-1 pt-5 px-2">
                {{$page.props.auth.user[0].client.nom_societe}} - {{$t('accueil.titre_principal')}}
                </h1>
                <div class="grid grid-cols-4">
-                <div class="col-span-4 m-4"><h2 class="text-center font-bold lg:text-3xl sm:text-2xl text-xl">Découvrez nos dernières collections</h2></div>
+                <div class="col-span-4 m-4"><h2 class="text-center font-bold lg:text-2xl sm:text-2xl text-xl">Découvrez nos dernières collections</h2></div>
                    <article class="xl:col-span-3 col-span-4 grid grid-cols-3 xl:h-full h-[100vh]">
                         <div class="lg:col-span-1 col-span-3 m-2 ">
                             <div :style="{'background-image':'url('+imgAccueil.cosy+')'}" class="relative bg-cover bg-no-repeat h-full w-full">

@@ -8,7 +8,7 @@ const props = defineProps(['panier', 'linkEtapeSuivant', 'titreLink','isButtonSu
 import Alert from 'icons/Alert.vue';
 </script>
 <template>
-   <div class="bg-primary-50 rounded border-2 border-primary-200 py-5">
+   <div class="bg-white border border-primary-100 rounded border-2 border-primary-200 py-5">
       <h2 class="font-bold text-sm lg:text-xl sm:text-lg text-gray-800 text-center py-2">Récapitulatif de
          la commande</h2>
 
@@ -28,16 +28,16 @@ import Alert from 'icons/Alert.vue';
       <div class="flex items-center justify-center">
          <div v-if="props.titreLink != '' && props.titreLink != undefined">
             <div class="flex items-center justify-center my-3" v-if="props.linkEtapeSuivant != undefined && !props.disabled && props.panier != undefined && !isButtonSubmit && props.panier.produits_total > 0">
-               <Link v-if="props.panier.total_ttc != undefined" :href="props.linkEtapeSuivant" class="p-2 border border-primary-300 rounded bg-primary-200 
+               <Link v-if="props.panier.total_ttc != undefined" :href="props.linkEtapeSuivant" class="p-2 border border-primary-50 rounded bg-primary-50 
                         hover:bg-primary-100 transition duration-300">{{ props.titreLink }}</Link>
             </div>
             <div class="flex items-center justify-center my-3" v-else-if="props.panier != undefined && isButtonSubmit && !props.disabled">
-               <button v-if="props.panier.total_ttc != undefined" type="submit" class="p-2 border border-primary-300 rounded bg-primary-200 
+               <button v-if="props.panier.total_ttc != undefined" type="submit" class="p-2 border border-primary-50 rounded bg-primary-50 
                            hover:bg-primary-100 transition duration-300 disabled:bg-primary-100
                             disabled:cursor-not-allowed">{{ props.titreLink }}</button>
             </div>
             <div class="flex items-center justify-center my-3" v-else>
-               <button type="button" class="p-2 border border-primary-300 rounded bg-primary-200 
+               <button type="button" class="p-2 border border-primary-300 rounded bg-primary-50 
                            hover:bg-primary-100 transition duration-300 disabled:bg-primary-100
                             disabled:cursor-not-allowed" disabled>{{ props.titreLink }}</button>
             </div>
@@ -45,7 +45,7 @@ import Alert from 'icons/Alert.vue';
          <div v-else>
             
             <div class="flex items-center justify-center my-3" >
-               <button type="button" class="p-2 border border-primary-300 rounded bg-primary-200 
+               <button type="button" class="p-2 border border-primary-300 rounded bg-primary-50 
                            hover:bg-primary-100 transition duration-300 disabled:bg-primary-100
                             disabled:cursor-not-allowed" disabled>{{ props.titreLink }}</button>
             </div>

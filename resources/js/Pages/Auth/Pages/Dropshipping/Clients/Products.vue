@@ -340,7 +340,7 @@ export default {
 
       <div class="grid grid-flow-row-dense grid-cols-12 " id="TabProducts">
          <div class="xl:col-span-3 lg:col-span-4 sm:col-span-6 col-span-12" v-for="(produit, key) in productsSearch" :key="key" :data-positiontab="getCountP()" :id="'tab_idDesign' + produit.id_design">
-            <div class="grid grid-cols-12 bg-primary-100 rounded-lg sm:h-48 h-38 mx-6 my-4 p-4">
+            <div class="grid grid-cols-12 bg-primary-white border border-primary-200 rounded-lg sm:h-48 h-38 mx-6 my-4 p-4">
                <div class="xl:col-span-5 sm:col-span-4 col-span-2 items-stretch justify-center flex sm:h-40 h-full">
                   <div v-if="produit.img_produit != null"
                         class="cursor-pointer relative overflow-hidden bg-gray-200 w-full h-full">

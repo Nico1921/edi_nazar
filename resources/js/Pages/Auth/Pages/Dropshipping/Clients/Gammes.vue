@@ -274,7 +274,7 @@ export default {
                </div>
 
                <div class="absolute bottom-0 z-30 w-full overflow-hidden">
-                 <div class="max-h-0 group-hover:max-h-60 group-hover:p-1 transition-full duration-500 bg-primary-100 text-center flex flex-col  bg-opacity-70 text-white">
+                 <div class="max-h-0 group-hover:max-h-60 group-hover:p-1 transition-full duration-500 bg-primary-300 text-center flex flex-col  bg-opacity-70 text-white">
                   <span>Tapis {{ (produit.type_tapis == 0 ? 'intérieur' : produit.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
                   <span>Poils {{ (produit.type_poils == 1 ? 'court' : 'long') }} - {{ (produit.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
                   <span class="capitalize">{{ lowercase(produit.nom_special) }}</span>

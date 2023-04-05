@@ -47,7 +47,7 @@ import Triangle from 'icons/Triangle.vue';
                      <div class="relative w-full mt-5 flex justify-center">   
                         <Triangle class="text-gray-100 flex items-center justify-center !absolute -top-2 pl-0.5 !w-full right-0 left-0" />
                         <div class="px-2 py-1 bg-gray-100 rounded shadow-lg">
-                           <p tabindex="0" class="focus:outline-none text-primary-200 text-xs font-bold">{{ props.listeEtape[n-1] }}</p>
+                           <p tabindex="0" class="focus:outline-none text-primary-300 text-xs font-bold">{{ props.listeEtape[n-1] }}</p>
                         </div>     
                      </div>
                   </div>

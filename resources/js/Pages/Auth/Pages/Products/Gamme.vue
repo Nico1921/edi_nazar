@@ -1,26 +1,38 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/inertia-vue3';
 import { createApp, onMounted,ref } from 'vue';
-import {
-  TransitionRoot,
-  TransitionChild,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-} from '@headlessui/vue';
+import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,} from '@headlessui/vue';
 import DetailsDesign from '@/Components/DetailsDesign.vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicons/vue/24/solid';
 
-const templateVierge = new URL('../../../../..//fichiers/templates/Commercial/Template_Vierge_Com.xlsx', import.meta.url).href;
-const templateModele = new URL('../../../../../fichiers/templates/Commercial/Template_Model_Com.xlsx', import.meta.url).href;
-const props = defineProps(["products","gamme"]);
-var imgBackground  = "background-image: url('https://gestion.tapis-nazar.fr/img/produit/gamme/"+props.gamme.img_gamme+"');";
+const props = defineProps(["products","gamme","dimensions"]);
+var links = [{
+        title: 'Accueil',
+        link: '/',
+        icon: HomeIcon,
+        active: false
+    },{
+      title: 'Commande Entrepôt',
+      link: '/order_entrepot/gamme',
+      icon: ListBulletIcon,
+      active: false
+   },{
+      title: 'Gamme',
+      link: '/order_entrepot/gamme',
+      icon: '',
+      active: false
+   },{
+      title: props.gamme.nom_gamme,
+      link: '/order_entrepot/gamme/'+props.gamme.nom_gamme,
+      icon: '',
+      active: true
+}];
+
 const isOpen = ref(false);
-
-let fileExist = ref(false);
-var typeVente = ref(usePage().props.value.session.typeVente);
 var productsSearch = ref(props.products.data);
 var products = ref(props.products);
-
+var clientUser = ref(usePage().props.value.auth.user[0].client);
 var countP = 0;
 
 var classVariant = {
@@ -45,10 +57,6 @@ var perPage = () => {
    var targetNode = document.getElementById('per_page');
    parsedUrl.searchParams.set('perPage',targetNode.value);
    window.location.href = parsedUrl.href;
-};
-
-const lowercase = (nom) => {
-   return HtmlEntities.decode(nom.toLowerCase());
 };
 
 var perPageActual = () => {
@@ -88,40 +96,6 @@ var searchGamme = (e) => {
             window.history.replaceState('','',parsedUrl.href);
       }
    })
-};
-
-var fileImport = (input)=>{
-   if(input.target.value == ''){
-      document.getElementById("file_name_client").innerText = "";
-      document.getElementById("file_name_span_client").classList.add("hidden");
-      fileExist.value = false;
-   }else{
-      document.getElementById("file_name_client").innerText = input.target.files[0].name;
-      document.getElementById("file_name_span_client").classList.remove("hidden");     
-      fileExist.value = true;
-   }
-};
-
-var clickResetInputFile = ()=>{
-   document.getElementById("file_import_cart").value = null;
-   document.getElementById("file_name_client").innerText = "";
-   document.getElementById("file_name_span_client").classList.add("hidden");
-   fileExist.value = false;
-};
-
-const submit_file = () => {
-   var form = new FormData(document.getElementById('fileCartImport'));
-   axios.post('/order_entrepot/panier/import',form).then((response) => {
-      console.log(response);
-      if(response.status){
-        document.location.href = "/cart";
-      }else{
-         Toast.fire({
-            icon: 'error',
-            title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
-         });
-      }
-   });
 };
 
 function closeModal() {
@@ -234,6 +208,22 @@ var deletePanier = () =>{
    });
 };
 
+const lowercase = (nom) => {
+   return HtmlEntities.decode(nom.toLowerCase());
+};
+
+var roundNumber = (e) => {
+   return (Math.round(e * 100) / 100).toFixed(2);
+};
+
+var calcul_prix_gamme = (prix_gamme) => {
+   var HT = prix_gamme;
+   if(clientUser.value.taux_remise > 0){
+      HT = HT - ((HT) * (clientUser.value.taux_remise /100));
+   }
+   return roundNumber(HT);
+}
+
 onMounted(() => {
    var targetNode = document.getElementById('TabProducts');
    var config = { attributes: true, childList: true, subtree: true };
@@ -249,13 +239,10 @@ onMounted(() => {
 </script>
 <script >
 import Eye from 'icons/EyeOutline.vue';
-import Close from 'icons/Close.vue';
-import Excel from 'icons/MicrosoftExcel.vue';
 import ImageOff from 'icons/ImageOff.vue';
 import Right from 'icons/ChevronRight.vue';
 import Left from 'icons/ChevronLeft.vue';
 import Search from 'icons/Magnify.vue';
-import {BackspaceIcon} from '@heroicons/vue/24/outline';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 export default {
@@ -270,44 +257,24 @@ export default {
 
    <Head title="Products" />
    <section class="container mx-auto">
-      <section :style="imgBackground" class="h-52 relative container mx-auto bg-cover bg-[center_bottom_-15rem]">
-         <div class="absolute top-1 left-0 text-white p-5 py-2 rounded-r-lg bg-primary-50">
-            <a class="underline" href="/">Accueil</a> / <a class="underline" href="/order_entrepot/gamme">Gamme</a> / {{ props.gamme.nom_gamme }}
+      <Breadcrumbs :links="links" />
+      <section class="relative container mx-auto grid grid-cols-12 mb-4">     
+         <div class="col-span-2 flex items-end">
+            <a href="/order_entrepot/gamme" class="relative inline-block group">
+               <ArrowLeftIcon class="h-4 w-4 absolute left-0 bottom-1/4 top-1/4 text-black group-hover:text-primary-300 transition duration-300" /> 
+               <span class="inline-block border-b border-black pl-5 group-hover:text-primary-300 group-hover:border-primary-300 transition duration-300">Retourner aux gammes</span>
+            </a>
+         </div>    
+         <div class="flex items-center justify-center col-span-7">
+            <h1 class="text-6xl font-bold">{{ props.gamme.nom_gamme }}</h1>
          </div>
-         <div class="flex items-center h-full ">
-            <h1 class="text-white text-3xl font-bold px-5 py-2 rounded-r-lg bg-primary-50">{{ props.gamme.nom_gamme }}</h1>
+         <div class="col-span-3 rounded bg-primary-white border border-primary-100 text-center flex flex-col text-primary-300">
+            <span>Tapis {{ (props.gamme.type_tapis == 0 ? 'intérieur' : props.gamme.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
+            <span>Poils {{ (props.gamme.type_poils == 1 ? 'court' : 'long') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
+            <span class="capitalize">{{ props.gamme.nom_special }}</span>
+            <span>Prix HT m² : {{ calcul_prix_gamme(props.gamme.prix_vente_ht_m2) }} €</span>
          </div>
-         <div class="absolute bottom-0 left-0 py-2">
-            <div class="relative  rounded bg-gradient-to-r from-blue-400 to-indigo-500">
-               <a href="/order_entrepot/gamme" class="group rounded bg-gradient-to-r from-blue-400 to-indigo-500">
-                  <div class="bg-gradient-to-r to-blue-400 from-indigo-500 text-white font-bold py-2 px-4 rounded shadow-md transition duration-500 ease-in-out opacity-0 group-hover:opacity-100">
-                     <span class="opacity-100 text-white font-bold">Retourner aux gammes</span>
-                  </div>
-                  <div class="absolute flex items-center justify-center w-full h-full top-0 left-0 opacity-100 group-hover:opacity-0 transition duration-500 ease-in-out">
-                     <span class="opacity-100 text-white font-bold">Retourner aux gammes</span>
-                  </div>
-               </a>
-            </div>
-      </div>
       </section>
-
-      <div class="bg-primary-50 rounded xl:mx-40 mb-5" v-if="typeVente == 1">
-         <h2 class="text-center lg:text-xl text-lg text-primary-300 py-1 bg-primary-100 rounded-t-lg">Ajouter au panier via un fichier</h2>
-         <div class="p-4 flex flex-col items-center justify-items-center justify-center">
-            <form id="fileCartImport" class="grid grid-cols-4" @submit.prevent="submit_file">
-               <div :class="fileExist ? 'relative col-span-3 lg:mx-2 mx-1' : 'relative col-span-4 lg:mx-2 mx-1'">
-                  <label class="block lg:text-lg text-sm  cursor-pointer text-primary-500 bg-primary-200 p-3 rounded-lg" for="file_import_cart">Importer mon fichier de commandes <Excel /></label>
-                  <span class="hidden" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
-                  <input @change="fileImport" type="file" class="hidden" id="file_import_cart" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
-                  <p class="mt-1 text-sm text-gray-500" id="file_input_helper">.XLS,.XLSX</p>
-                  <span class="absolute bottom-0 right-0"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
-               </div>
-               <div class="col-span-1" v-if="fileExist">
-                  <button type="submit" class="p-3 lg:text-lg text-sm rounded-lg text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
-               </div>
-            </form>       
-         </div>
-      </div>
 
       <div class="mx-1 my-1 flex sm:flex-row flex-col w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 ">
          <div class="relative flex-grow">
@@ -324,7 +291,7 @@ export default {
 
       <div class="grid grid-flow-row-dense grid-cols-12 " id="TabProducts">
          <div class="xl:col-span-3 lg:col-span-4 sm:col-span-6 col-span-12" v-for="(produit, key) in productsSearch" :key="key" :data-positiontab="getCountP()" :id="'tab_idDesign' + produit.id_design">
-            <div class="grid grid-cols-12 bg-primary-100 rounded-lg sm:h-48 h-38 mx-6 my-4 p-4">
+            <div class="grid grid-cols-12 bg-primary-white border border-primary-200 rounded-lg sm:h-48 h-38 mx-6 my-4 p-4">
                <div class="xl:col-span-5 sm:col-span-4 col-span-2 items-stretch justify-center flex sm:h-40 h-full">
                   <div v-if="produit.img_produit != null"
                         class="cursor-pointer relative overflow-hidden bg-gray-200 w-full h-full">

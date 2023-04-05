@@ -139,8 +139,8 @@ export default {
          </div>
          <div class="col-span-4 grid grid-cols-4 xl:mx-16 ">
          <div class="lg:col-span-3 col-span-4 xl:ml-0 lg:ml-16 lg:mx-0 sm:mx-12">
-            <div class="bg-primary-50 rounded mb-5">
-               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-100 rounded-t-lg w-full">Information générale</h2>
+            <div class="bg-white border border-primary-100 rounded mb-5">
+               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-sm w-full">Information générale</h2>
                <div  class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="sm:col-span-4 col-span-5">
@@ -166,8 +166,8 @@ export default {
                      </div>
                </div>
             </div>
-            <div class="bg-primary-50 rounded my-5">
-               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-100 rounded-t-lg w-full">Saisir l'adresse de livraison</h2>
+            <div class="bg-white border border-primary-100 rounded my-5">
+               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-sm w-full">Saisir l'adresse de livraison</h2>
                <div class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
 
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
@@ -292,7 +292,7 @@ export default {
                            <InputError class="mt-2" :message="formClient.errors.pays" />
                         </div>
                      </div>
-                  <div class="col-span-6 z-10 relative py-1 pl-4 pr-4 text-lg rounded bg-primary-100 w-full text-primary-400 flex flex-row items-center">
+                  <div class="col-span-6 z-10 relative py-1 pl-4 pr-4 text-lg rounded bg-primary-50 w-full text-primary-400 flex flex-row items-center">
                      <label for="sameAdresseFact" class="sm:w-11/12 w-10/12">Utiliser cette adresse comme adresse de facturation</label>
                      <div class="sm:w-1/12 w-2/12 flex justify-center">
                         <Switch id="sameAdresseFact" v-model="sameAdresseFact" :class="sameAdresseFact ? 'bg-blue-600' : 'bg-gray-200'" class="relative inline-flex h-6 w-11 items-center rounded-full">
@@ -304,8 +304,8 @@ export default {
                   </div>
                </div>
             </div>
-            <div v-if="!sameAdresseFact" class="bg-primary-50 rounded my-5">
-               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-100 rounded-t-lg w-full">Saisir l'adresse de facturation</h2>
+            <div v-if="!sameAdresseFact" class="bg-white border border-primary-100 rounded my-5">
+               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-lg w-full">Saisir l'adresse de facturation</h2>
                <div @submit.prevent="submit" class="grid grid-cols-1 gap-4 p-5 mx-5" id="form_client">
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
