@@ -210,6 +210,11 @@ var modifQteDrop = (e,nomProduit) => {
    }
 };
 
+var goLink = (e,link) => {
+	e.preventDefault();
+	document.location.href = link;
+};
+
 </script>
 <script>
 import Delete from 'icons/Delete.vue';
@@ -321,13 +326,15 @@ export default {
 			<div class="absolute right-10 z-50" >
 				<Popover class="relative" v-slot="{ open }">
 					<div @mouseleave="onMouseLeave(open)" class="mt-2">
-						<PopoverButton class="outline-none" ref="buttonRef" @mouseenter="onMouseEnter(open)">
-							<ShoppingCartIcon v-if="typeVente == 1" class="w-6 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
-							<ShoppingBagIcon v-if="typeVente == 2" class="w-7 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
-							<div
-								class=" rounded-full bg-primary-200 absolute -top-2 -right-3 w-5 h-5 flex justify-center items-center">
-								<span class="text-xs text-primary-500">{{ (typeVente == 1 ? countPanier : panierDrop.count) }}</span>
-							</div>
+						<PopoverButton  class="outline-none z-20 relative" ref="buttonRef" @mouseenter="onMouseEnter(open)">
+							<a @click="goLink($event,(typeVente == 1 ? '/cart' : '/dropshipping/cart'))" class="z-30 relative" :href="(typeVente == 1 ? '/cart' : '/dropshipping/cart')">
+								<ShoppingCartIcon v-if="typeVente == 1" class="w-6 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
+								<ShoppingBagIcon v-if="typeVente == 2" class="w-7 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
+								<div
+									class=" rounded-full bg-primary-200 absolute -top-2 -right-3 w-5 h-5 flex justify-center items-center">
+									<span class="text-xs text-primary-500">{{ (typeVente == 1 ? countPanier : panierDrop.count) }}</span>
+								</div>
+							</a>
 						</PopoverButton>
 						<transition enter-active-class="transition duration-200 ease-out"
 							enter-from-class="translate-y-1 opacity-0" enter-to-class="translate-y-0 opacity-100"
