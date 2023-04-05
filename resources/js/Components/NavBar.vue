@@ -4,10 +4,11 @@ import { Link, usePage, useForm } from '@inertiajs/inertia-vue3';
 import { Menu, MenuButton, MenuItem, MenuItems, Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
 import { ShoppingBagIcon,ShoppingCartIcon } from '@heroicons/vue/20/solid';
 import InputNumber from '@/Components/InputNumberVertical.vue';
-import Langue from '@/Components/LangueChoice.vue';
+import Dropdown from '@/Components/Dropdown.vue';
 
 const imageUrl = new URL('../../images/Logo/Nazar Logo.svg', import.meta.url).href;
 const active = ref(false);
+
 var user = ref(usePage().props.value.auth.user);
 
 var typeVente = ref(usePage().props.value.session.typeVente);
@@ -209,26 +210,9 @@ var modifQteDrop = (e,nomProduit) => {
    }
 };
 
-var confirmChangeTypeVente = () => {
-	Swal.fire({
-      title: 'Attention',
-      text: 'Etes-vous sur de vouloir passer au commande '+(typeVente.value == 1 ? "B to C"	: "B to B")+' ?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Non',
-      confirmButtonText: 'Oui',
-   }).then((result) => {
-      if (result.isConfirmed) {
-			document.location.href = (typeVente.value == 1 ? '/type_order/customers' : '/type_order/warehouse');
-      }
-   })
-};
 </script>
 <script>
 import Delete from 'icons/Delete.vue';
-import Cart from 'icons/Cart.vue';
 import ImageOff from 'icons/ImageOff.vue';
 import menuHamburger from 'icons/Menu.vue';
 import dotsVertical from 'icons/DotsVertical.vue';
@@ -260,31 +244,43 @@ export default {
 				class="hidden z-40 absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:justify-center lg:items-center lg:w-full lg:space-x-6">
 				<li>
 					<Link href="/about-us" :class="{ '!text-gray-800': $page.url.startsWith('/about-us') }"
-						class="text-sm  text-primary-300 hover:text-primary-500 transition duration-300">
+						class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
 					{{ $t('navbar.aPropos') }}</Link>
 				</li>
 				<li class="text-primary-300">
 					<dotsVertical />
 				</li>
-				<li>
-					<Link href="/order_entrepot" :class="{ '!text-gray-800': $page.url.startsWith('/order_entrepot') }"
-						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
-					Commande Entrepôt</Link>
+				<li class="relative">
+					
+					<Dropdown>
+						<template #trigger>
+							<a href="/order_entrepot" :class="{ '!text-gray-800': $page.url.startsWith('/order_entrepot') }"
+								class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
+								Commande Entrepôt</a>
+							</template>
+							<template #content>
+								<ul class=" bg-primary-100 rounded w-full none">
+							<li>Collections</li>
+							</ul>
+						</template>
+						
+					</Dropdown>
+					
 				</li>
-				<li class="text-primary-300">
+				<li class="text-primary-300 font-bold">
 					<dotsVertical />
 				</li>
 				<li>
 					<Link href="/dropshipping" :class="{ '!text-gray-800': $page.url.startsWith('/dropshipping') }"
-						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
+						class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
 					Dropshipping</Link>
 				</li>
-				<li class="text-primary-300">
+				<li class="text-primary-300 font-bold">
 					<dotsVertical />
 				</li>
 				<li>
 					<Link href="/shippings" :class="{ '!text-gray-800': $page.url.startsWith('/shippings') }"
-						class="text-sm text-primary-300 hover:text-primary-500 transition duration-300">
+						class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
 					{{ $t('navbar.expeditions') }}</Link>
 				</li>
 			</ul>

@@ -138,6 +138,19 @@ class OrderEntrepotController extends Controller
             });
         });
 
+        $dimensions = DB::table('gamme')
+            ->select(['gamme.id_gamme','dimension.largeur','dimension.longueur'])
+            ->distinct()
+            ->join('design', 'gamme.id_gamme', 'design.id_gamme')
+            ->join('produit', 'design.id_design', 'produit.id_design')
+            ->join('dimension', 'produit.id_dimension', 'dimension.id_dimension')
+            ->where('gamme.in_edi', '=', '1')
+            ->where('gamme.statut', '=', '1')
+            ->where('gamme.nom_gamme', 'like', "%{$gamme}%")
+            ->orderBy('dimension.largeur')
+            ->orderBy('dimension.longueur')
+            ->get();
+
 
         $products = QueryBuilder::for(Produit::class)
             ->defaultSort('nom_design')
@@ -163,6 +176,7 @@ class OrderEntrepotController extends Controller
         return Inertia::render('Auth/Pages/Products/Gamme', [
             'products' => $products,
             'gamme' => $gammeSearch,
+            'dimensions' => $dimensions
         ]);
     }
 
@@ -441,7 +455,7 @@ class OrderEntrepotController extends Controller
         $request->validate(['fileImport' => 'required|file|mimes:xls,xlsx']);
 
         $imports = Excel::import(new CommandeImport, $request->file('fileImport')->store('temp'))->toCollection(new CommandeImport, $request->file('fileImport')->store('temp'));
-Log::debug($imports);
+
         if (!$request->session()->has('panier_commercial')) {
             $num_commande = PanierEdi::generateNumOrder();
             $panier = PanierEdi::create([

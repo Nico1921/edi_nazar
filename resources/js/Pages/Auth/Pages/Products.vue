@@ -186,25 +186,26 @@ export default {
    <Head title="Produits" />
    <section class="container mx-auto mt-5">
       <Breadcrumbs :links="links" />
-      <h1 class="font-semibold mx-1 lg:text-2xl text-lg text-gray-800 py-2">Commande Entrepôt - Gamme</h1>
+      <div class="flex lg:flex-row flex-col items-center justify-center relative pb-10">
+         <h1 class="font-semibold text-center mx-1 lg:text-2xl text-lg text-gray-800 py-2">Commande Entrepôt - Gamme</h1>
 
-      <div class="bg-primary-50 rounded xl:mx-40 mb-5" v-if="typeVente == 1">
-         <h2 class="text-center lg:text-xl text-lg text-primary-300 py-1 bg-primary-100 rounded-t-lg">Ajouter au panier via un fichier</h2>
-         <div class="p-4 flex flex-col items-center justify-items-center justify-center">
-            <form id="fileCartImport" class="grid grid-cols-4" @submit.prevent="submit_file">
-               <div :class="fileExist ? 'relative col-span-3 lg:mx-2 mx-1' : 'relative col-span-4 lg:mx-2 mx-1'">
-                  <label class="block lg:text-lg text-sm cursor-pointer text-primary-500 bg-primary-200 p-3 rounded-lg" for="file_import_cart">Importer fichier de commandes <Excel /></label>
-                  <span class="hidden" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
-                  <input @change="fileImport" type="file" class="hidden" id="file_import_cart" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
-                  <p class="mt-1 text-sm text-gray-500" id="file_input_helper">.XLS,.XLSX</p>
-                  <span class="absolute bottom-0 right-0"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
-               </div>
-               <div class="col-span-1" v-if="fileExist">
-                  <button type="submit" class="p-3 rounded-lg lg:text-lg text-sm text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
-               </div>
-            </form>       
+         <div v-if="typeVente == 1" class="lg:absolute inset-0 lg:flex items-center justify-end">
+            <div class="">
+               <form id="fileCartImport" class="grid grid-cols-4 max-w-[21rem]" @submit.prevent="submit_file">
+                  <div class="relative lg:mx-2 mx-1 flex flex-col max-w-sm" :class="fileExist ? 'col-span-3' : ' col-span-4'">
+                     <label class="block text-sm cursor-pointer text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300 px-2 py-2 rounded-xl" for="file_import_cart">Importer fichier de commandes <Excel /></label>
+                     <span class="hidden whitespace-nowrap truncate" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
+                     <input @change="fileImport" type="file" class="hidden" id="file_import_cart" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
+                     <span class="mt-1 ml-1 text-sm text-gray-500"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
+                  </div>
+                  <div class="col-span-1" v-if="fileExist">
+                     <button type="submit" class="px-2 py-2 rounded-xl text-sm text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
+                  </div>
+               </form>       
+            </div>
          </div>
       </div>
+      
 
       <div class="mx-1 my-1 flex sm:flex-row flex-col w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 ">
          <div class="relative flex-grow">
@@ -232,7 +233,7 @@ export default {
                </div>
 
                <div class="absolute bottom-0 z-30 w-full overflow-hidden text-sm">
-                 <div class="max-h-0 group-hover:max-h-60  rounded group-hover:p-1 transition-full duration-500 bg-primary-100 text-center flex flex-col  sm:bg-opacity-70 text-white z-30">
+                 <div class="max-h-0 group-hover:max-h-60  rounded group-hover:p-1 transition-full duration-500 bg-primary-300 text-center flex flex-col  sm:bg-opacity-70 text-white z-30">
                   <span>Tapis {{ (produit.type_tapis == 0 ? 'intérieur' : produit.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
                   <span>Poils {{ (produit.type_poils == 1 ? 'court' : 'long') }} - {{ (produit.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
                   <span class="capitalize">{{ lowercase(produit.nom_special) }}</span>

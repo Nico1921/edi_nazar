@@ -22,16 +22,16 @@ module.exports = {
         },
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ['Sofia', ...defaultTheme.fontFamily.sans],
+                'sofia_bold': ['Sofia Bold','Sofia', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 'primary': {
-                  50: '#DAD3CD',
-                  100: '#C0B1AF',
-                  200: '#A49299',
-                  300: '#827785',
-                  400: '#5A5E71',
-                  500: '#2F4858',
+                  50: '#F3EDE7',
+                  100: '#E4E2DA',
+                  200: '#D9D2CC',
+                  300: '#A89E90',
+                  400: '#000000',
                 },
             },
             animation: {
