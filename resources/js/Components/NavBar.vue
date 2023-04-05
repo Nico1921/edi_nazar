@@ -15,6 +15,7 @@ var typeVente = ref(usePage().props.value.session.typeVente);
 var countPanier = ref(usePage().props.value.Panier.count);
 var panier = ref(usePage().props.value.Panier.panier.panier);
 var panierDrop = ref(usePage().props.value.PanierDrop);
+var gammeList = ref(usePage().props.value.gammeList);
 
 watchEffect(() => {
 	countPanier.value = usePage().props.value.Panier.count;
@@ -210,6 +211,11 @@ var modifQteDrop = (e,nomProduit) => {
    }
 };
 
+var goLink = (e,link) => {
+	e.preventDefault();
+	document.location.href = link;
+};
+
 </script>
 <script>
 import Delete from 'icons/Delete.vue';
@@ -250,30 +256,66 @@ export default {
 				<li class="text-primary-300">
 					<dotsVertical />
 				</li>
-				<li class="relative">
-					
-					<Dropdown>
+				<li class="relative">	
+					<Dropdown alignDrop="bottom" >
 						<template #trigger>
 							<a href="/order_entrepot" :class="{ '!text-gray-800': $page.url.startsWith('/order_entrepot') }"
 								class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
 								Commande Entrepôt</a>
 							</template>
 							<template #content>
-								<ul class=" bg-primary-100 rounded w-full none">
-							<li>Collections</li>
-							</ul>
+								<ul class="bg-primary-50 text-center rounded w-full ">
+									<li>
+										<Dropdown alignDrop="right" >
+											<template #trigger>
+												Collections
+											</template>
+											<template #content>
+												<ul class="w-max bg-primary-50 text-center rounded w-full h-full max-h-56 overflow-y-auto overflow-x-hidden scrollbarCustom">
+													<li class="cursor-pointer bg-primary-50 px-4 py-1 hover:bg-primary-100 hover:shadow-lg hover:scale-105 transition-full duration-150" 
+													v-for="(gamme,key) in gammeList" 
+													:key="key">
+														<a class="w-full block" :href="'/order_entrepot/view/'+gamme.nom_gamme">{{ gamme.nom_gamme }}</a>
+													</li>
+												</ul>
+											</template>
+										</Dropdown>
+									</li>
+								</ul>
 						</template>
-						
 					</Dropdown>
-					
 				</li>
 				<li class="text-primary-300 font-bold">
 					<dotsVertical />
 				</li>
 				<li>
-					<Link href="/dropshipping" :class="{ '!text-gray-800': $page.url.startsWith('/dropshipping') }"
-						class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
-					Dropshipping</Link>
+					<Dropdown alignDrop="bottom">
+						<template #trigger>
+							<a href="/dropshipping" :class="{ '!text-gray-800': $page.url.startsWith('/dropshipping') }"
+								class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
+							Dropshipping</a>
+							</template>
+							<template #content>
+								<ul class="bg-primary-50 text-center rounded w-full ">
+									<li>
+										<Dropdown alignDrop="right">
+											<template #trigger>
+												Collections
+											</template>
+											<template #content>
+												<ul class="w-max bg-primary-50 text-center rounded w-full h-full max-h-56 overflow-y-auto overflow-x-hidden scrollbarCustom">
+													<li class="cursor-pointer bg-primary-50 py-1 px-4 hover:bg-primary-100 hover:shadow-lg hover:scale-105 transition-full duration-150" 
+													v-for="(gamme,key) in gammeList" 
+													:key="key">
+														<a class="w-full block" :href="'/dropshipping/view/'+gamme.nom_gamme">{{ gamme.nom_gamme }}</a>
+													</li>
+												</ul>
+											</template>
+										</Dropdown>
+									</li>
+								</ul>
+						</template>
+					</Dropdown>
 				</li>
 				<li class="text-primary-300 font-bold">
 					<dotsVertical />
@@ -321,13 +363,15 @@ export default {
 			<div class="absolute right-10 z-50" >
 				<Popover class="relative" v-slot="{ open }">
 					<div @mouseleave="onMouseLeave(open)" class="mt-2">
-						<PopoverButton class="outline-none" ref="buttonRef" @mouseenter="onMouseEnter(open)">
-							<ShoppingCartIcon v-if="typeVente == 1" class="w-6 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
-							<ShoppingBagIcon v-if="typeVente == 2" class="w-7 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
-							<div
-								class=" rounded-full bg-primary-200 absolute -top-2 -right-3 w-5 h-5 flex justify-center items-center">
-								<span class="text-xs text-primary-500">{{ (typeVente == 1 ? countPanier : panierDrop.count) }}</span>
-							</div>
+						<PopoverButton  class="outline-none z-20 relative" ref="buttonRef" @mouseenter="onMouseEnter(open)">
+							<a @click="goLink($event,(typeVente == 1 ? '/cart' : '/dropshipping/cart'))" class="z-30 relative" :href="(typeVente == 1 ? '/cart' : '/dropshipping/cart')">
+								<ShoppingCartIcon v-if="typeVente == 1" class="w-6 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
+								<ShoppingBagIcon v-if="typeVente == 2" class="w-7 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
+								<div
+									class=" rounded-full bg-primary-200 absolute -top-2 -right-3 w-5 h-5 flex justify-center items-center">
+									<span class="text-xs text-primary-500">{{ (typeVente == 1 ? countPanier : panierDrop.count) }}</span>
+								</div>
+							</a>
 						</PopoverButton>
 						<transition enter-active-class="transition duration-200 ease-out"
 							enter-from-class="translate-y-1 opacity-0" enter-to-class="translate-y-0 opacity-100"

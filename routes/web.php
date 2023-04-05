@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
    Route::post('/settings/save/sociaux', [SettingsController::class, 'edit_sociaux'])->name('settings/save/sociaux');
 
    Route::get('/order_entrepot', [OrderEntrepotController::class, 'create_type_vente'])->name('order_entrepot');
+   Route::get('/order_entrepot/view/{gamme}', [OrderEntrepotController::class, 'create_type_vente_choix_gamme']);
    Route::middleware(['type-entrepot'])->group(function () {
       Route::get('/order_entrepot/gamme', [OrderEntrepotController::class, 'create'])->name('order_entrepot/gamme');
       Route::post('/order_entrepot/gamme', [OrderEntrepotController::class, 'create_post'])->name('order_entrepot/gamme');
@@ -74,6 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
    });
 
    Route::get('/dropshipping', [DropshippingController::class, 'create_type_vente'])->name('dropshipping');
+   Route::get('/dropshipping/view/{gamme}', [DropshippingController::class, 'create_type_vente_choix_gamme']);
    Route::middleware(['type-client'])->group(function () {
       Route::post('/dropshipping/gamme/design', [DropshippingController::class, 'getProductsDesignPanier'])->name('/dropshipping/gamme/design');
 

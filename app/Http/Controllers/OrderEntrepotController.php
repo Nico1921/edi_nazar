@@ -30,6 +30,11 @@ class OrderEntrepotController extends Controller
         return redirect('/order_entrepot/gamme');
     }
 
+    public function create_type_vente_choix_gamme(Request $request){
+        $request->session()->put('typeVente', 1);
+        return redirect('/order_entrepot/gamme/'.$request->gamme);
+    }
+
     /**
      * Display the registration view.
      *
