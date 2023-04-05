@@ -178,6 +178,18 @@ class HandleInertiaRequests extends Middleware
                 }
                 return ['count' => $panierCountF,'panier' => $produitsAchat];
             },
+            'gammeList' => function() use($request) {
+                $gammeList = '';
+                if($request->session()->has('gammeList')){
+                    $gammeList = $request->session()->get('gammeList');
+                    if(empty($gammeList) || count($gammeList) == 0){
+                        $gammeList = Gamme::where('gamme.in_edi', '=', '1')->where('gamme.statut', '=', '1')->get();
+                    }
+                }else{
+                    $gammeList = Gamme::where('gamme.in_edi', '=', '1')->where('gamme.statut', '=', '1')->get();
+                }
+                return $gammeList;
+            },
             'session' => function () use ($request) {
                 return $request->session()->all();
             },

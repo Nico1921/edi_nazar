@@ -1,17 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
-
-const props = defineProps({
-    align: {
-        default: 'right'
-    },
-    width: {
-        default: '48'
-    },
-    contentClasses: {
-        default: () => ['py-1', 'bg-white']
-    }
-});
+import {  onMounted, onUnmounted, ref } from 'vue';
 
 const transitionClasses = {
   enter: 'transform ease-out duration-300 transition',
@@ -22,6 +10,13 @@ const transitionClasses = {
   leaveTo: 'opacity-0',
 };
 
+
+const props = defineProps({
+    alignDrop: {
+        default: 'bottom'
+    },
+});
+
 const closeOnEscape = (e) => {
     if (open.value && e.key === 'Escape') {
         open.value = false;
@@ -31,28 +26,36 @@ const closeOnEscape = (e) => {
 onMounted(() => document.addEventListener('keydown', closeOnEscape));
 onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
 
-const widthClass = computed(() => {
-    return {
-        '48': 'w-48',
-    }[props.width.toString()];
-});
-
-const alignmentClasses = computed(() => {
-    if (props.align === 'left') {
-        return 'origin-top-left left-0';
-    } else if (props.align === 'right') {
-        return 'origin-top-right right-0';
-    } else {
-        return 'origin-top';
+var classChoose = () => {
+    var classChoix = '';
+    switch(props.alignDrop) {
+        case 'bottom' : 
+            classChoix = 'origin-top-left left-0 -bottom-8';
+            break;
+        case 'right' : 
+            classChoix = 'origin-top-left top-0 -right-full';
+            break;
+        case 'left' : 
+            classChoix = 'origin-top-left top-0 -left-full';
+            break;
+        case 'top' : 
+            classChoix = 'origin-top-left left-0 -top-8';
+            break;
+        default : 
+            classChoix = 'origin-top-left left-0 -bottom-8';
+            break;
     }
-});
+    console.log(props.alignDrop);
+    
+    return classChoix;
+}
 
 const open = ref(false);
 </script>
 
 <template>
-    <div class="relative">
-        <div class="py-1 z-[50] relative cursor-pointer" @mouseenter="open = ! open"  @click="open = ! open">
+    <div class="relative"  @mouseleave="open = false">
+        <div @mouseenter="open = true"  @click="open = ! open" class="py-2 px-2 z-[50] relative cursor-pointer" >
             <slot name="trigger" />
         </div>
 
@@ -65,12 +68,12 @@ const open = ref(false);
             :leave-active-class="transitionClasses.leave"
             :leave-from-class="transitionClasses.leaveFrom"
             :leave-to-class="transitionClasses.leaveTo">
-            <div @mouseout="open = false" v-show="open"
-                    class="absolute left-0 -bottom-7 z-50 mt-2 rounded-md shadow-lg"
-                    :class="[widthClass, alignmentClasses]"
+            <div  v-show="open"
+                    class="absolute z-50 rounded-md shadow-lg w-full"
+                    :class="classChoose()"
                     style="display: none;"
-                    @click="open = false">
-                <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
+                    @mouseenter="open = true"  >
+                <div class=" w-full" :class="contentClasses">
                     <slot name="content" />
                 </div>
             </div>

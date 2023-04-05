@@ -43,6 +43,11 @@ class DropshippingController extends Controller
       return redirect('/dropshipping/gamme');
    }
 
+   public function create_type_vente_choix_gamme(Request $request){
+      $request->session()->put('typeVente', 2);
+      return redirect('/dropshipping/gamme/'.$request->gamme);
+  }
+
    /**
      * Affiche les gammes de produit
      * 
