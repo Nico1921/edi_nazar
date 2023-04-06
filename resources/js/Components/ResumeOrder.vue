@@ -8,7 +8,7 @@ const props = defineProps(['panier', 'linkEtapeSuivant', 'titreLink','isButtonSu
 import Alert from 'icons/Alert.vue';
 </script>
 <template>
-   <div class="bg-white border border-primary-100 rounded border-2 border-primary-200 py-5">
+   <div class="bg-white border border-primary-100 rounded border-2 border-primary-200 py-2">
       <h2 class="font-bold text-sm lg:text-xl sm:text-lg text-gray-800 text-center py-2">Récapitulatif de
          la commande</h2>
 
