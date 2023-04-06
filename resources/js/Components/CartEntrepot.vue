@@ -123,15 +123,15 @@ import ImageOff from 'icons/ImageOff.vue';
 import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 </script>
 <template>
-         <div v-if="prop.panier.is_validate" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
+            <div v-if="prop.panier.is_validate" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
                <ExclamationTriangleIcon v-if="prop.panier.is_validate" class="h-8 w-8 text-red-600" />
                <span v-if="prop.panier.is_validate" class="pl-2 text-red-600">Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.</span>
             </div>
-            <div v-if="produits != undefined" class="sm:my-4 rounded-lg border shadow-lg p-10 w-full h-90 ">
-               <div v-for="(produit, key) in produits" :key="key" class="w-full lg:p-4 sm:p-3 p-2  grid bg-gray-100 rounded grid-cols-12 my-2" >
-                  <div class="sm:col-span-2 xsm:col-span-3 col-span-4 flex items-center justify-center">
+            <div v-if="produits != undefined" class="sm:my-4 px-2 py-4 rounded-lg border shadow-lg  w-full grid grid-cols-12 max-h-96 overflow-y-auto scrollbarCustom">
+               <div v-for="(produit, key) in produits" :key="key" class="2xl:col-span-3 lg:col-span-4 sm:col-span-6 col-span-12 bg-gray-100 rounded grid grid-cols-12 px-2 py-4 my-2 lg:mx-4 sm:mx-2 mx-6" >
+                  <div class="sm:col-span-4 xsm:col-span-3 col-span-4 flex items-center justify-center">
                      <div v-if="produit.photo != null"
-                        class="h-full w-full lg:max-h-52 max-h-42 px-2">
+                        class="h-full w-full lg:max-h-52 max-h-42 min-h-min px-2">
                         <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+produit.photo.img_produit"
                            :alt="produit.code_sku" class="w-full h-full object-cover rounded-xl" />
                      </div>
@@ -139,14 +139,14 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 								<ImageOff />
 							</div>
                   </div>
-                  <div class="sm:col-span-10 xsm:col-span-9 col-span-8 flex flex-col xl:text-lg text-sm">
-                     <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
-                     <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
+                  <div class="sm:col-span-8 xsm:col-span-9 col-span-8 h-full flex flex-col justify-evenly">
+                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
+                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
                         produit.dimension.longueur }}</span>
-                     <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix du M² : {{ calcul_prix_gamme(produit.gamme.prix_vente_ht_m2) }} € HT</span>
-                     <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                     <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * calcul_prix_gamme(produit.gamme.prix_vente_ht_m2),2)}} €</span>
-                     <div class="grid grid-cols-8 lg:w-1/2">               
+                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ calcul_prix_gamme(produit.gamme.prix_vente_ht_m2) }} € HT</span>
+                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
+                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * calcul_prix_gamme(produit.gamme.prix_vente_ht_m2),2)}} €</span>
+                     <div class="grid grid-cols-8">               
                         <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
                            <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">
                               <InputNumber @change="modifQte($event,produit.design.nom_design + produit.dimension.largeur + 'x' + produit.dimension.longueur)" name="qte"

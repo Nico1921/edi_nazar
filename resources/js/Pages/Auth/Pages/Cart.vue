@@ -1,8 +1,7 @@
 <script setup>
 import { Head, useForm, usePage } from '@inertiajs/inertia-vue3';
 import EtapeOrder from '@/Components/EtapeOrder.vue';
-import ResumeOrder from '@/Components/ResumeOrder.vue';
-import ResumeOrderVertical from '@/Components/ResumeOrderVertical.vue';
+import ResumeOrder from '@/Components/ResumeOrderVertical.vue';
 import CartEntrepot from '@/Components/CartEntrepot.vue';
 import CartDropshipping from '@/Components/CartDropshipping.vue';
 import { ref, watchEffect } from 'vue';
@@ -50,7 +49,7 @@ export default {
             <EtapeOrder :hrefEtape="(typeVente == 1 ? hrefEtape : hrefEtapeDrop)" :etape="1" :nbEtape="3" :listeEtape="listeEtape" />
          </div>
          <div class="col-span-4 grid grid-cols-4 xl:mx-16 ">
-            <div class="lg:col-span-3 col-span-4 flex flex-col items-start mt-2">
+            <div class="col-span-4 flex flex-col items-start mt-2 lg:mx-0 sm:mx-2 mx-4 ">
                <div v-if="usePage().props.value.session.messageError != undefined" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
                   <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
                   <span class="pl-2 text-red-600">{{usePage().props.value.session.messageError}}</span>
@@ -59,22 +58,22 @@ export default {
                   <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
                   <span class="pl-2 text-yellow-600">Pour continuer, veuillez ajouter au minimum un produit pour chaque commande.</span>
                </div> 
-               <div class="relative grid grid-cols-12 w-full">
-                  <a :href="(typeVente == 1 ? '/order_entrepot/gamme' : '/dropshipping/gamme')" 
-                  class="lg:absolute left-0 top-1/4 bottom-1/4 transition duration-300 flex items-center lg:col-span-4 col-span-12 lg:text-lg text-sm lg:w-4/12 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded-full">
-                     <ArrowLeftIcon class="w-5 h-4 inline-block mr-2" fill="none" stroke="currentColor"  />
-                     Poursuivre mes achats
+               <div class="relative w-full">
+                  <h1 class=" w-full font-semibold text-lg lg:text-2xl sm:text-xl text-gray-800 text-center py-2">Panier - {{ (typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping') }}</h1>
+               </div>   
+                  <CartEntrepot v-if="typeVente == 1" :produits="produits" :panier="props.panier" />
+                  <CartDropshipping v-if="typeVente == 2" :panier="panierDrop" />
+            </div>
+            <div class="col-span-4 grid grid-cols-8 ml-5">
+               <div class="lg:col-span-3 sm:col-span-4 col-span-8">
+                  <a :href="(typeVente == 1 ? '/order_entrepot/gamme' : '/dropshipping/gamme')" class="relative inline-block group">
+                     <ArrowLeftIcon class="h-4 w-4 absolute left-0 bottom-1/4 top-1/4 text-black group-hover:text-primary-300 transition duration-300" /> 
+                     <span class="inline-block border-b border-black pl-5 group-hover:text-primary-300 group-hover:border-primary-300 transition duration-300">Poursuivre mes achats</span>
                   </a>
-                  <h1 class="col-span-12 w-full font-semibold text-lg lg:text-2xl sm:text-xl text-gray-800 text-center py-2 ml-12">Panier - {{ (typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping') }}</h1>
-               </div>      
-               <CartEntrepot v-if="typeVente == 1" :produits="produits" :panier="props.panier" />
-               <CartDropshipping v-if="typeVente == 2" :panier="panierDrop" />
-            </div>
-            <div class="lg:hidden block col-span-4">
-               <ResumeOrderVertical :disabled="(typeVente == 2 && panierDrop.panier != undefined ? !panierDrop.panier.panier_valid : false)" :linkEtapeSuivant="(typeVente == 1 ? '/cart/adresses' : '/dropshipping/cart/adresses')" :titreLink="'Valider la commande'" :panier="(typeVente == 1 ? props.panier : (panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined))" :isButtonSubmit="false" />
-            </div>
-            <div class="lg:block hidden col-span-1 ml-5">
-               <ResumeOrder :disabled="(typeVente == 2 && panierDrop.panier != undefined ? !panierDrop.panier.panier_valid : false)" :linkEtapeSuivant="(typeVente == 1 ? '/cart/adresses' : '/dropshipping/cart/adresses')" :titreLink="'Valider la commande'" :panier="(typeVente == 1 ? props.panier : (panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined))" :isButtonSubmit="false" />
+               </div>
+               <div class="lg:col-span-5 sm:col-span-4 col-span-8">
+                  <ResumeOrder :disabled="(typeVente == 2 && panierDrop.panier != undefined ? !panierDrop.panier.panier_valid : false)" :linkEtapeSuivant="(typeVente == 1 ? '/cart/adresses' : '/dropshipping/cart/adresses')" :titreLink="'Valider la commande'" :panier="(typeVente == 1 ? props.panier : (panierDrop.panier.panierActuel != undefined ? panierDrop.panier.panierActuel : undefined))" :isButtonSubmit="false" />
+               </div>
             </div>
          </div>
          

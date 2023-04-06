@@ -30,22 +30,21 @@ var classChoose = () => {
     var classChoix = '';
     switch(props.alignDrop) {
         case 'bottom' : 
-            classChoix = 'origin-top-left left-0 -bottom-8';
+            classChoix = 'origin-top-left left-0 top-8';
             break;
         case 'right' : 
-            classChoix = 'origin-top-left top-0 -right-full';
+            classChoix = 'origin-top-left top-0 left-full';
             break;
         case 'left' : 
-            classChoix = 'origin-top-left top-0 -left-full';
+            classChoix = 'origin-top-left top-0 right-full';
             break;
         case 'top' : 
-            classChoix = 'origin-top-left left-0 -top-8';
+            classChoix = 'origin-top-left left-0 bottom-8';
             break;
         default : 
-            classChoix = 'origin-top-left left-0 -bottom-8';
+            classChoix = 'origin-top-left left-0 top-8';
             break;
     }
-    console.log(props.alignDrop);
     
     return classChoix;
 }
@@ -73,7 +72,7 @@ const open = ref(false);
                     :class="classChoose()"
                     style="display: none;"
                     @mouseenter="open = true"  >
-                <div class=" w-full" :class="contentClasses">
+                <div class=" w-full" >
                     <slot name="content" />
                 </div>
             </div>
