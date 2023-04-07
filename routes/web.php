@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderEntrepotController;
 use App\Http\Controllers\DropshippingController;
 use App\Http\Controllers\FilesController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ShippingsController;
@@ -35,8 +36,8 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
-   Route::get('/', function () {return Inertia::render('Auth/Pages/Home');});
-   Route::get('/home', function () {return Inertia::render('Auth/Pages/Home');})->name('home');
+   Route::get('/', [HomeController::class, 'create']);
+   Route::get('/home', [HomeController::class, 'create'])->name('home');
    Route::get('/about-us', function () {return Inertia::render('Auth/Pages/AboutUs');})->name('about-us');
    
    Route::get('/settings', [SettingsController::class, 'create'])->name('settings');
