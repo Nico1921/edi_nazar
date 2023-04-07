@@ -183,10 +183,10 @@ class HandleInertiaRequests extends Middleware
                 if($request->session()->has('gammeList')){
                     $gammeList = $request->session()->get('gammeList');
                     if(empty($gammeList) || count($gammeList) == 0){
-                        $gammeList = Gamme::where('gamme.in_edi', '=', '1')->where('gamme.statut', '=', '1')->get();
+                        $gammeList = Gamme::where('gamme.in_edi', '=', '1')->where('gamme.statut', '=', '1')->orderBy('nom_gamme', 'asc')->get();
                     }
                 }else{
-                    $gammeList = Gamme::where('gamme.in_edi', '=', '1')->where('gamme.statut', '=', '1')->get();
+                    $gammeList = Gamme::where('gamme.in_edi', '=', '1')->where('gamme.statut', '=', '1')->orderBy('nom_gamme', 'asc')->get();
                 }
                 return $gammeList;
             },
