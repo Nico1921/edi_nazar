@@ -60,7 +60,7 @@
         </div>
         
 
-        <div>
+        <div class="">
             <h2 class="font-bold lg:text-xl sm:text-lg text-sm lg:!px-10 !px-0">Nos nouvelles collections</h2>
             <swiper :modules="[Navigation, Pagination, Scrollbar, A11y]"
                     :slides-per-view="3"
@@ -109,6 +109,7 @@
                 </swiper-slide>
             </swiper>
         </div>
+        <hr class="border border-primary-300 lg:!mx-10 !mx-0 my-5" />
         <div>
             <h2 class="font-bold lg:text-xl sm:text-lg text-sm lg:!px-10 !px-0">Meilleures ventes</h2>
             <swiper :modules="[Navigation, Pagination, Scrollbar, A11y]"
