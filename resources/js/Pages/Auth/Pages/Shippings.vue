@@ -164,10 +164,15 @@
                             <span class="flex flex-row items-center"><span class="uppercase">Type Commande</span></span>
                         </div>
                     </th>  
-                  <th class="table-cell">
-                        <div class="py-3 sm:px-6 px-2 w-full">
-                            <span class="flex flex-row items-center"><span class="uppercase">N° Commande</span></span>
-                        </div>
+                  <th class="table-cell" @click="slotHead.sortBy('num_commande')">
+                        <button class="py-3 sm:px-6 px-2 w-full" dusk="sort-num_commande">
+                            <span class="flex flex-row items-center">
+                              <span class="uppercase">N° Commande</span>
+                              <ChevronDownIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('num_commande').sorted == 'desc'" />
+                              <ChevronUpIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('num_commande').sorted == 'asc'" />
+                              <ChevronUpDownIcon class="w-3 h-3 ml-2 text-gray-400" v-if="slotHead.header('num_commande').sorted == false" />
+                           </span>
+                     </button>
                     </th>
                     <th class="lg:table-cell hidden">
                         <div class="py-3 px-6 w-full">

@@ -43,11 +43,11 @@ class ShippingsController extends Controller
         });
 
         $panierEdi = QueryBuilder::for(PanierEdi::class)
-        ->defaultSort('-date_commande')
+        ->defaultSort('-date_commande','-num_commande','panier_edi.is_validate')
         ->select(['panier_edi.id_panier_edi','panier_edi.date_commande','panier_edi.date_maj','panier_edi.num_commande','panier_edi.nb_client',
         'panier_edi.total_HT','panier_edi.total_ttc','panier_edi.poids_total','panier_edi.produits_total',
         'panier_edi.total_m2','panier_edi.date_livraison','panier_edi.total_payer','panier_edi.is_validate','panier_edi.is_marketplace'])
-        ->allowedSorts(['date_livraison','date_commande','num_commande','produits_total','total_m2','poids_total','total_ttc','is_marketplace','total_HT'])
+        ->allowedSorts(['date_livraison','panier_edi.is_validate','date_commande','num_commande','produits_total','total_m2','poids_total','total_ttc','is_marketplace','total_HT'])
         ->allowedFilters([$globalSearch,'date_livraison','date_commande','num_commande','total_ttc'])
         ->where('id_users','=',Auth::id())
         ->paginate(request('perPage'))
@@ -59,8 +59,8 @@ class ShippingsController extends Controller
         ])->table(function (InertiaTable $table) {
             $table
               ->withGlobalSearch()
-              ->defaultSort('-date_commande')
-              ->column(key: 'num_commande',label: 'N° Commande', searchable: true, sortable: false, canBeHidden:false)
+              ->defaultSort('-date_commande','-num_commande','is_validate')
+              ->column(key: 'num_commande',label: 'N° Commande', searchable: true, sortable: true, canBeHidden:false)
               ->column(key: 'nb_client',label: 'clients', searchable: false, sortable: false, canBeHidden:true)
               ->column(key: 'date_commande',label: 'Date commande', searchable: true, sortable: true, canBeHidden:false)
               ->column(key: 'produits_total',label: 'Total produit', searchable: true, sortable: true, canBeHidden:true)
