@@ -118,7 +118,7 @@ class OrderEntrepotController extends Controller
      *
      * @return \Inertia\Response
      */
-    public function create_product($gamme)
+    public function create_product($gamme,Request $request)
     {
         
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
@@ -144,10 +144,11 @@ class OrderEntrepotController extends Controller
         });
 
         $dimensions = DB::table('gamme')
-            ->select(['gamme.id_gamme','dimension.largeur','dimension.longueur'])
+            ->select(['gamme.id_gamme','dimension.largeur','dimension.longueur','stats_produit.*'])
             ->distinct()
             ->join('design', 'gamme.id_gamme', 'design.id_gamme')
             ->join('produit', 'design.id_design', 'produit.id_design')
+            ->join('stats_produit', 'stats_produit.id_produit', 'produit.id_produit')
             ->join('dimension', 'produit.id_dimension', 'dimension.id_dimension')
             ->where('gamme.in_edi', '=', '1')
             ->where('gamme.statut', '=', '1')
@@ -176,12 +177,41 @@ class OrderEntrepotController extends Controller
             ->paginate(request('perPage'))
             ->withQueryString();
 
-            $gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
-        // error_log(print_r($products));
+        $gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
+        
+        if ($request->session()->has('client_commercial')) {
+            $clientUser = $request->session()->get('client_commercial');
+        } else {
+            $clientUser = array();
+        }
+
+        $gammepanier = array();
+
+        if (!empty($clientUser)) {
+            for ($i = 0; $i < count($dimensions); $i++) {
+                $gammepanier[$i]->prixProduit = Produit::calcul_prix_produit($gammepanier[$i]->id_produit,0);
+                if (PanierEdiList::where('id_produit', '=', $gammepanier[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
+                    $panier = PanierEdiList::where('id_produit', '=', $gammepanier[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
+                    $gammepanier[$i]->panier = $panier;
+                    $gammepanier[$i]->isInPanier = true;
+                } else {
+                    $gammepanier[$i]->panier = array("quantiter" => 0);
+                    $gammepanier[$i]->isInPanier = false;
+                }
+            }
+        } else {
+            for ($i = 0; $i < count($gammepanier); $i++) {
+                $gammepanier[$i]->prixProduit = Produit::calcul_prix_produit($gammepanier[$i]->id_produit,0);
+                $gammepanier[$i]->panier = array("quantiter" => 0);
+                $gammepanier[$i]->isInPanier = false;
+            }
+        }
+        
         return Inertia::render('Auth/Pages/Products/Gamme', [
             'products' => $products,
             'gamme' => $gammeSearch,
-            'dimensions' => $dimensions
+            'dimensions' => $dimensions,
+            'gammepanier' => $gammepanier
         ]);
     }
 
