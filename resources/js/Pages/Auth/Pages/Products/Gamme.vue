@@ -5,7 +5,7 @@ import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,} from
 import Tooltip from '@/Components/Tooltip.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import InputError from '@/Components/InputError.vue';
-import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicons/vue/24/solid';
+import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon,ArrowRightCircleIcon  } from '@heroicons/vue/24/solid';
 
 const props = defineProps(["products","gamme","designpanier"]);
 var links = [{
@@ -302,6 +302,9 @@ export default {
             <span>Prix HT m² : {{ calcul_prix_gamme(props.gamme.prix_vente_ht_m2) }} €</span>
             <div class="sm:w-auto w-full py-2 flex items-center justify-center">
                <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
+               <a href="/cart" class="py-2 px-4 ml-2 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                           hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
+                            disabled:bg-green-300">Voir mon panier</a>
             </div>
          </div>
       </section>
@@ -518,8 +521,10 @@ export default {
                      <button @click="isOpenAdd = false;" type="button" class="mx-10 inline-flex justify-center rounded-md border border-transparent hover:border-red-100 px-4 py-2 text-sm font-medium text-red-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition duration-300">
                         Annuler
                      </button>
-                     <button type="submit" class="mx-10 inline-flex justify-center rounded-md border border border-primary-200 px-4 py-2 text-sm font-medium text-primary-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 transition duration-300">
-                        Valider
+                     <button type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                           hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
+                            disabled:bg-green-300">
+                        Valider <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" />
                      </button>
                      
                   </div>
