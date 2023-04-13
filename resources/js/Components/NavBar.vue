@@ -368,7 +368,7 @@ export default {
 								<ShoppingCartIcon v-if="typeVente == 1" class="w-6 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
 								<ShoppingBagIcon v-if="typeVente == 2" class="w-7 h-7 text-primary-300 hover:text-primary-500 transition duration-300" />
 								<div
-									class=" rounded-full bg-primary-200 absolute bottom-4 left-1 w-5 h-5 flex justify-center items-center">
+									class=" rounded-full bg-primary-300 absolute bottom-4 left-1 w-5 h-5 flex justify-center items-center">
 									<span class="text-xs text-primary-500">{{ (typeVente == 1 ? countPanier : panierDrop.count) }}</span>
 								</div>
 							</a>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\CommandeImport;
 use App\Models\Produit;
 use App\Models\ClientEDI;
+use App\Models\Design;
 use App\Models\Dimension;
 use App\Models\Facture;
 use App\Models\Gamme;
@@ -142,21 +143,7 @@ class OrderEntrepotController extends Controller
                 });
             });
         });
-
-        $dimensions = DB::table('gamme')
-            ->select(['gamme.id_gamme','dimension.largeur','dimension.longueur','stats_produit.*'])
-            ->distinct()
-            ->join('design', 'gamme.id_gamme', 'design.id_gamme')
-            ->join('produit', 'design.id_design', 'produit.id_design')
-            ->join('stats_produit', 'stats_produit.id_produit', 'produit.id_produit')
-            ->join('dimension', 'produit.id_dimension', 'dimension.id_dimension')
-            ->where('gamme.in_edi', '=', '1')
-            ->where('gamme.statut', '=', '1')
-            ->where('gamme.nom_gamme', 'like', "%{$gamme}%")
-            ->orderBy('dimension.largeur')
-            ->orderBy('dimension.longueur')
-            ->get();
-
+        
 
         $products = QueryBuilder::for(Produit::class)
             ->defaultSort('nom_design')
@@ -178,41 +165,168 @@ class OrderEntrepotController extends Controller
             ->withQueryString();
 
         $gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
-        
+
+        $designpanier = DB::table('design')
+            ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
+            ->distinct()
+            ->join('gamme', 'gamme.id_gamme', 'design.id_gamme')
+            ->where('gamme.in_edi', '=', '1')
+            ->where('gamme.statut', '=', '1')
+            ->where('gamme.nom_gamme', 'like', "%{$gamme}%")
+            ->get();
+
         if ($request->session()->has('client_commercial')) {
             $clientUser = $request->session()->get('client_commercial');
         } else {
             $clientUser = array();
         }
 
-        $gammepanier = array();
+        $design = new \stdClass;
 
         if (!empty($clientUser)) {
-            for ($i = 0; $i < count($dimensions); $i++) {
-                $gammepanier[$i]->prixProduit = Produit::calcul_prix_produit($gammepanier[$i]->id_produit,0);
-                if (PanierEdiList::where('id_produit', '=', $gammepanier[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
-                    $panier = PanierEdiList::where('id_produit', '=', $gammepanier[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
-                    $gammepanier[$i]->panier = $panier;
-                    $gammepanier[$i]->isInPanier = true;
-                } else {
-                    $gammepanier[$i]->panier = array("quantiter" => 0);
-                    $gammepanier[$i]->isInPanier = false;
+            for ($i = 0; $i < count($designpanier); $i++) {
+                $design->$i = new \stdClass;
+                $design->$i->produits = new \stdClass;
+
+                $photo = Produit::select('id_produit')->with(['photo' => function($query) {
+                    $query->where('principale', '=', '1');
+                }])->where('id_design','=',$designpanier[$i]->id_design)->first();
+                $design->$i->nom_design = $designpanier[$i]->nom_design;
+                $design->$i->img_produit = $photo->photo->img_produit;
+
+                $produit = Produit::with(['dimension','statsProduit'])->where('id_design','=',$designpanier[$i]->id_design)->get();
+                for ($j = 0; $j < count($produit); $j++) {
+                    $design->$i->produits->$j = new \stdClass;
+                    $design->$i->produits->$j->prixProduit = Produit::calcul_prix_produit($produit[$j]->id_produit,0);
+                    $design->$i->produits->$j->largeur = $produit[$j]->dimension->largeur;
+                    $design->$i->produits->$j->longueur = $produit[$j]->dimension->longueur;
+                    $design->$i->produits->$j->stock_restant = $produit[$j]->statsProduit->stock_restant;
+                    $design->$i->produits->$j->sku = $produit[$j]->code_sku;
+                    $design->$i->produits->$j->id_produit = $produit[$j]->id_produit;
+                    if (PanierEdiList::where('id_produit', '=', $produit[$j]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
+                        $panier = PanierEdiList::where('id_produit', '=', $produit[$j]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
+                        $design->$i->produits->$j->panier= $panier;
+                        $design->$i->produits->$j->isInPanier = true;
+                    } else {
+                        $design->$i->produits->$j->panier= array("quantiter" => 0);
+                        $design->$i->produits->$j->isInPanier = false;
+                    }
                 }
+
+                
             }
         } else {
-            for ($i = 0; $i < count($gammepanier); $i++) {
-                $gammepanier[$i]->prixProduit = Produit::calcul_prix_produit($gammepanier[$i]->id_produit,0);
-                $gammepanier[$i]->panier = array("quantiter" => 0);
-                $gammepanier[$i]->isInPanier = false;
+            for ($i = 0; $i < count($designpanier); $i++) {
+                $design->$i = new \stdClass;
+                $design->$i->produits = new \stdClass;
+
+                $photo = Produit::select('id_produit')->with(['photo' => function($query) {
+                    $query->where('principale', '=', '1');
+                }])->where('id_design','=',$designpanier[$i]->id_design)->first();
+                $design->$i->nom_design = $designpanier[$i]->nom_design;
+                $design->$i->img_produit = $photo->photo->img_produit;
+
+                $produit = Produit::with(['dimension','statsProduit'])->where('id_design','=',$designpanier[$i]->id_design)->get();
+                for ($j = 0; $j < count($produit); $j++) {
+                    $design->$i->produits->$j = new \stdClass;
+                    $design->$i->produits->$j->prixProduit = Produit::calcul_prix_produit($produit[$j]->id_produit,0);
+                    $design->$i->produits->$j->largeur = $produit[$j]->dimension->largeur;
+                    $design->$i->produits->$j->longueur = $produit[$j]->dimension->longueur;
+                    $design->$i->produits->$j->stock_restant = $produit[$j]->statsProduit->stock_restant;
+                    $design->$i->produits->$j->sku = $produit[$j]->code_sku;
+                    $design->$i->produits->$j->id_produit = $produit[$j]->id_produit;
+                    $design->$i->produits->$j->panier = array("quantiter" => 0);
+                    $design->$i->produits->$j->isInPanier = false;
+                }
+                
             }
         }
         
         return Inertia::render('Auth/Pages/Products/Gamme', [
             'products' => $products,
             'gamme' => $gammeSearch,
-            'dimensions' => $dimensions,
-            'gammepanier' => $gammepanier
+            'designpanier' => $design
         ]);
+    }
+
+    public function getListDesign(Request $request){
+        $designpanier = DB::table('design')
+            ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
+            ->distinct()
+            ->join('gamme', 'gamme.id_gamme', 'design.id_gamme')
+            ->where('gamme.in_edi', '=', '1')
+            ->where('gamme.statut', '=', '1')
+            ->where('gamme.nom_gamme', 'like', "%{$gamme}%")
+            ->get();
+
+        if ($request->session()->has('client_commercial')) {
+            $clientUser = $request->session()->get('client_commercial');
+        } else {
+            $clientUser = array();
+        }
+
+        $design = new \stdClass;
+
+        if (!empty($clientUser)) {
+            for ($i = 0; $i < count($designpanier); $i++) {
+                $design->$i = new \stdClass;
+                $design->$i->produits = new \stdClass;
+
+                $photo = Produit::select('id_produit')->with(['photo' => function($query) {
+                    $query->where('principale', '=', '1');
+                }])->where('id_design','=',$designpanier[$i]->id_design)->first();
+                $design->$i->nom_design = $designpanier[$i]->nom_design;
+                $design->$i->img_produit = $photo->photo->img_produit;
+
+                $produit = Produit::with(['dimension','statsProduit'])->where('id_design','=',$designpanier[$i]->id_design)->get();
+                for ($j = 0; $j < count($produit); $j++) {
+                    $design->$i->produits->$j = new \stdClass;
+                    $design->$i->produits->$j->prixProduit = Produit::calcul_prix_produit($produit[$j]->id_produit,0);
+                    $design->$i->produits->$j->largeur = $produit[$j]->dimension->largeur;
+                    $design->$i->produits->$j->longueur = $produit[$j]->dimension->longueur;
+                    $design->$i->produits->$j->stock_restant = $produit[$j]->statsProduit->stock_restant;
+                    $design->$i->produits->$j->sku = $produit[$j]->code_sku;
+                    $design->$i->produits->$j->id_produit = $produit[$j]->id_produit;
+                    if (PanierEdiList::where('id_produit', '=', $produit[$j]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
+                        $panier = PanierEdiList::where('id_produit', '=', $produit[$j]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
+                        $design->$i->produits->$j->panier= $panier;
+                        $design->$i->produits->$j->isInPanier = true;
+                    } else {
+                        $design->$i->produits->$j->panier= array("quantiter" => 0);
+                        $design->$i->produits->$j->isInPanier = false;
+                    }
+                }
+
+                
+            }
+        } else {
+            for ($i = 0; $i < count($designpanier); $i++) {
+                $design->$i = new \stdClass;
+                $design->$i->produits = new \stdClass;
+
+                $photo = Produit::select('id_produit')->with(['photo' => function($query) {
+                    $query->where('principale', '=', '1');
+                }])->where('id_design','=',$designpanier[$i]->id_design)->first();
+                $design->$i->nom_design = $designpanier[$i]->nom_design;
+                $design->$i->img_produit = $photo->photo->img_produit;
+
+                $produit = Produit::with(['dimension','statsProduit'])->where('id_design','=',$designpanier[$i]->id_design)->get();
+                for ($j = 0; $j < count($produit); $j++) {
+                    $design->$i->produits->$j = new \stdClass;
+                    $design->$i->produits->$j->prixProduit = Produit::calcul_prix_produit($produit[$j]->id_produit,0);
+                    $design->$i->produits->$j->largeur = $produit[$j]->dimension->largeur;
+                    $design->$i->produits->$j->longueur = $produit[$j]->dimension->longueur;
+                    $design->$i->produits->$j->stock_restant = $produit[$j]->statsProduit->stock_restant;
+                    $design->$i->produits->$j->sku = $produit[$j]->code_sku;
+                    $design->$i->produits->$j->id_produit = $produit[$j]->id_produit;
+                    $design->$i->produits->$j->panier = array("quantiter" => 0);
+                    $design->$i->produits->$j->isInPanier = false;
+                }
+                
+            }
+        }
+
+        return $design;
     }
 
     public function create_product_post($gamme)
