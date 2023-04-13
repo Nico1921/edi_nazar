@@ -199,7 +199,7 @@ var deleteCommande = (id_panier_edi_list,key,key2) =>{
 var deletePanier = () =>{
    Swal.fire({
       title: 'Attention',
-      text: 'Êtes-vous de vider votre panier ?',
+      text: 'Êtes-vous sur de vider votre panier ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
