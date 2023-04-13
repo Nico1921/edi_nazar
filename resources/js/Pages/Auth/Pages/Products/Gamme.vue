@@ -1,12 +1,13 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/inertia-vue3';
-import { createApp, onMounted,ref } from 'vue';
+import { Head, usePage, useForm } from '@inertiajs/inertia-vue3';
+import { onMounted,ref,watchEffect } from 'vue';
 import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,} from '@headlessui/vue';
-import DetailsDesign from '@/Components/DetailsDesign.vue';
+import Tooltip from '@/Components/Tooltip.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import InputError from '@/Components/InputError.vue';
 import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicons/vue/24/solid';
 
-const props = defineProps(["products","gamme","dimensions"]);
+const props = defineProps(["products","gamme","designpanier"]);
 var links = [{
         title: 'Accueil',
         link: '/',
@@ -30,18 +31,19 @@ var links = [{
 }];
 
 const isOpen = ref(false);
+const isOpenAdd = ref(false);
 var productsSearch = ref(props.products.data);
 var products = ref(props.products);
+var designpanier = ref(props.designpanier);
 var clientUser = ref(usePage().props.value.auth.user[0].client);
-var countP = 0;
-
-var classVariant = {
-   'default' : "col-span-12 mx-6 relative inline-block  text-sm text-gray-500 whitespace-nowrap mt-4 before:-mt-[1.8rem] before:border-r-solid before:content-[''] before:block before:absolute before:w-0 before:h-0 before:border-l-[30px] before:border-l-transparent before:border-l-solid before:border-r-[30px] before:border-r-transparent  before:border-b-[30px] before:border-b-gray-100",
-   'base1' : "before:xl:right-[85%] before:lg:right-[80%] before:sm:right-[70%] before:right-[50%]",
-   'base2' : "before:xl:right-[60%] before:lg:right-[45%] before:sm:right-[15%] before:right-[50%]",
-   'base3' : "before:xl:right-[35%] before:lg:right-[10%] before:sm:right-[15%] before:right-[50%]",
-   'base4' : "before:xl:right-[5%] before:lg:right-[45%] before:sm:right-[15%] before:right-[50%]",
-};
+var produitAdd = ref(false);
+var formAddProduit = useForm({
+   idProduit: null,
+   quantiter: 1,
+   id_panier_edi_list: null,
+   key_tab_1 : 0,
+   key_tab_2 : 0,
+})
 
 var classPaginate = {
    'previous' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
@@ -68,6 +70,16 @@ var perPageActual = () => {
    }
 };
 
+var setIsOpenAdd = (value,produit,key1,key2) => {
+   isOpenAdd.value = value;
+   produitAdd.value = produit;
+   formAddProduit.idProduit = produit.id_produit;
+   formAddProduit.key_tab_1 = key1;
+   formAddProduit.key_tab_2 = key2;
+   formAddProduit.quantiter = (produit.panier.quantiter > 0 ? produit.panier.quantiter : 1);
+   formAddProduit.id_panier_edi_list = (produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0);
+}
+
 var searchGamme = (e) => {
    
    const parsedUrl = new URL(window.location.href);
@@ -93,7 +105,7 @@ var searchGamme = (e) => {
          parsedUrl.searchParams.set('filter[global]',e.target.value);
          productsSearch.value = response.data.products.data;
          products.value = response.data.products;
-            window.history.replaceState('','',parsedUrl.href);
+         window.history.replaceState('','',parsedUrl.href);
       }
    })
 };
@@ -102,76 +114,86 @@ function closeModal() {
   isOpen.value = false;
 }
 
-function openModal(img,gamme,design,couleur) {
-  countP = -1;
+function openModal(img,gamme,design) {
   isOpen.value = true;
-  var nomProduit = gamme+" "+design+" "+couleur;
+  var nomProduit = gamme+" "+design;
   document.getElementById("visuelImage").setAttribute('src','https://gestion.tapis-nazar.fr/img/produit/'+img);
   document.getElementById("visuelImage").setAttribute('alt',nomProduit);
   document.getElementById("nomVisuelImage").textContent = nomProduit;
 };
 
-const getCountP = () => {
-   if(countP == 4){
-      countP = 1;
-   }else{
-      countP++;
-   }
-   return countP;
-}
-
-const getVariant = (idDesign) => {
-   if (idDesign != "" && idDesign != null) {
-      var checkExist = document.getElementById("tab_idDesign" + idDesign);
-      var keyCheck = checkExist.dataset.positiontab;
-      var checkExist = checkExist.nextSibling;
-      if (checkExist.id != "viewDetailsDesign") {
-         axios.post('/order_entrepot/gamme/design', { id_design: idDesign }).then((response) => {
-            if (response.status == 200) {
-               if (document.getElementById("viewDetailsDesign") != null) {
-                  if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-                     document.getElementById("viewDetailsDesign").__vue_app__.unmount();
-                  }
-                  document.getElementById("viewDetailsDesign").remove();
-               }
-
-               var detailsDesign = createApp(DetailsDesign, { designs: response.data });
-               var trNew = document.createElement('div');
-               trNew.id = "viewDetailsDesign";
-               trNew.dataset.idDesign = idDesign;
-               var classChoix = classVariant.base1;
-               if(keyCheck == 2 ){
-                  classChoix = classVariant.base2;
-               }else if(keyCheck == 3 ){
-                  classChoix = classVariant.base3;
-               }else if(keyCheck == 4){
-                  classChoix = classVariant.base4;
-               }
-               trNew.classList = classVariant.default +" "+ classChoix;
-               document.getElementById("tab_idDesign" + idDesign).parentNode.insertBefore(trNew, document.getElementById("tab_idDesign" + idDesign).nextSibling);
-               detailsDesign.mount(document.getElementById("viewDetailsDesign"));
+var addCommande = (e,isPanier) => {
+   e.preventDefault();
+   var key1= formAddProduit.key_tab_1;
+   var key2= formAddProduit.key_tab_2;
+   if(formAddProduit.quantiter > 0){
+      formAddProduit.post(route('order_entrepot/panier/add'), {
+         preserveScroll: true,
+         preserveState:true,
+         onSuccess: (e) => {
+            if(e.props.session.status){
+               designpanier.value[key1].produits[key2].panier.id_panier_edi_list = e.props.session.id_panier_edi_list;
+               designpanier.value[key1].produits[key2].isInPanier = true;
+               designpanier.value[key1].produits[key2].panier.quantiter = formAddProduit.quantiter;
+               isOpenAdd.value = false;
+               Toast.fire({
+                  icon: 'success',
+                  title: (isPanier ? 'La quantiter pour ce produit à bien été modifier' : 'Le produit à bien ajouter au panier')
+               });
+            }else{
+               Toast.fire({
+                  icon: 'error',
+                  title: e.props.session.message
+               });
             }
-         })
-      } else if (checkExist.id == "viewDetailsDesign") {
-         if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-            document.getElementById("viewDetailsDesign").__vue_app__.unmount();
-         }
-         document.getElementById("viewDetailsDesign").remove();
-      }
+            
+         },
+      });
+   }else{
+      deleteCommande(formAddProduit.id_panier_edi_list,key1,key2)
    }
+   
 };
 
-const checkIsOnList = () => {
-   if (document.getElementById("viewDetailsDesign") != null) {
-      var dataId = document.getElementById("viewDetailsDesign").dataset.idDesign;
-      var check = document.getElementById("viewDetailsDesign").previousSibling;
-      if (check.id != "tab_idDesign" + dataId) {
-         if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-            document.getElementById("viewDetailsDesign").__vue_app__.unmount();
-         }
-         document.getElementById("viewDetailsDesign").remove();
+var deleteCommande = (id_panier_edi_list,key,key2) =>{
+   Swal.fire({
+      title: 'Attention',
+      text: 'Etes-vous sur de supprimer cette article du panier ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Non',
+      confirmButtonText: 'Oui',
+   }).then((result) => {
+      if (result.isConfirmed) {
+         const formProduit = useForm({
+            id_panier_edi_list: id_panier_edi_list,
+         });
+
+         formProduit.post(route('order_entrepot/panier/delete'), {
+            preserveScroll: true,
+            onSuccess: (e) => {
+               if(e.props.session.status){
+                  Toast.fire({
+                     icon: 'success',
+                     title: 'Le produit à bien été supprimer du panier'
+                  })
+                  designpanier.value[key].produits[key2].isInPanier = false;
+                  designpanier.value[key].produits[key2].panier.quantiter = 0;
+                  designpanier.value[key].produits[key2].panier.id_panier_edi_list = 0;
+                  isOpenAdd.value = false;
+               }else{
+                  Toast.fire({
+                     icon: 'error',
+                     title: e.props.session.message
+                  });
+               }
+               
+            },
+         });
       }
-   }
+   })
 };
 
 var deletePanier = () =>{
@@ -189,7 +211,7 @@ var deletePanier = () =>{
          Inertia.post('/cart/empty',{}, {
             preserveScroll: true,
             onSuccess: (e) => {
-               console.log(e);
+               
                if(e.props.session.status){
                   Toast.fire({
                      icon: 'success',
@@ -208,10 +230,6 @@ var deletePanier = () =>{
    });
 };
 
-const lowercase = (nom) => {
-   return HtmlEntities.decode(nom.toLowerCase());
-};
-
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
@@ -224,17 +242,25 @@ var calcul_prix_gamme = (prix_gamme) => {
    return roundNumber(HT);
 }
 
-onMounted(() => {
-   var targetNode = document.getElementById('TabProducts');
-   var config = { attributes: true, childList: true, subtree: true };
-   var observer = new MutationObserver(checkIsOnList);
-   observer.observe(targetNode, config);
+var formatPrix = (prix) => {
+   return new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+   }).format(prix);
+};
 
-   var targetNode2 = document.getElementById('per_page');
-   targetNode2.value = perPageActual();
-   const parsedUrl = new URL(window.location.href);
-   var input = document.getElementById("searchGamme");
-   input.value = parsedUrl.searchParams.get('filter[global]');
+onMounted(() => {
+   // var targetNode2 = document.getElementById('per_page');
+   // targetNode2.value = perPageActual();
+   // const parsedUrl = new URL(window.location.href);
+   // var input = document.getElementById("searchGamme");
+   // input.value = parsedUrl.searchParams.get('filter[global]');
+});
+
+watchEffect(() => {
+	// for(var i = 0;i<count(designpanier.value);i++){
+   //    design.value
+   // }
 });
 </script>
 <script >
@@ -243,6 +269,7 @@ import ImageOff from 'icons/ImageOff.vue';
 import Right from 'icons/ChevronRight.vue';
 import Left from 'icons/ChevronLeft.vue';
 import Search from 'icons/Magnify.vue';
+import CartAdd from 'icons/CartPlus.vue';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 export default {
@@ -273,10 +300,13 @@ export default {
             <span>Poils {{ (props.gamme.type_poils == 1 ? 'court' : 'long') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
             <span class="capitalize">{{ props.gamme.nom_special }}</span>
             <span>Prix HT m² : {{ calcul_prix_gamme(props.gamme.prix_vente_ht_m2) }} €</span>
+            <div class="sm:w-auto w-full py-2 flex items-center justify-center">
+               <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
+            </div>
          </div>
       </section>
 
-      <div class="mx-1 my-1 flex sm:flex-row flex-col w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 ">
+      <!-- <div class="mx-1 my-1 flex sm:flex-row flex-col w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 ">
          <div class="relative flex-grow">
             <input class="block w-full pl-9 text-sm rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" 
             placeholder="Recherche..." id="searchGamme" type="text" name="global" @input="searchGamme">
@@ -287,36 +317,78 @@ export default {
          <div class="sm:w-auto w-full sm:pl-2 pl-0 sm:pt-0 pt-2">
             <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
          </div>
-      </div>
+      </div> -->
 
-      <div class="grid grid-flow-row-dense grid-cols-12 " id="TabProducts">
-         <div class="xl:col-span-3 lg:col-span-4 sm:col-span-6 col-span-12" v-for="(produit, key) in productsSearch" :key="key" :data-positiontab="getCountP()" :id="'tab_idDesign' + produit.id_design">
-            <div class="grid grid-cols-12 bg-primary-white border border-primary-200 rounded-lg sm:h-48 h-38 mx-6 my-4 p-4">
-               <div class="xl:col-span-5 sm:col-span-4 col-span-2 items-stretch justify-center flex sm:h-40 h-full">
-                  <div v-if="produit.img_produit != null"
-                        class="cursor-pointer relative overflow-hidden bg-gray-200 w-full h-full">
-                        <div class="absolute flex items-center justify-center w-full h-full">
-                           <Eye class="text-lg text-black" />
-                        </div>
-                        <img @click="openModal(produit.img_produit,produit.nom_gamme,produit.nom_design,produit.nom_couleur)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.img_produit"
-                           :alt="produit.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
-                     </div>
-                     <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
-                     <ImageOff />
-                  </div>
-               </div>
-               <div class="xl:col-span-7 sm:col-span-8 col-span-10 flex flex-col ml-3">
-                  <span class="font-bold xl:text-xl sm:text-lg text-sm text-gray-600">{{ produit.nom_design }}</span>
-                  <span class="font-semibold 2xl:text-lg text-sm">Couleur : {{ produit.nom_couleur }}</span>
-                  <div class="flex flex-start items-end h-full">
-                     <button class="py-2 px-3 h-10 rounded bg-primary-200 hover:bg-primary-50 2xl:text-lg text-sm text-white hover:text-primary-400 transition duration-300" type="button" @click="getVariant(produit.id_design)">Voir les produits</button>
+      <div class="flex flex-col">
+         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+               <div class="min-w-full overflow-hidden border border-primary-200 p-4">
+                  <div class="border-b border-primary-200 min-w-full" :key="key1" v-for="(gamme,key1) in designpanier">
+                     <table class=" text-left text-sm font-light" >
+                        <tbody>
+                           <tr class="px-4 py-4">
+                              <td class="whitespace-nowrap px-4 py-4">
+                                 <div class="h-24 w-full mb-2">
+                                    <div v-if="gamme.img_produit != null"
+                                          class="cursor-pointer relative overflow-hidden w-full h-full flex justify-center">
+                                       <div class="absolute flex items-center justify-center w-full h-full">
+                                          <Eye class="text-lg text-black" />
+                                       </div>
+                                       <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + gamme.img_produit"
+                                          :alt="gamme.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
+                                    </div>
+                                    <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
+                                       <ImageOff />
+                                    </div>
+                                 </div>
+                                 <div class="text-center w-full">
+                                    <span class="font-bold pt-2">{{ gamme.nom_design }}</span>
+                                 </div>
+                                 
+                              </td>
+                              <td  v-for="(produit,key2) in gamme.produits" :key="key2" class="whitespace-nowrap px-4 py-4 h-24 table-cell align-middle">
+                                 <div class="w-full h-full flex flex-col items-center justify-between">
+                                    <div class="w-full font-bold text-center">
+                                       {{ produit.largeur }}x{{ produit.longueur }}
+                                    </div>
+                                    <div  class="flex items-center justify-center ">
+                                          <Tooltip>
+                                             <template #header>
+                                                <div v-if="produit.stock_restant > 0" class="hover:scale-110 transition duration-300">
+                                                   <button @click="setIsOpenAdd(true,produit,key1,key2)"
+                                                      :class="produit.stock_restant > 10 ? 'bg-green-700' : (produit.stock_restant > 0 ? 'bg-orange-400 ' : 'bg-red-700')" 
+                                                      class=" w-[35px] h-[35px] block rounded-full flex items-center justify-center">
+                                                      <CartAdd v-if="!produit.isInPanier" class="text-xl text-white items-center justify-center" />
+                                                      <span v-else class="text-xl text-white items-center justify-center">{{ produit.panier.quantiter }}</span>
+
+                                                   </button>
+                                                </div>
+                                                
+                                                <span v-else class="bg-red-700 w-[35px] h-[35px] block rounded-full flex items-center justify-center"></span>
+                                             </template>
+                                             <template #body>
+                                                <span v-if="produit.stock_restant > 0"> {{(produit.isInPanier ? 'Modifier quantiter' : 'Ajouter au')}} panier</span>
+                                                <span v-else> Rupture de stock </span>
+                                             </template>
+                                          </Tooltip>
+                                          
+                                    </div>
+                                    <div class="text-center w-full">
+                                       <span class="font-bold">{{ formatPrix(produit.prixProduit) }} HT</span>
+                                    </div>
+                                 </div>
+                                 
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
                   </div>
                </div>
             </div>
          </div>
-      </div>
+         </div>
 
-      <div class="grid grid-cols-4 justify-center items-center bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 xl:px-6">
+      <!-- <div class="grid grid-cols-4 justify-center items-center bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 xl:px-6">
          <div class="lg:col-span-1 sm:col-span-2 col-span-4 sm:text-start text-center">
             <select id="per_page" name="per_page" dusk="per-page-full" @change="perPage" class="xl:mr-5 mr-2 focus:ring-indigo-500 focus:border-indigo-500 min-w-max shadow-sm text-sm border-gray-300 rounded-md">
                <option value="8">8 par page</option>
@@ -339,7 +411,7 @@ export default {
                </a>
             </nav>
          </div>
-       </div>
+       </div> -->
    </section>
 
    <TransitionRoot :show="isOpen" as="template" :unmount="false" >
@@ -387,6 +459,72 @@ export default {
                   <button type="button" class="mt-4 inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition duration-300"
                    @click="closeModal" >Fermer</button>
                </div>
+            </DialogPanel>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
+
+  <TransitionRoot appear :show="isOpenAdd" as="template" :unmount="false">
+    <Dialog as="div" class="relative z-50">
+      <TransitionChild
+        as="template"
+        enter="duration-300 ease-out"
+        enter-from="opacity-0"
+        enter-to="opacity-100"
+        leave="duration-200 ease-in"
+        leave-from="opacity-100"
+        leave-to="opacity-0"
+        :unmount="false"
+      >
+        <div class="fixed inset-0 bg-black bg-opacity-25" />
+      </TransitionChild>
+
+      <div class="fixed inset-0 overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4 text-center">
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95" :unmount="false">
+            <DialogPanel class="w-full border-[5px] border-primary-200 max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all" >
+              <DialogTitle as="h3" class="lg:text-lg text-sm text-center font-medium leading-6 text-gray-900"  v-if="produitAdd != false">
+               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantiter' : 'Ajouter ') }} produit {{ produitAdd.sku }}
+              </DialogTitle>
+               <form v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
+                  <input type="hidden" name="id_produit" id="id_produit" v-model="formAddProduit.idProduit" />
+                  <input type="hidden" name="id_panier_edi_list" id="id_panier_edi_list" v-model="formAddProduit.id_panier_edi_list" />
+                  <div class="mt-2 flex justify-center items-center">
+                     <div class="text-sm text-gray-500 w-full">
+                        <label class="lg:text-lg text-sm" for="ref"> Quantiter : </label> 
+                        <input v-model="formAddProduit.quantiter" class="w-full lg:text-lg text-sm transition duration-300 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" 
+                        id="quantiter" type="number" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande">
+                        <InputError class="mt-2" :message="formAddProduit.errors.quantiter" />
+                        <InputError class="mt-2" :message="formAddProduit.errors.idProduit" />
+                        <InputError class="mt-2" :message="formAddProduit.errors.id_panier_edi_list" />
+                     </div>
+                     <div class="w-full mt-7 ml-5" v-if="produitAdd.isInPanier">
+                        <button type="button" @click="deleteCommande(produitAdd.panier.id_panier_edi_list,formAddProduit.key_tab_1,formAddProduit.key_tab_2)" class="w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300">
+                           <BackspaceIcon class="w-5 h-5 mr-2" />Suprimmer le produit du panier
+                        </button>
+                     </div>
+                  </div>
+
+                  <div class="mt-4 flex justify-center">
+                     <button @click="isOpenAdd = false;" type="button" class="mx-10 inline-flex justify-center rounded-md border border-transparent hover:border-red-100 px-4 py-2 text-sm font-medium text-red-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition duration-300">
+                        Annuler
+                     </button>
+                     <button type="submit" class="mx-10 inline-flex justify-center rounded-md border border border-primary-200 px-4 py-2 text-sm font-medium text-primary-300 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 transition duration-300">
+                        Valider
+                     </button>
+                     
+                  </div>
+              </form>
+             
             </DialogPanel>
           </TransitionChild>
         </div>

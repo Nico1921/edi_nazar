@@ -57,4 +57,12 @@ class Design extends Model
     { 
         return $this->hasOne(Gamme::class,'id_gamme','id_gamme'); 
     }
+
+    /**
+     * Permet la récupération de la gamme lier au Design
+     */
+    public function produits()
+    { 
+        return $this->hasMany(Produit::class,'id_design','id_design'); 
+    }
 }
