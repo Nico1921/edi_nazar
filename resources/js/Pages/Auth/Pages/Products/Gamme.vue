@@ -5,7 +5,8 @@ import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,} from
 import Tooltip from '@/Components/Tooltip.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import InputError from '@/Components/InputError.vue';
-import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon,ArrowRightCircleIcon  } from '@heroicons/vue/24/solid';
+import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicons/vue/24/solid';
+import { ArrowRightCircleIcon  } from '@heroicons/vue/24/outline';
 
 const props = defineProps(["products","gamme","designpanier"]);
 var links = [{
