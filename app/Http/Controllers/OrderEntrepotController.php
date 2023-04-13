@@ -192,7 +192,7 @@ class OrderEntrepotController extends Controller
                     $query->where('principale', '=', '1');
                 }])->where('id_design','=',$designpanier[$i]->id_design)->first();
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
-                $design->$i->img_produit = $photo->photo->img_produit;
+                $design->$i->img_produit = ($photo->photo != null ? $photo->photo->img_produit : '');
 
                 $produit = Produit::with(['dimension','statsProduit'])->where('id_design','=',$designpanier[$i]->id_design)->get();
                 for ($j = 0; $j < count($produit); $j++) {
@@ -224,7 +224,7 @@ class OrderEntrepotController extends Controller
                     $query->where('principale', '=', '1');
                 }])->where('id_design','=',$designpanier[$i]->id_design)->first();
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
-                $design->$i->img_produit = $photo->photo->img_produit;
+                $design->$i->img_produit = ($photo->photo != null ? $photo->photo->img_produit : '');
 
                 $produit = Produit::with(['dimension','statsProduit'])->where('id_design','=',$designpanier[$i]->id_design)->get();
                 for ($j = 0; $j < count($produit); $j++) {
@@ -249,7 +249,7 @@ class OrderEntrepotController extends Controller
         ]);
     }
 
-    public function getListDesign(Request $request){
+    public function getListDesign($gamme,Request $request){
         $designpanier = DB::table('design')
             ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
             ->distinct()
@@ -276,7 +276,7 @@ class OrderEntrepotController extends Controller
                     $query->where('principale', '=', '1');
                 }])->where('id_design','=',$designpanier[$i]->id_design)->first();
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
-                $design->$i->img_produit = $photo->photo->img_produit;
+                $design->$i->img_produit = ($photo->photo != null ? $photo->photo->img_produit : '');
 
                 $produit = Produit::with(['dimension','statsProduit'])->where('id_design','=',$designpanier[$i]->id_design)->get();
                 for ($j = 0; $j < count($produit); $j++) {
@@ -308,7 +308,7 @@ class OrderEntrepotController extends Controller
                     $query->where('principale', '=', '1');
                 }])->where('id_design','=',$designpanier[$i]->id_design)->first();
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
-                $design->$i->img_produit = $photo->photo->img_produit;
+                $design->$i->img_produit = ($photo->photo != null ? $photo->photo->img_produit : '');
 
                 $produit = Produit::with(['dimension','statsProduit'])->where('id_design','=',$designpanier[$i]->id_design)->get();
                 for ($j = 0; $j < count($produit); $j++) {
