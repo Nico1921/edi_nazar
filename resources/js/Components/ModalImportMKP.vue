@@ -142,7 +142,9 @@ import Alert from 'icons/Alert.vue';
             </div>
 
             <div class=" w-full py-2 bg-white flex items-center justify-center">
-              <button @click="confirmImport" class="px-4 py-2 bg-primary-50 rounded hover:bg-primary-100 transition duration-300">Valider l'importation</button>
+              <button @click="confirmImport" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                           hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
+                            disabled:bg-green-300">Valider l'importation</button>
             </div>
            </DialogPanel>
          </TransitionChild>

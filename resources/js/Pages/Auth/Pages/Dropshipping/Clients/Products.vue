@@ -128,7 +128,7 @@ const checkIsOnList = () => {
 var deletePanier = () =>{
    Swal.fire({
       title: 'Attention',
-      text: 'Êtes-vous de vider votre panier ?',
+      text: 'Êtes-vous de vouloir vider votre panier ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

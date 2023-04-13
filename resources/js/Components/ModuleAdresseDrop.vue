@@ -455,7 +455,9 @@ export default {
             </div>
 
             <div class="flex flex-row-reverse">
-               <button type="submit" class="hover:animate-[scale_1s_ease-in-out_infinite] bg-blue-200 hover:bg-blue-300 text-blue-600 font-bold py-2 px-6 rounded transition duration-300 ease-in-out">
+               <button type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                           hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
+                            disabled:bg-green-300">
                   Valider
                </button>
             </div>
