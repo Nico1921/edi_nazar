@@ -44,7 +44,7 @@ var formAddProduit = useForm({
    id_panier_edi_list: null,
    key_tab_1 : 0,
    key_tab_2 : 0,
-})
+});
 
 var classPaginate = {
    'previous' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
@@ -53,7 +53,7 @@ var classPaginate = {
    'next_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
    'number' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',
    'number_active' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 bg-gray-100'
-}
+};
 
 var perPage = () => {
    const parsedUrl = new URL(window.location.href);
@@ -152,8 +152,7 @@ var addCommande = (e,isPanier) => {
       });
    }else{
       deleteCommande(formAddProduit.id_panier_edi_list,key1,key2)
-   }
-   
+   }  
 };
 
 var deleteCommande = (id_panier_edi_list,key,key2) =>{
@@ -189,8 +188,7 @@ var deleteCommande = (id_panier_edi_list,key,key2) =>{
                      icon: 'error',
                      title: e.props.session.message
                   });
-               }
-               
+               }              
             },
          });
       }
@@ -259,9 +257,16 @@ onMounted(() => {
 });
 
 watchEffect(() => {
-	// for(var i = 0;i<count(designpanier.value);i++){
-   //    design.value
-   // }
+	// axios.get('/dropshipping/panier/view',{gamme:props.gamme.nom_gamme}).then((response)=>{
+   //    console.log(response);
+   //    if(response.data.produitsAchat != undefined){         
+   //       if(response.data.produitsAchat.panier != undefined){         
+   //          produitsAchat.value = response.data.produitsAchat.panier;
+   //       }else{
+   //          produitsAchat.value = [];
+   //       }
+   //    }
+   // });
 });
 </script>
 <script >
@@ -390,7 +395,7 @@ export default {
                </div>
             </div>
          </div>
-         </div>
+      </div>
 
       <!-- <div class="grid grid-cols-4 justify-center items-center bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 xl:px-6">
          <div class="lg:col-span-1 sm:col-span-2 col-span-4 sm:text-start text-center">

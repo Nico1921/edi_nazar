@@ -78,12 +78,23 @@ export default {
                                  <span v-if="client.client.adresseValide" class="text-green-500">Valide</span>
                               </template>
                            </Tooltip>
-                           <span class="text-lg font-bold">{{ client.client.ref_externe }}</span>
+                           <div>
+                              <span class="text-lg"><span class="font-bold">Commande : </span>{{ client.client.ref_externe }}</span>
+                              <div class="flex flex-col" v-if="client.client.adresse1 != '' && client.client.adresse1 != null">
+                                 <span class="text-lg"><span class="font-bold">Adresse commande : </span>{{ client.client.nom_adresse }},</span>
+                                 <span class="text-lg">{{ client.client.adresse1 }},</span>
+                                 <span v-if="client.client.adresse2 != '' && client.client.adresse2 != null" class="text-lg ">{{ client.client.adresse2 }},</span>
+                                 <span v-if="client.client.adresse3 != '' && client.client.adresse3 != null" class="text-lg ">{{ client.client.adresse3 }},</span>
+                                 <span class="text-lg">{{client.client.code_postal+", "+client.client.ville}},</span>
+                                 <span class="text-lg">{{client.client.pays}}</span>
+                              </div>
+                              
+                           </div> 
                         </div>
                         
                         <div class="">
-                           <button @click="openModal(client.client.ref_externe,client.client)" class="text-gray-500 hover:text-gray-300 flex bg-primary-50 hover:bg-primary-100 group px-4 py-1 rounded-2xl  transition duration-300 ease-in-out">
-                              <PencilIcon class="pt-1 w-5 h-5 text-primary-200 group-hover:text-primary-50" /> <span>Modifier</span>
+                           <button @click="openModal(client.client.ref_externe,client.client)" class="text-gray-600 hover:text-gray-400 flex bg-primary-50 hover:bg-primary-100 group px-4 py-1 rounded-2xl  transition duration-300 ease-in-out">
+                              <PencilIcon class="pt-1 w-5 h-5 text-primary-300 group-hover:text-primary-200" /> <span>Modifier</span>
                            </button>
                         </div>
                      </div>

@@ -388,7 +388,9 @@ import { Inertia } from '@inertiajs/inertia';
                   </div>
 
                   <div class="mt-4 flex flex-row-reverse">
-                     <button type="submit" class="mx-1 inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 transition duration-300">
+                     <button type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                           hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
+                            disabled:bg-green-300">
                         Valider
                      </button>
                      <button @click="isOpenModalAdd = false;" type="button" class="mx-1 inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition duration-300">
@@ -403,11 +405,4 @@ import { Inertia } from '@inertiajs/inertia';
       </div>
     </Dialog>
   </TransitionRoot>
-
-  <div class="fixed bottom-10 right-10 z-[50] overflow-hidden">
-      <button @click="setIsOpen(true)" class="group flex items-center justify-center text-white hover:px-4 w-10 hover:w-auto h-10 bg-green-600 rounded-full hover:bg-green-700 active:shadow-lg mouse shadow transition-all ease-in duration-300 focus:outline-none">
-         <PlusIcon class="w-5 h-5 group-hover:mr-1" />
-         <span class=" translate-x-full group-hover:relative absolute group-hover:translate-x-0 transition-all ease-in-out duration-100 ">Ajouter commande client</span>
-      </button>
-   </div>
 </template>

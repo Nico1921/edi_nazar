@@ -96,7 +96,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::post('/dropshipping/panier/add', [DropshippingController::class, 'add_product_commande'])->name('dropshipping/panier/add');
       Route::post('/dropshipping/panier/delete', [DropshippingController::class, 'delete_product_commande'])->name('dropshipping/panier/delete');
       Route::post('/dropshipping/panier/empty', [DropshippingController::class, 'empty_commande'])->name('dropshipping/panier/empty');
-      Route::get('/dropshipping/panier/view', [DropshippingController::class, 'view_product_commande'])->name('dropshipping/panier/view');
+      Route::post('/dropshipping/panier/view', [DropshippingController::class, 'view_product'])->name('dropshipping/panier/view');
       Route::get('/dropshipping/panier/get', [DropshippingController::class, 'getPanierDrop'])->name('dropshipping/panier/get');
    
       Route::get('/dropshipping/clients/validation', [DropshippingController::class, 'validation_commande_clients'])->name('dropshipping/clients/validation');

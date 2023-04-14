@@ -10,11 +10,16 @@ var links = [{
         icon: HomeIcon,
         active: false
     },{
-      title: 'Commande Entrepôt - Gamme',
+      title: 'Commande Entrepôt',
       link: '/order_entrepot/gamme',
       icon: ListBulletIcon,
+      active: false
+   },{
+      title: 'Gamme',
+      link: '/order_entrepot/gamme',
+      icon: '',
       active: true
-}];
+   }];
 
 const templateVierge = new URL('../../../../fichiers/templates/Commercial/Template_Vierge_Com.xlsx', import.meta.url).href;
 const templateModele = new URL('../../../../fichiers/templates/Commercial/Template_Model_Com.xlsx', import.meta.url).href;

@@ -3,6 +3,7 @@ import { Head, usePage, useForm } from '@inertiajs/inertia-vue3';
 import { ref, onMounted, watchEffect,createApp } from 'vue';
 import ListClients from '@/Components/ListClients.vue';
 import ModalImportMKP from '@/Components/ModalImportMKP.vue';
+import ModalAjoutClient from '@/Components/ModalAjoutClient.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import { HomeIcon,ListBulletIcon  } from '@heroicons/vue/24/solid';
     
@@ -12,11 +13,16 @@ var links = [{
         icon: HomeIcon,
         active: false
     },{
-      title: 'Dropshipping - Gamme',
+      title: 'Dropshipping',
       link: '/dropshipping/gamme',
       icon: ListBulletIcon,
+      active: false
+   },{
+      title: 'Gamme',
+      link: '/dropshipping/gamme',
+      icon: '',
       active: true
-}];
+   }];
 const templateVierge = new URL('../../../../../../fichiers/templates/Drop/Template_Vierge_Drop.xlsx', import.meta.url).href;
 const templateModele = new URL('../../../../../../fichiers/templates/Drop/Template_Model_Drop.xlsx', import.meta.url).href;
 const props = defineProps(['products','dimensions', 'produitsAchat']);
@@ -24,7 +30,7 @@ const isOpen = ref(false);
 
 var products = ref(props.products);
 var dynamic = ref(usePage().props.value.dynamique_client);
-var produitsAchat = ref(props.produitsAchat.panier);
+
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 
 let fileExist = ref(false);
@@ -183,15 +189,6 @@ watchEffect(() => {
    dynamic.value = usePage().props.value.dynamique_client;
    panierDrop.value = usePage().props.value.PanierDrop;
    client.value = panierDrop.value.panier.clientActuel;
-	axios.get('/dropshipping/panier/view').then((response)=>{
-      if(response.data.produitsAchat != undefined){         
-         if(response.data.produitsAchat.panier != undefined){         
-            produitsAchat.value = response.data.produitsAchat.panier;
-         }else{
-            produitsAchat.value = [];
-         }
-      }
-   })
 });
 </script>
 <script >
@@ -217,37 +214,43 @@ export default {
    <Head title="Products" />
    <section class="container mx-auto mt-5">
       <Breadcrumbs :links="links" />
-      <h1 class="font-semibold text-sm lg:text-2xl sm:text-lg text-gray-800 py-2">Dropshipping - Gamme</h1>
 
-      <div v-if="client != undefined " class="flex justify-between sm:flex-row flex-col ">
-         <div v-if="client.id_client_edi != undefined" class="flex items-center px-2">
-            <h3 class="text-lg text-gray-600">Commande client N° : {{ client.ref_externe }}</h3>
-         </div>
+      <div class="flex lg:flex-row flex-col items-center justify-center relative pb-10">
+         <h1 class="font-semibold text-center mx-1 lg:text-2xl text-lg text-gray-800 py-2">Dropshipping  - Gamme</h1>
 
-         <div v-if="client.id_client_edi != undefined" class="mb-4 px-2">
-            <ListClients :data="panierDrop.panier" />
-         </div>
-      </div>
-
-      <div class="bg-primary-50 rounded xl:mx-40 mb-5" v-if="typeVente == 2">
-         <h2 class="text-center text-xl text-primary-300 py-1 bg-primary-100 rounded-t-lg">Ajouter au panier via un fichier</h2>
-         <div class="p-4 flex flex-col items-center justify-items-center justify-center">
-            <form id="fileClientImport" class="grid grid-cols-4" @submit.prevent="submit_file">
-               <div :class="fileExist ? 'relative col-span-3 mx-2' : 'relative col-span-4 mx-2'">
-                  <label class="block cursor-pointer text-primary-500 bg-primary-200 p-3 rounded-lg" for="file_Client_Import">Importer mon fichier de commandes <Excel /></label>
-                  <span class="hidden" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
-                  <input @change="fileImport" type="file" class="hidden" id="file_Client_Import" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
-                  <p class="mt-1 text-sm text-gray-500" id="file_input_helper">.XLS,.XLSX</p>
-                  <span class="absolute bottom-0 right-0"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
-               </div>
-               <div class="col-span-1" v-if="fileExist">
-                  <button type="submit" class="p-3 rounded-lg text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
-               </div>
-            </form>       
+         <div v-if="typeVente == 2" class="lg:absolute inset-0 lg:flex items-center justify-end">
+            <div class="">
+               <form id="fileClientImport" class="grid grid-cols-4 max-w-[21rem]" @submit.prevent="submit_file">
+                  <div class="relative lg:mx-2 mx-1 flex flex-col max-w-sm" :class="fileExist ? 'col-span-3' : ' col-span-4'">
+                     <label class="block text-sm cursor-pointer text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300 px-2 py-2 rounded-xl" for="file_import_clients">Importer fichier de commandes <Excel /></label>
+                     <span class="hidden whitespace-nowrap truncate" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
+                     <input @change="fileImport" type="file" class="hidden" id="file_import_clients" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
+                     <span class="mt-1 ml-1 text-sm text-gray-500"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
+                  </div>
+                  <div class="col-span-1" v-if="fileExist">
+                     <button type="submit" class="px-2 py-2 rounded-xl text-sm text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
+                  </div>
+               </form>       
+            </div>
          </div>
       </div>
 
-      <div class="flex sm:flex-row flex-col w-full sm:w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 sm:mr-4 sm:px-0 px-2">
+      <div class="flex justify-between">
+         <div v-if="client != undefined " class="flex items-center px-2 py-1 bg-primary-50 rounded">
+            <h3 class="text-lg text-gray-600 mr-2">Commande client N° :</h3>
+            <div v-if="client.id_client_edi != undefined" class="flex justify-between ">
+               <ListClients  v-if="client.id_client_edi != undefined" :data="panierDrop.panier" />
+            </div>
+            
+         </div>
+
+         <div class=" px-2 bg-primary-50 hover:scale-110 transition duration-300 rounded h-auto flex items-center justify-center">
+            <ModalAjoutClient />
+         </div>
+      </div>
+      
+
+      <div class="mx-1 my-1 flex sm:flex-row flex-col w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 ">
          <div class="relative flex-grow">
             <input class="block w-full pl-9 text-sm rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" 
             placeholder="Recherche..." id="searchGamme" type="text" name="global" @input="searchGamme">
@@ -258,7 +261,6 @@ export default {
          <div class="sm:w-auto w-full sm:pl-2 pl-0 sm:pt-0 pt-2">
             <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
          </div>
-         
       </div>
 
       <div class="grid grid-cols-4" id="gammes">
