@@ -70,6 +70,7 @@ const sameAdresseFact = ref(true);
 const formClient = useForm({
     email: (props.client.email != undefined ? props.client.email : ''),
     tel: (props.client.tel != undefined ? props.client.tel : ''),
+    num_commande: '',
     nom_adresse: (props.client.nom_adresse != undefined ? props.client.nom_adresse : ''),
     adresse1: (props.client.adresse1 != undefined ? props.client.adresse1 : ''),
     adresse2: (props.client.adresse2 != undefined ? props.client.adresse2 : ''),
@@ -115,7 +116,7 @@ import Calendar from 'icons/CalendarRange.vue';
 import City from 'icons/HomeCity.vue'; 
 import Flag from 'icons/Flag.vue'; 
 import Mail from 'icons/Email.vue'; 
-import Back from 'icons/ArrowLeftThin.vue'; 
+import Box from 'icons/package.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 export default {
@@ -164,6 +165,18 @@ export default {
                            <InputError class="mt-2" :message="formClient.errors.tel" />
                         </div>
                      </div>
+
+                     <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
+                        <div class="sm:col-span-4 col-span-5">
+                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="mail_client"><span class="pr-2"><Box /></span> N° Commande :</label>
+                        </div>
+                        <div class="sm:col-span-8 col-span-7">
+                           <input type="text" id="num_commande"
+                           class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" 
+                              name="num_commande" required="" autofocus="" v-model="formClient.num_commande"/>
+                           <InputError class="mt-2" :message="formClient.errors.num_commande" />
+                        </div>
+                     </div>
                </div>
             </div>
             <div class="bg-white border border-primary-100 rounded my-5">
@@ -172,7 +185,7 @@ export default {
 
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="nom_adresse_client"><span class="pr-2"><City /></span> Nom adresse :</label>
+                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="nom_adresse_client"><span class="pr-2"><City /></span> Contact:</label>
                         </div>
                         <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
                            <input type="text" id="nom_adresse_client"
@@ -184,7 +197,7 @@ export default {
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="adresse_client"><span class="pr-2"><City /></span> Adresse 1 :</label>
+                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="adresse_client"><span class="pr-2"><City /></span> Adresse :</label>
                         </div>
                         <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
                            <input type="text" id="adresse_client"

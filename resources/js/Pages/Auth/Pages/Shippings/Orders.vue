@@ -95,6 +95,7 @@ var getUrl = () => {
    var url = document.location.href;
    return url;
 };
+
 </script>
 <script >
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
@@ -126,6 +127,8 @@ export default {
       <div class="p-4 bg-primary-50">
          <h1 class="lg:text-xl text-lg font-bold">Commande n°{{props.order.num_commande}}</h1>
       </div>
+
+      
 
    <TabGroup>
     <TabList class="overflow-hidden flex space-x-1 rounded-xl  p-1 bg-primary-50 my-5">
@@ -166,138 +169,47 @@ export default {
     </TabList>
     <TabPanels>
       <TabPanel>
-      <div class="my-8 bg-primary-50 grid grid-cols-4 relative" >
-         <div class="p-4 lg:col-span-3 col-span-4" v-if="order.is_marketplace == 1 ">
-            <h2 class="text-lg font-semibold">Listes des commandes clients</h2>
-            <div class="my-5">
-               <div class="bg-white py-10 px-5">
-                  <!-- What is term -->
-                  <div class="rounded-lg" v-for="(client, key) in props.clients" :key="key" :id="'ordersResum_'+client.id_client_edi">
-                     <!-- header -->
-                     <div @click="eventClick($event,client.id_client_edi)"
-                        class="accordion-header cursor-pointer transition border my-2 px-2 py-4 rounded-lg shadow-lg hover:shadow-xl transition relative transition duration-300 hover:bg-primary-100">
-                        <div class=" lg:col-span-11 col-span-12 relative">
-                           <i class="mdi absolute top-0 text-xl"> <Plus /> </i>
-                           <div class="ml-10">
-                              <div class="flex flex-col justify-between  mb-2">
-                                 <h3 class="lg:text-xl text-sm font-bold">N° Nazar : {{client.num_commande}}</h3>
-                                 <h4 class="lg:text-xl text-sm font-bold">N° Client : {{client.ref_externe}}</h4>
-                                 <h5 class="lg:text-xl text-sm font-bold">{{ client.prenom+" "+client.nom }}</h5>
-                              </div>
-                              <div class="flex items-center mb-2">  
-                                 <img :src="imgBase64" alt="Logo client" class="w-12 h-12 rounded-full mr-4">
-                                 <div class="grid grid-cols-12 w-full">
-                                    <div class="lg:col-span-8 col-span-12">
-                                       <p class="font-bold">{{ client.nom_adresse }}</p>
-                                       <p class="text-gray-600">
-                                          {{ client.adresse1 }}, 
-                                          {{ (client.adresse2 != '' && client.adresse2 != null ? client.adresse2+"," : '') }} 
-                                          {{ (client.adresse3 != '' && client.adresse3 != null ? client.adresse3+"," : '') }}
-                                       </p>
-                                       <p class="text-gray-600">
-                                          {{ client.code_postal }} {{ client.ville }}, 
-                                          {{ client.pays }}
-                                       </p>
-                                    </div>
-                                    <div class="lg:col-span-4 col-span-12">
-                                       <p class="text-gray-600">Nombre de produit : {{client.quantiter}}</p>
-                                       <p class="text-gray-600">Total_ttc : {{client.total_ttc}} €</p>
-                                    </div>
-
-                                   
-                                 </div>
-                              </div>
-                           </div>
-                           
-                        </div>
-                        <div class="border-b border-gray-300 mb-1">
-
-                        </div>
+      <div class="my-8 relative" >
+         <div class="p-4">
+            <div class="px-4 my-2 border border-primary-300 rounded">
+               <div class="flex flex-col">
+                  <div class="flex items-center justify-center flex-col">
+                     <h2 class="text-center my-3 text-lg font-semibold">Résumé de la commande</h2>
+                     <div class="flex space-x-4">
+                        <span class="my-1">Nombre de clients : {{props.order.nb_client}}</span>
+                        <span class="my-1">Poids total : {{props.order.poids_total}} kg</span>
+                        <span class="my-1">Total de m² : {{props.order.total_m2}} m²</span>
                      </div>
-                     <!-- Content -->
-                     <div class="accordion-content px-2 pt-0 pb-1 overflow-hidden max-h-0"
-                        :id="'orders_'+client.id_client_edi">
-
+                     
+                  </div>
+                  <div class="flex items-center justify-center flex-col mx-5">
+                     <h2 class="text-center my-3 text-lg font-semibold">Paiement</h2>
+                     <div class="flex space-x-4">
+                        <span class="my-1">Total HT : {{props.order.total_HT}} €</span>
+                        <span class="my-1">Total TVA : {{props.order.total_taxe}} €</span>
+                        <span class="my-1">Total TTC : {{props.order.total_ttc}} €</span>
+                        <span class="my-1">Total Payer : {{props.order.total_payer}} €</span>
+                        <span class="my-1">Total Restant À Payer : {{props.order.total_ttc - props.order.total_payer}} €</span>
+                     </div>
+                     
+                  </div>
+               </div>
+               <div class="w-full h-full flex flex-col justify-end my-2">
+                  <a :href="getUrl()+'/pdf/facture'" rel="noopener" target="_blank" class=" p-3 text-center bg-primary-50 mt-6 hover:bg-primary-200 transition duration-300 ease-in-out" v-if="props.order.total_ttc - props.order.total_payer == 0">Télécharger ma facture</a>
+                  <a :href="getUrl()+'/pdf/proforma'" rel="noopener" target="_blank" class=" p-3 text-center bg-primary-50 mt-6 hover:bg-primary-200 transition duration-300 ease-in-out" v-else>Télécharger mon devis</a>
+               </div>
+            </div>
+            <div class="bg-primary-50 my-8 px-2 py-2 relative">
+               <h2 class="text-xl font-semibold">Listes des commandes {{props.order.is_marketplace ? 'clients' : '' }}</h2>
+               <div class="my-5 ">
+                  <div class=" py-4 px-5">
+                     <!-- What is term -->
+                     <div class=" " v-for="(client, key) in clients" :key="key" :id="'ordersResum_'+client.id_client_edi">
+                        <DisplayOrder :client="client" :isMK="props.order.is_marketplace" />
                      </div>
                   </div>
                </div>
-            </div>
-         </div>
-         <div class="p-4 lg:col-span-3 col-span-4" v-else>
-            <h2 class="text-lg font-semibold">Listes de la commandes</h2>
-            <div class="my-5">
-               <div class="bg-white py-10 px-5">
-                  <!-- What is term -->
-                  <div class="rounded-lg bg-primary-100">
-                     <!-- header -->
-                     <div class="accordion-header cursor-pointer transition border my-2 px-2 py-4 rounded-lg shadow-lg hover:shadow-xl transition relative transition duration-300 hover:bg-primary-100">
-                        <div class=" lg:col-span-11 col-span-12 relative">
-                           <div class="ml-10">
-                              <div class="flex flex-col justify-between  mb-2">
-                                 <h3 class="lg:text-xl text-sm font-bold">N° commande : {{clients.num_commande}}</h3>
-                                 <h4 class="lg:text-xl text-sm font-bold">{{ clients.prenom+" "+clients.nom }}</h4>
-                              </div>
-                              <div class="flex items-center mb-2">  
-                                 <img :src="imgBase64" alt="Logo client" class="w-12 h-12 rounded-full mr-4">
-                                 <div class="grid grid-cols-12 w-full">
-                                    <div class="lg:col-span-8 col-span-12">
-                                       <p class="font-bold">{{ clients.nom_adresse }}</p>
-                                       <p class="text-gray-600">
-                                          {{ clients.adresse1 }}, 
-                                          {{ (clients.adresse2 != '' && clients.adresse2 != null ? clients.adresse2+"," : '') }} 
-                                          {{ (clients.adresse3 != '' && clients.adresse3 != null ? clients.adresse3+"," : '') }}
-                                       </p>
-                                       <p class="text-gray-600">
-                                          {{ clients.code_postal }} {{ clients.ville }}, 
-                                          {{ clients.pays }}
-                                       </p>
-                                    </div>
-                                    <div class="lg:col-span-4 col-span-12">
-                                       <p class="text-gray-600">Nombre de produit : {{clients.quantiter}}</p>
-                                       <p class="text-gray-600">Total_ttc : {{clients.total_ttc}} €</p>
-                                    </div>
-
-                                   
-                                 </div>
-                              </div>
-                           </div>
-                           
-                        </div>
-                        <div class="border-b border-gray-300 mb-1">
-
-                        </div>
-                     </div>
-                     <!-- Content -->
-                     <div class="accordion-content px-5 pt-0 pb-1 overflow-hidden max-h-full">
-                        <DisplayOrder :products="props.produits.panier" 
-                        :slidePerView='{ 1536:{ slidesPerView:2}, 1024:{ slidesPerView:1}, 0:{ slidesPerView:1} }'
-                        :classGridImage='classListe.gridImage'
-                        :classGridText='classListe.gridBlock'
-                        :hBlock='classListe.hBlock' />
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="p-4 bg-primary-100 rounded lg:col-span-1 col-span-4 lg:-my-5 lg:mr-5 flex flex-col">
-            <div class="flex flex-col">
-               <h2 class="text-center my-5 text-lg font-semibold">Résumer de la commande</h2>
-
-               <span class="my-1">Nombre de clients : {{props.order.nb_client}}</span>
-               <span class="my-1">Poids total : {{props.order.poids_total}} kg</span>
-               <span class="my-1">Total de m² : {{props.order.total_m2}} m²</span>
-
-               <h3 class="text-center my-5 text-lg font-semibold">Paiement</h3>
-               <span class="my-1">Total HT : {{props.order.total_HT}} €</span>
-               <span class="my-1">Total TVA : {{props.order.total_taxe}} €</span>
-               <span class="my-1">Total TTC : {{props.order.total_ttc}} €</span>
-               <span class="my-1">Total Payer : {{props.order.total_payer}} €</span>
-               <span class="my-1">Total Restant À Payer : {{props.order.total_ttc - props.order.total_payer}} €</span>
-            </div>
-            <div class="w-full h-full flex flex-col justify-end">
-               <a :href="getUrl()+'/pdf/facture'" rel="noopener" target="_blank" class="p-3 text-center bg-primary-50 mt-6 hover:bg-primary-200 transition duration-300 ease-in-out" v-if="props.order.total_ttc - props.order.total_payer == 0">Télécharger ma facture</a>
-               <a :href="getUrl()+'/pdf/proforma'" rel="noopener" target="_blank" class="p-3 text-center bg-primary-50 mt-6 hover:bg-primary-200 transition duration-300 ease-in-out" v-else>Télécharger mon devis</a>
-            </div>
+            </div>      
          </div>
       </div>
    </TabPanel>

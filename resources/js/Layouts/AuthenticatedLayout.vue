@@ -4,12 +4,15 @@ import Footer from '@/Components/Footer.vue';
 </script>
 
 <template>
-    <div class="min-h-full relative pb-4" >
-        <NavBar>
-            <slot />
+    <div class="min-h-screen flex flex-col relative " >
+        <NavBar>   
         </NavBar>
+        <main class="flex-1 mb-5">
+            <slot />
+        </main>
+        
+        <Footer />
     </div>
-    <Footer />
 </template>
 
 <style>

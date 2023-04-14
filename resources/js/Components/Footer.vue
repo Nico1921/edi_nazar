@@ -7,7 +7,7 @@ import OekoTex from '@/Components/Logo/OekoTex.vue';
 </script>
 <template>
    <!-- absolute bottom-0 -->
-   <footer class="bg-primary-50 grid grid-cols-12  justify-center text-center w-full py-4 mx-auto">
+   <footer class="bg-primary-50 grid grid-cols-12 mt-auto justify-center text-center w-full py-4 mx-auto">
          <div class="col-span-5 mx-auto text-left">
             <h2 class="text-lg font-bold text-center"> Nous Contacter</h2>
             <div class="flex">
@@ -28,8 +28,6 @@ import OekoTex from '@/Components/Logo/OekoTex.vue';
                   </div>
                </div>
             </div>
-            
-            
          </div>
          <div class="col-span-4 ">
             <h2 class="font-bold">Paiement Sécurisé</h2>
@@ -78,18 +76,5 @@ import OekoTex from '@/Components/Logo/OekoTex.vue';
          <div class="col-span-12 mt-1">
             <span class="text-gray-400 ">@Copyright NAZAR RUGS {{ new Date().getFullYear() }}</span>
          </div>
-            <!-- <div class="lg:absolute left-5 lg:block hidden">
-                <a href="/politique-confidentialite" class="text-gray-500 underline hover:text-[1.1rem] cursor-pointer transition-all duration-300">Politique de confidentialité</a>
-            </div>
-            
-            <div class="col-span-12">
-                <span class="text-gray-400 ">@Copyright NAZAR RUGS {{ new Date().getFullYear() }}</span>
-            </div>
-            <div class="lg:hidden block col-span-12">
-                <a href="/politique-confidentialite" class="text-gray-500 underline hover:text-[1.1rem] cursor-pointer transition-all duration-300">Politique de confidentialité</a>
-            </div>
-            <div class="lg:absolute right-5 col-span-12">
-                <a href="/cgv" class="text-gray-500 underline hover:text-[1.1rem] cursor-pointer transition-all duration-300">Condition Générale de Vente</a>
-            </div> -->
         </footer>
 </template>

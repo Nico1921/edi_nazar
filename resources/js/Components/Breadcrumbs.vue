@@ -1,6 +1,5 @@
 <script setup>
 const props = defineProps(['links']);
-console.log(props);
 </script>
 <script>
 import { ChevronRightIcon,HomeIcon }  from '@heroicons/vue/24/solid';

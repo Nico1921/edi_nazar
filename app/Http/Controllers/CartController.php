@@ -379,6 +379,7 @@ class CartController extends Controller
             $validation = [
                 'email' => 'required|string|email|max:255',
                 'tel' => 'required|numeric|phone:AUTO,FR',
+                'num_commande' => 'required|string|max:250',
                 'nom_adresse' => 'required|string|max:255',
                 'adresse1' => 'required|string|max:32',
                 'adresse2' => 'nullable|string|max:32',
@@ -391,6 +392,7 @@ class CartController extends Controller
             $validation = [
                 'email' => 'required|string|email|max:255',
                 'tel' => 'required|numeric|phone:AUTO,FR',
+                'num_commande' => 'required|string|max:250',
                 'nom_adresse' => 'required|string|max:255',
                 'adresse1' => 'required|string|max:32',
                 'adresse2' => 'nullable|string|max:32',
@@ -421,6 +423,7 @@ class CartController extends Controller
                 $clientEDI->pays = $request->pays;
                 $clientEDI->code_postal = $request->code_postal;
                 $clientEDI->ville = $request->ville;
+                $clientEDI->ref_externe = $request->num_commande;
                 if(isset($request->sameAdresseFact) && !$request->sameAdresseFact){
                     $clientEDI->nom_adresse_facturation = $request->nom_adresse_facturation;
                     $clientEDI->adresse1_facturation = $request->adresse1_facturation;
