@@ -71,7 +71,8 @@ class Gamme extends Model
 
     public static function getM2withRemise($id_gamme){
         $user = User::with('client')->where('id','=',Auth::id())->first();
-        $gamme = Gamme::where('id_gamme','=',$id_gamme)->first();
+        //$gamme = Gamme::getM2withRemise($produit->design->id_gamme);
+		$gamme = Gamme::getM2withRemise($produit->gamme_id);
 
         $prixGamme = $gamme->prix_vente_ht_m2;
 

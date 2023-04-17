@@ -106,7 +106,9 @@ class ClientEDI extends Model
         $panierList = PanierEdiList::where('id_client_edi', '=', $id_client)->get();
         foreach ($panierList as $panierO) {
             $produit = Produit::with(['dimension', 'design'])->where('id_produit', '=', $panierO->id_produit)->first();
-            $gamme = Gamme::where('id_gamme', '=', $produit->design->id_gamme)->first();
+            //$gamme = Gamme::where('id_gamme', '=', $produit->design->id_gamme)->first();
+            $gamme = Gamme::where('id_gamme', '=', $produit->gamme_id)->first(); 
+            
             $m2 = ($produit->dimension->largeur / 100) * ($produit->dimension->longueur / 100);
             $m2TT = $m2TT + ($m2 * $panierO->quantiter);
             $poidsTT = $poidsTT + ($m2 * $panierO->quantiter) * $gamme->poids_m2_KG;
