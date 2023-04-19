@@ -521,6 +521,7 @@ export default {
                         <tbody>
                            <tr class="px-4 py-4">
                               <td class="whitespace-nowrap px-4 py-4 w-[190px] overflow-x-hidden">
+
                                  <div class="h-24 w-full mb-2">
                                     <div v-if="gamme.img_produit != null"
                                           class="cursor-pointer relative overflow-hidden w-full h-full flex justify-center">
@@ -529,6 +530,7 @@ export default {
                                        </div>
                                        <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.img_produit)"
                                           :alt="gamme.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 h-full object-contain" />
+
                                     </div>
                                     <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
                                        <ImageOff />

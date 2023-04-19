@@ -9,7 +9,6 @@ import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicon
 import { ArrowRightCircleIcon  } from '@heroicons/vue/24/outline';
 import {decode} from 'html-entities';
 
-
 const props = defineProps(["products","gamme","designpanier"]);
 var links = [{
         title: 'Accueil',
