@@ -266,7 +266,7 @@ class OrderEntrepotController extends Controller
                 
             }
         }
-        
+
         return Inertia::render('Auth/Pages/Products/Gamme', [
             'products' => $products,
             'gamme' => $gammeSearch,
