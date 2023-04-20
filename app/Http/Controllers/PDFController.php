@@ -38,7 +38,7 @@ class PDFController extends Controller
                 for($i=0;$i<count($commandeList);$i++){
                     $produit = Produit::with(['design','dimension','couleur'])->where('id_produit','=',$commandeList[$i]->id_produit)->get();
                     for($j=0;$j<count($produit);$j++){
-                        $gamme = Gamme::where('id_gamme','=',$produit[$j]->design->id_gamme)->first();
+                        $gamme = Gamme::where('id_gamme','=',$produit[$j]->gamme_id)->first();
                         $poids = Produit::calcul_poids($produit[$j]->id_produit,$commandeList[$i]->quantite);
                         $superficie = Produit::calcul_m2($produit[$j]->id_produit,$commandeList[$i]->quantite);
                         $produits[$i]['poids'] = $poids;
@@ -107,7 +107,7 @@ class PDFController extends Controller
                 for($i=0;$i<count($commandeList);$i++){
                     $produit = Produit::with(['design','dimension','couleur'])->where('id_produit','=',$commandeList[$i]->id_produit)->get();
                     for($j=0;$j<count($produit);$j++){
-                        $gamme = Gamme::where('id_gamme','=',$produit[$j]->design->id_gamme)->first();
+                        $gamme = Gamme::where('id_gamme','=',$produit[$j]->gamme_id)->first();
                         $poids = Produit::calcul_poids($produit[$j]->id_produit,$commandeList[$i]->quantite);
                         $superficie = Produit::calcul_m2($produit[$j]->id_produit,$commandeList[$i]->quantite);
                         $produits[$i]['poids'] = $poids;

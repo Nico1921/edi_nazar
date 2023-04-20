@@ -70,7 +70,7 @@ class HandleInertiaRequests extends Middleware
                             foreach($panierList as $list){
                                 $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
                                 for($i=0;$i<count($produit);$i++){
-                                    $gamme = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
+                                    $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
                                     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
                                     $produit[$i]->gamme = $gamme;
                                     $produit[$i]->panier = $panier;

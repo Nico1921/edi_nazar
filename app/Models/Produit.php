@@ -123,7 +123,7 @@ class Produit extends Model
         $poids = 0;
         $produit = Produit::with(['dimension','design'])->where('id_produit','=',$id_produit)->first();
         if(!empty($produit->id_produit)){
-            $gamme = Gamme::where('id_gamme','=',$produit->design->id_gamme)->first();
+            $gamme = Gamme::where('id_gamme','=',$produit->gamme_id)->first();
             $poids = $produit->dimension->largeur / 100 * $produit->dimension->longueur / 100 * $gamme->poids_m2_KG * $qte;
             $poids = sprintf('%01.2f', $poids);
         }
@@ -144,7 +144,7 @@ class Produit extends Model
 
     public static function calcul_prix_produit($id_produit,$isTTC=0){
         $produit = Produit::with(['dimension','design'])->where('id_produit','=',$id_produit)->first();
-        $gamme = Gamme::getM2withRemise($produit->design->id_gamme);
+        $gamme = Gamme::getM2withRemise($produit->gamme_id);
         $m2 = ($produit->dimension->largeur/100) * ($produit->dimension->longueur/100);
         $prixProduit = $gamme * $m2;
 

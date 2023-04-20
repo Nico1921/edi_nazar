@@ -241,7 +241,7 @@ class ShippingsController extends Controller
                                 if(count($photos) > 0){
                                     foreach($photos as $photo){
                                         $produit = Produit::with(['design'])->where('id_produit','=',$lePanier->id_produit)->first();
-                                        $gamme = Gamme::where('id_gamme','=',$produit->design->id_gamme)->first();
+                                        $gamme = Gamme::where('id_gamme','=',$produit->gamme_id)->first();
                                         
                                         $pathOriginalFile = 'https://gestion.tapis-nazar.fr/img/produit/'.$photo->img_produit;
                                         if(curl_init($pathOriginalFile) !== false) {

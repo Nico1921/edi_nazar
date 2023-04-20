@@ -65,7 +65,7 @@ class DropshippingController extends Controller
                $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
                for($i=0;$i<count($produit);$i++){
                   $produit[$i]->prix_produit = Produit::calcul_prix_produit($produit[$i]->id_produit);
-                  $gammeGet = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
+                  $gammeGet = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
                   $panier = PanierEdiList::where('id_produit','=',$produit[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
                   $produit[$i]->gamme = $gammeGet;
                   $produit[$i]->panier = $panier;
@@ -812,7 +812,7 @@ class DropshippingController extends Controller
          $eanProduct = $import['ean_product'];
          $product = Produit::with(['dimension', 'design','statsProduit','photo'])->where('gencode','=',$eanProduct)->first();
          if(isset($product->id_produit) && !empty($product->id_produit)){
-            $gamme = Gamme::where('id_gamme', '=', $product->design->id_gamme)->first();
+            $gamme = Gamme::where('id_gamme', '=', $product->gamme_id)->first();
             $m2 = ($product->dimension->largeur / 100) + ($product->dimension->longueur / 100);         
             $poidsUnitaire = $m2 * $gamme->poids_m2_KG;         
             $lastname = $import['lastname'];
@@ -1318,7 +1318,7 @@ class DropshippingController extends Controller
                   $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
                   for($i=0;$i<count($produit);$i++){
                      $produit[$i]->prix_produit = Produit::calcul_prix_produit($produit[$i]->id_produit);
-                     $gamme = Gamme::where('id_gamme','=',$produit[$i]->design->id_gamme)->first();
+                     $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
                      $panier = PanierEdiList::where('id_produit','=',$produit[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
                      $produit[$i]->gamme = $gamme;
                      $produit[$i]->panier = $panier;
