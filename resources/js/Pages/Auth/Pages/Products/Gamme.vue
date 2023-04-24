@@ -10,6 +10,7 @@ import { ArrowRightCircleIcon  } from '@heroicons/vue/24/outline';
 import {decode} from 'html-entities';
 
 const props = defineProps(["products","gamme","designpanier"]);
+console.log(props.gamme);
 var links = [{
         title: 'Accueil',
         link: '/',
