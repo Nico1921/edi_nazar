@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Gamme;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Produit extends Model
 {
@@ -117,6 +118,26 @@ class Produit extends Model
     public function panierEdiList()
     {
         return $this->belongsTo(PanierEdiList::class,'id_produit','id_produit');
+    }
+
+    public static function getDimension($productId){
+        $dimensions = Produit::select([
+            'produit.*', 
+            DB::raw('SUBSTRING(produits_features.data_values, 3, LENGTH(produits_features.data_values) - 4) AS largeur'), 
+            DB::raw('SUBSTRING(produits_features_2.data_values, 3, LENGTH(produits_features_2.data_values) - 4) AS longueur')
+        ])
+        ->join('produits_features', function ($join) {
+            $join->on('produits_features.produit_id', '=', 'produit.id_produit')
+                 ->where('produits_features.feature_id', '=', 3);
+        })
+        ->join('produits_features AS produits_features_2', function ($join) {
+            $join->on('produits_features_2.produit_id', '=', 'produit.id_produit')
+                 ->where('produits_features_2.feature_id', '=', 2);
+        })
+        ->orderByRaw('CAST(SUBSTRING(produits_features.data_values, 3, LENGTH(produits_features.data_values) - 4) AS DECIMAL(10,2))')
+        ->orderByRaw('CAST(SUBSTRING(produits_features_2.data_values, 3, LENGTH(produits_features_2.data_values) - 4) AS DECIMAL(10,2))')
+        ->where('id_produit','=',$productId);
+        return $dimensions;
     }
 
     public static function calcul_poids($id_produit, $qte){
