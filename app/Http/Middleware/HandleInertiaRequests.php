@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Middleware;
+use Illuminate\Support\Facades\DB;
 use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -71,6 +72,7 @@ class HandleInertiaRequests extends Middleware
                                 $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
                                 for($i=0;$i<count($produit);$i++){
                                     $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
+                                    $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit[$i]->gamme_id);
                                     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
                                     $produit[$i]->gamme = $gamme;
                                     $produit[$i]->panier = $panier;
@@ -113,6 +115,7 @@ class HandleInertiaRequests extends Middleware
                                     $list = $panierList[$j];
                                     $produit = $list->produit;
                                     $gamme =  $produit->design->gamme;
+                                    $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit->gamme_id);
                                     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
                                     $produit->prixProduit = Produit::calcul_prix_produit($produit->id_produit);
                                     $produit->gamme = $gamme;

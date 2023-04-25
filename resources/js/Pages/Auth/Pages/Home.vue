@@ -13,13 +13,13 @@
 
     var typeVente = ref(usePage().props.value.session.typeVente);
     var linkVente  = (typeVente.value == 1 ? '/order_entrepot/gamme/' : '/dropshipping/gamme/');
-    var calcul_prix_gamme = (prix_gamme) => {
+    /*var calcul_prix_gamme = (prix_gamme) => {
         var HT = prix_gamme;
         if(clientUser.value.taux_remise > 0){
             HT = HT - ((HT) * (clientUser.value.taux_remise /100));
         }
         return roundNumber(HT);
-    };
+    };*/
 
     var roundNumber = (e) => {
         return (Math.round(e * 100) / 100).toFixed(2);
@@ -103,7 +103,7 @@
                             <h3 class="font-bold lg:text-lg text-sm">
                                 Collection {{ gamme.nom_gamme }}
                             </h3>
-                            <span class="font-bold text-gray-400">Prix au m² : {{ calcul_prix_gamme(gamme.prix_vente_ht_m2) }} €</span>
+                            <span class="font-bold text-gray-400">Prix au m² : {{ gamme.prix_vente_ht_m2_remise?gamme.prix_vente_ht_m2_remise:gamme.prix_vente_ht_m2 }} €</span>
                         </div>
                     </a>
                 </swiper-slide>
@@ -154,7 +154,7 @@
                             </h3>
                             <span class="font-bold text-gray-400 flex flex-col justify-center text-center">
                                 <span>Prix au m² : </span>
-                                <span>{{ calcul_prix_gamme(gamme.prix_vente_ht_m2) }} €</span>
+                                <span>{{ gamme.prix_vente_ht_m2_remise?gamme.prix_vente_ht_m2_remise:gamme.prix_vente_ht_m2 }} €</span>
                             </span>
                         </div>
                     </a>

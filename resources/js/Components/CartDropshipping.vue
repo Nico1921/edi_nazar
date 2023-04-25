@@ -5,6 +5,7 @@ import InputNumber from '@/Components/InputNumber.vue';
 
 var prop = defineProps(['panier']);
 var panier = ref(prop.panier);
+console.log(panier);
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 var isValidatePanier = (panier.value.panier.panierActuel != undefined ? panier.value.panier.panierActuel.is_validate : undefined);
 
@@ -29,13 +30,14 @@ var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
 
+/*
 var calcul_prix_gamme = (prix_gamme) => {
    var HT = prix_gamme;
    if(clientUser.value.taux_remise > 0){
       HT = HT - ((HT) * (clientUser.value.taux_remise /100));
    }
    return roundNumber(HT);
-};
+};*/
 
 var modifQte = (e,nomProduit,keyclient) => {
    e.preventDefault();
@@ -56,7 +58,7 @@ var modifQte = (e,nomProduit,keyclient) => {
          preserveState: true,
          onSuccess: (e) => {
             if (e.props.session.status) {
-               console.log(panier.value.clients[keyclient]);
+               //console.log(panier.value.clients[keyclient]);
                panier.value.clients[keyclient].produits[formData.get("key_tab")].id_panier_edi_list = e.props.session.id_panier_edi_list;
                panier.value.clients[keyclient].produits[formData.get("key_tab")].isInPanier = true;
                panier.value.clients[keyclient].produits[formData.get("key_tab")].quantiter = formData.get("qte");
@@ -190,9 +192,9 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                         <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
                         <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
                            produit.dimension.longueur }}</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix du M² : {{ calcul_prix_gamme(produit.gamme.prix_vente_ht_m2) }} € HT</span>
+                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
                         <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * calcul_prix_gamme(produit.gamme.prix_vente_ht_m2),2)}} €</span>
+                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
                         <div class="grid grid-cols-8 lg:w-1/2">               
                            <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
                               <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">

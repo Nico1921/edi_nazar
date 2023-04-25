@@ -41,6 +41,8 @@ var links = [{
       active: true
 }];
 
+//console.log(props.gamme)
+
 var dynamic = ref(usePage().props.value.dynamique_client);
 var panierDrop = ref(usePage().props.value.PanierDrop);
 var client = ref(panierDrop.value.panier.clientActuel);
@@ -315,7 +317,7 @@ watchEffect(() => {
    client.value = panierDrop.value.panier.clientActuel;
    clientUser.value = usePage().props.value.auth.user[0].client;
 	axios.post('/dropshipping/panier/view',{gamme:props.gamme.nom_gamme}).then((response)=>{
-      console.log(response);
+      //console.log(response);
       if(response.data != null){         
          designpanier.value = response.data;
          formAddProduit.id_client_edi = (client.value != undefined ? client.value.id_client_edi : 0)
@@ -470,7 +472,7 @@ export default {
             <span>Tapis {{ (props.gamme.type_tapis == 0 ? 'intérieur' : props.gamme.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
             <span>Poils {{ (props.gamme.type_poils == 1 ? 'court' : 'long') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
             <span class="capitalize">{{ props.gamme.nom_special }}</span>
-            <span>Prix HT m² : {{ calcul_prix_gamme(props.gamme.prix_vente_ht_m2) }} €</span>
+            <span>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
             <div class="sm:w-auto w-full py-2 flex items-center justify-center">
                <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
                <a href="/dropshipping/cart" class="py-2 px-4 ml-2 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
@@ -520,7 +522,7 @@ export default {
                      <table class=" text-left text-sm font-light" >
                         <tbody>
                            <tr class="px-4 py-4">
-                              <td class="whitespace-nowrap px-4 py-4 w-[190px] hoverflow-x-hidden">
+                              <td class="whitespace-nowrap px-4 py-4 w-[190px] overflow-x-hidden">
                                  <div class="h-24 w-full mb-2">
                                     <div v-if="gamme.img_produit != null"
                                           class="cursor-pointer relative overflow-hidden w-full h-full flex justify-center">

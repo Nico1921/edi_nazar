@@ -59,7 +59,7 @@ class CartController extends Controller
                     if(!$panier->is_validate){
                         if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
                             $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
-                            $prix_HT_TT = round($prix_TTC_TT / 1.2,2);;
+                            $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
                             $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
                             $panierList->quantiter = $request->quantiter;
                             $panierList->prix_ttc_total = $prix_TTC_TT;
@@ -498,6 +498,7 @@ class CartController extends Controller
                            $produit = Produit::with(['photo','dimension','statsProduit','design'])->where('id_produit','=',$list->id_produit)->get();
                            for($i=0;$i<count($produit);$i++){
                               $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
+                              $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit[$i]->gamme_id);
                               $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
                               $produit[$i]->gamme = $gamme;
                               $produit[$i]->panier = $panier;

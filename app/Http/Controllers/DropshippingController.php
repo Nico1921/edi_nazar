@@ -167,15 +167,6 @@ class DropshippingController extends Controller
              });
          });
      });
-
-     $gammeSearch = AllowedFilter::callback('nom_gamme', function ($query, $value) {
-         $query->where(function ($query) use ($value) {
-             Collection::wrap($value)->each(function ($value) use ($query) {
-                 $query
-                     ->orWhere('gamme.nom_gamme', 'LIKE', "%{$value}%");
-             });
-         });
-     });
      
 
      $products = QueryBuilder::for(Produit::class)
@@ -185,19 +176,34 @@ class DropshippingController extends Controller
          ->join('couleur', 'produit.id_couleur', 'couleur.id_couleur')
          ->join('photo', 'produit.id_produit', 'photo.id_produit')
          ->join('gamme', 'design.id_gamme', 'gamme.id_gamme')
-         ->where('gamme.nom_gamme', 'like', '%'.$gamme.'%')
+         ->where('gamme.nom_gamme', '=', $gamme)
          ->where('produit.code_sku', '!=', 'null')
          ->where('produit.code_sku', '!=', '""')
          ->where('produit.drop_shipping', '=', '1')
          ->where('produit.statut', '=', '1')
          ->where('photo.principale', '=', '1')
          ->allowedSorts(['nom_design', 'nom_couleur', 'nom_gamme', 'code_sku'])
-         ->allowedFilters([$globalSearch, $gammeSearch, 'nom_couleur', 'nom_design'])
+         ->allowedFilters([$globalSearch, 'nom_couleur', 'nom_design'])
          ->groupBy(['produit.id_design'])
          ->paginate(request('perPage'))
          ->withQueryString();
 
-     $gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
+     //$gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
+     $user = User::with('client')->where('id','=',Auth::id())->first();
+
+     $gammeSearch = DB::table('gamme')
+     ->select(['gamme.*', 'client_edi_remise_gamme.remise AS remiseGamme'])
+     ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
+         $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
+              ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
+     })
+     ->where('nom_gamme', '=', $gamme)
+     ->first();
+
+
+     //rajoute la remise si il y a une remise par client et gamme ou si il y a une remise par client global. sinon renvoie faux
+     $gammeSearch->prix_vente_ht_m2_remise = isset($gammeSearch->remiseGamme)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($gammeSearch->remiseGamme / 100)), 2) . "":(isset($user->taux_remise)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($user->taux_remise / 100)), 2) . "":false);
+
 
      $designpanier = DB::table('design')
          ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
@@ -210,7 +216,7 @@ class DropshippingController extends Controller
          ->where('produit.code_sku', '!=', '""')
          ->where('produit.drop_shipping', '=', '1')
          ->where('produit.statut', '=', '1')
-         ->where('gamme.nom_gamme', 'like', "%{$gamme}%")
+         ->where('gamme.nom_gamme', '=', $gamme)
          ->get();
 
      if ($request->session()->has('client_actuel')) {
@@ -321,7 +327,7 @@ class DropshippingController extends Controller
          ->where('produit.code_sku', '!=', '""')
          ->where('produit.drop_shipping', '=', '1')
          ->where('produit.statut', '=', '1')
-         ->where('gamme.nom_gamme', 'like', "%{$request->gamme}%")
+         ->where('gamme.nom_gamme', '=', $request->gamme)
          ->get();
 
      if ($request->session()->has('client_actuel')) {

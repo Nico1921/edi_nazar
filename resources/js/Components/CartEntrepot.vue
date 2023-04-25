@@ -28,6 +28,7 @@ var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
 
+/*
 var calcul_prix_gamme = (prix_gamme) => {
    var HT = prix_gamme;
    if(clientUser.value.taux_remise > 0){
@@ -35,6 +36,7 @@ var calcul_prix_gamme = (prix_gamme) => {
    }
    return roundNumber(HT);
 };
+*/
 
 var modifQte = (e,nomProduit) => {
    e.preventDefault();
@@ -115,7 +117,7 @@ var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
 watchEffect(() => {
 	produits.value = usePage().props.value.Panier.panier.panier;
 });
-console.log(prop.panier);
+//console.log(prop.panier);
 </script>
 <script>
 import Delete from 'icons/Delete.vue';
@@ -143,9 +145,9 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                      <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
                      <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
                         produit.dimension.longueur }}</span>
-                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ calcul_prix_gamme(produit.gamme.prix_vente_ht_m2) }} € HT</span>
+                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
                      <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * calcul_prix_gamme(produit.gamme.prix_vente_ht_m2),2)}} €</span>
+                     <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
                      <div class="grid grid-cols-8">               
                         <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
                            <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">
