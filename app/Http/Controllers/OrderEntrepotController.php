@@ -53,46 +53,28 @@ class OrderEntrepotController extends Controller
             });
         });
 
-        $products =  QueryBuilder::for(Gamme::class)
-        ->defaultSort('gamme.nom_gamme')
-        ->select('gamme.id_gamme','gamme.nom_gamme', 'gamme.prix_vente_ht_m2','gamme.img_gamme',
-            DB::raw("REPLACE(REPLACE(cf.data_values, '[\"',''), '\"]', '') AS nom_special"),
-            DB::raw("REPLACE(REPLACE(fa.data_values, '[\"',''), '\"]', '') AS id_fabrication"),
-            DB::raw("REPLACE(REPLACE(tp.data_values, '[\"',''), '\"]', '') AS type_poils"),
-            DB::raw("CASE WHEN REPLACE(REPLACE(uv.data_values, '[\"',''), '\"]', '') = 'Oui' THEN 1 ELSE 0 END AS uv_proof"),
-            DB::raw("REPLACE(REPLACE(tt.data_values, '[\"',''), '\"]', '') AS type_tapis")
-        )
-        ->join('gammes_features as cf', function ($join) {
-            $join->on('gamme.id_gamme', '=', 'cf.gamme_id')
-                ->where('cf.feature_id', '=', 5);
-        })
-        ->join('gammes_features as sp', function ($join) {
-            $join->on('gamme.id_gamme', '=', 'sp.gamme_id')
-                ->where('sp.feature_id', '=', 13)
-                ->where('sp.data_values', 'LIKE', '%Oui%');
-        })
-        ->join('gammes_features as fa', function ($join) {
-            $join->on('gamme.id_gamme', '=', 'fa.gamme_id')
-                ->where('fa.feature_id', '=', 6);
-        })
-        ->join('gammes_features as tp', function ($join) {
-            $join->on('gamme.id_gamme', '=', 'tp.gamme_id')
-                ->where('tp.feature_id', '=', 10);
-        })
-        ->join('gammes_features as uv', function ($join) {
-            $join->on('gamme.id_gamme', '=', 'uv.gamme_id')
-                ->where('uv.feature_id', '=', 11);
-        })
-        ->join('gammes_features as tt', function ($join) {
-            $join->on('gamme.id_gamme', '=', 'tt.gamme_id')
-                ->where('tt.feature_id', '=', 12);
-        })
-        ->where('gamme.statut', '=', 1)
-        ->allowedFilters([$gammeSearch])
+
+        $products = QueryBuilder::for(Gamme::class)
+            ->defaultSort('gamme.nom_gamme')
+            ->select(['gamme.*','special.nom_special'])
+            ->join('special', 'special.id_special', 'gamme.id_special')
+            ->where('gamme.in_edi', '=', '1')
+            ->where('gamme.statut', '=', '1')
+            ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
         
-        $dimensions = Gamme::getAllDimensionGamme(); 
+        $dimensions = DB::table('gamme')
+            ->select(['gamme.id_gamme','dimension.largeur','dimension.longueur'])
+            ->distinct()
+            ->join('design', 'gamme.id_gamme', 'design.id_gamme')
+            ->join('produit', 'design.id_design', 'produit.id_design')
+            ->join('dimension', 'produit.id_dimension', 'dimension.id_dimension')
+            ->where('gamme.in_edi', '=', '1')
+            ->where('gamme.statut', '=', '1')
+            ->orderBy('dimension.largeur')
+            ->orderBy('dimension.longueur')
+            ->get();
 
 
         // error_log(print_r($products));
@@ -183,7 +165,6 @@ class OrderEntrepotController extends Controller
             ->withQueryString();
 
         $gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
-        $gammeSearch = Gamme::getGammeCaracteristiques($gammeSearch->id_gamme);
 
         $designpanier = DB::table('design')
             ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
@@ -339,6 +320,43 @@ class OrderEntrepotController extends Controller
 
     public function create_redirect_product($gamme,Request $request){
         return redirect('/order_entrepot/gamme'.'/'.$gamme.'?'.$request->getQueryString());
+    }
+
+    public function getProductsDesign(Request $request)
+    {
+        $id_design = $request->post()['id_design'];
+        if ($request->session()->has('client_commercial')) {
+            $clientUser = $request->session()->get('client_commercial');
+        } else {
+            $clientUser = array();
+        }
+        $sort = 'asc';
+        $produits = array();
+        $produits = Produit::with(['photo', 'dimension' => function($query) use ($sort) {
+            $query->orderBy('largeur',$sort);
+        }, 'statsProduit'])->join('dimension','dimension.id_dimension','=','produit.id_dimension')->orderBy('dimension.largeur',$sort)->orderBy('dimension.longueur',$sort)->where('id_design', '=', $id_design)->get();
+        if (!empty($clientUser)) {
+            for ($i = 0; $i < count($produits); $i++) {
+                $produits[$i]->prixProduit = Produit::calcul_prix_produit($produits[$i]->id_produit,0);
+                if (PanierEdiList::where('id_produit', '=', $produits[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
+                    $panier = PanierEdiList::where('id_produit', '=', $produits[$i]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
+                    $produits[$i]->panier = $panier;
+                    $produits[$i]->isInPanier = true;
+                } else {
+                    $produits[$i]->panier = array("quantiter" => 0);
+                    $produits[$i]->isInPanier = false;
+                }
+            }
+        } else {
+            for ($i = 0; $i < count($produits); $i++) {
+                $produits[$i]->prixProduit = Produit::calcul_prix_produit($produits[$i]->id_produit,0);
+                $produits[$i]->panier = array("quantiter" => 0);
+                $produits[$i]->isInPanier = false;
+            }
+        }
+
+
+        return $produits;
     }
 
     /**

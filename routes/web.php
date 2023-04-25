@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::get('/order_entrepot/gamme/{gamme}', [OrderEntrepotController::class, 'create_product']);
       Route::post('/order_entrepot/gamme/{gamme}/search', [OrderEntrepotController::class, 'create_product_post']);
       Route::get('/order_entrepot/gamme/{gamme}/search', [OrderEntrepotController::class, 'create_redirect_product']);
+      Route::post('/order_entrepot/gamme/design', [OrderEntrepotController::class, 'getProductsDesign']);
       Route::post('/order_entrepot/panier/add', [OrderEntrepotController::class, 'add_product_commande'])->name('order_entrepot/panier/add');
       Route::post('/order_entrepot/panier/delete', [OrderEntrepotController::class, 'delete_product_commande'])->name('order_entrepot/panier/delete');
       Route::post('/order_entrepot/panier/import', [OrderEntrepotController::class, 'import_panier_commande'])->name('order_entrepot/panier/import');
@@ -77,6 +78,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
    Route::get('/dropshipping', [DropshippingController::class, 'create_type_vente'])->name('dropshipping');
    Route::get('/dropshipping/view/{gamme}', [DropshippingController::class, 'create_type_vente_choix_gamme']);
    Route::middleware(['type-client'])->group(function () {
+      Route::post('/dropshipping/gamme/design', [DropshippingController::class, 'getProductsDesignPanier'])->name('/dropshipping/gamme/design');
+
       // Route::get('/dropshipping/clients', [DropshippingController::class, 'create_clients'])->name('dropshipping/clients');
       Route::post('/dropshipping/clients/add', [DropshippingController::class, 'add_ref_client'])->name('dropshipping/clients/add');
       Route::post('/dropshipping/clients/update', [DropshippingController::class, 'add_client'])->name('dropshipping/clients/update');

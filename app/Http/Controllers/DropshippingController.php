@@ -474,6 +474,49 @@ class DropshippingController extends Controller
    }
 
    /**
+     * Récupére les variations de produit d'un design 
+     * 
+     * @return Array
+     */
+   public function getProductsDesignPanier(Request $request)
+   {
+      $id_design = $request->post()['id_design'];
+      if($request->session()->has('client_actuel')){
+         $client = $request->session()->get('client_actuel');
+      }else{
+         $client = new \stdClass;
+      }
+      
+      $produits = array();
+         $sort = 'asc';
+         $produits = Produit::with(['photo', 'dimension' => function($query) use ($sort) {
+            $query->orderBy('largeur',$sort);
+        }, 'statsProduit'])->join('dimension','dimension.id_dimension','=','produit.id_dimension')->orderBy('dimension.largeur',$sort)->orderBy('dimension.longueur',$sort)->where('id_design', '=', $id_design)->get();
+         for($i=0;$i<count($produits);$i++){
+            $produits[$i]->prixProduit = Produit::calcul_prix_produit($produits[$i]->id_produit);
+            if(isset($client->id_client_edi)){
+               if(PanierEdiList::where('id_produit','=',$produits[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->exists()){
+                  $panier = PanierEdiList::where('id_produit','=',$produits[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
+                  $produits[$i]->panier = $panier;
+                  $produits[$i]->isInPanier = true;
+                  
+               }else{
+                  $produits[$i]->panier = array("quantiter" => 0);
+                  $produits[$i]->isInPanier = false;
+               }
+               $produits[$i]->id_client_edi = $client->id_client_edi;
+            }else{
+               $produits[$i]->panier = array("quantiter" => 0);
+               $produits[$i]->isInPanier = false;
+               $produits[$i]->id_client_edi = '';
+            }
+            $produits[$i]->dateGet = date('d/m/Y H:i:s');
+      }
+      
+      return $produits;
+   }
+
+   /**
     * Ajoute un client avec uniquement la référence de sa commande
     * @return Array
     */
