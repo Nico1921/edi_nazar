@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class Gamme extends Model
 {
@@ -70,15 +71,24 @@ class Gamme extends Model
     }
 
     public static function getM2withRemise($id_gamme){
+        $remise = false;
         $user = User::with('client')->where('id','=',Auth::id())->first();
         $gamme = Gamme::where('id_gamme','=',$id_gamme)->first();
+        //Log::debug(clientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->exists());
+       if(clientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->exists()){
+            $remise = clientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->first()->remise;
+        }
+
+        if(!$remise && $user->client->taux_remise > 0){
+            $remise = $user->client->taux_remise;
+        }
 
         $prixGamme = $gamme->prix_vente_ht_m2;
 
-        if($user->client->taux_remise > 0){
-            $prixGamme = $prixGamme - (($prixGamme) * ($user->client->taux_remise /100));
+        if($remise){
+            $prixGamme = $prixGamme - (($prixGamme) * ($remise /100));
         }
-
+        
         return $prixGamme;
     }
 }

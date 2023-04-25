@@ -147,6 +147,7 @@ class Produit extends Model
         $gamme = Gamme::getM2withRemise($produit->gamme_id);
         $m2 = ($produit->dimension->largeur/100) * ($produit->dimension->longueur/100);
         $prixProduit = $gamme * $m2;
+        
 
         if($isTTC){
             $prixProduit = ($prixProduit * 1.20);
