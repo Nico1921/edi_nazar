@@ -18,7 +18,7 @@ var roundNumber = (e) => {
 };
 
 const roundResult = (number, nbVirugule) => {
-   return parseInt(number).toFixed(nbVirugule);
+   return parseFloat(number).toFixed(nbVirugule);
 };
 
 const formatDate = (date) => {

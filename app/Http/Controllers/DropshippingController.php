@@ -841,7 +841,7 @@ class DropshippingController extends Controller
       $prixTTC_TT = 0;
       foreach($imports[0] as $import){
          $eanProduct = $import['ean_product'];
-         $product = Produit::with(['dimension', 'design','statsProduit','photo'])->where('gencode','=',$eanProduct)->first();
+         $product = Produit::with(['dimension','statsProduit','photo'])->where('gencode','=',$eanProduct)->first();
          if(isset($product->id_produit) && !empty($product->id_produit)){
             $gamme = Gamme::where('id_gamme', '=', $product->gamme_id)->first();
             $m2 = ($product->dimension->largeur / 100) + ($product->dimension->longueur / 100);         
@@ -908,7 +908,7 @@ class DropshippingController extends Controller
                         "poids_total" => round($poidsTotal,2),
                         "m2_unitaire" => round($m2,2),
                         "m2_total" => round($m2TT,2),
-                        "design" => $product->design->nom_design,
+                        "design" => $product->design,
                         "sku" => $product->code_sku,
                         "ean" => $product->gencode,
                         "taille" => $product->dimension->largeur."x".$product->dimension->longueur,
@@ -952,7 +952,7 @@ class DropshippingController extends Controller
                      "poids_total" => round($poidsTotal,2),
                      "m2_unitaire" => round($m2,2),
                      "m2_total" => round($m2TT,2),
-                     "design" => $product->design->nom_design,
+                     "design" => $product->design,
                      "sku" => $product->code_sku,
                      "ean" => $product->gencode,
                      "taille" => $product->dimension->largeur."x".$product->dimension->longueur,

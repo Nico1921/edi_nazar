@@ -24,7 +24,7 @@ const imgBase64 = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJ
 
 
 const roundResult = (number, nbVirugule) => {
-   return parseInt(number).toFixed(nbVirugule);
+   return parseFloat(number).toFixed(nbVirugule);
 };
 
 var formatDate = (date) => {
