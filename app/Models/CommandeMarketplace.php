@@ -293,7 +293,7 @@ class CommandeMarketplace extends Model
                  $adresseMarketplace->save();
  
                  foreach($panierList as $produitCommande){
-                    $p = Produit::with(['dimension','design','couleur'])->where('id_produit','=',$produitCommande->id_produit)->first();
+                    $p = Produit::with(['dimension','couleur'])->where('id_produit','=',$produitCommande->id_produit)->first();
                     $gamme = Gamme::where('id_gamme','=',$p->gamme_id)->first();
  
                     $prix_achat_ht = $gamme->prix_achat_ht_m2 * ($p->dimension->longueur / 100 * $p->dimension->largeur / 100);
@@ -303,7 +303,7 @@ class CommandeMarketplace extends Model
                        'id_commande' =>$commandeMarketplace->id_commande,
                        'id_produit' => $produitCommande->id_produit,
                        'ref_produit' => $p->code_sku,
-                       'nom_produit' => $gamme->nom_gamme." - ".$p->design->nom_design." ".$p->couleur->nom_couleur." ".$p->dimension->largeur."x".$p->dimension->longueur,
+                       'nom_produit' => $gamme->nom_gamme." - ".$p->design." ".$p->couleur->nom_couleur." ".$p->dimension->largeur."x".$p->dimension->longueur,
                        'quantite' => $produitCommande->quantiter,
                        'taux_tva' => 20,
                        'prix_ht' => $produitCommande->prix_ht_unitaire,

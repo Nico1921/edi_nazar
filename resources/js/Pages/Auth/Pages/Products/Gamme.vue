@@ -37,6 +37,7 @@ const isOpenAdd = ref(false);
 var productsSearch = ref(props.products.data);
 var products = ref(props.products);
 var designpanier = ref(props.designpanier);
+console.log(props.designpanier);
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 var produitAdd = ref(false);
 var formAddProduit = useForm({
@@ -92,7 +93,7 @@ var searchGamme = (e) => {
    parsedUrl.searchParams.delete('page');
    var urlBase = parsedUrl.href+'/search';
    parsedUrl.href = urlBase;
-   console.log(urlBase);
+   //console.log(urlBase);
    parsedUrl.searchParams.set('filter[global]',e.target.value);
    if(per != '' && per  != undefined){
       parsedUrl.searchParams.set('perPage',per);
@@ -234,13 +235,14 @@ var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
 
+/*
 var calcul_prix_gamme = (prix_gamme) => {
    var HT = prix_gamme;
    if(clientUser.value.taux_remise > 0){
       HT = HT - ((HT) * (clientUser.value.taux_remise /100));
    }
    return roundNumber(HT);
-}
+}*/
 
 var formatPrix = (prix) => {
    return new Intl.NumberFormat("fr-FR", {
@@ -306,7 +308,7 @@ export default {
             <span>Tapis {{ (props.gamme.type_tapis == 0 ? 'intérieur' : props.gamme.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
             <span>Poils {{ (props.gamme.type_poils == 1 ? 'court' : 'long') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
             <span class="capitalize">{{ props.gamme.nom_special }}</span>
-            <span>Prix HT m² : {{ calcul_prix_gamme(props.gamme.prix_vente_ht_m2) }} €</span>
+            <span>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
             <div class="sm:w-auto w-full py-2 flex items-center justify-center">
                <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
                <a href="/cart" class="py-2 px-4 ml-2 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
