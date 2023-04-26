@@ -18,7 +18,7 @@ var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser comman
 var hrefEtape = ['/cart', '/cart/adresses', '/cart/validation'];
 
 const roundResult = (number, nbVirugule) => {
-   return number.toFixed(nbVirugule);
+   return parseInt(number).toFixed(nbVirugule);
 };
 
 var venteCondition = ref(0);

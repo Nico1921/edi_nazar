@@ -10,7 +10,7 @@ var clientUser = ref(usePage().props.value.auth.user[0].client);
 var isValidatePanier = (panier.value.panier.panierActuel != undefined ? panier.value.panier.panierActuel.is_validate : undefined);
 
 const roundResult = (number, nbVirugule) => {
-   return number.toFixed(nbVirugule);
+   return parseInt(number).toFixed(nbVirugule);
 };
 
 const findElementInClassArray = (array, elementSearch) => {

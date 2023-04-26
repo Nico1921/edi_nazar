@@ -8,7 +8,7 @@ var produits = ref(prop.produits);
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 
 const roundResult = (number, nbVirugule) => {
-   return number.toFixed(nbVirugule);
+   return parseInt(number).toFixed(nbVirugule);
 };
 
 const findElementInClassArray = (array, elementSearch) => {
