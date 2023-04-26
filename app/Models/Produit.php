@@ -256,9 +256,4 @@ class Produit extends Model
 
         return $prixProduit;
     }
-
-    public function gamme()
-    {
-        return $this->hasOne(Gamme::class,'id_gamme','gamme_id');
-    }
 }
