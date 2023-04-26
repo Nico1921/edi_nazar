@@ -33,10 +33,12 @@ class HomeController extends Controller
         ->take(10)
         ->get();
 
+        //var_dump($latestCollection);
+
         $latestCollection->each(function($latestCollection, $user){
             $remise = 0;
-            if(isset($latestCollection->remiseGamme)){
-                $remise = $latestCollection->remiseGamme;
+            if(isset($latestCollection->remise)){
+                $remise = $latestCollection->remise;
             }
             elseif(isset($user->taux_remise)){
                 $remise = $user->taux_remise;
@@ -51,7 +53,7 @@ class HomeController extends Controller
         });
 
 
-        $bestSeller = Gamme::select('gamme.*', DB::raw('SUM(commande_list.quantite) as quantity_sold'))
+        $bestSeller = Gamme::select('gamme.*', DB::raw('SUM(commande_list.quantite) as quantity_sold'), 'client_edi_remise_gamme.remise as remiseGamme')
         ->join('design', 'gamme.id_gamme', '=', 'design.id_gamme')
         ->join('produit', 'design.id_design', '=', 'produit.id_design')
         ->join('commande_list', 'produit.id_produit', '=', 'commande_list.id_produit')
@@ -67,6 +69,8 @@ class HomeController extends Controller
         ->orderByDesc('quantity_sold')
         ->take(10)
         ->get();
+
+        
 
         $bestSeller->each(function($bestSeller, $user){
             $remise = 0;

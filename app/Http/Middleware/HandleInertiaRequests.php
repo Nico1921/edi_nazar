@@ -105,16 +105,23 @@ class HandleInertiaRequests extends Middleware
                                 $id_client_edi = $clientList[$i]->id_client_edi;
                                 $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
                                 $panierCountF = $panierCountF + $panierCount; 
+
+                                /*
                                 $panierList = PanierEdiList::with(["produit" => function($query) {
-                                    $query->with(['photo','dimension','statsProduit','design' => function($query2) {
-                                        $query2->with('gamme');
-                                    },'couleur']);
+                                $query->with(['photo','dimension','statsProduit','design' => function($query2) {
+                                $query2->with('gamme');
+                                },'couleur']);
                                 }])->where('id_client_edi','=',$id_client_edi)->get();
+                                */
+
+                                $panierList = PanierEdiList::with(["produit" => function($query) {
+                                    $query->with(['photo','dimension','statsProduit','design','gamme', 'couleur']);
+                                    }])->where('id_client_edi','=',$id_client_edi)->get();
                                 $produits =array();
                                 for($j=0;$j<count($panierList);$j++){
-                                    $list = $panierList[$j];
+                                    $list = $panierList[$j];                                    
                                     $produit = $list->produit;
-                                    $gamme =  $produit->design->gamme;
+                                    $gamme =  $list->produit->gamme;
                                     $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit->gamme_id);
                                     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
                                     $produit->prixProduit = Produit::calcul_prix_produit($produit->id_produit);
