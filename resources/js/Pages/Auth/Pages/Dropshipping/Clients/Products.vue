@@ -298,13 +298,14 @@ var setIsOpenAddRef = (value,produit,key1,key2) => {
    formAddProduitAndRef.quantiter = (produit.panier.quantiter > 0 ? produit.panier.quantiter : 1);
 }
 
+/*
 var calcul_prix_gamme = (prix_gamme) => {
    var HT = prix_gamme;
    if(clientUser.value.taux_remise > 0){
       HT = HT - ((HT) * (clientUser.value.taux_remise /100));
    }
    return roundNumber(HT);
-}
+}*/
 
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);

@@ -235,13 +235,14 @@ var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
 
+/*
 var calcul_prix_gamme = (prix_gamme) => {
    var HT = prix_gamme;
    if(clientUser.value.taux_remise > 0){
       HT = HT - ((HT) * (clientUser.value.taux_remise /100));
    }
    return roundNumber(HT);
-}
+}*/
 
 var formatPrix = (prix) => {
    return new Intl.NumberFormat("fr-FR", {
