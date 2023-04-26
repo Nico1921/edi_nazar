@@ -7,7 +7,7 @@ import CartDropshipping from '@/Components/CartDropshipping.vue';
 import { ref, watchEffect } from 'vue';
 
 
-const props = defineProps(['panier', 'produits']);
+const props = defineProps(['panier', 'produits','message_error']);
 
 var produits = ref(usePage().props.value.Panier.panier.panier);
 var panierDrop = ref(usePage().props.value.PanierDrop);
@@ -58,6 +58,10 @@ export default {
                   <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
                   <span class="pl-2 text-yellow-600">Pour continuer, veuillez ajouter au minimum un produit pour chaque commande.</span>
                </div> 
+               <div v-if="props.message_error != ''" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
+                  <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
+                  <span class="pl-2 text-red-600">{{props.message_error}}</span>
+               </div>
                <div class="relative w-full">
                   <h1 class=" w-full font-semibold text-lg lg:text-2xl sm:text-xl text-gray-800 text-center py-2">Panier - {{ (typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping') }}</h1>
                </div>   

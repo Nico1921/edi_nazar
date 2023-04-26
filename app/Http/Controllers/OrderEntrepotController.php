@@ -691,48 +691,55 @@ class OrderEntrepotController extends Controller
             $client = '';
         }
 
+        $stock_error = false;
+
         foreach ($imports[0] as $import) {
             $eanProduct = $import['ean_product'];
             $qte = $import['qte'];
-            $product = Produit::with(['dimension', 'design', 'statsProduit', 'photo'])->where('gencode', '=', $eanProduct)->first();
+            $product = Produit::with(['statsProduit'])->where('gencode', '=', $eanProduct)->first();
             if (isset($product->id_produit) && !empty($product->id_produit)) {
                 if (!empty($client)) {
                     $search = PanierEdiList::where('id_produit','=',$product->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
                     if(!empty($search->id_panier_edi_list)){
                         $addProducts = $search;
-                        $addProducts->quantiter = $addProducts->quantiter + $qte;
-                        $prix_TTC_TT = round($addProducts->prix_ttc_unitaire * $addProducts->quantiter,2);
-                        $prix_TVA_TT = round($prix_TTC_TT * 0.2,2);
-                        $prix_HT_TT = $prix_TTC_TT - $prix_TVA_TT;
-                        $addProducts->prix_ttc_total = $prix_TTC_TT;
-                        $addProducts->prix_taxe_total = $prix_TVA_TT;
-                        $addProducts->prix_ht_total = $prix_HT_TT;
-                        
-                        $addProducts->save();
+                        if($product->statsProduit->stock_restant >= ($addProducts->quantiter + $qte)){
+                            $addProducts->quantiter = $addProducts->quantiter + $qte;
+                            $prix_TTC_TT = round($addProducts->prix_ttc_unitaire * $addProducts->quantiter,2);
+                            $prix_TVA_TT = round($prix_TTC_TT * 0.2,2);
+                            $prix_HT_TT = $prix_TTC_TT - $prix_TVA_TT;
+                            $addProducts->prix_ttc_total = $prix_TTC_TT;
+                            $addProducts->prix_taxe_total = $prix_TVA_TT;
+                            $addProducts->prix_ht_total = $prix_HT_TT;
+                            
+                            $addProducts->save();
+                        }else{
+                            $stock_error = true;
+                        }
                     }else{
-                        $prix_produit =  round(Produit::calcul_prix_produit($product->id_produit),2);
-                        $prix_TVA = round($prix_produit * 0.2,2);
-                        $prix_ht = $prix_produit - $prix_TVA;
-                        $prix_TTC_TT = round($prix_produit * $qte,2);
-                        $prix_TVA_TT = round($prix_TTC_TT * 0.2,2);
-                        $prix_HT_TT = $prix_TTC_TT - $prix_TVA_TT;
-                        $addProducts = PanierEdiList::create([
-                            'date_ajout' => date('Y-m-d H:i:s'),
-                            'date_maj' => date('Y-m-d H:i:s'),
-                            'id_produit' => $product->id_produit,
-                            'prix_ht_unitaire' => $prix_ht,
-                            'prix_taxe_unitaire' => $prix_TVA,
-                            'prix_ttc_unitaire' => $prix_produit,
-                            'quantiter' => $qte,
-                            'prix_ht_total' => $prix_HT_TT,
-                            'prix_taxe_total' => $prix_TVA_TT,
-                            'prix_ttc_total' => $prix_TTC_TT,
-                            'id_client_edi' => $client->id_client_edi,
-                        ]);
+                        if($product->statsProduit->stock_restant >= $qte){
+                            $prix_produit =  round(Produit::calcul_prix_produit($product->id_produit),2);
+                            $prix_TVA = round($prix_produit * 0.2,2);
+                            $prix_ht = $prix_produit - $prix_TVA;
+                            $prix_TTC_TT = round($prix_produit * $qte,2);
+                            $prix_TVA_TT = round($prix_TTC_TT * 0.2,2);
+                            $prix_HT_TT = $prix_TTC_TT - $prix_TVA_TT;
+                            $addProducts = PanierEdiList::create([
+                                'date_ajout' => date('Y-m-d H:i:s'),
+                                'date_maj' => date('Y-m-d H:i:s'),
+                                'id_produit' => $product->id_produit,
+                                'prix_ht_unitaire' => $prix_ht,
+                                'prix_taxe_unitaire' => $prix_TVA,
+                                'prix_ttc_unitaire' => $prix_produit,
+                                'quantiter' => $qte,
+                                'prix_ht_total' => $prix_HT_TT,
+                                'prix_taxe_total' => $prix_TVA_TT,
+                                'prix_ttc_total' => $prix_TTC_TT,
+                                'id_client_edi' => $client->id_client_edi,
+                            ]);
+                        }else{
+                            $stock_error = true;
+                        }
                     }
-
-                    
-
 
                     if (isset($addProducts->id_panier_edi_list) && !empty($addProducts->id_panier_edi_list)) {
                         PanierEdi::calculPrixPanier($client->id_panier_edi);
@@ -741,9 +748,12 @@ class OrderEntrepotController extends Controller
                 }
             }
         }
-
         $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $panier->id_panier_edi)->first();
         $request->session()->put('panier_commercial', $panierGet);
-        return redirect('/cart');
+        if($stock_error == 1){
+            return redirect('/cart/error/import_stock');
+        }else{
+            return redirect('/cart');
+        }
     }
 }
