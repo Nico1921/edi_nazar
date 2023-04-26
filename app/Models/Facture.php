@@ -86,14 +86,20 @@ class Facture extends Model
     }
 
     public static function genNumFacture(){
-        $numFactureGet = Facture::where('num_facture','LIKE',"F" . date('y') . "5%")->max('num_facture');
-        if(!empty($numFactureGet)){
-            $numFacture = substr($numFactureGet,1);
-            $num_facture = (!empty($numFacture) ? 'F' . sprintf("%07s", ($numFacture + 1)) : 'F' . date('y') . '50000');
-        }else{
-            $num_facture = 'F' . date('y') . '50000';
+        $invoiceInitial = '22';
+        $numInvoiceDefault = '2200001';
+        $numInvoiceNext = '';
+        $numInvoiceLast = '';
+        $num_facture_max1 = DB::table('facture')->select(DB::raw('MAX(SUBSTRING(num_facture, 2)) as num_facture_max'))->where('num_facture', 'like', 'F' . $invoiceInitial . '%')->value('num_facture_max');
+        $num_facture_max2 = DB::table('commande_marketplace')->select(DB::raw('MAX(SUBSTRING(num_facture, 2)) as num_facture_max'))->where('num_facture', 'like', 'F' . $invoiceInitial . '%')->value('num_facture_max');
+        if (is_numeric($num_facture_max1) && is_numeric($num_facture_max2)) {
+            $numInvoiceLast = max($num_facture_max1, $num_facture_max2);
+        } elseif (is_numeric($num_facture_max1)) {
+            $numInvoiceLast = $num_facture_max1;
+        } elseif (is_numeric($num_facture_max2)) {
+            $numInvoiceLast = $num_facture_max2;
         }
-
-        return $num_facture;
-    }
+        $numInvoiceNext = (!empty($numInvoiceLast) ? sprintf("%07s", ($numInvoiceLast + 1)) : $numInvoiceDefault);
+        return 'F' . $numInvoiceNext;
+        }
 }
