@@ -55,17 +55,13 @@ var clickResetInputFile = ()=>{
 
 const submit_file = () => {
    var form = new FormData(document.getElementById('fileCartImport'));
-   axios.post('/order_entrepot/panier/import',form).then((response) => {
-      //console.log(response);
-      if(response.status){
-        document.location.href = "/cart";
-      }else{
-         Toast.fire({
-            icon: 'error',
-            title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
-         });
-      }
-   });
+   Inertia.post('/order_entrepot/panier/import', form,{
+            onError : (e) => {
+               Toast.fire({
+               icon: 'error',
+               title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
+            });
+   }});
 };
 
 const lowercase = (nom) => {

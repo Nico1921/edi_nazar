@@ -58,6 +58,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::post('/order_entrepot/panier/import', [OrderEntrepotController::class, 'import_panier_commande'])->name('order_entrepot/panier/import');
 
       Route::get('/cart', [CartController::class, 'create'])->name('cart');
+      Route::get('/cart/error/{error}', [CartController::class, 'create'])->name('cart');
       Route::get('/cart/payment/cb/valid', [CartController::class, 'redirect_cb_validation_com'])->name('cart/payment/cb/valid');
       Route::post('/cart/products/edit', [CartController::class, 'edit_qte'])->name('cart/products/edit');
       Route::post('/cart/products/delete', [CartController::class, 'delete_card_product'])->name('cart/products/delete');

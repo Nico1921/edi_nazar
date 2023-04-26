@@ -7,7 +7,7 @@ import CartDropshipping from '@/Components/CartDropshipping.vue';
 import { ref, watchEffect } from 'vue';
 
 
-const props = defineProps(['panier', 'produits']);
+const props = defineProps(['panier', 'produits','message_error']);
 
 var produits = ref(usePage().props.value.Panier.panier.panier);
 var panierDrop = ref(usePage().props.value.PanierDrop);
@@ -53,6 +53,10 @@ export default {
                <div v-if="usePage().props.value.session.messageError != undefined" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
                   <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
                   <span class="pl-2 text-red-600">{{usePage().props.value.session.messageError}}</span>
+               </div>
+               <div v-if="props.message_error != ''" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
+                  <ExclamationTriangleIcon class="h-8 w-8 text-red-600" />
+                  <span class="pl-2 text-red-600">{{props.message_error}}</span>
                </div>
                <div v-if="(!panierDrop.panier.panier_valid && typeVente == 2) " class="w-full bg-yellow-200 px-4 py-2 my-2 rounded flex items-center">
                   <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />

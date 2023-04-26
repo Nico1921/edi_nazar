@@ -9,8 +9,7 @@ import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicon
 import { ArrowRightCircleIcon  } from '@heroicons/vue/24/outline';
 import {decode} from 'html-entities';
 
-const props = defineProps(["products","gamme","designpanier"]);
-
+const props = defineProps(["gamme","designpanier"]);
 var links = [{
         title: 'Accueil',
         link: '/',
@@ -35,11 +34,9 @@ var links = [{
 
 const isOpen = ref(false);
 const isOpenAdd = ref(false);
-var productsSearch = ref(props.products.data);
-var products = ref(props.products);
+
 var designpanier = ref(props.designpanier);
 console.log(props.designpanier);
-var clientUser = ref(usePage().props.value.auth.user[0].client);
 var produitAdd = ref(false);
 var formAddProduit = useForm({
    idProduit: null,
@@ -49,70 +46,15 @@ var formAddProduit = useForm({
    key_tab_2 : 0,
 });
 
-var classPaginate = {
-   'previous' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
-   'previous_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
-   'next' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
-   'next_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
-   'number' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',
-   'number_active' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 bg-gray-100'
-};
-
-var perPage = () => {
-   const parsedUrl = new URL(window.location.href);
-   var targetNode = document.getElementById('per_page');
-   parsedUrl.searchParams.set('perPage',targetNode.value);
-   window.location.href = parsedUrl.href;
-};
-
-var perPageActual = () => {
-   const parsedUrl = new URL(window.location.href);
-   if(parsedUrl.searchParams.get('perPage') != null ){
-      return parsedUrl.searchParams.get('perPage');
-   }else{
-      return 12;
-   }
-};
-
 var setIsOpenAdd = (value,produit,key1,key2) => {
    isOpenAdd.value = value;
    produitAdd.value = produit;
    formAddProduit.idProduit = produit.id_produit;
    formAddProduit.key_tab_1 = key1;
    formAddProduit.key_tab_2 = key2;
-   formAddProduit.quantiter = (produit.panier.quantiter > 0 ? produit.panier.quantiter : 1);
-   formAddProduit.id_panier_edi_list = (produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0);
+   formAddProduit.quantiter = (produit.produit_panier.quantiter > 0 ? produit.produit_panier.quantiter : 1);
+   formAddProduit.id_panier_edi_list = (produit.produit_panier.id_panier_edi_list != undefined ? produit.produit_panier.id_panier_edi_list : 0);
 }
-
-var searchGamme = (e) => {
-   
-   const parsedUrl = new URL(window.location.href);
-   parsedUrl.searchParams.delete('filter[global]');
-   var per = parsedUrl.searchParams.get('perPage');
-   parsedUrl.searchParams.delete('perPage');
-   var page = parsedUrl.searchParams.get('page');
-   parsedUrl.searchParams.delete('page');
-   var urlBase = parsedUrl.href+'/search';
-   parsedUrl.href = urlBase;
-   //console.log(urlBase);
-   parsedUrl.searchParams.set('filter[global]',e.target.value);
-   if(per != '' && per  != undefined){
-      parsedUrl.searchParams.set('perPage',per);
-   }
-   if(page != '' && page != undefined){
-      parsedUrl.searchParams.set('page',page);
-   }
-   var url = parsedUrl.href;
-   axios.post(url).then((response)=>{
-      if(response.status == 200){
-         const parsedUrl = new URL(window.location.href);
-         parsedUrl.searchParams.set('filter[global]',e.target.value);
-         productsSearch.value = response.data.products.data;
-         products.value = response.data.products;
-         window.history.replaceState('','',parsedUrl.href);
-      }
-   })
-};
 
 function closeModal() {
   isOpen.value = false;
@@ -136,9 +78,9 @@ var addCommande = (e,isPanier) => {
          preserveState:true,
          onSuccess: (e) => {
             if(e.props.session.status){
-               designpanier.value[key1].produits[key2].panier.id_panier_edi_list = e.props.session.id_panier_edi_list;
+               designpanier.value[key1].produits[key2].produit_panier.id_panier_edi_list = e.props.session.id_panier_edi_list;
                designpanier.value[key1].produits[key2].isInPanier = true;
-               designpanier.value[key1].produits[key2].panier.quantiter = formAddProduit.quantiter;
+               designpanier.value[key1].produits[key2].produit_panier.quantiter = formAddProduit.quantiter;
                isOpenAdd.value = false;
                Toast.fire({
                   icon: 'success',
@@ -183,8 +125,8 @@ var deleteCommande = (id_panier_edi_list,key,key2) =>{
                      title: 'Le produit à bien été supprimer du panier'
                   })
                   designpanier.value[key].produits[key2].isInPanier = false;
-                  designpanier.value[key].produits[key2].panier.quantiter = 0;
-                  designpanier.value[key].produits[key2].panier.id_panier_edi_list = 0;
+                  designpanier.value[key].produits[key2].produit_panier.quantiter = 0;
+                  designpanier.value[key].produits[key2].produit_panier.id_panier_edi_list = 0;
                   isOpenAdd.value = false;
                }else{
                   Toast.fire({
@@ -234,6 +176,10 @@ var deletePanier = () =>{
 
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
+};
+
+const lowercase = (nom) => {
+   return HtmlEntities.decode(nom.toLowerCase());
 };
 
 /*
@@ -308,7 +254,7 @@ export default {
          <div class="col-span-3 rounded bg-primary-white border border-primary-100 text-center flex flex-col text-primary-300">
             <span>Tapis {{ (props.gamme.type_tapis == 0 ? 'intérieur' : props.gamme.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
             <span>Poils {{ (props.gamme.type_poils == 1 ? 'court' : 'long') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
-            <span class="capitalize">{{ props.gamme.nom_special }}</span>
+            <span class="capitalize">{{ lowercase(props.gamme.nom_special) }}</span>
             <span>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
             <div class="sm:w-auto w-full py-2 flex items-center justify-center">
                <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
@@ -342,12 +288,12 @@ export default {
                            <tr class="px-4 py-4">
                               <td class="whitespace-nowrap px-4 py-4 w-[190px] overflow-x-hidden">
                                  <div class="h-24 w-full mb-2">
-                                    <div v-if="gamme.photo != null"
+                                    <div v-if="gamme.img_produit != null"
                                           class="cursor-pointer relative overflow-hidden w-full h-full flex justify-center">
                                        <div class="absolute flex items-center justify-center w-full h-full">
                                           <Eye class="text-lg text-black" />
                                        </div>
-                                       <img @click="openModal(gamme.photo.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.photo.img_produit)"
+                                       <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.img_produit)"
                                           :alt="gamme.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
                                     </div>
                                     <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
@@ -372,7 +318,7 @@ export default {
                                                       :class="produit.stats_produit.stock_restant > 10 ? 'bg-green-700' : (produit.stats_produit.stock_restant > 0 ? 'bg-orange-400 ' : 'bg-red-700')" 
                                                       class=" w-[35px] h-[35px] block rounded-full flex items-center justify-center">
                                                       <CartAdd v-if="!produit.isInPanier" class="text-xl text-white items-center justify-center" />
-                                                      <span v-else class="text-xl text-white items-center justify-center">{{ produit.panier.quantiter }}</span>
+                                                      <span v-else class="text-xl text-white items-center justify-center">{{ produit.produit_panier.quantiter }}</span>
 
                                                    </button>
                                                 </div>
@@ -521,7 +467,7 @@ export default {
                         <InputError class="mt-2" :message="formAddProduit.errors.id_panier_edi_list" />
                      </div>
                      <div class="w-full mt-7 ml-5" v-if="produitAdd.isInPanier">
-                        <button type="button" @click="deleteCommande(produitAdd.panier.id_panier_edi_list,formAddProduit.key_tab_1,formAddProduit.key_tab_2)" class="w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300">
+                        <button type="button" @click="deleteCommande(produitAdd.produit_panier.id_panier_edi_list,formAddProduit.key_tab_1,formAddProduit.key_tab_2)" class="w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300">
                            <BackspaceIcon class="w-5 h-5 mr-2" />Suprimmer le produit du panier
                         </button>
                      </div>
