@@ -53,12 +53,56 @@ class OrderEntrepotController extends Controller
             });
         });
 
+<<<<<<< HEAD
         $products = Gamme::getRequestGammeCaracteristiques()
             ->defaultSort('gamme.nom_gamme')
             ->where('gamme.statut', '=', 1)
+=======
+
+        $user = User::with('client')->where('id','=',Auth::id())->first();
+        
+        $products = QueryBuilder::for(Gamme::class)
+            ->defaultSort('gamme.nom_gamme')
+            ->select(['gamme.*','special.nom_special', 'client_edi_remise_gamme.remise AS remiseGamme'])
+            ->join('special', 'special.id_special', 'gamme.id_special')
+            ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
+                $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
+                     ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
+            })
+            ->where('gamme.in_edi', '=', '1')
+            ->where('gamme.statut', '=', '1')
+>>>>>>> main
             ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
+
+            $products->each(function($product, $user){
+                $remise = 0;
+                if(isset($product->remiseGamme)){
+                    $remise = $product->remiseGamme;
+                }
+                elseif(isset($user->taux_remise)){
+                    $remise = $user->taux_remise;
+                }
+
+                if($remise > 0){
+                    $product->prix_vente_ht_m2_remise = "".round($product->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
+                }
+                else{
+                    $product->prix_vente_ht_m2_remise = false;
+                }
+            });
+
+
+            /*//permet de recuperer les features de la gamme
+        $products->each(function($product){
+            $product->caracteristique = DB::table('gammes_features')
+            ->select(['gammes_features.*', 'features.*'])
+            ->join('features', 'features.id', 'gammes_features.feature_id')
+            ->where('gammes_features.gamme_id', '=', $product->id_gamme)
+            ->get();
+        });
+        var_dump($products);*/
         
         $dimensions = Gamme::getAllDimensionGamme(); 
 
@@ -110,35 +154,37 @@ class OrderEntrepotController extends Controller
             $query->where(function ($query) use ($value) {
                 Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
+<<<<<<< HEAD
                         ->orWhere('couleurr', 'LIKE', "%{$value}%")
                         ->orWhere('gamme.nom_gamme', 'LIKE', "%{$value}%")
+=======
+                        ->orWhere('couleur.nom_couleur', 'LIKE', "%{$value}%")
+                        ->orWhere('gamme.nom_gamme', '=', $value)
+>>>>>>> main
                         ->orWhere('code_sku', 'LIKE', "%{$value}%")
                         ->orWhere('gencode', 'LIKE', "%{$value}%")
                         ->orWhere('produit.design', 'LIKE', "%{$value}%");
                 });
             });
-        });
-
-        $gammeSearch = AllowedFilter::callback('nom_gamme', function ($query, $value) {
-            $query->where(function ($query) use ($value) {
-                Collection::wrap($value)->each(function ($value) use ($query) {
-                    $query
-                        ->orWhere('gamme.nom_gamme', 'LIKE', "%{$value}%");
-                });
-            });
-        });
+        });       
         
 
         $products = Produit::getAllCaracteristiques(true)
             ->defaultSort('produit.design')
             ->join('gamme', 'produit.gamme_id', 'gamme.id_gamme')
             ->join('photo', 'produit.id_produit', 'photo.id_produit')
+<<<<<<< HEAD
             ->where('gamme.nom_gamme', 'like', '%'.$gamme.'%')
+=======
+            ->join('gamme', 'design.id_gamme', 'gamme.id_gamme')
+            ->where('gamme.nom_gamme', '=', $gamme)
+>>>>>>> main
             ->where('produit.code_sku', '!=', 'null')
             ->where('produit.code_sku', '!=', '""')
             ->where('produit.drop_shipping', '=', '1')
             ->where('produit.statut', '=', '1')
             ->where('photo.principale', '=', '1')
+<<<<<<< HEAD
             ->allowedSorts(['design', 'couleur', 'nom_gamme', 'code_sku'])
             ->allowedFilters([$globalSearch, $gammeSearch, 'couleur', 'produit.design'])
             ->groupBy(['produit.design'])
@@ -149,6 +195,50 @@ class OrderEntrepotController extends Controller
         $gammeSearch = Gamme::getGammeCaracteristiques($gammeSearch->id_gamme);
 
         $designpanier = Produit::getAllCaracteristiquesDesign()
+=======
+            ->allowedSorts(['nom_design', 'nom_couleur', 'nom_gamme', 'code_sku'])
+            ->allowedFilters([$globalSearch, 'nom_couleur', 'nom_design'])
+            ->groupBy(['produit.id_design'])
+            ->paginate(request('perPage'))
+            ->withQueryString();
+
+        //$gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
+        $user = User::with('client')->where('id','=',Auth::id())->first();
+
+        $gammeSearch = DB::table('gamme')
+        ->select(['gamme.*', 'client_edi_remise_gamme.remise AS remiseGamme'])
+        ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
+            $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
+                 ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
+        })
+        ->where('nom_gamme', '=', $gamme)
+        ->first();
+
+
+        //rajoute la remise si il y a une remise par client et gamme ou si il y a une remise par client global. sinon renvoie faux
+        $gammeSearch->prix_vente_ht_m2_remise = isset($gammeSearch->remiseGamme)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($gammeSearch->remiseGamme / 100)), 2) . "":(isset($user->taux_remise)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($user->taux_remise / 100)), 2) . "":false);
+
+
+        /*$gammeSearch->prix_vente_ht_m2_remise = function($gammeSearch, $user){
+            $remise = 0;
+            if(isset($gammeSearch->remiseGamme)){
+                $remise = $gammeSearch->remiseGamme;
+            }
+            elseif(isset($user->taux_remise)){
+                $remise = $user->taux_remise;
+            }
+
+            if($remise > 0){
+                $gammeSearch->prix_vente_ht_m2_remise = "".round($gammeSearch->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
+            }
+            else{
+                $gammeSearch->prix_vente_ht_m2_remise = false;
+            }
+        };*/
+        
+        $designpanier = DB::table('design')
+            ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
+>>>>>>> main
             ->distinct()
             ->join('gamme', 'gamme.id_gamme', 'produit.gamme_id')
             ->join('gammes_features as sp', function ($join) {
@@ -263,7 +353,12 @@ class OrderEntrepotController extends Controller
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
+<<<<<<< HEAD
                 ->where('produit.design','=',$designpanier[$i]->design)->get();
+=======
+                ->where('id_design','=',$designpanier[$i]->id_design)->get();
+
+>>>>>>> main
                 for ($j = 0; $j < count($produit); $j++) {
                     $design->$i->produits->$j = new \stdClass;
                     $design->$i->produits->$j->prixProduit = Produit::calcul_prix_produit($produit[$j]->id_produit,0);

@@ -14,6 +14,7 @@ const props = defineProps(['client','panier', 'produits']);
 
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 var clients = ref(usePage().props.value.PanierDrop.panier.clients);
+//console.log(clients);
 var panier = ref(usePage().props.value.PanierDrop.panier.panierActuel);
 var panierDrop = ref(usePage().props.value.PanierDrop);
 var hrefEtape = ['/dropshipping/cart', '/dropshipping/cart/adresses', '/dropshipping/cart/validation'];var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
@@ -23,7 +24,7 @@ const imgBase64 = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJ
 
 
 const roundResult = (number, nbVirugule) => {
-   return number.toFixed(nbVirugule);
+   return parseFloat(number).toFixed(nbVirugule);
 };
 
 var formatDate = (date) => {
@@ -56,7 +57,7 @@ var validationCommande = () => {
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
-
+/*
 var calcul_prix_gamme = (prix_gamme) => {
    var HT = prix_gamme;
    if(clientUser.value.taux_remise > 0){
@@ -64,7 +65,7 @@ var calcul_prix_gamme = (prix_gamme) => {
    }
    return roundNumber(HT);
 };
-
+*/
 var verifCheck = (e,type) => {
       if(type == 2){
          if(document.getElementById('paymentCB').getElementsByTagName('form').length === 0){
@@ -188,10 +189,10 @@ export default {
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
                                           produit.dimension.longueur }}</span>
-                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ calcul_prix_gamme(produit.gamme.prix_vente_ht_m2) }} € HT</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2 }} € HT</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantiter : {{ produit.panier.quantiter }}</span>
-                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * calcul_prix_gamme(produit.gamme.prix_vente_ht_m2),2)}} €</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2,2)}} €</span>
                                     </div>
                                  </div>
                               </div>

@@ -29,6 +29,7 @@ const props = defineProps(['products','dimensions', 'produitsAchat']);
 const isOpen = ref(false);
 
 var products = ref(props.products);
+//console.log(products)
 var dynamic = ref(usePage().props.value.dynamique_client);
 
 var clientUser = ref(usePage().props.value.auth.user[0].client);
@@ -130,6 +131,7 @@ var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
 };
 
+/*
 var calcul_prix_gamme = (prix_gamme) => {
    var HT = prix_gamme;
    if(clientUser.value.taux_remise > 0){
@@ -137,6 +139,7 @@ var calcul_prix_gamme = (prix_gamme) => {
    }
    return roundNumber(HT);
 };
+*/
 
 var deletePanier = () =>{
    Swal.fire({
@@ -285,7 +288,7 @@ export default {
                          {{ (!Number.isInteger(key/3) && key != 0 ? ' - ' : '') }} {{ dimension.largeur }}x{{ dimension.longueur }}cm
                      </span>
                   </div>
-                  <span>Prix HT m² : {{ calcul_prix_gamme(produit.prix_vente_ht_m2) }} €</span>
+                  <span>Prix HT m² : {{ produit.prix_vente_ht_m2_remise?produit.prix_vente_ht_m2_remise:produit.prix_vente_ht_m2 }} €</span>
                  </div>
                   
                </div>
