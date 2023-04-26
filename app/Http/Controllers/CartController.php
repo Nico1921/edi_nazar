@@ -43,7 +43,17 @@ class CartController extends Controller
             $panierCom = array();
         }
 
-        return Inertia::render('Auth/Pages/Cart',['panier' => $panierCom]);
+        if(isset($request->error)){
+            if($request->error == 'import_stock'){
+                $message = 'Une erreur s\'est produite lors de l\'import de votre commande. Certains produits n\'étaient pas en stock.';
+            }else{
+                $message = 'Une erreur s\'est produit !';
+            }
+        }else{
+            $message = '';
+        }
+
+        return Inertia::render('Auth/Pages/Cart',['panier' => $panierCom,'message_error'=> $message]);
     }
 
     public function edit_qte(Request $request){
