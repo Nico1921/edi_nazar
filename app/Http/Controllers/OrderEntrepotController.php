@@ -62,7 +62,9 @@ class OrderEntrepotController extends Controller
         
         $dimensions = Gamme::getAllDimensionGamme(); 
 
-        // error_log(print_r($products));
+        // $test = Produit::getAllCaracteristiques()->with(['photo','statsProduit'])->where('id_produit','=','14450')->get();
+
+        // Log::debug($test);
         return Inertia::render('Auth/Pages/Products', [
             'products' => $products,
             'dimensions' => $dimensions
@@ -108,11 +110,11 @@ class OrderEntrepotController extends Controller
             $query->where(function ($query) use ($value) {
                 Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
-                        ->orWhere('couleur.nom_couleur', 'LIKE', "%{$value}%")
+                        ->orWhere('couleurr', 'LIKE', "%{$value}%")
                         ->orWhere('gamme.nom_gamme', 'LIKE', "%{$value}%")
                         ->orWhere('code_sku', 'LIKE', "%{$value}%")
                         ->orWhere('gencode', 'LIKE', "%{$value}%")
-                        ->orWhere('design.nom_design', 'LIKE', "%{$value}%");
+                        ->orWhere('produit.design', 'LIKE', "%{$value}%");
                 });
             });
         });
@@ -127,47 +129,74 @@ class OrderEntrepotController extends Controller
         });
         
 
-        $products = QueryBuilder::for(Produit::class)
-            ->defaultSort('nom_design')
-            ->select(['produit.id_design', 'couleur.nom_couleur', 'gamme.nom_gamme', 'design.nom_design', 'photo.img_produit'])
-            ->join('design', 'produit.id_design', 'design.id_design')
-            ->join('couleur', 'produit.id_couleur', 'couleur.id_couleur')
+        $products = Produit::getAllCaracteristiques(true)
+            ->defaultSort('produit.design')
+            ->join('gamme', 'produit.gamme_id', 'gamme.id_gamme')
             ->join('photo', 'produit.id_produit', 'photo.id_produit')
-            ->join('gamme', 'design.id_gamme', 'gamme.id_gamme')
             ->where('gamme.nom_gamme', 'like', '%'.$gamme.'%')
             ->where('produit.code_sku', '!=', 'null')
             ->where('produit.code_sku', '!=', '""')
             ->where('produit.drop_shipping', '=', '1')
             ->where('produit.statut', '=', '1')
             ->where('photo.principale', '=', '1')
-            ->allowedSorts(['nom_design', 'nom_couleur', 'nom_gamme', 'code_sku'])
-            ->allowedFilters([$globalSearch, $gammeSearch, 'nom_couleur', 'nom_design'])
+            ->allowedSorts(['design', 'couleur', 'nom_gamme', 'code_sku'])
+            ->allowedFilters([$globalSearch, $gammeSearch, 'couleur', 'produit.design'])
             ->groupBy(['produit.design'])
             ->paginate(request('perPage'))
             ->withQueryString();
 
-        $gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
+        $gammeSearch = Gamme::where('nom_gamme', '=', $gamme)->first();
         $gammeSearch = Gamme::getGammeCaracteristiques($gammeSearch->id_gamme);
 
-        $designpanier = DB::table('design')
-            ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
+        $designpanier = Produit::getAllCaracteristiquesDesign()
             ->distinct()
-            ->join('gamme', 'gamme.id_gamme', 'design.id_gamme')
-            ->join('produit', 'produit.id_design', 'design.id_design')
-            ->where('gamme.in_edi', '=', '1')
+            ->join('gamme', 'gamme.id_gamme', 'produit.gamme_id')
+            ->join('gammes_features as sp', function ($join) {
+                $join->on('gamme.id_gamme', '=', 'sp.gamme_id')
+                    ->where('sp.feature_id', '=', 13)
+                    ->where('sp.data_values', 'LIKE', '%Oui%');
+            })
             ->where('gamme.statut', '=', '1')
             ->where('produit.code_sku', '!=', 'null')
             ->where('produit.code_sku', '!=', '""')
             ->where('produit.drop_shipping', '=', '1')
             ->where('produit.statut', '=', '1')
-            ->where('gamme.nom_gamme', 'like', "%{$gamme}%")
+            ->where('gamme.nom_gamme', '=', $gamme)
             ->get();
+
 
         if ($request->session()->has('client_commercial')) {
             $clientUser = $request->session()->get('client_commercial');
         } else {
             $clientUser = array();
         }
+
+        for ($i = 0; $i < count($designpanier); $i++) {
+            $produits = Produit::getAllCaracteristiques()
+            ->with(['statsProduit','photo' => function($query) {
+                $query->where('principale', '=', '1');
+            }])
+            ->where('produit.design','=',$designpanier[$i]->design)->get();
+            for ($j = 0; $j < count($produits); $j++) {
+                if(!empty($clientUser)){
+                    if (PanierEdiList::where('id_produit', '=', $produits[$j]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
+                        $panier = PanierEdiList::where('id_produit', '=', $produits[$j]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
+                        $produits[$j]->produit_panier = $panier;
+                        $produits[$j]->isInPanier = true;
+                    } else {
+                        $produits[$j]->produit_panier = array("quantiter" => 0);
+                        $produits[$j]->isInPanier = false;
+                    }
+                }else{
+                    $produits[$j]->produit_panier = array("quantiter" => 0);
+                    $produits[$j]->isInPanier = false;
+                }
+                $produits[$j]->prixProduit = Produit::calcul_prix_produit($produits[$j]->id_produit,0);
+            }
+            $designpanier[$i]->produits = $produits;
+        }
+
+        Log::debug($designpanier);
 
         $design = new \stdClass;
 
@@ -183,8 +212,8 @@ class OrderEntrepotController extends Controller
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
-                ->where('id_design','=',$designpanier[$i]->id_design)->first();
-                $design->$i->nom_design = $designpanier[$i]->nom_design;
+                ->where('produit.design','=',$designpanier[$i]->design)->first();
+                $design->$i->nom_design = $designpanier[$i]->design;
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
 
                 $produit = Produit::with(['dimension','statsProduit'])
@@ -192,7 +221,7 @@ class OrderEntrepotController extends Controller
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
-                ->where('id_design','=',$designpanier[$i]->id_design)->get();
+                ->where('produit.design','=',$designpanier[$i]->design)->get();
                 for ($j = 0; $j < count($produit); $j++) {
                     $design->$i->produits->$j = new \stdClass;
                     $design->$i->produits->$j->prixProduit = Produit::calcul_prix_produit($produit[$j]->id_produit,0);
@@ -225,8 +254,8 @@ class OrderEntrepotController extends Controller
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
-                ->where('id_design','=',$designpanier[$i]->id_design)->first();
-                $design->$i->nom_design = $designpanier[$i]->nom_design;
+                ->where('produit.design','=',$designpanier[$i]->design)->first();
+                $design->$i->nom_design = $designpanier[$i]->design;
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
 
                 $produit = Produit::with(['dimension','statsProduit'])
@@ -234,7 +263,7 @@ class OrderEntrepotController extends Controller
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
-                ->where('id_design','=',$designpanier[$i]->id_design)->get();
+                ->where('produit.design','=',$designpanier[$i]->design)->get();
                 for ($j = 0; $j < count($produit); $j++) {
                     $design->$i->produits->$j = new \stdClass;
                     $design->$i->produits->$j->prixProduit = Produit::calcul_prix_produit($produit[$j]->id_produit,0);
@@ -253,56 +282,8 @@ class OrderEntrepotController extends Controller
         return Inertia::render('Auth/Pages/Products/Gamme', [
             'products' => $products,
             'gamme' => $gammeSearch,
-            'designpanier' => $design
+            'designpanier' => $designpanier
         ]);
-    }
-
-    public function create_product_post($gamme)
-    {
-
-        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where(function ($query) use ($value) {
-                Collection::wrap($value)->each(function ($value) use ($query) {
-                    $query
-                        ->orWhere('couleur.nom_couleur', 'LIKE', "%{$value}%")
-                        ->orWhere('gamme.nom_gamme', 'LIKE', "%{$value}%")
-                        ->orWhere('code_sku', 'LIKE', "%{$value}%")
-                        ->orWhere('gencode', 'LIKE', "%{$value}%")
-                        ->orWhere('design.nom_design', 'LIKE', "%{$value}%");
-                });
-                
-            });
-        });
-
-        $products = QueryBuilder::for(Produit::class)
-            ->defaultSort('nom_design')
-            ->select(['produit.id_design', 'couleur.nom_couleur', 'gamme.nom_gamme', 'design.nom_design', 'photo.img_produit'])
-            ->join('design', 'produit.id_design', 'design.id_design')
-            ->join('couleur', 'produit.id_couleur', 'couleur.id_couleur')
-            ->join('photo', 'produit.id_produit', 'photo.id_produit')
-            ->join('gamme', 'design.id_gamme', 'gamme.id_gamme')
-            ->where('gamme.nom_gamme', 'like', '%'.$gamme.'%')
-            ->where('produit.code_sku', '!=', 'null')
-            ->where('produit.code_sku', '!=', '""')
-            ->where('produit.drop_shipping', '=', '1')
-            ->where('produit.statut', '=', '1')
-            ->where('photo.principale', '=', '1')
-            ->allowedSorts(['nom_design', 'nom_couleur', 'nom_gamme', 'code_sku'])
-            ->allowedFilters([$globalSearch])
-            ->groupBy(['produit.id_design'])
-            ->paginate(request('perPage'))
-            ->withQueryString();
-
-
-        // error_log(print_r($products));
-        return [
-            'products' => $products,
-            'gamme' => $gamme,
-        ];
-    }
-
-    public function create_redirect_product($gamme,Request $request){
-        return redirect('/order_entrepot/gamme'.'/'.$gamme.'?'.$request->getQueryString());
     }
 
     /**

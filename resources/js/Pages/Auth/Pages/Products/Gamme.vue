@@ -10,7 +10,7 @@ import { ArrowRightCircleIcon  } from '@heroicons/vue/24/outline';
 import {decode} from 'html-entities';
 
 const props = defineProps(["products","gamme","designpanier"]);
-console.log(props.gamme);
+
 var links = [{
         title: 'Accueil',
         link: '/',
@@ -340,12 +340,12 @@ export default {
                            <tr class="px-4 py-4">
                               <td class="whitespace-nowrap px-4 py-4 w-[190px] hoverflow-x-hidden">
                                  <div class="h-24 w-full mb-2">
-                                    <div v-if="gamme.img_produit != null"
+                                    <div v-if="gamme.photo != null"
                                           class="cursor-pointer relative overflow-hidden w-full h-full flex justify-center">
                                        <div class="absolute flex items-center justify-center w-full h-full">
                                           <Eye class="text-lg text-black" />
                                        </div>
-                                       <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.img_produit)"
+                                       <img @click="openModal(gamme.photo.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.photo.img_produit)"
                                           :alt="gamme.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
                                     </div>
                                     <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
@@ -353,7 +353,7 @@ export default {
                                     </div>
                                  </div>
                                  <div class="text-center w-full">
-                                    <span class="font-bold pt-2">{{ gamme.nom_design }}</span>
+                                    <span class="font-bold pt-2">{{ gamme.design }}</span>
                                  </div>
                                  
                               </td>
@@ -365,9 +365,9 @@ export default {
                                     <div  class="flex items-center justify-center ">
                                           <Tooltip>
                                              <template #header>
-                                                <div v-if="produit.stock_restant > 0" class="hover:scale-110 transition duration-300">
+                                                <div v-if="produit.stats_produit.stock_restant > 0" class="hover:scale-110 transition duration-300">
                                                    <button @click="setIsOpenAdd(true,produit,key1,key2)"
-                                                      :class="produit.stock_restant > 10 ? 'bg-green-700' : (produit.stock_restant > 0 ? 'bg-orange-400 ' : 'bg-red-700')" 
+                                                      :class="produit.stats_produit.stock_restant > 10 ? 'bg-green-700' : (produit.stats_produit.stock_restant > 0 ? 'bg-orange-400 ' : 'bg-red-700')" 
                                                       class=" w-[35px] h-[35px] block rounded-full flex items-center justify-center">
                                                       <CartAdd v-if="!produit.isInPanier" class="text-xl text-white items-center justify-center" />
                                                       <span v-else class="text-xl text-white items-center justify-center">{{ produit.panier.quantiter }}</span>
@@ -378,7 +378,7 @@ export default {
                                                 <span v-else class="bg-red-700 w-[35px] h-[35px] block rounded-full flex items-center justify-center"></span>
                                              </template>
                                              <template #body>
-                                                <span v-if="produit.stock_restant > 0"> {{(produit.isInPanier ? 'Modifier quantiter' : 'Ajouter au')}} panier</span>
+                                                <span v-if="produit.stats_produit.stock_restant > 0"> {{(produit.isInPanier ? 'Modifier quantiter' : 'Ajouter au')}} panier</span>
                                                 <span v-else> Rupture de stock </span>
                                              </template>
                                           </Tooltip>

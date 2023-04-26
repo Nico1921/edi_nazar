@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Gamme;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class Produit extends Model
 {
@@ -97,6 +99,14 @@ class Produit extends Model
     }
 
     /**
+     * Permet la récupération de la gamme lier au produit
+     */
+    public function gamme()
+    {
+        return $this->hasOne(Gamme::class,'id_gamme','gamme_id');
+    }
+
+    /**
      * Permet la récupération du ou des photos 
      */
     public function photo()
@@ -118,6 +128,76 @@ class Produit extends Model
     public function panierEdiList()
     {
         return $this->belongsTo(PanierEdiList::class,'id_produit','id_produit');
+    }
+
+    public static function getAllCaracteristiquesDesign($isPaginate=false,$select=[]){
+        $select[] = 'produit.design';
+        Log::debug($select);
+        if($isPaginate){
+            $design = QueryBuilder::for(Produit::class)->select($select);
+        }else{
+            $design = Produit::select($select);
+        }
+        
+        $design = $design->join('produits_features as cl', function ($join) {
+            $join->on('cl.produit_id', '=', 'produit.id_produit')
+                 ->where('cl.feature_id', '=', 1);
+        })
+        ->join('produits_features as long', function ($join) {
+            $join->on('long.produit_id', '=', 'produit.id_produit')
+                 ->where('long.feature_id', '=', 2);
+        })
+        ->join('produits_features AS lag', function ($join) {
+            $join->on('lag.produit_id', '=', 'produit.id_produit')
+                 ->where('lag.feature_id', '=', 3);
+        })
+        ->join('produits_features AS compo', function ($join) {
+            $join->on('compo.produit_id', '=', 'produit.id_produit')
+                 ->where('compo.feature_id', '=', 5);
+        });
+
+        return $design;
+    }
+    
+
+    public static function getAllCaracteristiques($isPaginate=false){
+        if($isPaginate){
+            $produits = QueryBuilder::for(Produit::class)
+            ->select([
+                'produit.*', 
+                DB::raw("REPLACE(REPLACE(cl.data_values, '[\"',''), '\"]', '') AS couleur"),
+                DB::raw("REPLACE(REPLACE(long.data_values, '[\"',''), '\"]', '') AS longueur"),
+                DB::raw("REPLACE(REPLACE(lag.data_values, '[\"',''), '\"]', '') AS largeur"),
+                DB::raw("REPLACE(REPLACE(compo.data_values, '[\"',''), '\"]', '') AS composition"),
+            ]);
+        }else{
+            $produits = Produit::select([
+                'produit.*', 
+                DB::raw("REPLACE(REPLACE(cl.data_values, '[\"',''), '\"]', '') AS couleur"),
+                DB::raw("REPLACE(REPLACE(long.data_values, '[\"',''), '\"]', '') AS longueur"),
+                DB::raw("REPLACE(REPLACE(lag.data_values, '[\"',''), '\"]', '') AS largeur"),
+                DB::raw("REPLACE(REPLACE(compo.data_values, '[\"',''), '\"]', '') AS composition"),
+            ]);
+        }
+        
+        $produits = $produits->join('produits_features as cl', function ($join) {
+            $join->on('cl.produit_id', '=', 'produit.id_produit')
+                 ->where('cl.feature_id', '=', 1);
+        })
+        ->join('produits_features as long', function ($join) {
+            $join->on('long.produit_id', '=', 'produit.id_produit')
+                 ->where('long.feature_id', '=', 2);
+        })
+        ->join('produits_features AS lag', function ($join) {
+            $join->on('lag.produit_id', '=', 'produit.id_produit')
+                 ->where('lag.feature_id', '=', 3);
+        })
+        ->join('produits_features AS compo', function ($join) {
+            $join->on('compo.produit_id', '=', 'produit.id_produit')
+                 ->where('compo.feature_id', '=', 5);
+        });
+
+        return $produits;
     }
 
     public static function getDimension($productId){

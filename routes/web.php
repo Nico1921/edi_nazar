@@ -53,8 +53,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::get('/order_entrepot/gamme', [OrderEntrepotController::class, 'create'])->name('order_entrepot/gamme');
       Route::post('/order_entrepot/gamme', [OrderEntrepotController::class, 'create_post'])->name('order_entrepot/gamme');
       Route::get('/order_entrepot/gamme/{gamme}', [OrderEntrepotController::class, 'create_product']);
-      Route::post('/order_entrepot/gamme/{gamme}/search', [OrderEntrepotController::class, 'create_product_post']);
-      Route::get('/order_entrepot/gamme/{gamme}/search', [OrderEntrepotController::class, 'create_redirect_product']);
       Route::post('/order_entrepot/panier/add', [OrderEntrepotController::class, 'add_product_commande'])->name('order_entrepot/panier/add');
       Route::post('/order_entrepot/panier/delete', [OrderEntrepotController::class, 'delete_product_commande'])->name('order_entrepot/panier/delete');
       Route::post('/order_entrepot/panier/import', [OrderEntrepotController::class, 'import_panier_commande'])->name('order_entrepot/panier/import');
