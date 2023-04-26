@@ -9,7 +9,7 @@ class ClientEdiRemiseGamme extends Model
 {
     use HasFactory;
 
-    protected $table = 'Client_edi_remise_gamme';
+    protected $table = 'client_edi_remise_gamme';
 
     protected $fillable = [
         'id_remise_gamme',
