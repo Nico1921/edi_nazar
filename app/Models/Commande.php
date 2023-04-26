@@ -132,7 +132,7 @@ class Commande extends Model
                             'montant_tva' => $panier->total_taxe,
                             'montant_due_ttc' => $panier->total_ttc - $panier->total_payer,
                             'montant_port_ht' => 0,
-                            'date_echeance' => 0,
+                            'date_echeance' => date('Y-m-d'),
                             'gen_facture' => ($paymentType == 2 ? 1 : 0),
                             'observation' => 'Commande EDI du '.date('d/m/Y'),
                             'interne' => 1,
