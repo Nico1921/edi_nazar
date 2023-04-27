@@ -34,24 +34,7 @@ class HomeController extends Controller
         ->get();
 
         //var_dump($latestCollection);
-
-        $latestCollection->each(function($latestCollection, $user){
-            $remise = 0;
-            if(isset($latestCollection->remise)){
-                $remise = $latestCollection->remise;
-            }
-            elseif(isset($user->taux_remise)){
-                $remise = $user->taux_remise;
-            }
-
-            if($remise > 0){
-                $latestCollection->prix_vente_ht_m2_remise = "".round($latestCollection->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
-            }
-            else{
-                $latestCollection->prix_vente_ht_m2_remise = false;
-            }
-        });
-
+        $latestCollection = Gamme::setRemiseGamme($latestCollection);
 
         $bestSeller = Gamme::select('gamme.*', DB::raw('SUM(commande_list.quantite) as quantity_sold'), 'client_edi_remise_gamme.remise as remiseGamme')
         ->join('design', 'gamme.id_gamme', '=', 'design.id_gamme')
@@ -70,25 +53,7 @@ class HomeController extends Controller
         ->take(10)
         ->get();
 
-        
-
-        $bestSeller->each(function($bestSeller, $user){
-            $remise = 0;
-            if(isset($bestSeller->remiseGamme)){
-                $remise = $bestSeller->remiseGamme;
-            }
-            elseif(isset($user->taux_remise)){
-                $remise = $user->taux_remise;
-            }
-
-            if($remise > 0){
-                $bestSeller->prix_vente_ht_m2_remise = "".round($bestSeller->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
-            }
-            else{
-                $bestSeller->prix_vente_ht_m2_remise = false;
-            }
-        });
-        
+        $bestSeller = Gamme::setRemiseGamme($bestSeller);
         
         return Inertia::render('Auth/Pages/Home',['latestCollection' => $latestCollection, 'bestSeller' => $bestSeller]);
     }

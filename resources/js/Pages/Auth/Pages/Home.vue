@@ -47,7 +47,7 @@
 
 
 <template>
-    <Head :title="$t('accueil.titre')" /> 
+    <Head title="Accueil" /> 
        
     <section class="container mx-auto mt-5 ">
         <div class="w-full flex flex-col items-center justify-center py-5 px-4">
