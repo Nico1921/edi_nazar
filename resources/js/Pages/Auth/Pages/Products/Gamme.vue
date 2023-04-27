@@ -198,25 +198,12 @@ var formatPrix = (prix) => {
    }).format(prix);
 };
 
-onMounted(() => {
-   // var targetNode2 = document.getElementById('per_page');
-   // targetNode2.value = perPageActual();
-   // const parsedUrl = new URL(window.location.href);
-   // var input = document.getElementById("searchGamme");
-   // input.value = parsedUrl.searchParams.get('filter[global]');
-});
-
 watchEffect(() => {
-	// axios.get('/dropshipping/panier/view',{gamme:props.gamme.nom_gamme}).then((response)=>{
-   //    console.log(response);
-   //    if(response.data.produitsAchat != undefined){         
-   //       if(response.data.produitsAchat.panier != undefined){         
-   //          produitsAchat.value = response.data.produitsAchat.panier;
-   //       }else{
-   //          produitsAchat.value = [];
-   //       }
-   //    }
-   // });
+	axios.post('/order_entrepot/gamme/'+props.gamme.nom_gamme).then((response)=>{
+      if(response.status == 200){
+         designpanier.value = response.data.designpanier
+      }
+   });
 });
 </script>
 <script >

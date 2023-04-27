@@ -59,8 +59,11 @@ class OrderEntrepotController extends Controller
             ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
+
+        
         
         $dimensions = Gamme::getAllDimensionGamme(); 
+        $products = Gamme::setRemiseGamme($products); 
 
         return Inertia::render('Auth/Pages/Products', [
             'products' => $products,
@@ -87,6 +90,23 @@ class OrderEntrepotController extends Controller
             ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
+
+            $products->each(function($product, $user){
+                $remise = 0;
+                if(isset($product->remiseGamme)){
+                    $remise = $product->remiseGamme;
+                }
+                elseif(isset($user->taux_remise)){
+                    $remise = $user->taux_remise;
+                }
+ 
+                if($remise > 0){
+                    $product->prix_vente_ht_m2_remise = "".round($product->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
+                }
+                else{
+                    $product->prix_vente_ht_m2_remise = false;
+                }
+            });
 
         return [
             'products' => $products
@@ -156,10 +176,17 @@ class OrderEntrepotController extends Controller
             }
             $designpanier[$i]->produits = $produits;
         }
-        return Inertia::render('Auth/Pages/Products/Gamme', [
-            'gamme' => $gammeSearch,
-            'designpanier' => $designpanier
-        ]);
+        if ($request->isMethod('post')) {
+            return [
+                'gamme' => $gammeSearch,
+                'designpanier' => $designpanier
+            ];
+        }else{
+            return Inertia::render('Auth/Pages/Products/Gamme', [
+                'gamme' => $gammeSearch,
+                'designpanier' => $designpanier
+            ]);
+        }
     }
 
     /**
@@ -493,8 +520,6 @@ class OrderEntrepotController extends Controller
                 }
             }
         }
-
-        Log::debug($stock_error);
 
         $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $panier->id_panier_edi)->first();
         $request->session()->put('panier_commercial', $panierGet);

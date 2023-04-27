@@ -62,16 +62,18 @@ class DropshippingController extends Controller
             $produitsAchat = new \stdClass;
             $panierList = PanierEdiList::where('id_client_edi','=',$client->id_client_edi)->get();
             foreach($panierList as $list){
-               $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
-               for($i=0;$i<count($produit);$i++){
-                  $produit[$i]->prix_produit = Produit::calcul_prix_produit($produit[$i]->id_produit);
-                  $gammeGet = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
-                  $panier = PanierEdiList::where('id_produit','=',$produit[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
-                  $produit[$i]->gamme = $gammeGet;
-                  $produit[$i]->panier = $panier;
-                  $produit[$i]->isInPanier = true;
-                  $produitsAchat->panier[] = $produit[$i];
-               }
+               $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $list->panier->id_panier_edi)->first();
+               $produitsAchat->panier[] = Produit::getProduitPanier($list->id_produit,$list->panier->id_panier_edi,$list,$panierGet);
+               // $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
+               // for($i=0;$i<count($produit);$i++){
+               //    $produit[$i]->prix_produit = Produit::calcul_prix_produit($produit[$i]->id_produit);
+               //    $gammeGet = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
+               //    $panier = PanierEdiList::where('id_produit','=',$produit[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
+               //    $produit[$i]->gamme = $gammeGet;
+               //    $produit[$i]->panier = $panier;
+               //    $produit[$i]->isInPanier = true;
+               //    $produitsAchat->panier[] = $produit[$i];
+               // }
             }
          }else{
             $panier = new \stdClass;
@@ -90,20 +92,22 @@ class DropshippingController extends Controller
                 });
             });
         });
-
-
-        $user = User::with('client')->where('id','=',Auth::id())->first();
-        
-        $products = QueryBuilder::for(Gamme::class)
+      //   $products = QueryBuilder::for(Gamme::class)
+      //       ->defaultSort('gamme.nom_gamme')
+      //       ->select(['gamme.*','special.nom_special', 'client_edi_remise_gamme.remise AS remiseGamme'])
+      //       ->join('special', 'special.id_special', 'gamme.id_special')
+      //       ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
+      //           $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
+      //                ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
+      //       })
+      //       ->where('gamme.in_edi', '=', '1')
+      //       ->where('gamme.statut', '=', '1')
+      //       ->allowedFilters([$gammeSearch])
+      //       ->paginate((request('perPage') != "" ? request('perPage') : '12'))
+      //       ->withQueryString();
+         $products = Gamme::getRequestGammeCaracteristiques()
             ->defaultSort('gamme.nom_gamme')
-            ->select(['gamme.*','special.nom_special', 'client_edi_remise_gamme.remise AS remiseGamme'])
-            ->join('special', 'special.id_special', 'gamme.id_special')
-            ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
-                $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
-                     ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
-            })
-            ->where('gamme.in_edi', '=', '1')
-            ->where('gamme.statut', '=', '1')
+            ->where('gamme.statut', '=', 1)
             ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
@@ -127,17 +131,7 @@ class DropshippingController extends Controller
 
             
         
-        $dimensions = DB::table('gamme')
-            ->select(['gamme.id_gamme','dimension.largeur','dimension.longueur'])
-            ->distinct()
-            ->join('design', 'gamme.id_gamme', 'design.id_gamme')
-            ->join('produit', 'design.id_design', 'produit.id_design')
-            ->join('dimension', 'produit.id_dimension', 'dimension.id_dimension')
-            ->where('gamme.in_edi', '=', '1')
-            ->where('gamme.statut', '=', '1')
-            ->orderBy('dimension.largeur')
-            ->orderBy('dimension.longueur')
-            ->get();
+        $dimensions = Gamme::getAllDimensionGamme();
 
 
         // error_log(print_r($products));
@@ -314,8 +308,6 @@ class DropshippingController extends Controller
    }
 
    public function view_product(Request $request){
-
-      Log::debug($request);
      $designpanier = DB::table('design')
          ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
          ->distinct()
@@ -1301,18 +1293,10 @@ class DropshippingController extends Controller
       $client = $request->session()->get('client_actuel');
       $produitsAchat = new \stdClass;
       if(!empty($client)){
-           $panierList = PanierEdiList::where('id_client_edi','=',$client->id_client_edi)->get();
+           $panierList = PanierEdiList::with('panier')->where('id_client_edi','=',$client->id_client_edi)->get();
                foreach($panierList as $list){
-                  $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
-                  for($i=0;$i<count($produit);$i++){
-                     $produit[$i]->prix_produit = Produit::calcul_prix_produit($produit[$i]->id_produit);
-                     $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
-                     $panier = PanierEdiList::where('id_produit','=',$produit[$i]->id_produit)->where('id_client_edi','=',$client->id_client_edi)->first();
-                     $produit[$i]->gamme = $gamme;
-                     $produit[$i]->panier = $panier;
-                     $produit[$i]->isInPanier = true;
-                     $produitsAchat->panier[] = $produit[$i];
-                  }
+                  $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $list->panier->id_panier_edi)->first();
+                  $produitsAchat->panier[] = Produit::getProduitPanier($list->id_produit,$list->panier->id_panier_edi,$list,$panierGet);
                }
       }
 

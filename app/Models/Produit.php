@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Spatie\QueryBuilder\QueryBuilder;
+use stdClass;
 
 class Produit extends Model
 {
@@ -159,7 +160,6 @@ class Produit extends Model
         return $design;
     }
     
-
     public static function getAllCaracteristiques($isPaginate=false){
         if($isPaginate){
             $produits = QueryBuilder::for(Produit::class)
@@ -218,6 +218,33 @@ class Produit extends Model
         ->orderByRaw('CAST(SUBSTRING(produits_features_2.data_values, 3, LENGTH(produits_features_2.data_values) - 4) AS DECIMAL(10,2))')
         ->where('id_produit','=',$productId);
         return $dimensions;
+    }
+
+    public static function getProduitPanier($id_produit,$id_panier_edi,$panier,$panierGet)
+    {
+        $produit = Produit::getAllCaracteristiques()->with(['photo', 'gamme', 'statsProduit'])->where('id_produit', '=', $id_produit)->first();
+        $gamme = $produit->gamme;
+        $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit->gamme_id);
+        $produit->gamme = $gamme;
+
+        $produit->panier = $panier;
+
+        $couleur = $produit->couleur;
+        $produit->couleur = new stdClass;
+        $produit->couleur->nom_couleur = $couleur;
+
+        $design = $produit->design;
+        $produit->design = new stdClass;
+        $produit->design->nom_design = $design;
+
+        $produit->dimension->largeur = $produit->largeur;
+        $produit->dimension->longueur = $produit->longueur;
+        $produit->panierActuel = $panierGet;
+        $produit->id_panier_edi = $id_panier_edi;
+        $produit->isInPanier = true;
+        $produit->prix_produit = Produit::calcul_prix_produit($id_produit);
+
+        return $produit;
     }
 
     public static function calcul_poids($id_produit, $qte){

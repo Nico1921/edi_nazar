@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class Gamme extends Model
@@ -72,14 +73,20 @@ class Gamme extends Model
     }
 
     public static function getRequestGammeCaracteristiques() {
+        $user = User::with('client')->where('id','=',Auth::id())->first();
         $resultats = QueryBuilder::for(Gamme::class)
-        ->select('gamme.id_gamme','gamme.nom_gamme', 'gamme.prix_vente_ht_m2','gamme.img_gamme',
+        ->select('gamme.id_gamme','gamme.nom_gamme', 
+            'gamme.prix_vente_ht_m2','gamme.img_gamme', 'client_edi_remise_gamme.remise AS remiseGamme',
             DB::raw("REPLACE(REPLACE(cf.data_values, '[\"',''), '\"]', '') AS nom_special"),
             DB::raw("REPLACE(REPLACE(fa.data_values, '[\"',''), '\"]', '') AS id_fabrication"),
             DB::raw("REPLACE(REPLACE(tp.data_values, '[\"',''), '\"]', '') AS type_poils"),
             DB::raw("CASE WHEN REPLACE(REPLACE(uv.data_values, '[\"',''), '\"]', '') = 'Oui' THEN 1 ELSE 0 END AS uv_proof"),
             DB::raw("REPLACE(REPLACE(tt.data_values, '[\"',''), '\"]', '') AS type_tapis")
         )
+        ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
+            $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
+                 ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
+        })
         ->join('gammes_features as cf', function ($join) {
             $join->on('gamme.id_gamme', '=', 'cf.gamme_id')
                 ->where('cf.feature_id', '=', 5);
@@ -176,6 +183,27 @@ class Gamme extends Model
             ->get();
 
         return $dimensions;
+    }
+
+    public static function setRemiseGamme($products){
+        $user = User::with('client')->where('id','=',Auth::id())->first();
+        $products->each(function($product) use ($user){
+            $remise = 0;
+            if(isset($product->remiseGamme)){
+                $remise = $product->remiseGamme;
+            }
+            elseif(isset($user->client->taux_remise)){
+                $remise = $user->client->taux_remise;
+            }
+            if($remise > 0){
+                $product->prix_vente_ht_m2_remise = "".round($product->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
+            }
+            else{
+                $product->prix_vente_ht_m2_remise = false;
+            }
+        });
+
+        return $products;
     }
 
     public static function getM2withRemise($id_gamme){

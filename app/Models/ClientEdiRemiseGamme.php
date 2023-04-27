@@ -10,6 +10,8 @@ class ClientEdiRemiseGamme extends Model
     use HasFactory;
 
     protected $table = 'client_edi_remise_gamme';
+    protected $primaryKey = 'id_remise_gamme';
+    public $timestamps = false;
 
     protected $fillable = [
         'id_remise_gamme',
@@ -18,11 +20,7 @@ class ClientEdiRemiseGamme extends Model
         'id_client_edi',
         'id_gamme',
         'remise'
-    ];
-
-    protected $primaryKey = 'id_remise_gamme';
-
-    public $timestamps = false;
+    ]; 
 
 
 }

@@ -503,18 +503,21 @@ class CartController extends Controller
                     if ($validator->fails()) {
                         return Redirect::route('cart');
                     }else{
-                        $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
+                        $panierList = PanierEdiList::with('panier')->where('id_client_edi','=',$id_client_edi)->get();
                         foreach($panierList as $list){
-                           $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
-                           for($i=0;$i<count($produit);$i++){
-                              $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
-                              $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit[$i]->gamme_id);
-                              $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                              $produit[$i]->gamme = $gamme;
-                              $produit[$i]->panier = $panier;
-                              $produit[$i]->isInPanier = true;
-                              $produits->panier[] = $produit[$i];
-                           }
+                            $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $list->panier->id_panier_edi)->first();
+                            $produits->panier[] = Produit::getProduitPanier($list->id_produit,$list->panier->id_panier_edi,$list,$panierGet);
+
+                        //    $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
+                        //    for($i=0;$i<count($produit);$i++){
+                        //       $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
+                        //       $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit[$i]->gamme_id);
+                        //       $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
+                        //       $produit[$i]->gamme = $gamme;
+                        //       $produit[$i]->panier = $panier;
+                        //       $produit[$i]->isInPanier = true;
+                        //       $produits->panier[] = $produit[$i];
+                        //    }
                         }
                     }
                    
