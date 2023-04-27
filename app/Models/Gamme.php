@@ -70,6 +70,27 @@ class Gamme extends Model
         return $this->belongsTo(Design::class,'id_design','id_design');
     }
 
+    public static function setRemiseGamme($products){
+        $user = User::with('client')->where('id','=',Auth::id())->first();
+        $products->each(function($product) use ($user){
+            $remise = 0;
+            if(isset($product->remiseGamme)){
+                $remise = $product->remiseGamme;
+            }
+            elseif(isset($user->client->taux_remise)){
+                $remise = $user->client->taux_remise;
+            }
+            if($remise > 0){
+                $product->prix_vente_ht_m2_remise = "".round($product->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
+            }
+            else{
+                $product->prix_vente_ht_m2_remise = false;
+            }
+        });
+
+        return $products;
+    }
+
     public static function getM2withRemise($id_gamme){
         $remise = false;
         $user = User::with('client')->where('id','=',Auth::id())->first();

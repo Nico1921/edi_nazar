@@ -70,22 +70,7 @@ class OrderEntrepotController extends Controller
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
 
-            $products->each(function($product, $user){
-                $remise = 0;
-                if(isset($product->remiseGamme)){
-                    $remise = $product->remiseGamme;
-                }
-                elseif(isset($user->taux_remise)){
-                    $remise = $user->taux_remise;
-                }
-
-                if($remise > 0){
-                    $product->prix_vente_ht_m2_remise = "".round($product->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
-                }
-                else{
-                    $product->prix_vente_ht_m2_remise = false;
-                }
-            });
+            $products = Gamme::setRemiseGamme($products);
 
 
             /*//permet de recuperer les features de la gamme
@@ -203,7 +188,7 @@ class OrderEntrepotController extends Controller
 
 
         //rajoute la remise si il y a une remise par client et gamme ou si il y a une remise par client global. sinon renvoie faux
-        $gammeSearch->prix_vente_ht_m2_remise = isset($gammeSearch->remiseGamme)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($gammeSearch->remiseGamme / 100)), 2) . "":(isset($user->taux_remise)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($user->taux_remise / 100)), 2) . "":false);
+        $gammeSearch->prix_vente_ht_m2_remise = isset($gammeSearch->remiseGamme)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($gammeSearch->remiseGamme / 100)), 2) . "":(isset($user->client->taux_remise)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($user->client->taux_remise / 100)), 2) . "":false);
 
 
         /*$gammeSearch->prix_vente_ht_m2_remise = function($gammeSearch, $user){
