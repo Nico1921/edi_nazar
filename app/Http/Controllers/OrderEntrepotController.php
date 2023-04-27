@@ -702,7 +702,7 @@ class OrderEntrepotController extends Controller
                         }
                     }else{
                         if($product->statsProduit->stock_restant >= $qte){
-                            $prix_produit =  round(Produit::calcul_prix_produit($product->id_produit),2);
+                            $prix_produit = round(round(Produit::calcul_prix_produit($product->id_produit,1),3),2);
                             $prix_TVA = round($prix_produit * 0.2,2);
                             $prix_ht = $prix_produit - $prix_TVA;
                             $prix_TTC_TT = round($prix_produit * $qte,2);
