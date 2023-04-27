@@ -7,7 +7,7 @@ var prop = defineProps(['panier']);
 var panier = ref(prop.panier);
 console.log(panier);
 var clientUser = ref(usePage().props.value.auth.user[0].client);
-var isValidatePanier = (panier.value.panier.panierActuel != undefined ? panier.value.panier.panierActuel.is_validate : undefined);
+var isValidatePanier = (panier.value.panierActuel != undefined ? panier.value.panierActuel.is_validate : undefined);
 
 const roundResult = (number, nbVirugule) => {
    return parseFloat(number).toFixed(nbVirugule);
@@ -152,6 +152,7 @@ var deleteClient = (e,id_client_edi,ref_externe) => {
 };
 
 watchEffect(() => {
+   console.log('test')
 	panier.value = usePage().props.value.PanierDrop.panier;
 });
 console.log(isValidatePanier);

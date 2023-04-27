@@ -109,7 +109,7 @@ import Close from 'icons/Close.vue';
                       <span v-if="produit.stock <= produit.qte" class="flex items-center justify-center mr-2">Erreur Stock<span class="bg-red-700 w-[10px] h-[10px] block rounded-full mx-2"></span> | </span>
                       <div class="flex flex-col">
                         <span>Quantiter : {{produit.qte}}</span>
-                        <span>Prix Unitaire : {{ roundNumber(produit.prix_TTC_unitaire) }} €</span>
+                        <span>Prix TTC Unitaire : {{ roundNumber(produit.prix_TTC_unitaire) }} €</span>
                       </div>
                     </div>
                   </div>

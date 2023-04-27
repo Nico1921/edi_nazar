@@ -18,7 +18,7 @@ import ListClients from '@/Components/ListClients.vue';
 import ModalAjoutClient from '@/Components/ModalAjoutClient.vue';
 import {decode} from 'html-entities';
 
-const props = defineProps(["products","gamme","designpanier"]);
+const props = defineProps(["gamme","designpanier"]);
 var links = [{
         title: 'Accueil',
         link: '/',
@@ -41,16 +41,11 @@ var links = [{
       active: true
 }];
 
-//console.log(props.gamme)
-
 var dynamic = ref(usePage().props.value.dynamique_client);
 var panierDrop = ref(usePage().props.value.PanierDrop);
 var client = ref(panierDrop.value.panier.clientActuel);
-var productsSearch = ref(props.products.data);
-var products = ref(props.products);
 var designpanier = ref(props.designpanier);
 var produitAdd = ref(false);
-var countP = 0;
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 const isOpen = ref(false);
 const isOpenAddRef = ref(false);
@@ -84,59 +79,6 @@ function openModal(img,gamme,design,couleur) {
   document.getElementById("nomVisuelImage").textContent = nomProduit;
 };
 
-const getVariant = (idDesign) => {
-   if (idDesign != "" && idDesign != null) {
-      var checkExist = document.getElementById("tab_idDesign" + idDesign);
-      var keyCheck = checkExist.dataset.positiontab;
-      var checkExist = checkExist.nextSibling;
-      if (checkExist.id != "viewDetailsDesign") {
-         axios.post('/dropshipping/gamme/design', { id_design: idDesign }).then((response) => {
-            if (response.status == 200) {
-               if (document.getElementById("viewDetailsDesign") != null) {
-                  if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-                     document.getElementById("viewDetailsDesign").__vue_app__.unmount();
-                  }
-                  document.getElementById("viewDetailsDesign").remove();
-               }
-               var detailsDesign = createApp(DetailsDesign, { designs: response.data, gamme: props.gamme.nom_gamme });
-               var trNew = document.createElement('div');
-               trNew.id = "viewDetailsDesign";
-               trNew.dataset.idDesign = idDesign;
-               var classChoix = classVariant.base1;
-               if(keyCheck == 2 ){
-                  classChoix = classVariant.base2;
-               }else if(keyCheck == 3 ){
-                  classChoix = classVariant.base3;
-               }else if(keyCheck == 4){
-                  classChoix = classVariant.base4;
-               }
-               trNew.classList = classVariant.default +" "+ classChoix;
-               document.getElementById("tab_idDesign" + idDesign).parentNode.insertBefore(trNew, document.getElementById("tab_idDesign" + idDesign).nextSibling)
-               detailsDesign.mount(document.getElementById("viewDetailsDesign"));
-            }
-         });
-      } else if (checkExist.id == "viewDetailsDesign") {
-         if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-            document.getElementById("viewDetailsDesign").__vue_app__.unmount();
-         }
-         document.getElementById("viewDetailsDesign").remove();
-      }
-   }
-};
-
-const checkIsOnList = () => {
-   if (document.getElementById("viewDetailsDesign") != null) {
-      var dataId = document.getElementById("viewDetailsDesign").dataset.idDesign;
-      var check = document.getElementById("viewDetailsDesign").previousSibling;
-      if (check.id != "tab_idDesign" + dataId) {
-         if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-            document.getElementById("viewDetailsDesign").__vue_app__.unmount();
-         }
-         document.getElementById("viewDetailsDesign").remove();
-      }
-   }
-};
-
 var addCommande = (e,isPanier) => {
    e.preventDefault();
    var key1= formAddProduit.key_tab_1;
@@ -147,9 +89,9 @@ var addCommande = (e,isPanier) => {
          preserveState:true,
          onSuccess: (e) => {
             if(e.props.session.status){
-               designpanier.value[key1].produits[key2].panier.id_panier_edi_list = e.props.session.id_panier_edi_list;
+               designpanier.value[key1].produits[key2].produit_panier.id_panier_edi_list = e.props.session.id_panier_edi_list;
                designpanier.value[key1].produits[key2].isInPanier = true;
-               designpanier.value[key1].produits[key2].panier.quantiter = formAddProduit.quantiter;
+               designpanier.value[key1].produits[key2].produit_panier.quantiter = formAddProduit.quantiter;
                isOpenAdd.value = false;
                isOpenAddRef.value = false;
                Toast.fire({
@@ -181,9 +123,9 @@ var addCommandeRef = (e,isPanier) => {
          preserveState:true,
          onSuccess: (e) => {
             if(e.props.session.status){
-               designpanier.value[key1].produits[key2].panier.id_panier_edi_list = e.props.session.id_panier_edi_list;
+               designpanier.value[key1].produits[key2].produit_panier.id_panier_edi_list = e.props.session.id_panier_edi_list;
                designpanier.value[key1].produits[key2].isInPanier = true;
-               designpanier.value[key1].produits[key2].panier.quantiter = formAddProduitAndRef.quantiter;
+               designpanier.value[key1].produits[key2].produit_panier.quantiter = formAddProduitAndRef.quantiter;
                isOpenAdd.value = false;
                isOpenAddRef.value = false;
                Toast.fire({
@@ -219,7 +161,7 @@ var deleteCommande = (id_panier_edi_list,key,key2) =>{
             id_panier_edi_list: id_panier_edi_list,
          });
 
-         formProduit.post(route('order_entrepot/panier/delete'), {
+         formProduit.post(route('dropshipping/panier/delete'), {
             preserveScroll: true,
             onSuccess: (e) => {
                if(e.props.session.status){
@@ -228,8 +170,8 @@ var deleteCommande = (id_panier_edi_list,key,key2) =>{
                      title: 'Le produit à bien été supprimer du panier'
                   })
                   designpanier.value[key].produits[key2].isInPanier = false;
-                  designpanier.value[key].produits[key2].panier.quantiter = 0;
-                  designpanier.value[key].produits[key2].panier.id_panier_edi_list = 0;
+                  designpanier.value[key].produits[key2].produit_panier.quantiter = 0;
+                  designpanier.value[key].produits[key2].produit_panier.id_panier_edi_list = 0;
                   isOpenAdd.value = false;
                   isOpenAddRef.value = false;
                }else{
@@ -285,8 +227,8 @@ var setIsOpenAdd = (value,produit,key1,key2) => {
    formAddProduit.idProduit = produit.id_produit;
    formAddProduit.key_tab_1 = key1;
    formAddProduit.key_tab_2 = key2;
-   formAddProduit.quantiter = (produit.panier.quantiter > 0 ? produit.panier.quantiter : 1);
-   formAddProduit.id_panier_edi_list = (produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0);
+   formAddProduit.quantiter = (produit.produit_panier.quantiter > 0 ? produit.produit_panier.quantiter : 1);
+   formAddProduit.id_panier_edi_list = (produit.produit_panier.id_panier_edi_list != undefined ? produit.produit_panier.id_panier_edi_list : 0);
 }
 
 var setIsOpenAddRef = (value,produit,key1,key2) => {
@@ -295,22 +237,8 @@ var setIsOpenAddRef = (value,produit,key1,key2) => {
    formAddProduitAndRef.idProduit = produit.id_produit;
    formAddProduitAndRef.key_tab_1 = key1;
    formAddProduitAndRef.key_tab_2 = key2;
-   formAddProduitAndRef.quantiter = (produit.panier.quantiter > 0 ? produit.panier.quantiter : 1);
+   formAddProduitAndRef.quantiter = (produit.produit_panier.quantiter > 0 ? produit.produit_panier.quantiter : 1);
 }
-
-/*
-var calcul_prix_gamme = (prix_gamme) => {
-   var HT = prix_gamme;
-   if(clientUser.value.taux_remise > 0){
-      HT = HT - ((HT) * (clientUser.value.taux_remise /100));
-   }
-   return roundNumber(HT);
-}*/
-
-var roundNumber = (e) => {
-   return (Math.round(e * 100) / 100).toFixed(2);
-};
-
 
 watchEffect(() => {
    dynamic.value = usePage().props.value.dynamique_client;
@@ -326,79 +254,8 @@ watchEffect(() => {
    });
 });
 
-var classVariant = {
-   'default' : "col-span-12 mx-6 relative inline-block  text-sm text-gray-500 whitespace-nowrap mt-4 before:-mt-[1.8rem] before:border-r-solid before:content-[''] before:block before:absolute before:w-0 before:h-0 before:border-l-[30px] before:border-l-transparent before:border-l-solid before:border-r-[30px] before:border-r-transparent  before:border-b-[30px] before:border-b-gray-100",
-   'base1' : "before:xl:right-[85%] before:lg:right-[80%] before:sm:right-[70%] before:right-[50%]",
-   'base2' : "before:xl:right-[60%] before:lg:right-[45%] before:sm:right-[15%] before:right-[50%]",
-   'base3' : "before:xl:right-[35%] before:lg:right-[10%] before:sm:right-[15%] before:right-[50%]",
-   'base4' : "before:xl:right-[5%] before:lg:right-[45%] before:sm:right-[15%] before:right-[50%]",
-};
-
-var classPaginate = {
-   'previous' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
-   'previous_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
-   'next' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
-   'next_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
-   'number' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',
-   'number_active' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 bg-gray-100'
-}
-
-var perPage = () => {
-   const parsedUrl = new URL(window.location.href);
-   var targetNode = document.getElementById('per_page');
-   parsedUrl.searchParams.set('perPage',targetNode.value);
-   window.location.href = parsedUrl.href;
-};
-
-// const lowercase = (nom) => {
-//    return HtmlEntities.decode(nom.toLowerCase());
-// };
-
-var perPageActual = () => {
-   const parsedUrl = new URL(window.location.href);
-   if(parsedUrl.searchParams.get('perPage') != null ){
-      return parsedUrl.searchParams.get('perPage');
-   }else{
-      return 12;
-   }
-};
-
-var searchGamme = (e) => {
-   
-   const parsedUrl = new URL(window.location.href);
-   parsedUrl.searchParams.delete('filter[global]');
-   var per = parsedUrl.searchParams.get('perPage');
-   parsedUrl.searchParams.delete('perPage');
-   var page = parsedUrl.searchParams.get('page');
-   parsedUrl.searchParams.delete('page');
-   var urlBase = parsedUrl.href+'/search';
-   parsedUrl.href = urlBase;
-   parsedUrl.searchParams.set('filter[global]',e.target.value);
-   if(per != '' && per  != undefined){
-      parsedUrl.searchParams.set('perPage',per);
-   }
-   if(page != '' && page != undefined){
-      parsedUrl.searchParams.set('page',page);
-   }
-   var url = parsedUrl.href;
-   axios.post(url).then((response)=>{
-      if(response.status == 200){
-         const parsedUrl = new URL(window.location.href);
-         parsedUrl.searchParams.set('filter[global]',e.target.value);
-         productsSearch.value = response.data.products.data;
-         products.value = response.data.products;
-            window.history.replaceState('','',parsedUrl.href);
-      }
-   })
-};
-
-const getCountP = () => {
-   if(countP == 4){
-      countP = 1;
-   }else{
-      countP++;
-   }
-   return countP;
+const lowercase = (nom) => {
+   return HtmlEntities.decode(nom.toLowerCase());
 };
 
 var formatPrix = (prix) => {
@@ -411,11 +268,7 @@ var formatPrix = (prix) => {
 
 <script>
 import Eye from 'icons/EyeOutline.vue';
-import Close from 'icons/Close.vue';
 import ImageOff from 'icons/ImageOff.vue';
-import Right from 'icons/ChevronRight.vue';
-import Left from 'icons/ChevronLeft.vue';
-import Search from 'icons/Magnify.vue';
 import CartAdd from 'icons/CartPlus.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import axios from 'axios';
@@ -432,30 +285,6 @@ export default {
 <template>
 
    <Head title="Orders Products Clients" />
-   <!-- <section :style="imgBackground" class="h-52 relative container mx-auto bg-cover bg-[center_bottom_-15rem]">
-      <Breadcrumbs :links="links" />
-      <div class="absolute top-1 left-0 text-white p-5 py-2 rounded-r-lg bg-primary-50">
-         <a class="underline" href="/">Accueil</a> / <a class="underline" href="/dropshipping/gamme">Gamme</a> / {{ props.gamme.nom_gamme }}
-      </div>
-      <div class="flex items-center h-full ">
-         <h1 class="text-white text-3xl font-bold px-5 py-2 rounded-r-lg bg-primary-50">{{ props.gamme.nom_gamme }}</h1>
-      </div>
-      <div class="absolute bottom-0 left-0 py-2">
-         <div class="relative  rounded bg-gradient-to-r from-blue-400 to-indigo-500">
-               <a href="/dropshipping/gamme" class="group rounded bg-gradient-to-r from-blue-400 to-indigo-500">
-                  <div class="bg-gradient-to-r to-blue-400 from-indigo-500 text-white font-bold py-2 px-4 rounded shadow-md transition duration-500 ease-in-out opacity-0 group-hover:opacity-100">
-                     <span class="opacity-100 text-white font-bold">Retourner aux gammes</span>
-                  </div>
-                  <div class="absolute flex items-center justify-center w-full h-full top-0 left-0 opacity-100 group-hover:opacity-0 transition duration-500 ease-in-out">
-                     <span class="opacity-100 text-white font-bold">Retourner aux gammes</span>
-                  </div>
-               </a>
-            </div>
-      </div>
-   </section> -->
-
-   
-
 
    <section class="container mx-auto mt-5">
       <Breadcrumbs :links="links" />
@@ -472,7 +301,7 @@ export default {
          <div class="col-span-3 rounded bg-primary-white border border-primary-100 text-center flex flex-col text-primary-300">
             <span>Tapis {{ (props.gamme.type_tapis == 0 ? 'intérieur' : props.gamme.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
             <span>Poils {{ (props.gamme.type_poils == 1 ? 'court' : 'long') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
-            <span class="capitalize">{{ props.gamme.nom_special }}</span>
+            <span class="capitalize">{{ lowercase(props.gamme.nom_special) }}</span>
             <span>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
             <div class="sm:w-auto w-full py-2 flex items-center justify-center">
                <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
@@ -550,12 +379,12 @@ export default {
                                     <div  class="flex items-center justify-center ">
                                           <Tooltip>
                                              <template #header>
-                                                <div v-if="produit.stock_restant > 0" class="hover:scale-110 transition duration-300">
+                                                <div v-if="produit.stats_produit.stock_restant > 0" class="hover:scale-110 transition duration-300">
                                                    <button @click="(client != undefined  ? setIsOpenAdd(true,produit,key1,key2) : setIsOpenAddRef(true,produit,key1,key2))"
-                                                      :class="produit.stock_restant > 10 ? 'bg-green-700' : (produit.stock_restant > 0 ? 'bg-orange-400 ' : 'bg-red-700')" 
+                                                      :class="produit.stats_produit.stock_restant > 10 ? 'bg-green-700' : (produit.stats_produit.stock_restant > 0 ? 'bg-orange-400 ' : 'bg-red-700')" 
                                                       class=" w-[35px] h-[35px] block rounded-full flex items-center justify-center">
                                                       <CartAdd v-if="!produit.isInPanier" class="text-xl text-white items-center justify-center" />
-                                                      <span v-else class="text-xl text-white items-center justify-center">{{ produit.panier.quantiter }}</span>
+                                                      <span v-else class="text-xl text-white items-center justify-center">{{ produit.produit_panier.quantiter }}</span>
 
                                                    </button>
                                                 </div>
@@ -563,7 +392,7 @@ export default {
                                                 <span v-else class="bg-red-700 w-[35px] h-[35px] block rounded-full flex items-center justify-center"></span>
                                              </template>
                                              <template #body>
-                                                <span v-if="produit.stock_restant > 0"> {{(produit.isInPanier ? 'Modifier quantiter' : 'Ajouter au')}} panier</span>
+                                                <span v-if="produit.stats_produit.stock_restant > 0"> {{(produit.isInPanier ? 'Modifier quantiter' : 'Ajouter au')}} panier</span>
                                                 <span v-else> Rupture de stock </span>
                                              </template>
                                           </Tooltip>
@@ -690,7 +519,7 @@ export default {
             leave-to="opacity-0 scale-95" :unmount="false">
             <DialogPanel class="w-full border-[5px] border-primary-200 max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all" >
               <DialogTitle as="h3" class="lg:text-lg text-sm text-center font-medium leading-6 text-gray-900"  v-if="produitAdd != false">
-               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantiter' : 'Ajouter ') }} produit {{ produitAdd.sku }}
+               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantiter' : 'Ajouter ') }} produit {{ produitAdd.code_sku }}
               </DialogTitle>
                <form v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
                   <input type="hidden" name="id_produit" id="id_produit" v-model="formAddProduit.idProduit" />
@@ -705,7 +534,7 @@ export default {
                         <InputError class="mt-2" :message="formAddProduit.errors.id_panier_edi_list" />
                      </div>
                      <div class="w-full mt-7 ml-5" v-if="produitAdd.isInPanier">
-                        <button type="button" @click="deleteCommande(produitAdd.panier.id_panier_edi_list,formAddProduit.key_tab_1,formAddProduit.key_tab_2)" class="w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300">
+                        <button type="button" @click="deleteCommande(produitAdd.produit_panier.id_panier_edi_list,formAddProduit.key_tab_1,formAddProduit.key_tab_2)" class="w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300">
                            <BackspaceIcon class="w-5 h-5 mr-2" />Suprimmer le produit du panier
                         </button>
                      </div>

@@ -59,11 +59,11 @@ class OrderEntrepotController extends Controller
             ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
-
+        $products = Gamme::setRemiseGamme($products); 
         
         
         $dimensions = Gamme::getAllDimensionGamme(); 
-        $products = Gamme::setRemiseGamme($products); 
+        
 
         return Inertia::render('Auth/Pages/Products', [
             'products' => $products,
@@ -91,22 +91,7 @@ class OrderEntrepotController extends Controller
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
 
-            $products->each(function($product, $user){
-                $remise = 0;
-                if(isset($product->remiseGamme)){
-                    $remise = $product->remiseGamme;
-                }
-                elseif(isset($user->taux_remise)){
-                    $remise = $user->taux_remise;
-                }
- 
-                if($remise > 0){
-                    $product->prix_vente_ht_m2_remise = "".round($product->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
-                }
-                else{
-                    $product->prix_vente_ht_m2_remise = false;
-                }
-            });
+        $products = Gamme::setRemiseGamme($products); 
 
         return [
             'products' => $products
@@ -122,6 +107,7 @@ class OrderEntrepotController extends Controller
     {
         $gammeSearch = Gamme::where('nom_gamme', '=', $gamme)->first();
         $gammeSearch = Gamme::getGammeCaracteristiques($gammeSearch->id_gamme);
+        $gammeSearch = Gamme::setRemiseGamme($gammeSearch,false);
 
         $designpanier = Produit::getAllCaracteristiquesDesign()
             ->distinct()
@@ -489,7 +475,7 @@ class OrderEntrepotController extends Controller
                         }
                     }else{
                         if($product->statsProduit->stock_restant >= $qte){
-                            $prix_produit =  round(Produit::calcul_prix_produit($product->id_produit),2);
+                            $prix_produit = round(round(Produit::calcul_prix_produit($product['id_produit'],1),3),2); 
                             $prix_TVA = round($prix_produit * 0.2,2);
                             $prix_ht = $prix_produit - $prix_TVA;
                             $prix_TTC_TT = round($prix_produit * $qte,2);

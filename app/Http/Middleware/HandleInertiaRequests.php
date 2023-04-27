@@ -71,18 +71,6 @@ class HandleInertiaRequests extends Middleware
                             $panierList = PanierEdiList::with('panier')->where('id_client_edi','=',$id_client_edi)->get();
                             foreach($panierList as $list){
                                 $produitsAchat->panier[] = Produit::getProduitPanier($list->id_produit,$list->panier->id_panier_edi,$list,$panierGet);
-                                // $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
-                                // for($i=0;$i<count($produit);$i++){
-                                //     $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
-                                //     $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit[$i]->gamme_id);
-                                //     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                                //     $produit[$i]->gamme = $gamme;
-                                //     $produit[$i]->panier = $panier;
-                                //     $produit[$i]->panierActuel = $panierGet;
-                                //     $produit[$i]->id_panier_edi = $request->session()->get('panier_commercial')->id_panier_edi;
-                                //     $produit[$i]->isInPanier = true;
-                                //     $produitsAchat->panier[] = $produit[$i];
-                                // }
                             }
                         }
                     }
@@ -108,14 +96,6 @@ class HandleInertiaRequests extends Middleware
                                 $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
                                 $panierCountF = $panierCountF + $panierCount; 
 
-                                /*
-                                $panierList = PanierEdiList::with(["produit" => function($query) {
-                                $query->with(['photo','dimension','statsProduit','design' => function($query2) {
-                                $query2->with('gamme');
-                                },'couleur']);
-                                }])->where('id_client_edi','=',$id_client_edi)->get();
-                                */
-
                                 $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
                                 $produits =array();
                                 for($j=0;$j<count($panierList);$j++){
@@ -134,7 +114,7 @@ class HandleInertiaRequests extends Middleware
                                     $produitClient->dimension->longueur = $produitClient->longueur;                                 
                                     $produit = $produitClient;
 
-                                    $gamme =  $list->produit->gamme;
+                                    $gamme =  $produit->gamme;
                                     $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit->gamme_id);
                                     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
                                     $produit->prixProduit = Produit::calcul_prix_produit($produit->id_produit);

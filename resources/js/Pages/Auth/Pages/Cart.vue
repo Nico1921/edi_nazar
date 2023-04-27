@@ -66,7 +66,7 @@ export default {
                   <h1 class=" w-full font-semibold text-lg lg:text-2xl sm:text-xl text-gray-800 text-center py-2">Panier - {{ (typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping') }}</h1>
                </div>   
                   <CartEntrepot v-if="typeVente == 1" :produits="produits" :panier="props.panier" />
-                  <CartDropshipping v-if="typeVente == 2" :panier="panierDrop" />
+                  <CartDropshipping v-if="typeVente == 2" :panier="panierDrop.panier" />
             </div>
             <div class="col-span-4 grid grid-cols-8 ml-5">
                <div class="lg:col-span-3 sm:col-span-4 col-span-8">
