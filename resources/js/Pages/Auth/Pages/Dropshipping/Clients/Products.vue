@@ -219,7 +219,7 @@ var deleteCommande = (id_panier_edi_list,key,key2) =>{
             id_panier_edi_list: id_panier_edi_list,
          });
 
-         formProduit.post(route('order_entrepot/panier/delete'), {
+         formProduit.post(route('dropshipping/panier/delete'), {
             preserveScroll: true,
             onSuccess: (e) => {
                if(e.props.session.status){

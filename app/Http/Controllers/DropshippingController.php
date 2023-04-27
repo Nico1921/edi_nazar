@@ -836,7 +836,7 @@ class DropshippingController extends Controller
             $idArray = array_search($import['num_order'], array_column($clients, 'num_commande'));
             $m2TT = $m2 * $import['qte'];
             $clientProduitStockInvalide = false;
-            $prix_TTC_unitaire = Produit::calcul_prix_produit($product->id_produit);
+            $prix_TTC_unitaire = round(round(Produit::calcul_prix_produit($product->id_produit,1),3),2); 
             $prixTTC_TT = round($prixTTC_TT + ($prix_TTC_unitaire * $import['qte']),2);
             $prixTVA_TT = round($prixTTC_TT * 0.2,2);
             $prixHT_TT = $prixTTC_TT - $prixTVA_TT;
@@ -1035,7 +1035,7 @@ class DropshippingController extends Controller
                      foreach($client['products'] as $product){
                         $stock = StatsProduit::where('id_produit','=',$product['id_produit'])->first();
                         if(isset($stock->stock_restant) && $stock->stock_restant > $product['qte']){
-                           $prix_produit =  round(Produit::calcul_prix_produit($product['id_produit']),2);
+                           $prix_produit =  round(round(Produit::calcul_prix_produit($product['id_produit'],1),3),2); 
                            $prix_TVA = round($prix_produit * 0.2,2);
                            $prix_ht = $prix_produit - $prix_TVA;
                            $prix_TTC_TT = round($prix_produit * $product['qte'],2);
