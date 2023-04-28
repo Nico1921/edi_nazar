@@ -341,7 +341,22 @@ class CommandeMarketplace extends Model
                  }
  
                  if(isset($commandeMarketplace->id_commande) && !empty($commandeMarketplace->id_commande) && $commandeMarketplace->id_commande > 0){
-                    $status = true;
+                  PaiementMarketplace::create([
+                     'id_commande' => $commandeMarketplace->id_commande,
+                     'date_ajout' => date('Y-m-d H:i:s'),
+                     'date_maj' => date('Y-m-d H:i:s'),
+                     'payment_type' => 4,
+                     'nature' => $commandeMarketplace->ref_externe,
+                     'transaction' => $commandeMarketplace->ref_externe,
+                     'date_payment' => date('Y-m-d'),
+                     'amount_ttc'=> $commandeMarketplace->total_ttc,
+                     'bank_charges' => '',
+                     'comments'  => '',
+                     'pdf_paiement'  => '',
+                     'id_avoir'  => '',
+                     'id_client' => $clientMarketplace->id_client
+                  ]);
+                  $status = true;
                  }
               }
            }

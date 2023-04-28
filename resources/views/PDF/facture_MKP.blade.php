@@ -386,7 +386,7 @@ function aff_type_paiement($payment_type=''){
                                             <td style="padding:5px">
                                                 @if(!empty($payment) && $paymentCount > 0)
                                                     <u>Paiement(s) :</u><br /><br />
-                                                    @foreach($ps as $valPayment)
+                                                    @foreach($payment as $valPayment)
                                                         @if($valPayment->payment_type == '1')
                                                                 @php
                                                                 sprintf('- %s %s %s %s %s&euro;<br />',

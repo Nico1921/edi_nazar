@@ -506,7 +506,6 @@ class OrderEntrepotController extends Controller
                 }
             }
         }
-
         $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $panier->id_panier_edi)->first();
         $request->session()->put('panier_commercial', $panierGet);
         if($stock_error == 1){

@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Gamme;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Spatie\QueryBuilder\QueryBuilder;
 use stdClass;
+=======
+use Illuminate\Support\Facades\Log;
+>>>>>>> main
 
 class Produit extends Model
 {
@@ -271,7 +275,8 @@ class Produit extends Model
     }
 
     public static function calcul_prix_produit($id_produit,$isTTC=0){
-        $produit = Produit::with(['dimension','design'])->where('id_produit','=',$id_produit)->first();
+        $produit = Produit::with(['dimension'])->where('id_produit','=',$id_produit)->first();
+        Log::debug($produit);
         $gamme = Gamme::getM2withRemise($produit->gamme_id);
         $m2 = ($produit->dimension->largeur/100) * ($produit->dimension->longueur/100);
         $prixProduit = $gamme * $m2;
