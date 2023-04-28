@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use stdClass;
 
 class Commande extends Model
 {
@@ -78,6 +79,8 @@ class Commande extends Model
 
     public static function create_facture($id_panier_edi,$paymentType = 1,$id_distributeur){
         $panier = PanierEdi::where('id_panier_edi','=',$id_panier_edi)->first();
+        $commande = new stdClass;
+        $facture = new stdClass;
         if(!empty($panier->id_panier_edi) && $panier->id_panier_edi > 0){
             $id_client = User::with('client')->where('id','=',$id_distributeur)->first(); 
                         Adresse::create([
@@ -110,7 +113,7 @@ class Commande extends Model
                             'taux_tva' => '20',
                             'total_ht' => $panier->total_HT,
                             'total_tva' => $panier->total_taxe,
-                            'due_ttc' => ($paymentType == 2 ? $panier->total_ttc : '0'),
+                            'due_ttc' => ($paymentType == 2 ? '0' : $panier->total_ttc),
                             'commentaire' => 'Commande EDI',
                             'mois' => '',
                             'mois2' => null,
@@ -205,6 +208,22 @@ class Commande extends Model
         
 
         if(!empty($facture->id_facture) && $facture->id_facture){
+            if($paymentType == 2){
+                Payment::create([
+                    'id_commande' => $commande->id_commande,
+                    'id_facture' => $facture->id_facture,
+                    'date_ajout' => date('Y-m-d H:i:s'),
+                    'date_maj' => date('Y-m-d H:i:s'),
+                    'payment_type' => 4,
+                    'nature' => $commande->num_commande,
+                    'transaction' => '',
+                    'date_payment' => date('Y-m-d'),
+                    'amount_ttc' => $commande->total_ttc,
+                    'bank_charges' => 0,
+                    'comments' => '',
+                    'id_avoir' => 0
+                ]);
+            }
             return true;
         }else{
             return false;
