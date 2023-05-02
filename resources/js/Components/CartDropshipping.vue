@@ -167,9 +167,9 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                <ExclamationTriangleIcon v-if="isValidatePanier" class="h-8 w-8 text-red-600" />
                <span v-if="isValidatePanier" class="pl-2 text-red-600">Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.</span>
             </div>
-            <div v-if="panier.clients != undefined" class="sm:my-4 rounded-lg border shadow-lg p-10 w-full h-90 ">
-               <div v-for="(client, key1) in panier.clients" :key="key1" class="w-full lg:p-4 sm:p-3 p-2 my-2 bg-gray-100 rounded">
-                  <div class="flex items-center justify-center">
+            <div v-if="panier.clients != undefined" class="sm:my-4 rounded-lg border shadow-lg p-4 w-full h-90 max-h-screen scrollbarCustom overflow-y-auto">
+               <div v-for="(client, key1) in panier.clients" :key="key1" class="sm:my-4 px-2 py-4 rounded-lg border shadow-lg bg-gray-100 w-full grid grid-cols-12   ">
+                  <div class="flex items-center justify-center col-span-12">
                      <h2 class="font-bold text-center text-xl py-1">Commande : {{client.client.ref_externe}}</h2>
                      <button type="button"
                         @click="deleteClient($event,(client.client.id_client_edi != undefined ? client.client.id_client_edi : 0),client.client.ref_externe)"
@@ -177,8 +177,8 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                         <Delete class="text-white" />
                      </button>
                   </div>
-                  <div v-if="client.nbProduit > 0" v-for="(produit, key2) in client.produits" :key="key2" class="grid grid-cols-12 py-4" >
-                     <div class="sm:col-span-2 xsm:col-span-3 col-span-4 flex items-center justify-center">
+                  <div v-if="client.nbProduit > 0" v-for="(produit, key2) in client.produits" :key="key2" class="2xl:col-span-3 lg:col-span-4 sm:col-span-6 col-span-12 shadow-lg bg-white rounded grid grid-cols-12 px-2 py-4 my-2 lg:mx-4 sm:mx-2 mx-6" >
+                     <div class="sm:col-span-4 xsm:col-span-3 col-span-4 flex items-center justify-center">
                         <div v-if="produit.photo != null"
                            class=" h-full w-full lg:max-h-52 max-h-42 px-2">
                            <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+produit.photo.img_produit"
@@ -188,14 +188,14 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                            <ImageOff />
                         </div>
                      </div>
-                     <div class="sm:col-span-10 xsm:col-span-9 col-span-8 flex flex-col xl:text-lg text-sm">
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
+                     <div class="sm:col-span-8 xsm:col-span-9 col-span-8 h-full flex flex-col justify-evenly">
+                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
+                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
                            produit.dimension.longueur }}</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
-                        <div class="grid grid-cols-8 lg:w-1/2">               
+                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
+                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
+                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
+                        <div class="grid grid-cols-8">               
                            <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
                               <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">
                                  <InputNumber @change="modifQte($event,produit.design.nom_design + produit.dimension.largeur + 'x' + produit.dimension.longueur,key1)" name="qte"
