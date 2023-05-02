@@ -68,6 +68,10 @@ export default {
                   <CartEntrepot v-if="typeVente == 1" :produits="produits" :panier="props.panier" />
                   <CartDropshipping v-if="typeVente == 2" :panier="panierDrop" />
             </div>
+            <div v-if="typeVente == 2" class="col-span-4  bg-blue-200 px-4 py-2 my-2 rounded flex items-center">
+                  <ExclamationCircleIcon class="h-8 w-8 text-blue-600" />
+                  <span class="pl-2 text-blue-600">* Le prix du transport peux varier en fonction du pays de livraison.</span>
+               </div> 
             <div class="col-span-4 grid grid-cols-8 ml-5">
                <div class="lg:col-span-3 sm:col-span-4 col-span-8">
                   <a :href="(typeVente == 1 ? '/order_entrepot/gamme' : '/dropshipping/gamme')" class="relative inline-block group">

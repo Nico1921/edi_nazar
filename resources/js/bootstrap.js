@@ -327,6 +327,17 @@ window.HtmlEntities = HtmlEntities;
 window.HtmlEntities.encode = HtmlEntities.encode;
 window.HtmlEntities.decode = HtmlEntities.decode;
 
+const checkImageURL = (url) => {
+   return new Promise((resolve, reject) => {
+     const img = new Image();
+     img.onload = () => resolve(true);
+     img.onerror = () => reject(false);
+     img.src = url;
+   });
+ };
+
+ window.checkImageURL = checkImageURL;
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

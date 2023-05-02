@@ -19,6 +19,10 @@ import {ArrowRightCircleIcon} from '@heroicons/vue/24/outline';
          }} pcs</span>
          <span class="py-2 text-sm"><span class="font-semibold text-lg">M² Total : </span> {{ (props.panier != undefined ? (props.panier.total_m2 != undefined ? props.panier.total_m2 : '0') : '0') }}
             m²</span>
+            <span class="py-2 text-sm"><span class="font-semibold text-lg">Montant HT :</span> {{ (props.panier != undefined ? (props.panier.montant_ht != undefined ? props.panier.montant_ht : '0') : '0') }}
+            €</span>
+         <span class="py-2 text-sm"><span class="font-semibold text-lg">* Transport HT :</span> {{ (props.panier != undefined ? (props.panier.prix_transport != undefined ? props.panier.prix_transport : '0') : '0') }}
+            €</span>
          <span class="py-2 text-sm"><span class="font-semibold text-lg">Total HT :</span> {{ (props.panier != undefined ? (props.panier.total_HT != undefined ? props.panier.total_HT : '0') : '0') }}
             €</span>
          <span class="py-2 text-sm"><span class="font-semibold text-lg">Total TVA : </span>{{ (props.panier != undefined ? (props.panier.total_taxe != undefined ? props.panier.total_taxe : '0') : '0') }}

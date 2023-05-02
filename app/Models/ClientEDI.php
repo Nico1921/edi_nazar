@@ -45,10 +45,12 @@ class ClientEDI extends Model
         'ville_facturation',
         'num_commande',
         'quantiter',
+        'montant_ht',
         'total_ht',
         'total_taxe',
         'total_ttc',
         'poids',
+        'prix_transport',
         'total_m2',
         'id_panier_edi',
     ];
@@ -99,6 +101,10 @@ class ClientEDI extends Model
         $quantiterTotal = 0;
         $m2TT = 0.00;
         $poidsTT = 0.00;
+        $clientsPanier = ClientEDI::where('id_client_edi', '=', $id_client)->first();
+        $panierClient = PanierEdi::find($clientsPanier->id_panier_edi);
+
+        $prixTransport = 0;
 
         $total_ttc = DB::table('panier_edi_list')->where('id_client_edi', '=', $id_client)->sum('prix_ttc_total');
         $quantiterTotal = DB::table('panier_edi_list')->where('id_client_edi', '=', $id_client)->sum('quantiter');
@@ -112,15 +118,27 @@ class ClientEDI extends Model
             $poidsTT = $poidsTT + ($m2 * $panierO->quantiter) * $gamme->poids_m2_KG;
         }
 
-        $total_ht = round($total_ttc / 1.2,2);
+        if($panierClient->is_marketplace){
+            $prixTransport = PaysLivraison::getPrixLivraison($clientsPanier->pays,$poidsTT);
+        }
+        
+
+        $prixTransport = round($prixTransport,2);
+        $montant_ht = round($total_ttc / 1.2,2);
+        $total_ht = $montant_ht + $prixTransport;
+        $total_ht = round($total_ht,2);
+        
+        $total_ttc = $total_ht * (1 + 0.20);
         $total_tva = $total_ttc - $total_ht;
 
         $clientsPanier = ClientEDI::where('id_client_edi', '=', $id_client)->first();
+        $clientsPanier->montant_ht = $montant_ht;
         $clientsPanier->total_ht = $total_ht;
         $clientsPanier->total_taxe = $total_tva;
         $clientsPanier->total_ttc = $total_ttc;
         $clientsPanier->total_m2 = $m2TT;
         $clientsPanier->poids = $poidsTT;
+        $clientsPanier->prix_transport = $prixTransport;
         $clientsPanier->quantiter = $quantiterTotal;
         $clientsPanier->save();
 

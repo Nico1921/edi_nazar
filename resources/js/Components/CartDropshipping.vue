@@ -177,7 +177,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                         <Delete class="text-white" />
                      </button>
                   </div>
-                  <div v-if="client.nbProduit > 0" v-for="(produit, key2) in client.produits" :key="key2" class="2xl:col-span-3 lg:col-span-4 sm:col-span-6 col-span-12 shadow-lg bg-white rounded grid grid-cols-12 px-2 py-4 my-2 lg:mx-4 sm:mx-2 mx-6" >
+                  <div v-if="client.nbProduit > 0" v-for="(produit, key2) in client.produits" :key="key2" class="lg:col-span-4 sm:col-span-6 col-span-12 shadow-lg bg-white rounded grid grid-cols-12 px-2 py-4 my-2 lg:mx-4 sm:mx-2 mx-6" >
                      <div class="sm:col-span-4 xsm:col-span-3 col-span-4 flex items-center justify-center">
                         <div v-if="produit.photo != null"
                            class=" h-full w-full lg:max-h-52 max-h-42 px-2">
@@ -194,7 +194,8 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                            produit.dimension.longueur }}</span>
                         <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
                         <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
+                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT hors transport : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
+                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix transport TT : {{ produit.prixTransport }} €</span>
                         <div class="grid grid-cols-8">               
                            <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
                               <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">

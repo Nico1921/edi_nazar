@@ -63,6 +63,10 @@ export default {
                   <ExclamationCircleIcon class="h-8 w-8 text-yellow-600" />
                   <span class="pl-2 text-yellow-600">Pour continuer, veuillez saisir l'adresse pour chaque commande.</span>
                </div>   
+               <div class="col-span-4  bg-blue-200 px-4 py-2 my-2 rounded flex items-center">
+                  <ExclamationCircleIcon class="h-8 w-8 text-blue-600" />
+                  <span class="pl-2 text-blue-600">* Le prix du transport peux varier en fonction du pays de livraison.</span>
+               </div> 
                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8 ">
                   <div v-for="(client, key) in clients"
                      :key="key" class="bg-white rounded-lg shadow-lg p-6 flex flex-col justify-between hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">

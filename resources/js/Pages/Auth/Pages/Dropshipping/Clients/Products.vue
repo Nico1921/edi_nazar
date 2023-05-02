@@ -11,11 +11,11 @@ import {
 import { HomeIcon,ListBulletIcon,ArrowLeftIcon  } from '@heroicons/vue/24/solid';
 import { ArrowRightCircleIcon  } from '@heroicons/vue/24/outline';
 import Tooltip from '@/Components/Tooltip.vue';
-import DetailsDesign from '@/Components/DetailsDesignAction.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import InputError from '@/Components/InputError.vue';
 import ListClients from '@/Components/ListClients.vue';
 import ModalAjoutClient from '@/Components/ModalAjoutClient.vue';
+import InputNumberProduit from '@/Components/InputNumberProduit.vue';
 import {decode} from 'html-entities';
 
 const props = defineProps(["products","gamme","designpanier"]);
@@ -41,16 +41,11 @@ var links = [{
       active: true
 }];
 
-//console.log(props.gamme)
-
 var dynamic = ref(usePage().props.value.dynamique_client);
 var panierDrop = ref(usePage().props.value.PanierDrop);
 var client = ref(panierDrop.value.panier.clientActuel);
-var productsSearch = ref(props.products.data);
-var products = ref(props.products);
 var designpanier = ref(props.designpanier);
 var produitAdd = ref(false);
-var countP = 0;
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 const isOpen = ref(false);
 const isOpenAddRef = ref(false);
@@ -84,58 +79,18 @@ function openModal(img,gamme,design,couleur) {
   document.getElementById("nomVisuelImage").textContent = nomProduit;
 };
 
-const getVariant = (idDesign) => {
-   if (idDesign != "" && idDesign != null) {
-      var checkExist = document.getElementById("tab_idDesign" + idDesign);
-      var keyCheck = checkExist.dataset.positiontab;
-      var checkExist = checkExist.nextSibling;
-      if (checkExist.id != "viewDetailsDesign") {
-         axios.post('/dropshipping/gamme/design', { id_design: idDesign }).then((response) => {
-            if (response.status == 200) {
-               if (document.getElementById("viewDetailsDesign") != null) {
-                  if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-                     document.getElementById("viewDetailsDesign").__vue_app__.unmount();
-                  }
-                  document.getElementById("viewDetailsDesign").remove();
-               }
-               var detailsDesign = createApp(DetailsDesign, { designs: response.data, gamme: props.gamme.nom_gamme });
-               var trNew = document.createElement('div');
-               trNew.id = "viewDetailsDesign";
-               trNew.dataset.idDesign = idDesign;
-               var classChoix = classVariant.base1;
-               if(keyCheck == 2 ){
-                  classChoix = classVariant.base2;
-               }else if(keyCheck == 3 ){
-                  classChoix = classVariant.base3;
-               }else if(keyCheck == 4){
-                  classChoix = classVariant.base4;
-               }
-               trNew.classList = classVariant.default +" "+ classChoix;
-               document.getElementById("tab_idDesign" + idDesign).parentNode.insertBefore(trNew, document.getElementById("tab_idDesign" + idDesign).nextSibling)
-               detailsDesign.mount(document.getElementById("viewDetailsDesign"));
-            }
-         });
-      } else if (checkExist.id == "viewDetailsDesign") {
-         if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-            document.getElementById("viewDetailsDesign").__vue_app__.unmount();
+const findElementInClassArray = (array, elementSearch) => {
+   var elementCheck = undefined;
+   array.forEach(element => {
+      if (element.classList != undefined && element.classList.length > 0) {
+         if (element.classList.contains(elementSearch)) {
+            elementCheck = element;
          }
-         document.getElementById("viewDetailsDesign").remove();
       }
-   }
-};
+   });
 
-const checkIsOnList = () => {
-   if (document.getElementById("viewDetailsDesign") != null) {
-      var dataId = document.getElementById("viewDetailsDesign").dataset.idDesign;
-      var check = document.getElementById("viewDetailsDesign").previousSibling;
-      if (check.id != "tab_idDesign" + dataId) {
-         if (document.getElementById("viewDetailsDesign").__vue_app__ != undefined) {
-            document.getElementById("viewDetailsDesign").__vue_app__.unmount();
-         }
-         document.getElementById("viewDetailsDesign").remove();
-      }
-   }
-};
+   return elementCheck;
+}
 
 var addCommande = (e,isPanier) => {
    e.preventDefault();
@@ -298,19 +253,6 @@ var setIsOpenAddRef = (value,produit,key1,key2) => {
    formAddProduitAndRef.quantiter = (produit.panier.quantiter > 0 ? produit.panier.quantiter : 1);
 }
 
-/*
-var calcul_prix_gamme = (prix_gamme) => {
-   var HT = prix_gamme;
-   if(clientUser.value.taux_remise > 0){
-      HT = HT - ((HT) * (clientUser.value.taux_remise /100));
-   }
-   return roundNumber(HT);
-}*/
-
-var roundNumber = (e) => {
-   return (Math.round(e * 100) / 100).toFixed(2);
-};
-
 
 watchEffect(() => {
    dynamic.value = usePage().props.value.dynamique_client;
@@ -326,137 +268,50 @@ watchEffect(() => {
    });
 });
 
-var classVariant = {
-   'default' : "col-span-12 mx-6 relative inline-block  text-sm text-gray-500 whitespace-nowrap mt-4 before:-mt-[1.8rem] before:border-r-solid before:content-[''] before:block before:absolute before:w-0 before:h-0 before:border-l-[30px] before:border-l-transparent before:border-l-solid before:border-r-[30px] before:border-r-transparent  before:border-b-[30px] before:border-b-gray-100",
-   'base1' : "before:xl:right-[85%] before:lg:right-[80%] before:sm:right-[70%] before:right-[50%]",
-   'base2' : "before:xl:right-[60%] before:lg:right-[45%] before:sm:right-[15%] before:right-[50%]",
-   'base3' : "before:xl:right-[35%] before:lg:right-[10%] before:sm:right-[15%] before:right-[50%]",
-   'base4' : "before:xl:right-[5%] before:lg:right-[45%] before:sm:right-[15%] before:right-[50%]",
-};
-
-var classPaginate = {
-   'previous' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
-   'previous_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
-   'next' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
-   'next_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
-   'number' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',
-   'number_active' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 bg-gray-100'
-}
-
-var perPage = () => {
-   const parsedUrl = new URL(window.location.href);
-   var targetNode = document.getElementById('per_page');
-   parsedUrl.searchParams.set('perPage',targetNode.value);
-   window.location.href = parsedUrl.href;
-};
-
-// const lowercase = (nom) => {
-//    return HtmlEntities.decode(nom.toLowerCase());
-// };
-
-var perPageActual = () => {
-   const parsedUrl = new URL(window.location.href);
-   if(parsedUrl.searchParams.get('perPage') != null ){
-      return parsedUrl.searchParams.get('perPage');
-   }else{
-      return 12;
-   }
-};
-
-var searchGamme = (e) => {
-   
-   const parsedUrl = new URL(window.location.href);
-   parsedUrl.searchParams.delete('filter[global]');
-   var per = parsedUrl.searchParams.get('perPage');
-   parsedUrl.searchParams.delete('perPage');
-   var page = parsedUrl.searchParams.get('page');
-   parsedUrl.searchParams.delete('page');
-   var urlBase = parsedUrl.href+'/search';
-   parsedUrl.href = urlBase;
-   parsedUrl.searchParams.set('filter[global]',e.target.value);
-   if(per != '' && per  != undefined){
-      parsedUrl.searchParams.set('perPage',per);
-   }
-   if(page != '' && page != undefined){
-      parsedUrl.searchParams.set('page',page);
-   }
-   var url = parsedUrl.href;
-   axios.post(url).then((response)=>{
-      if(response.status == 200){
-         const parsedUrl = new URL(window.location.href);
-         parsedUrl.searchParams.set('filter[global]',e.target.value);
-         productsSearch.value = response.data.products.data;
-         products.value = response.data.products;
-            window.history.replaceState('','',parsedUrl.href);
-      }
-   })
-};
-
-const getCountP = () => {
-   if(countP == 4){
-      countP = 1;
-   }else{
-      countP++;
-   }
-   return countP;
-};
-
 var formatPrix = (prix) => {
    return new Intl.NumberFormat("fr-FR", {
       style: "currency",
       currency: "EUR",
    }).format(prix);
 };
+
+var consolel = (data) => {
+   console.log(data);
+};
+
+var modifQte = (e,formRef) => {
+   e.preventDefault();
+
+   var form = findElementInClassArray(e.path, 'editQteModal');
+   if (form != undefined) {
+      
+      var formData = new FormData(form);
+      formRef.quantiter = formData.get("quantiter");
+   }
+};
 </script>
 
 <script>
 import Eye from 'icons/EyeOutline.vue';
-import Close from 'icons/Close.vue';
 import ImageOff from 'icons/ImageOff.vue';
-import Right from 'icons/ChevronRight.vue';
-import Left from 'icons/ChevronLeft.vue';
-import Search from 'icons/Magnify.vue';
 import CartAdd from 'icons/CartPlus.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import axios from 'axios';
 import {BackspaceIcon} from '@heroicons/vue/24/outline';
 import { Inertia } from '@inertiajs/inertia';
+
 export default {
-   // Using a render function
-   layout: (h, page) => h(AuthenticatedLayout, () => child),
-   // Using the shorthand
-   layout: AuthenticatedLayout,
+    // Using a render function
+    layout: (h, page) => h(AuthenticatedLayout, () => child),
+    // Using the shorthand
+    layout: AuthenticatedLayout,
+    components: { InputNumberProduit }
 };
 </script>
 
 <template>
 
    <Head title="Orders Products Clients" />
-   <!-- <section :style="imgBackground" class="h-52 relative container mx-auto bg-cover bg-[center_bottom_-15rem]">
-      <Breadcrumbs :links="links" />
-      <div class="absolute top-1 left-0 text-white p-5 py-2 rounded-r-lg bg-primary-50">
-         <a class="underline" href="/">Accueil</a> / <a class="underline" href="/dropshipping/gamme">Gamme</a> / {{ props.gamme.nom_gamme }}
-      </div>
-      <div class="flex items-center h-full ">
-         <h1 class="text-white text-3xl font-bold px-5 py-2 rounded-r-lg bg-primary-50">{{ props.gamme.nom_gamme }}</h1>
-      </div>
-      <div class="absolute bottom-0 left-0 py-2">
-         <div class="relative  rounded bg-gradient-to-r from-blue-400 to-indigo-500">
-               <a href="/dropshipping/gamme" class="group rounded bg-gradient-to-r from-blue-400 to-indigo-500">
-                  <div class="bg-gradient-to-r to-blue-400 from-indigo-500 text-white font-bold py-2 px-4 rounded shadow-md transition duration-500 ease-in-out opacity-0 group-hover:opacity-100">
-                     <span class="opacity-100 text-white font-bold">Retourner aux gammes</span>
-                  </div>
-                  <div class="absolute flex items-center justify-center w-full h-full top-0 left-0 opacity-100 group-hover:opacity-0 transition duration-500 ease-in-out">
-                     <span class="opacity-100 text-white font-bold">Retourner aux gammes</span>
-                  </div>
-               </a>
-            </div>
-      </div>
-   </section> -->
-
-   
-
-
    <section class="container mx-auto mt-5">
       <Breadcrumbs :links="links" />
       <section class="relative container mx-auto grid grid-cols-12 mb-4">     
@@ -501,20 +356,6 @@ export default {
             <ModalAjoutClient />
          </div>
       </div>
-
-      <!-- <div class="mx-1 my-1 flex sm:flex-row flex-col w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 ">
-         <div class="relative flex-grow">
-            <input class="block w-full pl-9 text-sm rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" 
-            placeholder="Recherche..." id="searchGamme" type="text" name="global" @input="searchGamme">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-               <Search class="text-xl mb-1" />
-            </div>
-         </div>
-         <div class="sm:w-auto w-full sm:pl-2 pl-0 sm:pt-0 pt-2">
-            <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
-         </div>
-      </div> -->
-
       <div class="flex flex-col">
          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
@@ -583,31 +424,6 @@ export default {
             </div>
          </div>
       </div>
-
-      <!-- <div class="grid grid-cols-4 justify-center items-center bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 xl:px-6">
-         <div class="lg:col-span-1 sm:col-span-2 col-span-4 sm:text-start text-center">
-            <select id="per_page" name="per_page" dusk="per-page-full" @change="perPage" class="xl:mr-5 mr-2 focus:ring-indigo-500 focus:border-indigo-500 min-w-max shadow-sm text-sm border-gray-300 rounded-md">
-               <option value="8">8 par page</option>
-               <option value="12" >12 par page</option>
-               <option value="18" >18 par page</option>
-               <option value="50" >50 par page</option>
-               <option value="100">100 par page</option>
-            </select>
-            <span>Page {{ products.current_page }} sur {{ products.last_page }}</span>
-         </div>
-         <span class="lg:col-span-2 sm:col-span-2 col-span-4 lg:text-center sm:text-end text-center sm:my-0 my-2">{{ products.total }} Résultats</span>
-         <div class="flex lg:justify-end justify-center lg:col-span-1 col-span-4">
-            <nav class="relative z-0 inline-flex  rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-               <a v-for="(link, key) in products.links" :key="key"
-               :class="(key != 0 && key+1 != products.links.length ? (link.active ? classPaginate.number_active : classPaginate.number) : (key == 0 ? (products.current_page == 1 ? classPaginate.previous_disabled : classPaginate.previous) : (products.current_page == products.last_page ? classPaginate.next_disabled : classPaginate.next)))" 
-               :href="link.url">
-                  <span v-if="key != 0 && key+1 != products.links.length">{{ link.label }}</span>
-                  <Right v-if="key+1 == products.links.length" />
-                  <Left v-if="key == 0"/>
-               </a>
-            </nav>
-         </div>
-       </div> -->
 
    </section>
 
@@ -692,14 +508,14 @@ export default {
               <DialogTitle as="h3" class="lg:text-lg text-sm text-center font-medium leading-6 text-gray-900"  v-if="produitAdd != false">
                {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantiter' : 'Ajouter ') }} produit {{ produitAdd.sku }}
               </DialogTitle>
-               <form v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
+               <form class="editQteModal" v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
                   <input type="hidden" name="id_produit" id="id_produit" v-model="formAddProduit.idProduit" />
                   <input type="hidden" name="id_panier_edi_list" id="id_panier_edi_list" v-model="formAddProduit.id_panier_edi_list" />
                   <div class="mt-2 flex justify-center items-center">
                      <div class="text-sm text-gray-500 w-full">
                         <label class="lg:text-lg text-sm" for="ref"> Quantiter : </label> 
-                        <input v-model="formAddProduit.quantiter" class="w-full lg:text-lg text-sm transition duration-300 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" 
-                        id="quantiter" type="number" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande">
+                        <InputNumberProduit  @change="modifQte($event,formAddProduit)"                          
+                           id="quantiter" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande" />
                         <InputError class="mt-2" :message="formAddProduit.errors.quantiter" />
                         <InputError class="mt-2" :message="formAddProduit.errors.idProduit" />
                         <InputError class="mt-2" :message="formAddProduit.errors.id_panier_edi_list" />
@@ -760,7 +576,7 @@ export default {
               <DialogTitle as="h3" class="lg:text-lg text-sm text-center font-medium leading-6 text-gray-900"  v-if="produitAdd != false">
                Ajouter le numéro de commande et la quantité du produit {{ produitAdd.sku }} 
               </DialogTitle>
-               <form v-if="produitAdd != false" @submit.prevent="addCommandeRef($event,(formAddProduitAndRef.id_panier_edi_list != null && formAddProduitAndRef.id_panier_edi_list != 0 ? true : false))">
+               <form class="editQteModal" v-if="produitAdd != false" @submit.prevent="addCommandeRef($event,(formAddProduitAndRef.id_panier_edi_list != null && formAddProduitAndRef.id_panier_edi_list != 0 ? true : false))">
                   <input type="hidden" name="id_produit" id="id_produit" v-model="formAddProduitAndRef.idProduit" />
                   <input type="hidden" name="id_panier_edi_list" id="id_panier_edi_list" v-model="formAddProduitAndRef.id_panier_edi_list" />
                   <div class="mt-2 flex justify-center items-center">
@@ -773,8 +589,8 @@ export default {
                      </div>
                      <div class="text-sm text-gray-500 w-full">
                         <label class="lg:text-lg text-sm" for="ref"> Quantiter : </label> 
-                        <input v-model="formAddProduitAndRef.quantiter" class="w-full lg:text-lg text-sm transition duration-300 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" 
-                        id="quantiter" type="number" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande">
+                        <InputNumberProduit  @change="modifQte($event,formAddProduitAndRef)"                          
+                           id="quantiter" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande" />
                         <InputError class="mt-2" :message="formAddProduitAndRef.errors.quantiter" />
                         <InputError class="mt-2" :message="formAddProduitAndRef.errors.idProduit" />
                      </div>
