@@ -200,6 +200,22 @@ class Produit extends Model
         return $produits;
     }
 
+    public static function getOldCaracteristiqueProduit($produit){
+        $couleur = $produit->couleur;
+        $produit->couleur = new stdClass;
+        $produit->couleur->nom_couleur = $couleur;
+
+        $design = $produit->design;
+        $produit->design = new stdClass;
+        $produit->design->nom_design = $design;
+        
+        $produit->dimension = new stdClass;
+        $produit->dimension->largeur = $produit->largeur;
+        $produit->dimension->longueur = $produit->longueur;
+
+        return $produit;
+    }
+
     public static function getDimension($productId){
         $dimensions = Produit::select([
             'produit.*', 
@@ -237,6 +253,7 @@ class Produit extends Model
         $produit->design = new stdClass;
         $produit->design->nom_design = $design;
 
+        $produit->dimension = new stdClass;
         $produit->dimension->largeur = $produit->largeur;
         $produit->dimension->longueur = $produit->longueur;
         $produit->panierActuel = $panierGet;
@@ -249,9 +266,10 @@ class Produit extends Model
 
     public static function calcul_poids($id_produit, $qte){
         $poids = 0;
-        $produit = Produit::with(['dimension','design'])->where('id_produit','=',$id_produit)->first();
+        $produit = Produit::getAllCaracteristiques()->with(['gamme'])->where('id_produit', '=', $id_produit)->first();
+        $produit = Produit::getOldCaracteristiqueProduit($produit);
         if(!empty($produit->id_produit)){
-            $gamme = Gamme::where('id_gamme','=',$produit->gamme_id)->first();
+            $gamme = $produit->gamme;
             $poids = $produit->dimension->largeur / 100 * $produit->dimension->longueur / 100 * $gamme->poids_m2_KG * $qte;
             $poids = sprintf('%01.2f', $poids);
         }
@@ -261,7 +279,8 @@ class Produit extends Model
 
     public static function calcul_m2($id_produit, $qte){
         $superficie = 0;
-        $produit = Produit::with(['dimension','design'])->where('id_produit','=',$id_produit)->first();
+        $produit = Produit::getAllCaracteristiques()->with(['gamme'])->where('id_produit', '=', $id_produit)->first();
+        $produit = Produit::getOldCaracteristiqueProduit($produit);
         if(!empty($produit->id_produit)){
             $superficie = $produit->dimension->largeur / 100 * $produit->dimension->longueur / 100 * $qte;
             $superficie = sprintf('%01.2f', $superficie);
@@ -271,8 +290,8 @@ class Produit extends Model
     }
 
     public static function calcul_prix_produit($id_produit,$isTTC=0){
-        $produit = Produit::with(['dimension'])->where('id_produit','=',$id_produit)->first();
-        Log::debug($produit);
+        $produit = Produit::getAllCaracteristiques()->where('id_produit', '=', $id_produit)->first();
+        $produit = Produit::getOldCaracteristiqueProduit($produit);
         $gamme = Gamme::getM2withRemise($produit->gamme_id);
         $m2 = ($produit->dimension->largeur/100) * ($produit->dimension->longueur/100);
         $prixProduit = $gamme * $m2;

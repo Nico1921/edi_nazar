@@ -228,7 +228,7 @@ class Gamme extends Model
     public static function getM2withRemise($id_gamme){
         $remise = false;
         $user = User::with('client')->where('id','=',Auth::id())->first();
-        $gamme = Gamme::where('id_gamme','=',$id_gamme)->first();
+        $gamme = Gamme::getGammeCaracteristiques($id_gamme);
         //Log::debug(clientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->exists());
        if(ClientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->exists()){
             $remise = ClientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->first()->remise;

@@ -7,6 +7,7 @@ use App\Models\PanierEdi;
 use App\Models\PanierEdiList;
 use App\Models\Produit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Middleware;
@@ -101,17 +102,7 @@ class HandleInertiaRequests extends Middleware
                                 for($j=0;$j<count($panierList);$j++){
                                     $list = $panierList[$j]; 
                                     $produitClient = Produit::getAllCaracteristiques()->with(['photo','statsProduit','gamme'])->where('id_produit','=',$panierList[$j]->id_produit)->first();
-
-                                    $couleur = $produitClient->couleur;
-                                    $produitClient->couleur = new stdClass;
-                                    $produitClient->couleur->nom_couleur = $couleur;
-
-                                    $design = $produitClient->design;
-                                    $produitClient->design = new stdClass;
-                                    $produitClient->design->nom_design = $design;
-
-                                    $produitClient->dimension->largeur = $produitClient->largeur;  
-                                    $produitClient->dimension->longueur = $produitClient->longueur;                                 
+                                    $produitClient = Produit::getOldCaracteristiqueProduit($produitClient);
                                     $produit = $produitClient;
 
                                     $gamme =  $produit->gamme;
@@ -183,13 +174,15 @@ class HandleInertiaRequests extends Middleware
             },
             'gammeList' => function() use($request) {
                 $gammeList = '';
-                if($request->session()->has('gammeList')){
-                    $gammeList = $request->session()->get('gammeList');
-                    if(empty($gammeList) || count($gammeList) == 0){
-                        $gammeList = Gamme::where('gamme.in_edi', '=', '1')->where('gamme.statut', '=', '1')->orderBy('nom_gamme', 'asc')->get();
+                if (Auth::check()) {
+                    if($request->session()->has('gammeList')){
+                        $gammeList = $request->session()->get('gammeList');
+                        if(empty($gammeList) || count($gammeList) == 0){
+                            $gammeList = Gamme::getRequestGammeCaracteristiques()->where('gamme.statut', '=', '1')->orderBy('nom_gamme', 'asc')->get();
+                        }
+                    }else{
+                        $gammeList = Gamme::getRequestGammeCaracteristiques()->where('gamme.statut', '=', '1')->orderBy('nom_gamme', 'asc')->get();
                     }
-                }else{
-                    $gammeList = Gamme::where('gamme.in_edi', '=', '1')->where('gamme.statut', '=', '1')->orderBy('nom_gamme', 'asc')->get();
                 }
                 return $gammeList;
             },

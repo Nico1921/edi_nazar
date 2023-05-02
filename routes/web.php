@@ -101,9 +101,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
       Route::post('/dropshipping/clients/validation/delete', [DropshippingController::class, 'delete_product_commande'])->name('orders/clients/products/{gamme}/delete');
       
       Route::post('/dropshipping/clients/confirmation', [DropshippingController::class, 'confirmation_order_clients'])->name('orders/clients/confirmation');
-      Route::post('/dropshipping/clients/orders', [DropshippingController::class, 'get_order_client'])->name('orders/clients/orders');
-      Route::post('/dropshipping/clients/delete', [DropshippingController::class, 'delete_order_client'])->name('orders/clients/delete');
-      Route::post('/dropshipping/clients/edit', [DropshippingController::class, 'edit_order_client'])->name('orders/clients/edit');
+      Route::post('/dropshipping/clients/orders', [DropshippingController::class, 'get_order_client'])->name('dropshipping/clients/orders');
+      Route::post('/dropshipping/clients/delete', [DropshippingController::class, 'delete_order_client'])->name('dropshipping/clients/delete');
+      Route::post('/dropshipping/clients/edit', [DropshippingController::class, 'edit_order_client'])->name('dropshipping/clients/edit');
 
       Route::get('/dropshipping/cart', [CartController::class, 'create'])->name('dropshipping/cart');
       Route::get('/dropshipping/cart/payment/cb/valid', [CartController::class, 'redirect_cb_validation_drop'])->name('dropshipping/cart/payment/cb/valid');

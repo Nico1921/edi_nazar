@@ -1167,15 +1167,8 @@ class DropshippingController extends Controller
       if(!empty($id_client_edi)){
          $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
          foreach($panierList as $list){
-            $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
-            for($i=0;$i<count($produit);$i++){
-               $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-               $produit[$i]->prixProduit = Produit::calcul_prix_produit($produit[$i]->id_produit);
-               $produit[$i]->panier = $panier;
-               $produit[$i]->id_client_edi = $request->id_client_edi;
-               $produit[$i]->isInPanier = true;
-               $produits->panier[] = $produit[$i];
-            }
+            $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $list->panier->id_panier_edi)->first();
+            $produits->panier[] = Produit::getProduitPanier($list->id_produit,$list->panier->id_panier_edi,$list,$panierGet);
          }
       }
       $produits =  json_encode($produits);

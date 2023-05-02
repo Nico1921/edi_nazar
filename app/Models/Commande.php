@@ -158,8 +158,9 @@ class Commande extends Model
                 if(count($panierClient) > 0){
                     $i = 1;
                         foreach ($panierClient as $produitCommande) {
-                            $p = Produit::with(['dimension', 'design', 'couleur'])->where('id_produit', '=', $produitCommande->id_produit)->first();
-                            $gamme = Gamme::where('id_gamme', '=', $p->gamme_id)->first();
+                            $p = Produit::getAllCaracteristiques()->with(['gamme'])->where('id_produit', '=', $produitCommande->id_produit)->first();
+                            $p = Produit::getOldCaracteristiqueProduit($p);
+                            $gamme = $p->gamme;
 
                             $prix_achat_ht = $gamme->prix_achat_ht_m2 * ($p->dimension->longueur / 100 * $p->dimension->largeur / 100);
                             $prix_achat_ht = sprintf("%.2f", $prix_achat_ht);

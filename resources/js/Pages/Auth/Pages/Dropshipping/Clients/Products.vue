@@ -71,9 +71,9 @@ function closeModal() {
   isOpen.value = false;
 }
 
-function openModal(img,gamme,design,couleur) {
+function openModal(img,gamme,design) {
   isOpen.value = true;
-  var nomProduit = gamme+" "+design+" "+couleur;
+  var nomProduit = gamme+" "+design;
   document.getElementById("visuelImage").setAttribute('src','https://gestion.tapis-nazar.fr/img/produit/'+img);
   document.getElementById("visuelImage").setAttribute('alt',nomProduit);
   document.getElementById("nomVisuelImage").textContent = nomProduit;
@@ -359,7 +359,7 @@ export default {
                                        <div class="absolute flex items-center justify-center w-full h-full">
                                           <Eye class="text-lg text-black" />
                                        </div>
-                                       <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.img_produit)"
+                                       <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.img_produit)"
                                           :alt="gamme.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
                                     </div>
                                     <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
@@ -441,7 +441,7 @@ export default {
    </section>
 
    <TransitionRoot :show="isOpen" as="template" :unmount="false" >
-    <Dialog as="div" @close="closeModal" class="relative z-30" :unmount="false">
+    <Dialog as="div" @close="closeModal" class="relative z-[90]" :unmount="false">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"

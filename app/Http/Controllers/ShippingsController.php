@@ -130,15 +130,8 @@ class ShippingsController extends Controller
                             if(!empty($id_client_edi)){
                                 $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
                                 foreach($panierList as $list){
-                                    $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
-                                    for($j=0;$j<count($produit);$j++){
-                                        $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                                        $commande = Commande::where('num_commande_interne','=',$clients[$i]->num_commande)->first();
-                                        $produit[$j]->panier = $panier;
-                                        $produit[$j]->commande = $commande;
-                                        $produit[$j]->isInPanier = true;
-                                        $produits->panier[] = $produit[$j];
-                                    }           
+                                    $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $list->panier->id_panier_edi)->first();
+                                    $produits->panier[] = Produit::getProduitPanier($list->id_produit,$list->panier->id_panier_edi,$list,$panierGet);
                                 }        
                             }
                             $clients[$i]->produits = $produits;
@@ -175,18 +168,8 @@ class ShippingsController extends Controller
         if(!empty($id_client_edi)){
            $panierList = PanierEdiList::with('panier')->where('id_client_edi','=',$id_client_edi)->get();
            foreach($panierList as $list){
-              $panierG = PanierEdi::where('id_panier_edi','=',$list->panier->id_panier_edi)->first();
-              $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
-              for($i=0;$i<count($produit);$i++){
-                 $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                 $client = ClientEDI::where('id_client_edi','=',$id_client_edi)->first();
-                 $commande = CommandeMarketplace::with(['etape','commande_stock'])->where('ref_externe','=',$client->num_commande)->first();
-                 $produit[$i]->panier = $panier;
-                 $produit[$i]->panierG = $panierG;
-                 $produit[$i]->commande = $commande;
-                 $produit[$i]->isInPanier = true;
-                 $produits->panier[] = $produit[$i];
-              }           
+              $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $list->panier->id_panier_edi)->first();
+              $produits->panier[] = Produit::getProduitPanier($list->id_produit,$list->panier->id_panier_edi,$list,$panierGet);     
            }        
         }
         $produits =  json_encode($produits);
@@ -205,16 +188,8 @@ class ShippingsController extends Controller
         if(!empty($id_client_edi)){
            $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
            foreach($panierList as $list){
-              $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
-              for($i=0;$i<count($produit);$i++){
-                 $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                 $client = ClientEDI::where('id_client_edi','=',$id_client_edi)->first();
-                 $commande = Commande::where('ref_externe','=',$client->num_commande)->first();
-                 $produit[$i]->panier = $panier;
-                 $produit[$i]->commande = $commande;
-                 $produit[$i]->isInPanier = true;
-                 $produits->panier[] = $produit[$i];
-              }           
+            $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $list->panier->id_panier_edi)->first();
+            $produits->panier[] = Produit::getProduitPanier($list->id_produit,$list->panier->id_panier_edi,$list,$panierGet);        
            }        
         }
         $produits =  json_encode($produits);
@@ -240,8 +215,9 @@ class ShippingsController extends Controller
                                 $photos = Photo::where('id_produit','=',$lePanier->id_produit)->get();
                                 if(count($photos) > 0){
                                     foreach($photos as $photo){
-                                        $produit = Produit::where('id_produit','=',$lePanier->id_produit)->first();
-                                        $gamme = Gamme::where('id_gamme','=',$produit->gamme_id)->first();
+                                        $produit = Produit::getAllCaracteristiques()->with(['gamme'])->where('id_produit','=',$lePanier->id_produit)->first();
+                                        $produit = Produit::getOldCaracteristiqueProduit($produit);
+                                        $gamme = $produit->gamme;
                                         
                                         $pathOriginalFile = 'https://gestion.tapis-nazar.fr/img/produit/'.$photo->img_produit;
                                         if(curl_init($pathOriginalFile) !== false) {

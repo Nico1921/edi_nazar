@@ -16,6 +16,7 @@ use Dompdf\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use stdClass;
 
 class PDFController extends Controller
 {
@@ -36,17 +37,26 @@ class PDFController extends Controller
                 $produits = array();
                 
                 for($i=0;$i<count($commandeList);$i++){
-                    $produit = Produit::with(['design','dimension','couleur'])->where('id_produit','=',$commandeList[$i]->id_produit)->get();
-                    for($j=0;$j<count($produit);$j++){
-                        $gamme = Gamme::where('id_gamme','=',$produit[$j]->gamme_id)->first();
-                        $poids = Produit::calcul_poids($produit[$j]->id_produit,$commandeList[$i]->quantite);
-                        $superficie = Produit::calcul_m2($produit[$j]->id_produit,$commandeList[$i]->quantite);
-                        $produits[$i]['poids'] = $poids;
-                        $produits[$i]['superficie'] = $superficie;
-                        $produits[$i]['gamme'] = $gamme;
-                        $produits[$i]['produit'] = $produit[$j];
-                        $produits[$i]['commande'] = $commandeList[$i];
-                    }
+                    $produit = Produit::getAllCaracteristiques()->with(['gamme'])->where('id_produit','=',$commandeList[$i]->id_produit)->first();
+                    $couleur = $produit->couleur;
+                    $produit->couleur = new stdClass;
+                    $produit->couleur->nom_couleur = $couleur;
+
+                    $design = $produit->design;
+                    $produit->design = new stdClass;
+                    $produit->design->nom_design = $design;
+
+                    $produit->dimension->largeur = $produit->largeur;  
+                    $produit->dimension->longueur = $produit->longueur;       
+                    
+                    
+                    $poids = Produit::calcul_poids($produit->id_produit,$commandeList[$i]->quantite);
+                    $superficie = Produit::calcul_m2($produit->id_produit,$commandeList[$i]->quantite);
+                    $produits[$i]['poids'] = $poids;
+                    $produits[$i]['superficie'] = $superficie;
+                    $produits[$i]['gamme'] = $produit->gamme;
+                    $produits[$i]['produit'] = $produit;
+                    $produits[$i]['commande'] = $commandeList[$i];
                  }
                  
                 $produits = json_encode($produits);
@@ -105,17 +115,17 @@ class PDFController extends Controller
                 $produits = array();
                 
                 for($i=0;$i<count($commandeList);$i++){
-                    $produit = Produit::with(['design','dimension','couleur'])->where('id_produit','=',$commandeList[$i]->id_produit)->get();
-                    for($j=0;$j<count($produit);$j++){
-                        $gamme = Gamme::where('id_gamme','=',$produit[$j]->gamme_id)->first();
-                        $poids = Produit::calcul_poids($produit[$j]->id_produit,$commandeList[$i]->quantite);
-                        $superficie = Produit::calcul_m2($produit[$j]->id_produit,$commandeList[$i]->quantite);
-                        $produits[$i]['poids'] = $poids;
-                        $produits[$i]['superficie'] = $superficie;
-                        $produits[$i]['gamme'] = $gamme;
-                        $produits[$i]['produit'] = $produit[$j];
-                        $produits[$i]['commande'] = $commandeList[$i];
-                    }
+                    $produit = Produit::getAllCaracteristiques()->with(['gamme'])->where('id_produit','=',$commandeList[$i]->id_produit)->first();
+                    $produit = Produit::getOldCaracteristiqueProduit($produit);
+                    
+                    
+                    $poids = Produit::calcul_poids($produit->id_produit,$commandeList[$i]->quantite);
+                    $superficie = Produit::calcul_m2($produit->id_produit,$commandeList[$i]->quantite);
+                    $produits[$i]['poids'] = $poids;
+                    $produits[$i]['superficie'] = $superficie;
+                    $produits[$i]['gamme'] = $produit->gamme;
+                    $produits[$i]['produit'] = $produit;
+                    $produits[$i]['commande'] = $commandeList[$i];
                  }
                  
                 $produits = json_encode($produits);

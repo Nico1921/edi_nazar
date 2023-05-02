@@ -178,53 +178,55 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                         <Delete class="text-white" />
                      </button>
                   </div>
-                  <div v-if="client.nbProduit > 0" v-for="(produit, key2) in client.produits" :key="key2" class="grid grid-cols-12 py-4" >
-                     <div class="sm:col-span-2 xsm:col-span-3 col-span-4 flex items-center justify-center">
-                        <div v-if="produit.photo != null"
-                           class=" h-full w-full lg:max-h-52 max-h-42 px-2">
-                           <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+produit.photo.img_produit"
-                              :alt="produit.code_sku" class="w-full h-full object-cover rounded-xl" />
-                        </div>
-                        <div v-else class="text-3xl m-2 lg:h-[150px] sm:h-[130px] h-full w-full flex items-stretch justify-center bg-gray-300">
-                           <ImageOff />
-                        </div>
-                     </div>
-                     <div class="sm:col-span-10 xsm:col-span-9 col-span-8 flex flex-col xl:text-lg text-sm">
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
-                           produit.dimension.longueur }}</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                        <span class="text-gray-600 sm:text-lg text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
-                        <div class="grid grid-cols-8 lg:w-1/2">               
-                           <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
-                              <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">
-                                 <InputNumber @change="modifQte($event,produit.design.nom_design + produit.dimension.largeur + 'x' + produit.dimension.longueur,key1)" name="qte"
-                                    :max="produit.stats_produit.stock_restant"
-                                    :value="(produit.quantiter > 0 ? produit.quantiter : 1)" 
-                                    class="h-full"/>
-                                 <input type="hidden" name="id_produit" :value="produit.id_produit" />
-                                 <input type="hidden" name="id_panier_edi_list"
-                                    :value="(produit.id_panier_edi_list != undefined ? produit.id_panier_edi_list : 0)" />
-                                 <input type="hidden" name="key_tab" :value="key2" />
-                                 <input type="hidden" name="id_panier_edi"
-                                    :value="(panier.id_panier_edi != undefined ? panier.id_panier_edi : 0)" />
-                                 <input type="hidden" name="id_client_edi"
-                                    :value="(client.client.id_client_edi != undefined ? client.client.id_client_edi : 0)" />
-                              </form>
+                  <div class="sm:my-4 px-2 py-4 w-full grid grid-cols-12 max-h-96 overflow-y-auto scrollbarCustom">
+                     <div v-if="client.nbProduit > 0" v-for="(produit, key2) in client.produits" :key="key2" class="2xl:col-span-3 lg:col-span-4 sm:col-span-6 col-span-12 bg-white rounded-lg border shadow-lg grid grid-cols-12 px-2 py-4 my-2 lg:mx-4 sm:mx-2 mx-6" >
+                        <div class="sm:col-span-4 xsm:col-span-3 col-span-4 flex items-center justify-center">
+                           <div v-if="produit.photo != null"
+                              class="h-full w-full lg:max-h-52 max-h-42 min-h-min px-2">
+                              <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+produit.photo.img_produit"
+                                 :alt="produit.code_sku" class="w-full h-full object-cover rounded-xl" />
                            </div>
-                           <div class="xl:col-span-3 col-span-4 sm:mx-4 mx-2">
-                              <button type="button"
-                                 @click="deleteCommande((produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0),(panier.id_panier_edi != undefined ? panier.id_panier_edi : 0),key)"
-                                 class="w-full bg-red-500 text-white rounded hover:bg-red-300 transition duration-300 h-full">
-                                 <Delete class="text-white" />
-                              </button>
+                           <div v-else class="text-3xl m-2 lg:h-[150px] sm:h-[130px] h-full w-full flex items-stretch justify-center bg-gray-300">
+                              <ImageOff />
                            </div>
                         </div>
+                        <div class="sm:col-span-8 xsm:col-span-9 col-span-8 h-full flex flex-col justify-evenly">
+                           <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
+                           <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
+                              produit.dimension.longueur }}</span>
+                           <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
+                           <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
+                           <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
+                           <div class="grid grid-cols-8">               
+                              <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
+                                 <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">
+                                    <InputNumber @change="modifQte($event,produit.design.nom_design + produit.dimension.largeur + 'x' + produit.dimension.longueur,key1)" name="qte"
+                                       :max="produit.stats_produit.stock_restant"
+                                       :value="(produit.quantiter > 0 ? produit.quantiter : 1)" 
+                                       class="h-full"/>
+                                    <input type="hidden" name="id_produit" :value="produit.id_produit" />
+                                    <input type="hidden" name="id_panier_edi_list"
+                                       :value="(produit.id_panier_edi_list != undefined ? produit.id_panier_edi_list : 0)" />
+                                    <input type="hidden" name="key_tab" :value="key2" />
+                                    <input type="hidden" name="id_panier_edi"
+                                       :value="(panier.id_panier_edi != undefined ? panier.id_panier_edi : 0)" />
+                                    <input type="hidden" name="id_client_edi"
+                                       :value="(client.client.id_client_edi != undefined ? client.client.id_client_edi : 0)" />
+                                 </form>
+                              </div>
+                              <div class="xl:col-span-3 col-span-4 sm:mx-4 mx-2">
+                                 <button type="button"
+                                    @click="deleteCommande((produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0),(panier.id_panier_edi != undefined ? panier.id_panier_edi : 0),key)"
+                                    class="w-full bg-red-500 text-white rounded hover:bg-red-300 transition duration-300 h-full">
+                                    <Delete class="text-white" />
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
                      </div>
-                  </div>
-                  <div class="text-center py-5" v-else>
-                     <span class="text-lg">Le panier de se client est vide !</span>
+                     <div class="col-span-12 text-center py-5" v-else>
+                        <span class="text-lg">Le panier de se client est vide !</span>
+                     </div>
                   </div>
                </div>
                
