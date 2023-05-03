@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Session;
 
 Route::get('/politique-confidentialite', function () {return Inertia::render('Auth/Pages/Legales/PolitiqueConfidentialite');})->name('politique-confidentialite');
 Route::get('/cgv', function () {return Inertia::render('Auth/Pages/Legales/CGV');})->name('cgv');
+Route::get('/cookies', function () {return Inertia::render('Auth/Pages/Legales/Cookies');})->name('cookies');
+Route::get('/mentions-legales', function () {return Inertia::render('Auth/Pages/Legales/MentionsLegales');})->name('mentions-legales');
 Route::get('/files/identiter/{file}', [FilesController::class, 'get_identiter']);
 Route::get('/files/kbis/{file}', [FilesController::class, 'get_kbis']);
 
