@@ -13,16 +13,20 @@ import {ArrowRightCircleIcon} from '@heroicons/vue/24/outline';
 <div class="bg-white border border-primary-100 rounded border-2 border-primary-200 py-2 my-2">
       <h2 class="font-bold text-sm lg:text-xl sm:text-lg text-gray-800 text-center py-2">Récapitulatif de la commande</h2>
 
-      <div class="grid grid-cols-10 px-3 py-2">
-         <span class="2xl:col-span-2 lg:col-span-5 col-span-10 text-sm text-center"><span class="font-semibold text-lg">Quantité Total :</span> 
+      <div class="grid grid-cols-12 px-3 py-2 justify-center items-center">
+         <span class="2xl:col-span-3 lg:col-span-6 col-span-12 text-sm text-center"><span class="font-semibold text-lg">Quantité Total :</span> 
          {{ (props.panier != undefined ? (props.panier.produits_total != undefined ? props.panier.produits_total : '0') : '0')}} pcs</span>
-         <span class="2xl:col-span-2 lg:col-span-5 col-span-10 text-sm text-center"><span class="font-semibold text-lg">M² Total : </span> {{ (props.panier != undefined ? (props.panier.total_m2 != undefined ? props.panier.total_m2 : '0') : '0') }}
+         <span class="2xl:col-span-3 lg:col-span-6 col-span-12 text-sm text-center"><span class="font-semibold text-lg">M² Total : </span> {{ (props.panier != undefined ? (props.panier.total_m2 != undefined ? props.panier.total_m2 : '0') : '0') }}
             m²</span>
-         <span class="2xl:col-span-2 lg:col-span-3 col-span-10 text-sm text-center"><span class="font-semibold text-lg">Total HT :</span> {{ (props.panier != undefined ? (props.panier.total_HT != undefined ? props.panier.total_HT : '0') : '0') }}
+         <span class="2xl:col-span-3 lg:col-span-6 col-span-12 text-sm text-center"><span class="font-semibold text-lg">Montant HT :</span> {{ (props.panier != undefined ? (props.panier.montant_ht != undefined ? props.panier.montant_ht : '0') : '0') }}
             €</span>
-         <span class="2xl:col-span-2 lg:col-span-4 col-span-10 text-sm text-center"><span class="font-semibold text-lg">Total TVA : </span>{{ (props.panier != undefined ? (props.panier.total_taxe != undefined ? props.panier.total_taxe : '0') : '0') }}
+         <span class="2xl:col-span-3 lg:col-span-6 col-span-12 text-sm text-center"><span class="font-semibold text-lg">* Transport HT :</span> {{ (props.panier != undefined ? (props.panier.prix_transport != undefined ? props.panier.prix_transport : '0') : '0') }}
             €</span>
-         <span class="2xl:col-span-2 lg:col-span-3 col-span-10 text-sm text-center"><span class="font-semibold text-lg">Total TTC :</span> {{ (props.panier != undefined ? (props.panier.total_ttc != undefined ? props.panier.total_ttc : '0') : '0') }}
+         <span class="2xl:col-span-4 lg:col-span-6 col-span-12 text-sm text-center"><span class="font-semibold text-lg">Total HT :</span> {{ (props.panier != undefined ? (props.panier.total_HT != undefined ? props.panier.total_HT : '0') : '0') }}
+            €</span>
+         <span class="2xl:col-span-4 lg:col-span-6 col-span-12 text-sm text-center"><span class="font-semibold text-lg">Total TVA : </span>{{ (props.panier != undefined ? (props.panier.total_taxe != undefined ? props.panier.total_taxe : '0') : '0') }}
+            €</span>
+         <span class="2xl:col-span-4 lg:col-span-6 col-span-12 text-sm text-center"><span class="font-semibold text-lg">Total TTC :</span> {{ (props.panier != undefined ? (props.panier.total_ttc != undefined ? props.panier.total_ttc : '0') : '0') }}
             €</span>
       </div>
       <div class="flex items-center justify-center">

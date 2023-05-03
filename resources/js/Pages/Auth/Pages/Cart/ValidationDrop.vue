@@ -127,24 +127,32 @@ export default {
             <div class="m-5">
                <div class="bg-primary-50 rounded m-2 p-4">
                   <h2 class="text-center font-bold">Total Commande</h2>
-                  <div class="grid lg:grid-cols-5 grid-cols-4 justify-center flex-row mt-4 mx-6">
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
-                        <span class="font-semibold text-gray-600">Quantiter : {{panier.produits_total}} pcs</span>
+                  <div class="grid 2xl:grid-cols-7 grid-cols-4 justify-center flex-row mt-4 mx-6">
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span class="font-semibold text-gray-600">Quantité : {{panier.produits_total}} pcs</span>
                         <hr class="absolute sm:block hidden w-px h-5 border border-primary-100  right-0" />
                      </div>
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
                         <span class="font-semibold text-gray-600">M² : {{panier.total_m2}} m²</span>
                         <hr class="absolute lg:block hidden w-px h-5 border border-primary-100 right-0" />
                      </div>
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span lass="font-semibold text-gray-600">Montant HT : {{formatPrix(panier.montant_ht)}} </span>
+                        <hr class="absolute sm:block hidden w-px h-5 border border-primary-100 right-0" />
+                     </div>
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span lass="font-semibold text-gray-600">Transport HT : {{formatPrix(panier.prix_transport)}} </span>
+                        <hr class="absolute sm:block hidden w-px h-5 border border-primary-100 right-0" />
+                     </div>
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
                         <span lass="font-semibold text-gray-600">Prix HT : {{formatPrix(panier.total_HT)}} </span>
                         <hr class="absolute sm:block hidden w-px h-5 border border-primary-100 right-0" />
                      </div>
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
                         <span lass="font-semibold text-gray-600">Prix TVA : {{formatPrix(panier.total_taxe)}} </span>
                         <hr class="absolute lg:block hidden w-px h-5 border border-primary-100 right-0" />
                      </div>
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
                         <span lass="font-semibold text-gray-600">Prix TTC : {{formatPrix(panier.total_ttc)}} </span>
                      </div>
                   </div>
@@ -191,8 +199,9 @@ export default {
                                           produit.dimension.longueur }}</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2 }} € HT</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantiter : {{ produit.panier.quantiter }}</span>
-                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2,2)}} €</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantité : {{ produit.panier.quantiter }}</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT hors transport : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * (produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2),2)}} €</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix transport TT HT : {{ produit.prixTransport }} €</span>
                                     </div>
                                  </div>
                               </div>

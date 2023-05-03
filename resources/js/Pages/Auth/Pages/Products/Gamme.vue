@@ -7,6 +7,7 @@ import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import InputError from '@/Components/InputError.vue';
 import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicons/vue/24/solid';
 import { ArrowRightCircleIcon  } from '@heroicons/vue/24/outline';
+import InputNumberProduit from '@/Components/InputNumberProduit.vue';
 import {decode} from 'html-entities';
 
 const props = defineProps(["products","gamme","designpanier"]);
@@ -34,11 +35,8 @@ var links = [{
 
 const isOpen = ref(false);
 const isOpenAdd = ref(false);
-var productsSearch = ref(props.products.data);
-var products = ref(props.products);
 var designpanier = ref(props.designpanier);
-console.log(props.designpanier);
-var clientUser = ref(usePage().props.value.auth.user[0].client);
+
 var produitAdd = ref(false);
 var formAddProduit = useForm({
    idProduit: null,
@@ -47,31 +45,6 @@ var formAddProduit = useForm({
    key_tab_1 : 0,
    key_tab_2 : 0,
 });
-
-var classPaginate = {
-   'previous' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
-   'previous_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium',
-   'next' : 'text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
-   'next_disabled' : 'cursor-not-allowed text-gray-400 relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium',
-   'number' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50',
-   'number_active' : 'relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 bg-gray-100'
-};
-
-var perPage = () => {
-   const parsedUrl = new URL(window.location.href);
-   var targetNode = document.getElementById('per_page');
-   parsedUrl.searchParams.set('perPage',targetNode.value);
-   window.location.href = parsedUrl.href;
-};
-
-var perPageActual = () => {
-   const parsedUrl = new URL(window.location.href);
-   if(parsedUrl.searchParams.get('perPage') != null ){
-      return parsedUrl.searchParams.get('perPage');
-   }else{
-      return 12;
-   }
-};
 
 var setIsOpenAdd = (value,produit,key1,key2) => {
    isOpenAdd.value = value;
@@ -82,36 +55,6 @@ var setIsOpenAdd = (value,produit,key1,key2) => {
    formAddProduit.quantiter = (produit.panier.quantiter > 0 ? produit.panier.quantiter : 1);
    formAddProduit.id_panier_edi_list = (produit.panier.id_panier_edi_list != undefined ? produit.panier.id_panier_edi_list : 0);
 }
-
-var searchGamme = (e) => {
-   
-   const parsedUrl = new URL(window.location.href);
-   parsedUrl.searchParams.delete('filter[global]');
-   var per = parsedUrl.searchParams.get('perPage');
-   parsedUrl.searchParams.delete('perPage');
-   var page = parsedUrl.searchParams.get('page');
-   parsedUrl.searchParams.delete('page');
-   var urlBase = parsedUrl.href+'/search';
-   parsedUrl.href = urlBase;
-   //console.log(urlBase);
-   parsedUrl.searchParams.set('filter[global]',e.target.value);
-   if(per != '' && per  != undefined){
-      parsedUrl.searchParams.set('perPage',per);
-   }
-   if(page != '' && page != undefined){
-      parsedUrl.searchParams.set('page',page);
-   }
-   var url = parsedUrl.href;
-   axios.post(url).then((response)=>{
-      if(response.status == 200){
-         const parsedUrl = new URL(window.location.href);
-         parsedUrl.searchParams.set('filter[global]',e.target.value);
-         productsSearch.value = response.data.products.data;
-         products.value = response.data.products;
-         window.history.replaceState('','',parsedUrl.href);
-      }
-   })
-};
 
 function closeModal() {
   isOpen.value = false;
@@ -231,19 +174,6 @@ var deletePanier = () =>{
    });
 };
 
-var roundNumber = (e) => {
-   return (Math.round(e * 100) / 100).toFixed(2);
-};
-
-/*
-var calcul_prix_gamme = (prix_gamme) => {
-   var HT = prix_gamme;
-   if(clientUser.value.taux_remise > 0){
-      HT = HT - ((HT) * (clientUser.value.taux_remise /100));
-   }
-   return roundNumber(HT);
-}*/
-
 var formatPrix = (prix) => {
    return new Intl.NumberFormat("fr-FR", {
       style: "currency",
@@ -251,26 +181,29 @@ var formatPrix = (prix) => {
    }).format(prix);
 };
 
-onMounted(() => {
-   // var targetNode2 = document.getElementById('per_page');
-   // targetNode2.value = perPageActual();
-   // const parsedUrl = new URL(window.location.href);
-   // var input = document.getElementById("searchGamme");
-   // input.value = parsedUrl.searchParams.get('filter[global]');
-});
+const findElementInClassArray = (array, elementSearch) => {
+   var elementCheck = undefined;
+   array.forEach(element => {
+      if (element.classList != undefined && element.classList.length > 0) {
+         if (element.classList.contains(elementSearch)) {
+            elementCheck = element;
+         }
+      }
+   });
 
-watchEffect(() => {
-	// axios.get('/dropshipping/panier/view',{gamme:props.gamme.nom_gamme}).then((response)=>{
-   //    console.log(response);
-   //    if(response.data.produitsAchat != undefined){         
-   //       if(response.data.produitsAchat.panier != undefined){         
-   //          produitsAchat.value = response.data.produitsAchat.panier;
-   //       }else{
-   //          produitsAchat.value = [];
-   //       }
-   //    }
-   // });
-});
+   return elementCheck;
+}
+
+var modifQte = (e,formRef) => {
+   e.preventDefault();
+
+   var form = findElementInClassArray(e.path, 'editQteModal');
+   if (form != undefined) {
+      
+      var formData = new FormData(form);
+      formRef.quantiter = formData.get("quantiter");
+   }
+};
 </script>
 <script >
 import Eye from 'icons/EyeOutline.vue';
@@ -317,19 +250,6 @@ export default {
             </div>
          </div>
       </section>
-
-      <!-- <div class="mx-1 my-1 flex sm:flex-row flex-col w-auto sm:flex-grow order-1 sm:order-2 mb-2 sm:mb-0 ">
-         <div class="relative flex-grow">
-            <input class="block w-full pl-9 text-sm rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300" 
-            placeholder="Recherche..." id="searchGamme" type="text" name="global" @input="searchGamme">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-               <Search class="text-xl mb-1" />
-            </div>
-         </div>
-         <div class="sm:w-auto w-full sm:pl-2 pl-0 sm:pt-0 pt-2">
-            <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
-         </div>
-      </div> -->
 
       <div class="flex flex-col">
          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -399,31 +319,6 @@ export default {
             </div>
          </div>
       </div>
-
-      <!-- <div class="grid grid-cols-4 justify-center items-center bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 xl:px-6">
-         <div class="lg:col-span-1 sm:col-span-2 col-span-4 sm:text-start text-center">
-            <select id="per_page" name="per_page" dusk="per-page-full" @change="perPage" class="xl:mr-5 mr-2 focus:ring-indigo-500 focus:border-indigo-500 min-w-max shadow-sm text-sm border-gray-300 rounded-md">
-               <option value="8">8 par page</option>
-               <option value="12" >12 par page</option>
-               <option value="18" >18 par page</option>
-               <option value="50" >50 par page</option>
-               <option value="100">100 par page</option>
-            </select>
-            <span>Page {{ products.current_page }} sur {{ products.last_page }}</span>
-         </div>
-         <span class="lg:col-span-2 sm:col-span-2 col-span-4 lg:text-center sm:text-end text-center sm:my-0 my-2">{{ products.total }} Résultats</span>
-         <div class="flex lg:justify-end justify-center lg:col-span-1 col-span-4">
-            <nav class="relative z-0 inline-flex  rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-               <a v-for="(link, key) in products.links" :key="key"
-               :class="(key != 0 && key+1 != products.links.length ? (link.active ? classPaginate.number_active : classPaginate.number) : (key == 0 ? (products.current_page == 1 ? classPaginate.previous_disabled : classPaginate.previous) : (products.current_page == products.last_page ? classPaginate.next_disabled : classPaginate.next)))" 
-               :href="link.url">
-                  <span v-if="key != 0 && key+1 != products.links.length">{{ link.label }}</span>
-                  <Right v-if="key+1 == products.links.length" />
-                  <Left v-if="key == 0"/>
-               </a>
-            </nav>
-         </div>
-       </div> -->
    </section>
 
    <TransitionRoot :show="isOpen" as="template" :unmount="false" >
@@ -505,16 +400,16 @@ export default {
             leave-to="opacity-0 scale-95" :unmount="false">
             <DialogPanel class="w-full border-[5px] border-primary-200 max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all" >
               <DialogTitle as="h3" class="lg:text-lg text-sm text-center font-medium leading-6 text-gray-900"  v-if="produitAdd != false">
-               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantiter' : 'Ajouter ') }} produit {{ produitAdd.sku }}
+               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantité' : 'Ajouter ') }} produit {{ produitAdd.sku }}
               </DialogTitle>
-               <form v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
+               <form class="editQteModal" v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
                   <input type="hidden" name="id_produit" id="id_produit" v-model="formAddProduit.idProduit" />
                   <input type="hidden" name="id_panier_edi_list" id="id_panier_edi_list" v-model="formAddProduit.id_panier_edi_list" />
                   <div class="mt-2 flex justify-center items-center">
                      <div class="text-sm text-gray-500 w-full">
-                        <label class="lg:text-lg text-sm" for="ref"> Quantiter : </label> 
-                        <input v-model="formAddProduit.quantiter" class="w-full lg:text-lg text-sm transition duration-300 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" 
-                        id="quantiter" type="number" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande">
+                        <label class="lg:text-lg text-sm" for="ref"> Quantité : </label> 
+                        <InputNumberProduit  @change="modifQte($event,formAddProduit)" :value="formAddProduit.quantiter"                        
+                           id="quantiter" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande" />
                         <InputError class="mt-2" :message="formAddProduit.errors.quantiter" />
                         <InputError class="mt-2" :message="formAddProduit.errors.idProduit" />
                         <InputError class="mt-2" :message="formAddProduit.errors.id_panier_edi_list" />

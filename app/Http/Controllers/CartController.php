@@ -294,7 +294,10 @@ class CartController extends Controller
                 }
     
                 $clientEDI->save();
+                
+                ClientEDI::calculPrixPanier($request->id_client_edi);
                 $clientGet = ClientEDI::where('id_client_edi','=',$request->id_client_edi)->first();
+                PanierEdi::calculPrixPanier($clientGet->id_panier_edi);
                 $panierGet = PanierEdi::with('client_edi_list')->where('id_panier_edi','=',$clientGet->id_panier_edi)->first();
                 $request->session()->put('panier_mkp',$panierGet);
                 $request->session()->put('client_actuel',$clientGet);
@@ -453,7 +456,9 @@ class CartController extends Controller
                 }
     
                 $clientEDI->save();
+                ClientEDI::calculPrixPanier($clientEDI->id_client_edi);
                 $clientGet = ClientEDI::with('panier')->where('id_client_edi', '=', $clientEDI->id_client_edi)->first();
+                PanierEdi::calculPrixPanier($clientGet->id_panier_edi);
                 $request->session()->put('client_commercial', $clientGet);
                 $status = true;
             }

@@ -107,7 +107,7 @@ import { PlusIcon,MinusIcon} from '@heroicons/vue/24/solid';
                      formatDate(client.date_commande) }}</p>
                   <p class="text-gray-600"><span class="font-semibold">Nombre de produit : </span>{{ client.quantiter }}
                   </p>
-                  <p class="text-gray-600"><span class="font-semibold">Total_ttc : </span>{{ client.total_ttc }} €</p>
+                  <p class="text-gray-600"><span class="font-semibold">Total ttc : </span>{{ client.total_ttc }} €</p>
                </div>
                <div class="col-span-6 border border-primary-300 rounded px-4 py-2 mx-4 space-y-1">
                   <h4 class="text-lg font-bold mb-2 text-center">Adresse commande</h4>

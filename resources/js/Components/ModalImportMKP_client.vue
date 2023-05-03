@@ -81,7 +81,7 @@ import Close from 'icons/Close.vue';
               <button @click="closeModal" type="button" class="absolute top-5 right-10"><Close /></button>
              </div>
              <div class="grid grid-cols-10 ml-5 bg-primary-50 rounded-lg p-4 mb-4">
-                <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center ">Quantiter : {{props.client.products_tt}}</span>
+                <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center ">Quantité : {{props.client.products_tt}}</span>
                 <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">M² : {{props.client.m2_tt}} m²</span>
                 <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Prix HT : {{ roundNumber(props.client.prix_ht_tt)}} €</span>
                 <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Prix TVA : {{ roundNumber(props.client.prix_tva_tt) }} €</span>
@@ -108,7 +108,7 @@ import Close from 'icons/Close.vue';
                     <div class="flex justify-center items-center py-2 w-full">
                       <span v-if="produit.stock <= produit.qte" class="flex items-center justify-center mr-2">Erreur Stock<span class="bg-red-700 w-[10px] h-[10px] block rounded-full mx-2"></span> | </span>
                       <div class="flex flex-col">
-                        <span>Quantiter : {{produit.qte}}</span>
+                        <span>Quantité : {{produit.qte}}</span>
                         <span>Prix Unitaire : {{ roundNumber(produit.prix_TTC_unitaire) }} €</span>
                       </div>
                     </div>

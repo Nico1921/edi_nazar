@@ -32,6 +32,8 @@ class PanierEdi extends Model
         'total_ttc',
         'total_payer',
         'poids_total',
+        'montant_ht',
+        'prix_transport',
         'produits_total',
         'total_m2',
         'date_livraison',
@@ -78,11 +80,13 @@ class PanierEdi extends Model
 
     public static function calculPrixPanier($id_panier){
         $clientsPanier = ClientEDI::where('id_panier_edi','=',$id_panier)->get();
-        
+        $panierFinal = PanierEdi::find($id_panier);
+
         $total_ttc = 0.00;
         $quantiterTotal = 0;
         $m2TT = 0.00; 
         $poidsTT = 0.00;
+        $prixTransport = 0;
         foreach($clientsPanier as $client){ 
             $panier = DB::table('panier_edi_list')->where('id_client_edi','=',$client->id_client_edi)->sum('prix_ttc_total');
             $quantiter = DB::table('panier_edi_list')->where('id_client_edi','=',$client->id_client_edi)->sum('quantiter');
@@ -90,28 +94,40 @@ class PanierEdi extends Model
             $quantiterTotal += $quantiter;
                
             $panierList = PanierEdiList::where('id_client_edi','=',$client->id_client_edi)->get();
+            $poidsClient = 0;
             foreach($panierList as $panierO){
                 $produit = Produit::with(['dimension','design'])->where('id_produit','=',$panierO->id_produit)->first();
                 $gamme = Gamme::where('id_gamme','=',$produit->gamme_id)->first();
                 $m2 = ($produit->dimension->largeur/100) * ($produit->dimension->longueur/100);
                 $m2TT = $m2TT + ($m2 * $panierO->quantiter); 
                 $poidsTT = $poidsTT + ($m2 * $panierO->quantiter) * $gamme->poids_m2_KG;
-                 
+                $poidsClient = $poidsClient + ($m2 * $panierO->quantiter) * $gamme->poids_m2_KG;
             }
-            
-        }
 
-        $total_ht = round($total_ttc / 1.2,2);
+            if($panierFinal->is_marketplace){
+                $prixTransport = $prixTransport + PaysLivraison::getPrixLivraison($client->pays,$poidsClient);
+            }
+        }
+        
+        $prixTransport = round($prixTransport,2);
+
+        $montant_ht = round($total_ttc / 1.2,2);
+        $total_ht = $montant_ht + $prixTransport;
+        $total_ht = round($total_ht,2);
+        
+        $total_ttc = $total_ht * (1 + 0.20);
         $total_tva = $total_ttc - $total_ht;
         
         $m2TT = round($m2TT,2);
 
         $panierFinal = PanierEdi::find($id_panier);
+        $panierFinal->montant_ht = $montant_ht;
         $panierFinal->total_HT = $total_ht;
         $panierFinal->total_taxe = $total_tva;
         $panierFinal->total_ttc = $total_ttc;
         $panierFinal->total_m2 = $m2TT;
         $panierFinal->poids_total = $poidsTT;
+        $panierFinal->prix_transport = $prixTransport;
         $panierFinal->produits_total = $quantiterTotal;    
         $panierFinal->save();
 

@@ -68,6 +68,17 @@ export default {
                   <CartEntrepot v-if="typeVente == 1" :produits="produits" :panier="props.panier" />
                   <CartDropshipping v-if="typeVente == 2" :panier="panierDrop" />
             </div>
+            <div v-if="typeVente == 2" class="col-span-4  bg-blue-200 px-4 py-2 my-2 rounded flex items-center">
+                  <ExclamationCircleIcon class="h-8 w-8 text-blue-600" />
+                  <div class="flex flex-col">
+                     <span class="pl-2 text-blue-600 whitespace-pre-line">
+                     * Le prix du transport peut varier en fonction du pays de livraison.
+                     </span>
+                     <span class="pl-5 text-blue-600 whitespace-pre-line">
+                        Les frais de retour sont identiques à ceux de l'aller.
+                     </span>
+                  </div>
+            </div> 
             <div class="col-span-4 grid grid-cols-8 ml-5">
                <div class="lg:col-span-3 sm:col-span-4 col-span-8">
                   <a :href="(typeVente == 1 ? '/order_entrepot/gamme' : '/dropshipping/gamme')" class="relative inline-block group">

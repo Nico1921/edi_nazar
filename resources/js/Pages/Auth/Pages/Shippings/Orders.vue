@@ -185,6 +185,8 @@ export default {
                   <div class="flex items-center justify-center flex-col mx-5">
                      <h2 class="text-center my-3 text-lg font-semibold">Paiement</h2>
                      <div class="flex space-x-4">
+                        <span class="my-1">Montant HT : {{props.order.montant_ht}} €</span>
+                        <span class="my-1">Transport HT : {{props.order.prix_transport}} €</span>
                         <span class="my-1">Total HT : {{props.order.total_HT}} €</span>
                         <span class="my-1">Total TVA : {{props.order.total_taxe}} €</span>
                         <span class="my-1">Total TTC : {{props.order.total_ttc}} €</span>

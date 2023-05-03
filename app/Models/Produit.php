@@ -120,6 +120,41 @@ class Produit extends Model
         return $this->belongsTo(PanierEdiList::class,'id_produit','id_produit');
     }
 
+    public static function calcul_prix_livraison_drop($id_produit,$qte,$pays){
+        $poids = Produit::calcul_poids($id_produit,$qte);
+        $prixLivraison = 12.36;
+        $exist = PaysLivraison::where('pays','=',$pays)->first();
+        if(isset($exist->id_pays_livraison) && $exist->id_pays_livraison > 0){
+            if($poids <= 30){
+                $prixL = PaysLivraison::getPaysLivraison($pays,$poids);
+                if(isset($prixL->id_pays_livraison) && $prixL->id_pays_livraison > 0){
+                    $prixLivraison = $prixL->prix;
+                }else{
+                    $prixL = PaysLivraison::getPaysLivraison($pays,30);
+                    $prixLivraison = $prixL->prix;
+                }
+            }else{
+                $prixL = PaysLivraison::getPaysLivraison('France',30);
+                $prixLivraison = $prixL->prix;
+            }
+        }else{
+            if($poids <= 30){
+                $prixL = PaysLivraison::getPaysLivraison('France',$poids);
+                if(isset($prixL->id_pays_livraison) && $prixL->id_pays_livraison > 0){
+                    $prixLivraison = $prixL->prix;
+                }else{
+                    $prixL = PaysLivraison::getPaysLivraison('France',$poids);
+                    $prixLivraison = $prixL->prix;
+                }
+            }else{
+                $prixL = PaysLivraison::getPaysLivraison('France',30);
+                $prixLivraison = $prixL->prix;
+            }
+        }
+
+        return $prixLivraison;
+    }
+
     public static function calcul_poids($id_produit, $qte){
         $poids = 0;
         $produit = Produit::with(['dimension','design'])->where('id_produit','=',$id_produit)->first();
@@ -145,7 +180,6 @@ class Produit extends Model
 
     public static function calcul_prix_produit($id_produit,$isTTC=0){
         $produit = Produit::with(['dimension'])->where('id_produit','=',$id_produit)->first();
-        Log::debug($produit);
         $gamme = Gamme::getM2withRemise($produit->gamme_id);
         $m2 = ($produit->dimension->largeur/100) * ($produit->dimension->longueur/100);
         $prixProduit = $gamme * $m2;

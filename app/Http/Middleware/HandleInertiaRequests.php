@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ClientEDI;
 use App\Models\Gamme;
 use App\Models\PanierEdi;
 use App\Models\PanierEdiList;
@@ -97,7 +98,7 @@ class HandleInertiaRequests extends Middleware
                         $request->session()->put('panier_mkp',$panierGet);
                         $produitsAchat->id_panier_edi = $panier->id_panier_edi;
                         $produitsAchat->panierActuel = $panier;
-                        if(isset($panierGet->client_edi_list) && $panierGet->client_edi_list != null ){
+                        if(isset($panierGet->client_edi_list) && $panierGet->client_edi_list != null ){                     
                             $clientList = $panierGet->client_edi_list;
                             $allAddValide = true;
                             $allPanierValide = true;
@@ -126,6 +127,7 @@ class HandleInertiaRequests extends Middleware
                                     $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit->gamme_id);
                                     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
                                     $produit->prixProduit = Produit::calcul_prix_produit($produit->id_produit);
+                                    $produit->prixTransport = Produit::calcul_prix_livraison_drop($produit->id_produit,$list->quantiter,$clientList[$i]->pays);
                                     $produit->gamme = $gamme;
                                     $produit->panier = $panier;
                                     $produit->panierActuel = $panierGet;
