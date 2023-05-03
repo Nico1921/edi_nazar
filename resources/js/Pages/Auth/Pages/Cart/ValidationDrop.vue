@@ -201,7 +201,7 @@ export default {
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantité : {{ produit.panier.quantiter }}</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT hors transport : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * (produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2),2)}} €</span>
-                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix transport TT HT : {{ produit.prixTransport }} €</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix transport HT : {{ produit.prixTransport }} €</span>
                                     </div>
                                  </div>
                               </div>

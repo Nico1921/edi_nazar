@@ -195,7 +195,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                         <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
                         <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
                         <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT hors transport : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise,2)}} €</span>
-                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix transport TT HT : {{ produit.prixTransport }} €</span>
+                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix transport HT : {{ produit.prixTransport }} €</span>
                         <div class="grid grid-cols-8">               
                            <div class="xl:col-span-5 col-span-4 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
                               <form v-if="produit.stats_produit.stock_restant > 0" class="editQteForm w-full h-full">
