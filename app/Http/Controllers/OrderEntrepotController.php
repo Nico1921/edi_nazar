@@ -253,8 +253,8 @@ class OrderEntrepotController extends Controller
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
                 ->where('id_design', '=', $designpanier[$i]->id_design)
-                ->orderBy('dimension.longueur', 'asc')
                 ->orderBy('dimension.largeur', 'asc')
+                ->orderBy('dimension.longueur', 'asc')
                 ->get();
                 for ($j = 0; $j < count($produit); $j++) {
                     $design->$i->produits->$j = new \stdClass;
@@ -299,8 +299,8 @@ class OrderEntrepotController extends Controller
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
                 ->where('id_design', '=', $designpanier[$i]->id_design)
-                ->orderBy('dimension.longueur', 'asc')
                 ->orderBy('dimension.largeur', 'asc')
+                ->orderBy('dimension.longueur', 'asc')
                 ->get();
 
                 for ($j = 0; $j < count($produit); $j++) {
