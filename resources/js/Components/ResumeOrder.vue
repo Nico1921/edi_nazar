@@ -14,7 +14,7 @@ import {ArrowRightCircleIcon} from '@heroicons/vue/24/outline';
          la commande</h2>
 
       <div class="flex flex-col px-5 py-2">
-         <span class="py-2 text-sm"><span class="font-semibold text-lg">Quantiter Total :</span> {{ (props.panier != undefined ?
+         <span class="py-2 text-sm"><span class="font-semibold text-lg">Quantité Total :</span> {{ (props.panier != undefined ?
                (props.panier.produits_total != undefined ? props.panier.produits_total : '0') : '0')
          }} pcs</span>
          <span class="py-2 text-sm"><span class="font-semibold text-lg">M² Total : </span> {{ (props.panier != undefined ? (props.panier.total_m2 != undefined ? props.panier.total_m2 : '0') : '0') }}

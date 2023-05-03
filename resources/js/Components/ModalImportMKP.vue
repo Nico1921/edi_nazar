@@ -107,7 +107,7 @@ import Alert from 'icons/Alert.vue';
              </div>
 
              <div class="grid grid-cols-10 xl:ml-5 bg-primary-50 rounded-lg p-4 mb-4 mt-4">
-                <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Quantiter : {{props.qteFinal}}</span>
+                <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Quantité : {{props.qteFinal}}</span>
                 <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">M² : {{props.m2Final}} m²</span>
                 <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Prix HT : {{ roundNumber(props.prixHT_TT)}} €</span>
                 <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Prix TVA : {{ roundNumber(props.prixTVA_TT) }} €</span>
@@ -126,7 +126,7 @@ import Alert from 'icons/Alert.vue';
                     <span>{{client.adresse_livraison.code_postal+', '+client.adresse_livraison.ville}}</span>
                     <span>{{client.adresse_livraison.pays}}</span>
              
-                    <span>Quantiter : {{client.products_tt}}</span>
+                    <span>Quantité : {{client.products_tt}}</span>
                     <span>M² total : {{client.m2_tt}} m²</span>
                     <span>Prix TTC Total : {{client.prix_ttc_tt}} €</span>
                   </div>

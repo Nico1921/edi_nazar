@@ -65,7 +65,14 @@ export default {
                </div>   
                <div class="col-span-4  bg-blue-200 px-4 py-2 my-2 rounded flex items-center">
                   <ExclamationCircleIcon class="h-8 w-8 text-blue-600" />
-                  <span class="pl-2 text-blue-600">* Le prix du transport peux varier en fonction du pays de livraison.</span>
+                  <div class="flex flex-col">
+                     <span class="pl-2 text-blue-600 whitespace-pre-line">
+                     * Le prix du transport peut varier en fonction du pays de livraison.
+                     </span>
+                     <span class="pl-5 text-blue-600 whitespace-pre-line">
+                        Les frais de retour sont identiques à ceux de l'aller.
+                     </span>
+                  </div>
                </div> 
                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8 ">
                   <div v-for="(client, key) in clients"

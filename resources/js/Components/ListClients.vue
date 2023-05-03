@@ -319,7 +319,7 @@ import { Inertia } from '@inertiajs/inertia';
                         <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Design</span> {{ produit.design.nom_design }}</span>
                         <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Couleur</span> {{ produit.couleur.nom_couleur }}</span>
                         <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Dimension</span> {{ produit.dimension.largeur +"x"+ produit.dimension.longueur  }}cm</span>
-                        <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Quantiter</span> {{ produit.panier.quantiter }}</span>
+                        <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Quantité</span> {{ produit.panier.quantiter }}</span>
                         <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Prix unitaire</span> {{ roundNumber(produit.prixProduit) }} €</span>
                      </div>
                   </div>

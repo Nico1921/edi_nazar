@@ -279,7 +279,7 @@ export default {
                         <span class="xl:col-span-1 sm:col-span-2 sm:block hidden text-center"> | </span>
                         <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Total TTC : {{ client.total_ttc }} €</span>
                         <span class="xl:col-span-1 xl:block hidden text-center"> | </span>
-                        <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Quantiter : {{ client.quantiter }}</span>
+                        <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Quantité : {{ client.quantiter }}</span>
                         <span class="xl:col-span-1 sm:col-span-2 sm:block hidden text-center"> | </span>
                         <span class="xl:col-span-2 sm:col-span-5 col-span-12 text-center">Total M² : {{ client.total_m2 }}</span>
                      </div>

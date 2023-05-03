@@ -129,7 +129,7 @@ export default {
                   <h2 class="text-center font-bold">Total Commande</h2>
                   <div class="grid 2xl:grid-cols-7 grid-cols-4 justify-center flex-row mt-4 mx-6">
                      <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
-                        <span class="font-semibold text-gray-600">Quantiter : {{panier.produits_total}} pcs</span>
+                        <span class="font-semibold text-gray-600">Quantité : {{panier.produits_total}} pcs</span>
                         <hr class="absolute sm:block hidden w-px h-5 border border-primary-100  right-0" />
                      </div>
                      <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
@@ -199,7 +199,7 @@ export default {
                                           produit.dimension.longueur }}</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2 }} € HT</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantiter : {{ produit.panier.quantiter }}</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantité : {{ produit.panier.quantiter }}</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2,2)}} €</span>
                                     </div>
                                  </div>

@@ -506,15 +506,15 @@ export default {
             leave-to="opacity-0 scale-95" :unmount="false">
             <DialogPanel class="w-full border-[5px] border-primary-200 max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all" >
               <DialogTitle as="h3" class="lg:text-lg text-sm text-center font-medium leading-6 text-gray-900"  v-if="produitAdd != false">
-               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantiter' : 'Ajouter ') }} produit {{ produitAdd.sku }}
+               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantité' : 'Ajouter ') }} produit {{ produitAdd.sku }}
               </DialogTitle>
                <form class="editQteModal" v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
                   <input type="hidden" name="id_produit" id="id_produit" v-model="formAddProduit.idProduit" />
                   <input type="hidden" name="id_panier_edi_list" id="id_panier_edi_list" v-model="formAddProduit.id_panier_edi_list" />
                   <div class="mt-2 flex justify-center items-center">
                      <div class="text-sm text-gray-500 w-full">
-                        <label class="lg:text-lg text-sm" for="ref"> Quantiter : </label> 
-                        <InputNumberProduit  @change="modifQte($event,formAddProduit)"                          
+                        <label class="lg:text-lg text-sm" for="ref"> Quantité : </label> 
+                        <InputNumberProduit  @change="modifQte($event,formAddProduit)" :value="formAddProduit.quantiter"                         
                            id="quantiter" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande" />
                         <InputError class="mt-2" :message="formAddProduit.errors.quantiter" />
                         <InputError class="mt-2" :message="formAddProduit.errors.idProduit" />
@@ -588,8 +588,8 @@ export default {
                         </div>
                      </div>
                      <div class="text-sm text-gray-500 w-full">
-                        <label class="lg:text-lg text-sm" for="ref"> Quantiter : </label> 
-                        <InputNumberProduit  @change="modifQte($event,formAddProduitAndRef)"                          
+                        <label class="lg:text-lg text-sm" for="ref"> Quantité : </label> 
+                        <InputNumberProduit  @change="modifQte($event,formAddProduitAndRef)" :value="formAddProduitAndRef.quantiter"                        
                            id="quantiter" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande" />
                         <InputError class="mt-2" :message="formAddProduitAndRef.errors.quantiter" />
                         <InputError class="mt-2" :message="formAddProduitAndRef.errors.idProduit" />

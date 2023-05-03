@@ -181,6 +181,19 @@ var formatPrix = (prix) => {
    }).format(prix);
 };
 
+const findElementInClassArray = (array, elementSearch) => {
+   var elementCheck = undefined;
+   array.forEach(element => {
+      if (element.classList != undefined && element.classList.length > 0) {
+         if (element.classList.contains(elementSearch)) {
+            elementCheck = element;
+         }
+      }
+   });
+
+   return elementCheck;
+}
+
 var modifQte = (e,formRef) => {
    e.preventDefault();
 
@@ -306,31 +319,6 @@ export default {
             </div>
          </div>
       </div>
-
-      <!-- <div class="grid grid-cols-4 justify-center items-center bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 xl:px-6">
-         <div class="lg:col-span-1 sm:col-span-2 col-span-4 sm:text-start text-center">
-            <select id="per_page" name="per_page" dusk="per-page-full" @change="perPage" class="xl:mr-5 mr-2 focus:ring-indigo-500 focus:border-indigo-500 min-w-max shadow-sm text-sm border-gray-300 rounded-md">
-               <option value="8">8 par page</option>
-               <option value="12" >12 par page</option>
-               <option value="18" >18 par page</option>
-               <option value="50" >50 par page</option>
-               <option value="100">100 par page</option>
-            </select>
-            <span>Page {{ products.current_page }} sur {{ products.last_page }}</span>
-         </div>
-         <span class="lg:col-span-2 sm:col-span-2 col-span-4 lg:text-center sm:text-end text-center sm:my-0 my-2">{{ products.total }} Résultats</span>
-         <div class="flex lg:justify-end justify-center lg:col-span-1 col-span-4">
-            <nav class="relative z-0 inline-flex  rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-               <a v-for="(link, key) in products.links" :key="key"
-               :class="(key != 0 && key+1 != products.links.length ? (link.active ? classPaginate.number_active : classPaginate.number) : (key == 0 ? (products.current_page == 1 ? classPaginate.previous_disabled : classPaginate.previous) : (products.current_page == products.last_page ? classPaginate.next_disabled : classPaginate.next)))" 
-               :href="link.url">
-                  <span v-if="key != 0 && key+1 != products.links.length">{{ link.label }}</span>
-                  <Right v-if="key+1 == products.links.length" />
-                  <Left v-if="key == 0"/>
-               </a>
-            </nav>
-         </div>
-       </div> -->
    </section>
 
    <TransitionRoot :show="isOpen" as="template" :unmount="false" >
@@ -412,15 +400,15 @@ export default {
             leave-to="opacity-0 scale-95" :unmount="false">
             <DialogPanel class="w-full border-[5px] border-primary-200 max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all" >
               <DialogTitle as="h3" class="lg:text-lg text-sm text-center font-medium leading-6 text-gray-900"  v-if="produitAdd != false">
-               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantiter' : 'Ajouter ') }} produit {{ produitAdd.sku }}
+               {{ (formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? 'Modifier Quantité' : 'Ajouter ') }} produit {{ produitAdd.sku }}
               </DialogTitle>
-               <form v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
+               <form class="editQteModal" v-if="produitAdd != false" @submit.prevent="addCommande($event,(formAddProduit.id_panier_edi_list != null && formAddProduit.id_panier_edi_list != 0 ? true : false))">
                   <input type="hidden" name="id_produit" id="id_produit" v-model="formAddProduit.idProduit" />
                   <input type="hidden" name="id_panier_edi_list" id="id_panier_edi_list" v-model="formAddProduit.id_panier_edi_list" />
                   <div class="mt-2 flex justify-center items-center">
                      <div class="text-sm text-gray-500 w-full">
-                        <label class="lg:text-lg text-sm" for="ref"> Quantiter : </label> 
-                        <InputNumberProduit  @change="modifQte($event,formAddProduitAndRef)"                          
+                        <label class="lg:text-lg text-sm" for="ref"> Quantité : </label> 
+                        <InputNumberProduit  @change="modifQte($event,formAddProduit)" :value="formAddProduit.quantiter"                        
                            id="quantiter" min="0" :max="produitAdd.stock_restant" name="quantiter" placeholder="Saisissez la quantiter pour la commande" />
                         <InputError class="mt-2" :message="formAddProduit.errors.quantiter" />
                         <InputError class="mt-2" :message="formAddProduit.errors.idProduit" />

@@ -145,7 +145,7 @@ import Edit from 'icons/Pencil.vue';
                   </td>
                   <td class="w-4/12 text-sm py-4 px-6 text-gray-500 whitespace-nowrap" >
                      <form @submit.prevent="addCommande" class="grid grid-cols-2" v-if="product.stats_produit.stock_restant > 0 && !product.isInPanier">
-                        <InputNumber name="qte" titre="Quantiter" :max="product.stats_produit.stock_restant" :value="(product.panier.quantiter > 0 ? product.panier.quantiter : 1)" />
+                        <InputNumber name="qte" titre="Quantité" :max="product.stats_produit.stock_restant" :value="(product.panier.quantiter > 0 ? product.panier.quantiter : 1)" />
                         <input type="hidden" name="id_produit" :value="product.id_produit" />
                         <input type="hidden" name="id_client_edi" :value="product.id_client_edi" />
                         <input type="hidden" name="id_panier_edi_list" :value="(product.panier.id_panier_edi_list != undefined ? product.panier.id_panier_edi_list : 0)" />
@@ -163,7 +163,7 @@ import Edit from 'icons/Pencil.vue';
                         </div>
                         
                         <div class="grid grid-cols-2">
-                              <span>Quantiter : {{product.panier.quantiter}}</span>
+                              <span>Quantité : {{product.panier.quantiter}}</span>
                               <div class="flex justify-items-center items-center justify-around" v-if="props.ifEdit">
                                  <button type="button" @click="editCommande(key)" class="p-2 bg-primary-50 rounded hover:bg-primary-100 transition duration-300 mx-2" ><Edit class="text-white" /> Modifier</button>
                                  <button type="button" @click="deleteCommande((product.panier.id_panier_edi_list != undefined ? product.panier.id_panier_edi_list : 0),key)" class="p-2 bg-red-500 text-white rounded hover:bg-red-300 transition duration-300 mx-2" ><Delete class="text-white" /> Supprimer</button>

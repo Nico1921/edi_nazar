@@ -189,7 +189,7 @@ import Right from 'icons/MenuRight.vue';
                            
                                  <div class="grid grid-cols-8 col-span-2">
                                     <div class="xl:col-span-5 sm:col-span-4 col-span-8 w-full h-8 bg-gray-300 flex items-center justify-center rounded">
-                                       <span class="">Quantiter : {{design.panier.quantiter}}</span>
+                                       <span class="">Quantité : {{design.panier.quantiter}}</span>
                                     </div>
                                     
                                     <div class="xl:col-span-3 sm:col-span-4 col-span-8 sm:mt-0 mt-1">

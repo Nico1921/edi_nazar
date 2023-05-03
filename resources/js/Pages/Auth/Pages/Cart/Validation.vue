@@ -85,6 +85,13 @@ var verifCheckVenteCondition = (e) => {
       venteCondition.value = false;
     } 
 };
+
+var formatPrix = (prix) => {
+   return new Intl.NumberFormat("fr-FR", {
+      style: "currency",
+      currency: "EUR",
+   }).format(prix);
+};
 </script>
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
@@ -133,25 +140,33 @@ export default {
                </div>
                <div class="bg-primary-50 rounded m-2 p-4">
                   <h2 class="text-center font-bold">Total Commande</h2>
-                  <div class="grid lg:grid-cols-5 grid-cols-4 justify-center flex-row mt-4 mx-6">
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
-                        <span class="font-semibold text-gray-600">Quantiter : {{props.panier.produits_total}} pcs</span>
+                  <div class="grid 2xl:grid-cols-7 grid-cols-4 justify-center flex-row mt-4 mx-6">
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span class="font-semibold text-gray-600">Quantité : {{props.panier.produits_total}} pcs</span>
                         <hr class="absolute sm:block hidden w-px h-5 border border-primary-100  right-0" />
                      </div>
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
                         <span class="font-semibold text-gray-600">M² : {{props.panier.total_m2}} m²</span>
                         <hr class="absolute lg:block hidden w-px h-5 border border-primary-100 right-0" />
                      </div>
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
-                        <span lass="font-semibold text-gray-600">Prix HT : {{props.panier.total_HT}} €</span>
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span lass="font-semibold text-gray-600">Montant HT : {{formatPrix(props.panier.montant_ht)}} </span>
                         <hr class="absolute sm:block hidden w-px h-5 border border-primary-100 right-0" />
                      </div>
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
-                        <span lass="font-semibold text-gray-600">Prix TVA : {{props.panier.total_taxe}} €</span>
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span lass="font-semibold text-gray-600">Transport HT : {{formatPrix(props.panier.prix_transport)}} </span>
+                        <hr class="absolute sm:block hidden w-px h-5 border border-primary-100 right-0" />
+                     </div>
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span lass="font-semibold text-gray-600">Prix HT : {{formatPrix(props.panier.total_HT)}} </span>
+                        <hr class="absolute sm:block hidden w-px h-5 border border-primary-100 right-0" />
+                     </div>
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span lass="font-semibold text-gray-600">Prix TVA : {{formatPrix(props.panier.total_taxe)}} </span>
                         <hr class="absolute lg:block hidden w-px h-5 border border-primary-100 right-0" />
                      </div>
-                     <div class="lg:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
-                        <span lass="font-semibold text-gray-600">Prix TTC : {{props.panier.total_ttc}} €</span>
+                     <div class="2xl:col-span-1 sm:col-span-2 col-span-4 flex justify-center relative">
+                        <span lass="font-semibold text-gray-600">Prix TTC : {{formatPrix(props.panier.total_ttc)}} </span>
                      </div>
                   </div>
                </div>
@@ -178,7 +193,7 @@ export default {
                                  produit.dimension.longueur }}</span>
                               <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2 }} € HT</span>
                               <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
-                              <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantiter : {{ produit.panier.quantiter }}</span>
+                              <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantité : {{ produit.panier.quantiter }}</span>
                               <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * (produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2),2)}} €</span>
                            </div>
                         </div>
@@ -245,7 +260,7 @@ export default {
                         </div>
                      </RadioGroup>
                   </div>
-                  <div class="flex items-center my-6 2xl:mx-28 xl:mx-12 lg:mx-[4.4rem] sm:mx-2 xsm:mx-14 mx-auto max-w-sm">
+                  <div class="flex items-center my-6 mx-auto max-w-sm">
                     <input @click="verifCheckVenteCondition" id="checkVenteCondition" type="checkbox" value="1" class="w-4 h-4 text-primary-200 bg-gray-100 border-gray-300 rounded focus:ring-primary-200  focus:ring-2 bg-primary-100">
                     <label for="checkVenteCondition" class="ml-2 sm:text-lg text-sm font-medium text-gray-900 ">J'accepte les <a href="/cgv" class="text-gray-400 underline hover:text-[1.15rem] cursor-pointer transition-all duration-300">conditions générales de vente</a></label>
                   </div>
