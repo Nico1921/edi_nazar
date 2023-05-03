@@ -215,6 +215,7 @@ class OrderEntrepotController extends Controller
             ->join('produit', 'produit.id_design', 'design.id_design')
             ->where('gamme.in_edi', '=', '1')
             ->where('gamme.statut', '=', '1')
+            ->where('design.nom_design', 'NOT LIKE', 'X2%')
             ->where('produit.code_sku', '!=', 'null')
             ->where('produit.code_sku', '!=', '""')
             ->where('produit.drop_shipping', '=', '1')
