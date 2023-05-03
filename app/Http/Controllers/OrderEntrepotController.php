@@ -247,11 +247,15 @@ class OrderEntrepotController extends Controller
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
 
                 $produit = Produit::with(['dimension','statsProduit'])
+                ->join('dimension','produit.id_dimension','dimension.id_dimension')
                 ->where('produit.code_sku', '!=', 'null')
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
-                ->where('id_design','=',$designpanier[$i]->id_design)->get();
+                ->where('id_design', '=', $designpanier[$i]->id_design)
+                ->orderBy('dimension.longueur', 'asc')
+                ->orderBy('dimension.largeur', 'asc')
+                ->get();
                 for ($j = 0; $j < count($produit); $j++) {
                     $design->$i->produits->$j = new \stdClass;
                     $design->$i->produits->$j->prixProduit = Produit::calcul_prix_produit($produit[$j]->id_produit,0);
@@ -289,11 +293,15 @@ class OrderEntrepotController extends Controller
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
 
                 $produit = Produit::with(['dimension','statsProduit'])
+                ->join('dimension','produit.id_dimension','dimension.id_dimension')
                 ->where('produit.code_sku', '!=', 'null')
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
-                ->where('id_design','=',$designpanier[$i]->id_design)->get();
+                ->where('id_design', '=', $designpanier[$i]->id_design)
+                ->orderBy('dimension.longueur', 'asc')
+                ->orderBy('dimension.largeur', 'asc')
+                ->get();
 
                 for ($j = 0; $j < count($produit); $j++) {
                     $design->$i->produits->$j = new \stdClass;
