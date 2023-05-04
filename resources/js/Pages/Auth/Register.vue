@@ -117,32 +117,32 @@ import linkedin from "icons/Linkedin.vue";
                     <h2 class="text-3xl"><user /> {{$t('register.labelDiv1')}}</h2>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="nom" class="w-auto">{{$t('register.labelNom')}} :</label>
-                        <input class="block w-full p-1 text-lg rounded-sm bg-primary-100" v-model="form.nom" type="text" name="nom" id="nom" required autofocus autocomplete="family-name">
+                        <input class="block w-full p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.nom" type="text" name="nom" id="nom" required autofocus autocomplete="family-name">
                         <InputError class="mt-2" :message="form.errors.nom" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="prenom">{{$t('register.labelPrenom')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.prenom" type="text" name="prenom" id="prenom" required autofocus autocomplete="given-name">
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.prenom" type="text" name="prenom" id="prenom" required autofocus autocomplete="given-name">
                         <InputError class="mt-2" :message="form.errors.prenom" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="email">{{$t('register.labelEmail')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.email" type="email" name="email" id="email" required autofocus autocomplete="email">
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.email" type="email" name="email" id="email" required autofocus autocomplete="email">
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="email_confirmation">{{$t('register.labelEmailConfirm')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.email_confirmation" type="email" name="email_confirmation" id="email_confirmation" required autofocus autocomplete="email" >
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.email_confirmation" type="email" name="email_confirmation" id="email_confirmation" required autofocus autocomplete="email" >
                         <InputError class="mt-2" :message="form.errors.email_confirmation" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="tel">{{$t('register.labelTel')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.tel" type="tel" name="tel" id="tel" required autofocus autocomplete="tel">
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.tel" type="tel" name="tel" id="tel" required autofocus autocomplete="tel">
                         <InputError class="mt-2" :message="form.errors.tel" />
                     </div>
                     <form enctype="multipart/form-data" class="grid grid-cols-2 items-center p-1">
                         <label for="fileIdentiter">Pièce identiter du dirigeant :</label>
-                        <label id="labelIdentiter" class="cursor-pointer text-center p-1 text-lg text-gray-200 rounded-sm bg-primary-100" for="fileIdentiter">Importer ma pièce</label>
+                        <label id="labelIdentiter" class="cursor-pointer text-center p-1 text-lg text-gray-700 border-[1px] border-primary-300 rounded-sm bg-primary-100" for="fileIdentiter">Importer ma pièce</label>
                         <span id="uploadIdentiter" class="hidden text-green-700">Importer avec succées</span>
                         <span id="uploadErrorIdentiter" class="hidden text-red-600"></span>
                         <input accept=".jpg,.jpeg,.png,.pdf" @change="submitIdentiter" class="hidden " type="file" name="fileIdentiter" id="fileIdentiter" required>
@@ -153,37 +153,37 @@ import linkedin from "icons/Linkedin.vue";
                     <h2 class="text-3xl"><domain /> {{$t('register.labelDiv2')}}</h2>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="nom_societe" class="w-auto">{{$t('register.labelNomSociete')}} :</label>
-                        <input class="block w-full p-1 text-lg rounded-sm bg-primary-100" v-model="form.nom_societe" type="text" name="nom_societe" id="nom_societe" required autofocus autocomplete="organization">
+                        <input class="block w-full p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.nom_societe" type="text" name="nom_societe" id="nom_societe" required autofocus autocomplete="organization">
                         <InputError class="mt-2" :message="form.errors.nom_societe" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="numTVA">{{$t('register.labelNumTVA')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.numTVA" type="text" name="numTVA" id="numTVA" required autofocus>
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.numTVA" type="text" name="numTVA" id="numTVA" required autofocus>
                         <InputError class="mt-2" :message="form.errors.numTVA" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="adresse">{{$t('register.labelAdresse')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.adresse" type="text" name="adresse" id="adresse" required autofocus autocomplete="street-address">
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.adresse" type="text" name="adresse" id="adresse" required autofocus autocomplete="street-address">
                         <InputError class="mt-2" :message="form.errors.adresse" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="cp">{{$t('register.labelCP')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.cp" type="text" name="cp" id="cp" required autofocus autocomplete="postal-code">
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.cp" type="text" name="cp" id="cp" required autofocus autocomplete="postal-code">
                         <InputError class="mt-2" :message="form.errors.cp" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="ville">{{$t('register.labelVille')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.ville" type="text" name="ville" id="ville" required autofocus autocomplete="city">
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.ville" type="text" name="ville" id="ville" required autofocus autocomplete="city">
                         <InputError class="mt-2" :message="form.errors.ville" />
                     </div>
                     <div class="grid grid-cols-2 items-center p-1">
                         <label for="pays">{{$t('register.labelPays')}} :</label>
-                        <input class="block p-1 text-lg rounded-sm bg-primary-100" v-model="form.pays" type="text" name="pays" id="pays" required autofocus autocomplete="country-name">
+                        <input class="block p-1 text-lg rounded-sm bg-primary-100 border-[1px] border-primary-300 text-gray-700" v-model="form.pays" type="text" name="pays" id="pays" required autofocus autocomplete="country-name">
                         <InputError class="mt-2" :message="form.errors.pays" />
                     </div>
                     <form @submit="formSubmit" enctype="multipart/form-data" class="grid grid-cols-2 items-center p-1">
                         <label for="fileKbis">Kbis entreprise -3 mois :</label>
-                        <label id="labelKbis" class="cursor-pointer text-center p-1 text-lg text-gray-200 rounded-sm bg-primary-100" for="fileKbis">Importer mon Kbis</label>
+                        <label id="labelKbis" class="cursor-pointer text-center p-1 text-lg text-gray-700 border-[1px] border-primary-300 rounded-sm bg-primary-100" for="fileKbis">Importer mon Kbis</label>
                         <span id="uploadKbis" class="hidden text-green-700">Importer avec succées</span>
                         <span id="uploadErrorKbis" class="hidden text-red-600"></span>
                         <input accept=".jpg,.jpeg,.png,.pdf" @change="submitKbis" class="hidden " type="file" name="fileKbis" id="fileKbis" required>
@@ -195,10 +195,10 @@ import linkedin from "icons/Linkedin.vue";
                     <label for="checkPolitique" class="ml-2 text-lg font-medium text-gray-900 ">J'accepte la <a href="/politique-confidentialite" class="text-gray-400 underline hover:text-[1.15rem] cursor-pointer transition-all duration-300">politique de confidentialité</a></label>
                 </div>
                 <div class="px-4 pb-2 pt-4" v-if="acceptPolitique">
-                    <button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" class=" block w-full p-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-400 focus:outline-none">{{$t('register.btnInscription')}}</button>
+                    <button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" class=" block w-full p-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-100 focus:outline-none">{{$t('register.btnInscription')}}</button>
                 </div>
                 <div class="px-4 pb-2 pt-4" v-else>
-                    <button type="button" class="cursor-not-allowed block w-full p-2 text-lg rounded-full  bg-primary-200 focus:outline-none">{{$t('register.btnInscription')}}</button>
+                    <button type="button" class="cursor-not-allowed block w-full p-2 text-lg rounded-full  bg-primary-100 text-primary-200 focus:outline-none">{{$t('register.btnInscription')}}</button>
                 </div>
             </div>
             <div v-if="(typeof props.sendMessage !== 'undefined')" class="p-2 rounded-lg shadow grid grid-cols-1">
@@ -218,7 +218,7 @@ import linkedin from "icons/Linkedin.vue";
                     </div>
                 </div>
                 <div class="w-full">
-                    <Link :href="route('login')" class="block w-full text-center px-5 py-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-400 focus:outline-none">Je me connecte</Link>
+                    <Link :href="route('login')" class="block w-full text-center px-5 py-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-100 focus:outline-none">Je me connecte</Link>
                 </div>
                 <div class="w-full py-3">
                     <a href="https://www.pinterest.fr/nazarrugsfrance/" class="px-2" rel="noopener" target="_blank" aria-label="Pinterest">

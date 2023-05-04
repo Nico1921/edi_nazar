@@ -22,7 +22,7 @@ var links = [{
       icon: ListBulletIcon,
       active: false
    },{
-      title: 'Gamme',
+      title: 'Gammes',
       link: '/order_entrepot/gamme',
       icon: '',
       active: false
