@@ -315,7 +315,7 @@ import { Inertia } from '@inertiajs/inertia';
                         </div>
                      </div>
                      <div class="flex flex-col col-span-3">
-                        <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Gamme</span> {{ produit.gamme.nom_gamme }}</span>
+                        <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Gammes</span> {{ produit.gamme.nom_gamme }}</span>
                         <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Design</span> {{ produit.design.nom_design }}</span>
                         <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Couleur</span> {{ produit.couleur.nom_couleur }}</span>
                         <span class="my-1 text-sm rounded-xl bg-gray-200"><span class="rounded-xl bg-indigo-200 text-indigo-500 px-2 ">Dimension</span> {{ produit.dimension.largeur +"x"+ produit.dimension.longueur  }}cm</span>

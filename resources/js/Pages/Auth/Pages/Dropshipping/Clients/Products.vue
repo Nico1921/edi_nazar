@@ -30,7 +30,7 @@ var links = [{
       icon: ListBulletIcon,
       active: false
    },{
-      title: 'Gamme',
+      title: 'Gammes',
       link: '/dropshipping/gamme',
       icon: '',
       active: false

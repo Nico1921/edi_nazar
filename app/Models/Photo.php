@@ -23,6 +23,7 @@ class Photo extends Model
         'id_produit',
         'img_produit',
         'principale',
+        'principale_edi',
         'statut',
         'sort_order',
     ];

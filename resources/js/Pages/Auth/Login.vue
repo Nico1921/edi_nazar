@@ -40,12 +40,12 @@ import linkedin from "icons/Linkedin.vue";
             </h1>
             <div class="pb-2 pt-4">
                 <input type="text" name="email" id="email" :placeholder="$t('login.labelIdentifiant')"
-                    class="block w-full sm:p-4 p-2 text-lg rounded-sm bg-primary-100" v-model="form.email" required autofocus
+                    class="block w-full sm:p-4 p-2 text-lg rounded-sm bg-primary-100 text-gray-700 border-[1px] border-primary-300" v-model="form.email" required autofocus
                     autocomplete="username">
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
             <div class="pb-2 pt-4">
-                <input class="block w-full sm:p-4 p-2 text-lg rounded-sm bg-primary-100" v-model="form.password" type="password" name="password" id="password" :placeholder="$t('login.labelMotDePasse')">
+                <input class="block w-full sm:p-4 p-2 text-lg rounded-sm bg-primary-100 text-gray-700 border-[1px] border-primary-300" v-model="form.password" type="password" name="password" id="password" :placeholder="$t('login.labelMotDePasse')">
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
             <!-- <div class="text-right text-gray-400 hover:underline hover:text-gray-100">
@@ -59,7 +59,7 @@ import linkedin from "icons/Linkedin.vue";
                 </label>
             </div>
             <div class="px-4 pb-2 pt-4">
-                <button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" class=" block w-full p-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-400 focus:outline-none">{{$t('login.btnConnexion')}}</button>
+                <button :class="{ 'opacity-25': form.processing }" :disabled="form.processing" class=" block w-full p-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-100 focus:outline-none">{{$t('login.btnConnexion')}}</button>
             </div>
 
             <div class=" px-4 text-center flex flex-col justify-center lg:hidden text-[28px]">
@@ -69,7 +69,7 @@ import linkedin from "icons/Linkedin.vue";
                     </div>
                 </div>
                 <div class="w-full">
-                    <Link :href="route('register')" class="block w-full text-center px-5 py-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-400 focus:outline-none">{{$t('login.btnMobileOr')}}</Link>
+                    <Link :href="route('register')" class="block w-full text-center px-5 py-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-100 focus:outline-none">{{$t('login.btnMobileOr')}}</Link>
                 </div>
                 <div class="w-full pt-2">
                     <a href="https://www.pinterest.fr/nazarrugsfrance/" class="px-2" rel="noopener" target="_blank" aria-label="Pinterest">

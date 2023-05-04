@@ -23,7 +23,7 @@ defineProps(['TextTitre','SousTitre','TextBouttonTitre','hrefBtnTitre']);
                 <div class="flex items-center my-4">
                     <hr class="w-full"/><span class="px-2 text-xl">{{$t('Or')}}</span><hr class="w-full"/>
                 </div>
-                <Link :href="route(hrefBtnTitre)" class="block w-full text-center px-5 py-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-400 focus:outline-none">{{ TextBouttonTitre }}</Link>
+                <Link :href="route(hrefBtnTitre)" class="block w-full text-center px-5 py-2 text-lg rounded-full transition ease-in-out duration-700 bg-primary-300 hover:bg-primary-100 focus:outline-none">{{ TextBouttonTitre }}</Link>
             </div>
             <div class="bottom-0 absolute p-4 text-center right-0 left-0 flex justify-center space-x-4 text-[28px]">
                 <a href="https://www.pinterest.fr/nazarrugsfrance/" rel="noopener" target="_blank" aria-label="Pinterest">

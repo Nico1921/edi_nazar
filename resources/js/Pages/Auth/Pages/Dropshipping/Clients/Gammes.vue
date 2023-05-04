@@ -18,7 +18,7 @@ var links = [{
       icon: ListBulletIcon,
       active: false
    },{
-      title: 'Gamme',
+      title: 'Gammes',
       link: '/dropshipping/gamme',
       icon: '',
       active: true
@@ -219,7 +219,7 @@ export default {
       <Breadcrumbs :links="links" />
 
       <div class="flex lg:flex-row flex-col items-center justify-center relative pb-10">
-         <h1 class="font-semibold text-center mx-1 lg:text-2xl text-lg text-gray-800 py-2">Dropshipping  - Gamme</h1>
+         <h1 class="font-semibold text-center mx-1 lg:text-2xl text-lg text-gray-800 py-2">Dropshipping  - Gammes</h1>
 
          <div v-if="typeVente == 2" class="lg:absolute inset-0 lg:flex items-center justify-end">
             <div class="">

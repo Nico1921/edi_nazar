@@ -215,7 +215,6 @@ class OrderEntrepotController extends Controller
             ->join('produit', 'produit.id_design', 'design.id_design')
             ->where('gamme.in_edi', '=', '1')
             ->where('gamme.statut', '=', '1')
-            ->where('design.nom_design', 'NOT LIKE', 'X2%')
             ->where('produit.code_sku', '!=', 'null')
             ->where('produit.code_sku', '!=', '""')
             ->where('produit.drop_shipping', '=', '1')
@@ -237,13 +236,23 @@ class OrderEntrepotController extends Controller
                 $design->$i->produits = new \stdClass;
 
                 $photo = Produit::select('id_produit')->with(['photo' => function($query) {
-                    $query->where('principale', '=', '1');
+                    $query->where('principale_edi', '=', '1');
                 }])
                 ->where('produit.code_sku', '!=', 'null')
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
                 ->where('id_design','=',$designpanier[$i]->id_design)->first();
+                if($photo->photo == null){
+                    $photo = Produit::select('id_produit')->with(['photo' => function($query) {
+                        $query->where('principale', '=', '1');
+                    }])
+                    ->where('produit.code_sku', '!=', 'null')
+                    ->where('produit.code_sku', '!=', '""')
+                    ->where('produit.drop_shipping', '=', '1')
+                    ->where('produit.statut', '=', '1')
+                    ->where('id_design','=',$designpanier[$i]->id_design)->first();
+                }
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
 
@@ -283,13 +292,23 @@ class OrderEntrepotController extends Controller
                 $design->$i->produits = new \stdClass;
 
                 $photo = Produit::select('id_produit')->with(['photo' => function($query) {
-                    $query->where('principale', '=', '1');
+                    $query->where('principale_edi', '=', '1');
                 }])
                 ->where('produit.code_sku', '!=', 'null')
                 ->where('produit.code_sku', '!=', '""')
                 ->where('produit.drop_shipping', '=', '1')
                 ->where('produit.statut', '=', '1')
                 ->where('id_design','=',$designpanier[$i]->id_design)->first();
+                if($photo->photo == null){
+                    $photo = Produit::select('id_produit')->with(['photo' => function($query) {
+                        $query->where('principale', '=', '1');
+                    }])
+                    ->where('produit.code_sku', '!=', 'null')
+                    ->where('produit.code_sku', '!=', '""')
+                    ->where('produit.drop_shipping', '=', '1')
+                    ->where('produit.statut', '=', '1')
+                    ->where('id_design','=',$designpanier[$i]->id_design)->first();
+                }
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
 
