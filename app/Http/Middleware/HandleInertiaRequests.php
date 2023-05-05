@@ -43,6 +43,9 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         if(isset($request->user()->id) && !empty($request->user()->id)){
+            if(!$request->session()->has('typeVente')){
+                $request->session()->put('typeVente', 1);
+            }
             $user = $request->user()::with('client')->where('id','=',$request->user()->id)->get();
         }else {
             $user = '';
