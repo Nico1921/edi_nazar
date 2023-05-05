@@ -135,7 +135,7 @@ class Commande extends Model
                             'montant_tva' => $panier->total_taxe,
                             'montant_due_ttc' => $panier->total_ttc - $panier->total_payer,
                             'montant_port_ht' => $panier->prix_transport,
-                            'date_echeance' => date('Y-m-d'),
+                            'date_echeance' => ($id_client->client->paiement_comptant == 1 ? date('Y-m-d') : (date('d')<15? date('Y-m-t'): date('Y-m-d', strtotime(date('Y-m-15').'+ 1 month')))),
                             'gen_facture' => ($paymentType == 2 ? 1 : 0),
                             'observation' => 'Commande EDI du '.date('d/m/Y'),
                             'interne' => 1,
