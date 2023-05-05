@@ -322,7 +322,7 @@ export default {
    </section>
 
    <TransitionRoot :show="isOpen" as="template" :unmount="false" >
-    <Dialog as="div" @close="closeModal" class="relative z-30" :unmount="false">
+    <Dialog as="div" @close="closeModal" class="relative z-[60]" :unmount="false">
       <TransitionChild
         as="template"
         enter="duration-300 ease-out"
