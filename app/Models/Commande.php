@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\confirmationCommande;
 use stdClass;
 
 class Commande extends Model
@@ -83,7 +85,7 @@ class Commande extends Model
         $facture = new stdClass;
         if(!empty($panier->id_panier_edi) && $panier->id_panier_edi > 0){
             $id_client = User::with('client')->where('id','=',$id_distributeur)->first(); 
-                        Adresse::create([
+                        $adresse = Adresse::create([
                             'date_ajout' => date('Y-m-d H:i:s'),
                             'date_maj' => date('Y-m-d H:i:s'),
                             'id_user' => '0',
@@ -100,6 +102,8 @@ class Commande extends Model
                             'tel2' => '',
                             'statut' => '1',
                         ]);
+
+
 
                         $commande = Commande::create([
                             'date_ajout' => date('Y-m-d H:i:s'),
@@ -152,6 +156,20 @@ class Commande extends Model
                             'abonnement_ht' => 0,
                             'abonnement_tva' => 0
                         ]);
+
+                        if($panier->is_marketplace == 0){
+                            $preparation = Preparation::create([
+                                "date_ajout" => date('Y-m-d H:i:s'),
+                                "date_maj" => date('Y-m-d H:i:s'),
+                                "id_commande" => $commande->id_commande,
+                                'id_facture' => $facture->id_facture,
+                                'date_livraison' => $facture->date_livraison,
+                                'note' => 'CDE EDI ' . $commande->id_commande,
+                                'id_client' => $id_client->client->id_client,
+                                'id_adresse' => $adresse->id_adresse
+                            ]);
+                        }
+
             $clientList = ClientEDI::where('id_panier_edi','=',$id_panier_edi)->get();
             foreach($clientList as $client){
                 $panierClient = PanierEdiList::where('id_client_edi','=',$client->id_client_edi)->get();
@@ -204,6 +222,7 @@ class Commande extends Model
                         }
                 }
             }
+            //Mail::to($id_client->client->email)->send(new confirmationCommande());
         }
         
 
