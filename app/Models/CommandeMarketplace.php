@@ -139,8 +139,21 @@ class CommandeMarketplace extends Model
     public static function generateNumOrder(){
         $search = CommandeMarketplace::where('num_commande','like',date('ym').'2%')->max('num_commande');
         $num_commande = date('ym').'20001';
-        if(!empty($search)){
-                $num_commande = $search++;
+        $unique = false;
+        $tentative = 0;
+        while(!$unique && $tentative < 10){
+         if(!empty($search)){
+            if(substr($search,0,4) == date('ym'))
+               $num_commande = ($tentative > 3 ? $search+($tentative-2) : $search+1);
+            else
+               $num_commande = date('ym').'20001';
+         }
+         $check = CommandeMarketplace::where('num_commande','=',$num_commande)->get();
+         if($check && count($check) == 0){
+            $unique = true;
+         }else{
+            $tentative++;
+         }
         }
 
         return $num_commande;
