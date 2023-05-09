@@ -71,7 +71,7 @@ class SettingsController extends Controller
         if(isset($user->id) && !empty($user->id)){
             if($request->email != $user->email || !empty($request->actualPassword)){
                 if($request->email != $user->email){
-                    $validate['email'] = 'required|string|email|confirmed|max:255|unique:users';
+                    $validate['email'] = 'required|string|email|confirmed|max:255|unique:connexion_edi';
                 }
     
                 if(!empty($request->actualPassword)){

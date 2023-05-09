@@ -245,7 +245,7 @@ class ShippingsController extends Controller
                                         
                                         $pathOriginalFile = 'https://gestion.tapis-nazar.fr/img/produit/'.$photo->img_produit;
                                         if(curl_init($pathOriginalFile) !== false) {
-                                            $pathFile = $gamme->nom_gamme."/".$produit->design->nom_design."/".$photo->img_produit;
+                                            $pathFile = $gamme->nom_gamme."/".$produit->design."/".$photo->img_produit;
                                             $zipVisual->addFromString($pathFile, file_get_contents($pathOriginalFile));
                                         }
                                     }

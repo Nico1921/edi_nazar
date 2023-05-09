@@ -42,6 +42,7 @@ class Client extends Model
         'is_fournisseur',
         'has_distributeur',
         'is_edi',
+        'paiement_comptant',
         'taux_remise',
         'social_twitter',
         'social_insta',
