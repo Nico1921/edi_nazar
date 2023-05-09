@@ -1040,8 +1040,8 @@ class DropshippingController extends Controller
 
       $request->session()->put('importMarketplace',$clients);
 
-      return ['valider'=>$valider,'erreur'=>$erreur,'importCommandes' => $clients,'qteFinal' => $qteTT,'m2Final' => $m2Final, 
-      'prixHT_TT' => $prixHT_TT, 'prixTVA_TT' => $prixTVA_TT, 'prixTTC_TT' => $prixTTC_TT, 'stockInvalide' => $stockInvalid]; 
+      return redirect()->back()->with(['fileInfo' => ['valider'=>$valider,'erreur'=>$erreur,'importCommandes' => $clients,'qteFinal' => $qteTT,'m2Final' => $m2Final, 
+      'prixHT_TT' => $prixHT_TT, 'prixTVA_TT' => $prixTVA_TT, 'prixTTC_TT' => $prixTTC_TT, 'stockInvalide' => $stockInvalid]]); 
     }
 
     /**

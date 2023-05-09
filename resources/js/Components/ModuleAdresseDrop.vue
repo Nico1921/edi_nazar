@@ -455,7 +455,7 @@ export default {
             </div>
 
             <div class="flex flex-row-reverse">
-               <button type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+               <button :class="{ 'opacity-25': formClient.processing }" :disabled="formClient.processing" type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">
                   Valider

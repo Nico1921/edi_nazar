@@ -6,6 +6,7 @@ import ModalImportMKP from '@/Components/ModalImportMKP.vue';
 import ModalAjoutClient from '@/Components/ModalAjoutClient.vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import { HomeIcon,ListBulletIcon  } from '@heroicons/vue/24/solid';
+import InputError from '@/Components/InputError.vue';
     
 var links = [{
         title: 'Accueil',
@@ -39,6 +40,10 @@ var typeVente = ref(usePage().props.value.session.typeVente);
 var panierDrop = ref(usePage().props.value.PanierDrop);
 var client = ref(panierDrop.value.panier.clientActuel);
 
+var formFileImport = useForm({
+   fileImport: null
+});
+
 var fileImport = (input)=>{
    if(input.target.value == ''){
       document.getElementById("file_name_client").innerText = "";
@@ -59,26 +64,24 @@ var clickResetInputFile = ()=>{
 };
 
 const submit_file = () => {
-   var form = new FormData(document.getElementById('fileClientImport'));
-   axios.post('/dropshipping/clients/import',form).then((response) => {
-      console.log(response);
-      if(response.status){
-         if (document.getElementById("modalImport") != null) {
-            if (document.getElementById("modalImport").__vue_app__ != undefined) {
-               document.getElementById("modalImport").__vue_app__.unmount();
+   formFileImport.post('/dropshipping/clients/import',{
+         onSuccess: (e) => {
+            if (document.getElementById("modalImport") != null) {
+               if (document.getElementById("modalImport").__vue_app__ != undefined) {
+                  document.getElementById("modalImport").__vue_app__.unmount();
+               }
             }
-         }
-         var data = response.data;
-         var modalImportMKP = createApp(ModalImportMKP, { isOpen: true,importMKP: data.importCommandes,reussi: data.valider,erreur: data.erreur,
-            qteFinal: data.qteFinal,m2Final: data.m2Final, prixHT_TT: data.prixHT_TT, prixTVA_TT: data.prixTVA_TT, prixTTC_TT: data.prixTTC_TT, stockInvalide: data.stockInvalide });
-            modalImportMKP.mount(document.getElementById("modalImport"));
-      }else{
-         Toast.fire({
-            icon: 'error',
-            title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
+            var data = e.props.session.fileInfo;
+            var modalImportMKP = createApp(ModalImportMKP, { isOpen: true,importMKP: data.importCommandes,reussi: data.valider,erreur: data.erreur,
+               qteFinal: data.qteFinal,m2Final: data.m2Final, prixHT_TT: data.prixHT_TT, prixTVA_TT: data.prixTVA_TT, prixTTC_TT: data.prixTTC_TT, stockInvalide: data.stockInvalide });
+               modalImportMKP.mount(document.getElementById("modalImport"));
+         },
+         onError : (e) => {
+               Toast.fire({
+               icon: 'error',
+               title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
          });
-      }
-   });
+   }});
 };
 
 const lowercase = (nom) => {
@@ -227,11 +230,12 @@ export default {
                   <div class="relative lg:mx-2 mx-1 flex flex-col max-w-sm" :class="fileExist ? 'col-span-3' : ' col-span-4'">
                      <label class="block text-sm cursor-pointer text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300 px-2 py-2 rounded-xl" for="file_import_clients">Importer fichier de commandes <Excel /></label>
                      <span class="hidden whitespace-nowrap truncate" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
-                     <input @change="fileImport" type="file" class="hidden" id="file_import_clients" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
+                     <input @input="formFileImport.fileImport = $event.target.files[0]" @change="fileImport" type="file" class="hidden" id="file_import_clients" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
                      <span class="mt-1 ml-1 text-sm text-gray-500"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
+                     <InputError class="mt-2" :message="formFileImport.errors.fileImport" />
                   </div>
                   <div class="col-span-1" v-if="fileExist">
-                     <button type="submit" class="px-2 py-2 rounded-xl text-sm text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
+                     <button :class="{ 'opacity-25': formFileImport.processing }" :disabled="formFileImport.processing" type="submit" class="px-2 py-2 rounded-xl text-sm text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
                   </div>
                </form>       
             </div>

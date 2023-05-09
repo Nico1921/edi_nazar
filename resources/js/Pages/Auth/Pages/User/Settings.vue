@@ -370,7 +370,7 @@ export default {
                   </div>
 
                   <div class="col-span-4 flex justify-center items-center">
-                     <button type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
+                     <button :class="{ 'opacity-25': formSecu.processing }" :disabled="formSecu.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
             </div>
@@ -404,7 +404,7 @@ export default {
                   </div>
 
                   <div class="col-span-4 flex justify-center items-center">
-                     <button type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
+                     <button :class="{ 'opacity-25': formGeneral.processing }" :disabled="formGeneral.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
             </div>
@@ -454,7 +454,7 @@ export default {
                   </div>
 
                   <div class="col-span-4 flex justify-center items-center">
-                     <button type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
+                     <button :class="{ 'opacity-25': formSociete.processing }" :disabled="formSociete.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
             </div>
@@ -512,7 +512,7 @@ export default {
                   </div>
 
                   <div class="col-span-4 flex justify-center items-center">
-                     <button type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
+                     <button :class="{ 'opacity-25': formReseaux.processing }" :disabled="formReseaux.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
             </div>

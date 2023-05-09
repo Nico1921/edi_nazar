@@ -1,8 +1,9 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/inertia-vue3';
+import { Head, usePage,useForm } from '@inertiajs/inertia-vue3';
 import { ref, onMounted } from 'vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import { HomeIcon,ListBulletIcon  } from '@heroicons/vue/24/solid';
+import InputError from '@/Components/InputError.vue';
     
 var links = [{
         title: 'Accueil',
@@ -19,19 +20,20 @@ var links = [{
       link: '/order_entrepot/gamme',
       icon: '',
       active: true
-   }];
+}];
 
 const templateVierge = new URL('../../../../fichiers/templates/Commercial/Template_Vierge_Com.xlsx', import.meta.url).href;
 const templateModele = new URL('../../../../fichiers/templates/Commercial/Template_Model_Com.xlsx', import.meta.url).href;
 const props = defineProps(["products","dimensions"]);
-const isOpen = ref(false);
 
 var products = ref(props.products);
-//console.log(products);
-var clientUser = ref(usePage().props.value.auth.user[0].client);
 
 let fileExist = ref(false);
 var typeVente = ref(usePage().props.value.session.typeVente);
+
+var formFileImport = useForm({
+   fileImport: null
+});
 
 var fileImport = (input)=>{
    if(input.target.value == ''){
@@ -54,8 +56,7 @@ var clickResetInputFile = ()=>{
 };
 
 const submit_file = () => {
-   var form = new FormData(document.getElementById('fileCartImport'));
-   Inertia.post('/order_entrepot/panier/import', form,{
+   formFileImport.post('/order_entrepot/panier/import',{
             onError : (e) => {
                Toast.fire({
                icon: 'error',
@@ -199,11 +200,12 @@ export default {
                   <div class="relative lg:mx-2 mx-1 flex flex-col max-w-sm" :class="fileExist ? 'col-span-3' : ' col-span-4'">
                      <label class="block text-sm cursor-pointer text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300 px-2 py-2 rounded-xl" for="file_import_cart">Importer fichier de commandes <Excel /></label>
                      <span class="hidden whitespace-nowrap truncate" id="file_name_span_client"><button type="button" @click="clickResetInputFile"><Close /></button><span id="file_name_client"></span></span>
-                     <input @change="fileImport" type="file" class="hidden" id="file_import_cart" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
+                     <input @input="formFileImport.fileImport = $event.target.files[0]"  @change="fileImport" type="file" class="hidden" id="file_import_cart" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="fileImport"/>
                      <span class="mt-1 ml-1 text-sm text-gray-500"><a :href="templateVierge" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Template vierge</a> / <a :href="templateModele" class="mt-1 text-sm text-blue-400 hover:text-blue-300 transition duration-300">Modèle</a></span>
+                     <InputError class="mt-2" :message="formFileImport.errors.fileImport" />
                   </div>
                   <div class="col-span-1" v-if="fileExist">
-                     <button type="submit" class="px-2 py-2 rounded-xl text-sm text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
+                     <button :class="{ 'opacity-25': formFileImport.processing }" :disabled="formFileImport.processing" type="submit" class="px-2 py-2 rounded-xl text-sm text-primary-500 bg-primary-100 hover:bg-primary-200 transition duration-300">Importer !</button>
                   </div>
                </form>       
             </div>

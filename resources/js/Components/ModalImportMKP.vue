@@ -1,5 +1,6 @@
 <script setup>
 import { ref,createApp } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3';
 import {
   TransitionRoot,
   TransitionChild,
@@ -8,11 +9,11 @@ import {
   DialogTitle,
 } from '@headlessui/vue';
 import ModalImportMKP_client from '@/Components/ModalImportMKP_client.vue';
-import axios from 'axios';
-
 
 const props = defineProps(['isOpen','importMKP','reussi','erreur','qteFinal','m2Final','prixHT_TT','prixTVA_TT','prixTTC_TT','stockInvalide']);
-
+var formFileImportValidation = useForm({
+  clients: props.importMKP
+});
 const isOpen = ref(props.isOpen);
 
 function closeModal() {
@@ -49,16 +50,17 @@ var viewDetails = (key) => {
 };
 
 var confirmImport = () => {
-  axios.post('/dropshipping/clients/import/validation',{clients: props.importMKP}).then((response) => {
-    if(response.status){
-      document.location.href = "/dropshipping/gamme";
-    }else{
-      Toast.fire({
-        icon: 'error',
-        title: 'Une erreur s\'est produite lors de la validation de l\'importation, veuillez renouveller l\'opération !'
-      });
-    }
-  })
+  formFileImportValidation.post('/dropshipping/clients/import/validation',{
+         onSuccess: (e) => {
+          closeModal()
+          document.location.href = "/dropshipping/gamme";
+         },
+         onError : (e) => {
+               Toast.fire({
+               icon: 'error',
+               title: 'Une erreur s\'est produite lors de la validation de votre importation, veuillez réessayer !'
+         });
+   }});
 };
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
@@ -142,7 +144,7 @@ import Alert from 'icons/Alert.vue';
             </div>
 
             <div class=" w-full py-2 bg-white flex items-center justify-center">
-              <button @click="confirmImport" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+              <button :class="{ 'opacity-25': formFileImportValidation.processing }" :disabled="formFileImportValidation.processing" @click="confirmImport" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">Valider l'importation</button>
             </div>

@@ -89,10 +89,16 @@ const formClient = useForm({
 });
 
 var validationAdresse = () => {
-   console.log(formClient.data());
    formClient.post(route('cart/adresses'),{
+      onStart: (e) => {
+         const btnProcess = document.querySelectorAll('.btnProcess');
+         for(let i = 0;i<btnProcess.length;i++){
+            btnProcess[i].classList.add('opacity-25');
+            btnProcess[i].setAttribute('disabled','disabled');
+         }
+      },
       onSuccess: (e) => {
-           if(e.props.session.status == true){
+         if(e.props.session.status == true){
             document.location.href = "/cart/validation";
            }else if(e.props.session.status == false){
 
@@ -101,6 +107,11 @@ var validationAdresse = () => {
                title: 'Une erreur s\'est produite lors de l\'enregistrement de votre adresse, veuillez ressayer !'
             });
          };
+         const btnProcess = document.querySelectorAll('.btnProcess');
+            for(let i =0 ;i<btnProcess.length;i++){
+               btnProcess[i].classList.remove('opacity-25');
+               btnProcess[i].removeAttribute('disabled');
+            }
       }
    });
 };

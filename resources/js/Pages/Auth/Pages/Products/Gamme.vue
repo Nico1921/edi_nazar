@@ -63,7 +63,7 @@ function closeModal() {
 function openModal(img,gamme,design) {
   isOpen.value = true;
   var nomProduit = gamme+" "+design;
-  document.getElementById("visuelImage").setAttribute('src','https://gestion.tapis-nazar.fr/img/produit/'+img);
+  document.getElementById("visuelImage").setAttribute('src','https://gestion.tapis-nazar.fr/img/produit/'+decode(img));
   document.getElementById("visuelImage").setAttribute('alt',nomProduit);
   document.getElementById("nomVisuelImage").textContent = nomProduit;
 };
@@ -215,7 +215,7 @@ var afficheIMG = (classAff,img) => {
       if(document.getElementsByClassName(classAff).length == 1){
          document.getElementsByClassName(classAff)[0].classList.remove('opacity-100');
          document.getElementsByClassName(classAff)[0].classList.add('opacity-50');
-         document.getElementsByClassName(classAff)[0].src = 'https://gestion.tapis-nazar.fr/img/produit/'+img;
+         document.getElementsByClassName(classAff)[0].src = 'https://gestion.tapis-nazar.fr/img/produit/'+decode(img);
          document.getElementsByClassName(classAff)[0].classList.remove('opacity-50');
          document.getElementsByClassName(classAff)[0].classList.add('opacity-100');
       }
@@ -442,7 +442,7 @@ export default {
                      <button @click="isOpenAdd = false;" type="button" class="mx-10 inline-flex justify-center rounded-md border border-transparent hover:border-red-100 px-4 py-2 text-sm font-medium text-red-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition duration-300">
                         Annuler
                      </button>
-                     <button type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                     <button :class="{ 'opacity-25': formAddProduit.processing }" :disabled="formAddProduit.processing" type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">
                         Valider <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" />

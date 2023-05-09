@@ -1,5 +1,5 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/inertia-vue3';
+import { Head, usePage,useForm } from '@inertiajs/inertia-vue3';
 import EtapeOrder from '@/Components/EtapeOrder.vue';
 import { ref } from 'vue';
 import BoutonPaiement from '@/Components/BouttonPaiement.vue';
@@ -19,9 +19,7 @@ var panier = ref(usePage().props.value.PanierDrop.panier.panierActuel);
 var panierDrop = ref(usePage().props.value.PanierDrop);
 var hrefEtape = ['/dropshipping/cart', '/dropshipping/cart/adresses', '/dropshipping/cart/validation'];var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
 
-
 const imgBase64 = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDQwMDAgNDAwMCIgd2lkdGg9IjEwMDAiIGhlaWdodD0iMTAwMCI+PHN0eWxlPi5he2ZpbGw6I2EzYTNhM30uYntmaWxsOiNmZmZ9PC9zdHlsZT48cGF0aCBjbGFzcz0iYSIgZD0ibTQwMDAgNDAwMGgtNDAwMHYtNDAwMGg0MDAweiIvPjxwYXRoIGNsYXNzPSJiIiBkPSJtMzI2NSAzMDQ2Ljh2MjY1LjJoLTI1MzB2LTI2NS4yYzAtNDg5IDU2Ni40LTg4NS41IDEyNjUtODg1LjUgNjk4LjYgMCAxMjY1IDM5Ni41IDEyNjUgODg1LjV6Ii8+PHBhdGggY2xhc3M9ImIiIGQ9Im0yNjI0LjEgMTMxMi4xYzAgMzQ0LjYtMjc5LjQgNjI0LTYyNC4xIDYyNC0zNDQuNyAwLTYyNC4xLTI3OS40LTYyNC4xLTYyNCAwLTM0NC43IDI3OS40LTYyNC4xIDYyNC4xLTYyNC4xIDM0NC43IDAgNjI0LjEgMjc5LjQgNjI0LjEgNjI0LjF6Ii8+PC9zdmc+";
-
 
 const roundResult = (number, nbVirugule) => {
    return parseFloat(number).toFixed(nbVirugule);
@@ -39,8 +37,16 @@ var formatPrix = (prix) => {
 
 var paymentType = ref(0);
 var venteCondition = ref(0);
+var formAddCommande = useForm({
+   paymentType: paymentType.value,
+});
 
 var validationCommande = () => {
+   const btnProcess = document.querySelectorAll('.btnProcess');
+         for(let i = 0;i<btnProcess.length;i++){
+            btnProcess[i].classList.add('opacity-25');
+            btnProcess[i].setAttribute('disabled','disabled');
+         }
    axios.post('/dropshipping/cart/validation/order',{paymentType: paymentType.value}).then((response) => {
            if(response.status == 200){
             document.location.href = "/shippings/order/clients/"+response.data.num_commande;
@@ -51,6 +57,11 @@ var validationCommande = () => {
                title: 'Une erreur s\'est produite lors de l\'enregistrement de votre commande, veuillez ressayer !'
             });
          };
+         const btnProcess = document.querySelectorAll('.btnProcess');
+            for(let i =0 ;i<btnProcess.length;i++){
+               btnProcess[i].classList.remove('opacity-25');
+               btnProcess[i].removeAttribute('disabled');
+            }
    });
 };
 
@@ -289,7 +300,7 @@ export default {
                      </div>
                      <div v-if="paymentType == 1 || paymentType == 0" class="flex justify-center mb-5">
                         <button :disabled="((paymentType == 0 || !venteCondition) ? true : false)" @click="validationCommande" type="button" 
-                        class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                        class="btnProcess py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">Finaliser la commande <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" /></button>
                      </div>

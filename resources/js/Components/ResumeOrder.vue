@@ -33,17 +33,17 @@ import {ArrowRightCircleIcon} from '@heroicons/vue/24/outline';
       <div class="flex items-center justify-center">
          <div v-if="props.titreLink != '' && props.titreLink != undefined">
             <div class="flex items-center justify-center my-3" v-if="props.linkEtapeSuivant != undefined && !props.disabled && props.panier != undefined && !isButtonSubmit && props.panier.produits_total > 0">
-               <Link v-if="props.panier.total_ttc != undefined" :href="props.linkEtapeSuivant" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+               <Link v-if="props.panier.total_ttc != undefined" :href="props.linkEtapeSuivant" class="btnProcess py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">{{ props.titreLink }} <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" /></Link>
             </div>
             <div class="flex items-center justify-center my-3" v-else-if="props.panier != undefined && isButtonSubmit && !props.disabled">
-               <button v-if="props.panier.total_ttc != undefined" type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+               <button v-if="props.panier.total_ttc != undefined" type="submit" class=" btnProcess py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">{{ props.titreLink }} <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" /></button>
             </div>
             <div class="flex items-center justify-center my-3" v-else>
-               <button type="button" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+               <button type="button" class="btnProcess py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300" disabled>{{ props.titreLink }} <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" /></button>
             </div>
@@ -51,7 +51,7 @@ import {ArrowRightCircleIcon} from '@heroicons/vue/24/outline';
          <div v-else>
             
             <div class="flex items-center justify-center my-3" >
-               <button type="button" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+               <button type="button" class="btnProcess py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300" disabled>{{ props.titreLink }} <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" /></button>
             </div>
