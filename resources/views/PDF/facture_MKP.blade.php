@@ -111,7 +111,7 @@ function aff_type_paiement($payment_type=''){
                                     </tr>
                                     <tr>
                                         <td style="font-size:10pt;">
-                                            @php echo "date d'échéance : ".date_convert($facture->date_echeance, false) @endphp
+                                            @php echo "Date d'échéance : ".date_convert($facture->date_echeance, false) @endphp
                                         </td>
                                     </tr>
                                     <tr>
