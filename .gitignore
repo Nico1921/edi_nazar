@@ -8,7 +8,7 @@ yarn-error.log
 config/app.php
 config/database.php
 config/systempay.php
-
+storage/tmp
 # Laravel 4 specific
 bootstrap/compiled.php
 app/storage/

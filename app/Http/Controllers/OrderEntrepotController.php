@@ -152,27 +152,7 @@ class OrderEntrepotController extends Controller
                         ->orWhere('design.nom_design', 'LIKE', "%{$value}%");
                 });
             });
-        });       
-        
-
-        $products = QueryBuilder::for(Produit::class)
-            ->defaultSort('nom_design')
-            ->select(['produit.id_design', 'couleur.nom_couleur', 'gamme.nom_gamme', 'design.nom_design', 'photo.img_produit'])
-            ->join('design', 'produit.id_design', 'design.id_design')
-            ->join('couleur', 'produit.id_couleur', 'couleur.id_couleur')
-            ->join('photo', 'produit.id_produit', 'photo.id_produit')
-            ->join('gamme', 'design.id_gamme', 'gamme.id_gamme')
-            ->where('gamme.nom_gamme', '=', $gamme)
-            ->where('produit.code_sku', '!=', 'null')
-            ->where('produit.code_sku', '!=', '""')
-            ->where('produit.drop_shipping', '=', '1')
-            ->where('produit.statut', '=', '1')
-            ->where('photo.principale', '=', '1')
-            ->allowedSorts(['nom_design', 'nom_couleur', 'nom_gamme', 'code_sku'])
-            ->allowedFilters([$globalSearch, 'nom_couleur', 'nom_design'])
-            ->groupBy(['produit.id_design'])
-            ->paginate(request('perPage'))
-            ->withQueryString();
+        });            
 
         //$gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
         $user = User::with('client')->where('id','=',Auth::id())->first();
@@ -258,7 +238,9 @@ class OrderEntrepotController extends Controller
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
 
-                $produit = Produit::with(['dimension','statsProduit'])
+                $produit = Produit::with(['dimension','statsProduit','photo' => function($query) {
+                    $query->where('principale', '=', '1');
+                }])
                 ->join('dimension','produit.id_dimension','dimension.id_dimension')
                 ->where('produit.code_sku', '!=', 'null')
                 ->where('produit.code_sku', '!=', '""')
@@ -276,6 +258,7 @@ class OrderEntrepotController extends Controller
                     $design->$i->produits->$j->stock_restant = $produit[$j]->statsProduit->stock_restant;
                     $design->$i->produits->$j->sku = $produit[$j]->code_sku;
                     $design->$i->produits->$j->id_produit = $produit[$j]->id_produit;
+                    $design->$i->produits->$j->photo_produit = ($produit[$j]->photo != null ? $produit[$j]->photo : null);
                     if (PanierEdiList::where('id_produit', '=', $produit[$j]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->exists()) {
                         $panier = PanierEdiList::where('id_produit', '=', $produit[$j]->id_produit)->where('id_client_edi', '=', $clientUser->id_client_edi)->first();
                         $design->$i->produits->$j->panier= $panier;
@@ -316,7 +299,9 @@ class OrderEntrepotController extends Controller
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
 
-                $produit = Produit::with(['dimension','statsProduit'])
+                $produit = Produit::with(['dimension','statsProduit','photo' => function($query) {
+                    $query->where('principale', '=', '1');
+                }])
                 ->join('dimension','produit.id_dimension','dimension.id_dimension')
                 ->where('produit.code_sku', '!=', 'null')
                 ->where('produit.code_sku', '!=', '""')
@@ -335,6 +320,7 @@ class OrderEntrepotController extends Controller
                     $design->$i->produits->$j->stock_restant = $produit[$j]->statsProduit->stock_restant;
                     $design->$i->produits->$j->sku = $produit[$j]->code_sku;
                     $design->$i->produits->$j->id_produit = $produit[$j]->id_produit;
+                    $design->$i->produits->$j->photo_produit = ($produit[$j]->photo != null ? $produit[$j]->photo : null);
                     $design->$i->produits->$j->panier = array("quantiter" => 0);
                     $design->$i->produits->$j->isInPanier = false;
                 }
@@ -343,7 +329,6 @@ class OrderEntrepotController extends Controller
         }
         
         return Inertia::render('Auth/Pages/Products/Gamme', [
-            'products' => $products,
             'gamme' => $gammeSearch,
             'designpanier' => $design
         ]);

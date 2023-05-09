@@ -37,7 +37,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified','typeVente'])->group(function () {
    Route::get('/', [HomeController::class, 'create']);
    Route::get('/home', [HomeController::class, 'create'])->name('home');
    Route::get('/about-us', function () {return Inertia::render('Auth/Pages/AboutUs');})->name('about-us');

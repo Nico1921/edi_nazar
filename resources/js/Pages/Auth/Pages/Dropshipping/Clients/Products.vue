@@ -18,7 +18,7 @@ import ModalAjoutClient from '@/Components/ModalAjoutClient.vue';
 import InputNumberProduit from '@/Components/InputNumberProduit.vue';
 import {decode} from 'html-entities';
 
-const props = defineProps(["products","gamme","designpanier"]);
+const props = defineProps(["gamme","designpanier"]);
 var links = [{
         title: 'Accueil',
         link: '/',
@@ -275,8 +275,21 @@ var formatPrix = (prix) => {
    }).format(prix);
 };
 
-var consolel = (data) => {
-   console.log(data);
+var afficheIMG = (classAff,img) => {
+   if(typeof img === 'object' || img instanceof Object){
+      if(img != undefined && img != null && img != ''){ 
+         img = img.img_produit;
+      }
+   }
+   if(img != undefined && img != null && img != ''){ 
+      if(document.getElementsByClassName(classAff).length == 1){
+         document.getElementsByClassName(classAff)[0].classList.remove('opacity-100');
+         document.getElementsByClassName(classAff)[0].classList.add('opacity-50');
+         document.getElementsByClassName(classAff)[0].src = 'https://gestion.tapis-nazar.fr/img/produit/'+img;
+         document.getElementsByClassName(classAff)[0].classList.remove('opacity-50');
+         document.getElementsByClassName(classAff)[0].classList.add('opacity-100');
+      }
+   }
 };
 
 var modifQte = (e,formRef) => {
@@ -372,7 +385,7 @@ export default {
                                           <Eye class="text-lg text-black" />
                                        </div>
                                        <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.img_produit)"
-                                          :alt="gamme.code_sku" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
+                                          :alt="gamme.code_sku" :class="'imgView_'+key1" class="z-20 relative hover:opacity-50 transition duration-300 w-full h-full object-contain" />
                                     </div>
                                     <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
                                        <ImageOff />
@@ -383,7 +396,7 @@ export default {
                                  </div>
                                  
                               </td>
-                              <td  v-for="(produit,key2) in gamme.produits" :key="key2" class="whitespace-nowrap px-4 py-4 h-24 table-cell align-middle">
+                              <td  v-for="(produit,key2) in gamme.produits" :key="key2" @mouseover="afficheIMG('imgView_'+key1,produit.photo_produit)" @mouseleave="afficheIMG('imgView_'+key1,gamme.img_produit)"  class="whitespace-nowrap px-4 py-4 h-24 table-cell align-middle">
                                  <div class="w-full h-full flex flex-col items-center justify-between">
                                     <div class="w-full font-bold text-center">
                                        {{ produit.largeur }}x{{ produit.longueur }}
