@@ -78,10 +78,10 @@ class RegisteredUserController extends Controller
                 'path_identiter' => $request->nameFileIdentiter
             ]);
             $statut = true;
-            $message = 'Votre inscription a bien été prise en compte et sera traitée par nos équipe dans les meilleurs délais. Une fois validée vous recevrez vos identifiants par e-mail.';
+            $message = 'Votre inscription a bien été prise en compte et sera traitée par nos équipes dans les meilleurs délais. Une fois validée, vous recevrez vos identifiants par e-mail.';
         }   catch(\Exception $e) {
             $statut = false;
-            $message = 'Une erreur s\'est produite lors de votre demande d\'inscription, veuillez ressayer plus tard !';
+            $message = 'Une erreur s\'est produite lors de votre demande d\'inscription, veuillez réessayer plus tard !';
         }
         
         return Inertia::render('Auth/Register',['sendMessage' => $statut,'messageValidation' => $message]);
@@ -100,7 +100,7 @@ class RegisteredUserController extends Controller
             $fileName = 'Kbis_'.date('Y-m-d-H-m-s').'.'.$fileUpload->extension();
             $fileUpload->storeAs('/uploads/kbis',$fileName,'public');
 
-            return response()->json(['success'=>'Fichier upload avec succès','fileName' => $fileName]);
+            return response()->json(['success'=>'Fichier téléversé avec succès.','fileName' => $fileName]);
         }
    }
 
@@ -116,7 +116,7 @@ class RegisteredUserController extends Controller
         $fileName = 'Identiter_'.date('Y-m-d-H-m-s').'.'.$fileUpload->extension();
         $fileUpload->storeAs('/uploads/identiter',$fileName,'public');
 
-        return response()->json(['success'=>'Fichier upload avec succès','fileName' => $fileName]);
+        return response()->json(['success'=>'Fichier téléversé avec succès.','fileName' => $fileName]);
     }
 }
 }

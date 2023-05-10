@@ -563,9 +563,9 @@ class OrderEntrepotController extends Controller
             }
         }else{
             if($panier->is_validate){
-                $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                $message = "Votre panier a déjà été validé, vous pouvez aller dans la section 'Expéditions' pour voir les détails de votre commande.";
             }else{
-                $message = "Une erreur c'est produit lors de l'ajout du produit."; 
+                $message = "Une erreur s'est produite lors de l'ajout du produit."; 
             }
         }
         $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $panier->id_panier_edi)->first();
@@ -593,9 +593,9 @@ class OrderEntrepotController extends Controller
                 $status = true;
             }else{
                 if($panier->is_validate){
-                    $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                    $message = "Votre panier a déjà été validé, vous pouvez aller dans la section 'Expéditions' pour voir les détails de votre commande.";
                 }else{
-                    $message = "Une erreur c'est produit lors de la supression du produit du panier"; 
+                    $message = "Une erreur s'est produite lors de la suppression du produit du panier."; 
                 }
             }
            }

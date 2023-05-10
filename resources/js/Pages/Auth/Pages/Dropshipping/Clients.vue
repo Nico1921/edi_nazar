@@ -124,7 +124,6 @@ const submit = () => {
 const submit_file = () => {
    var form = new FormData(document.getElementById('fileClientImport'));
    axios.post('/orders/clients/import',form).then((response) => {
-      console.log(response);
       if(response.status){
          if (document.getElementById("modalImport") != null) {
             if (document.getElementById("modalImport").__vue_app__ != undefined) {
@@ -138,7 +137,7 @@ const submit_file = () => {
       }else{
          Toast.fire({
             icon: 'error',
-            title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
+            title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fourni puis ressayer !'
          });
       }
    });

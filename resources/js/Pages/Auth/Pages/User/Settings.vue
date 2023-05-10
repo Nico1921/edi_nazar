@@ -112,7 +112,7 @@ var submitSecu = () => {
                }else{
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                     title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                   });
                }
             }
@@ -127,7 +127,7 @@ var submitSecu = () => {
                }else{
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                     title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                   });
                }
                
@@ -150,7 +150,7 @@ var submitGeneral = () =>{
             }else{
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                  title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                });
             }
         },
@@ -158,7 +158,7 @@ var submitGeneral = () =>{
             if(formGeneral.errors.length == 0){
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                  title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                });
             }
         },
@@ -181,7 +181,7 @@ var submitSociete = () =>{
             }else{
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                  title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                });
             }
         },
@@ -189,7 +189,7 @@ var submitSociete = () =>{
             if(formSociete.errors.length == 0){
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                  title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                });
             }
         },
@@ -209,7 +209,7 @@ var submitProfil = () =>{
             }else{
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                  title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                });
             }
         },
@@ -217,7 +217,7 @@ var submitProfil = () =>{
             if(formProfil.errors.length == 0){
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                  title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                });
             }
         },
@@ -242,7 +242,7 @@ var submitResaux = () =>{
             }else{
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                  title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                });
             }
         },
@@ -250,7 +250,7 @@ var submitResaux = () =>{
             if(formReseaux.errors.length == 0){
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur s\'est produite lors de la modification des informations veuilliez ressayer plus tard !'
+                  title: 'Une erreur s\'est produite lors de la modification des informations veuillez ressayer plus tard !'
                });
             }
         },
@@ -318,7 +318,7 @@ export default {
             <h1 class="text-center font-bold text-xl">Votre profil</h1>
             <div class="m-4">
                <div class="flex">
-                  <h2 class="font-semibold text-lg mr-4 mt-0.5"><Security /> Sécuriter</h2>
+                  <h2 class="font-semibold text-lg mr-4 mt-0.5"><Security /> Sécurité</h2>
                   <button v-if="!editFormSecu" type="button" @click="fEditSecu" 
                   class="hover:text-white hover:bg-primary-100 flex items-center justify-start px-2 py-2  rounded-full w-8 h-8 hover:w-28 transition-all transition duration-300 relative">
                      <Edit class="absolute bottom-0.5" /> <span class="text-white absolute px-2  left-6">Modifier</span>
@@ -370,13 +370,13 @@ export default {
                   </div>
 
                   <div class="col-span-4 flex justify-center items-center">
-                     <button type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
+                     <button :class="{ 'opacity-25': formSecu.processing }" :disabled="formSecu.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
             </div>
             <div class="m-4">
                <div class="flex">
-                  <h2 class="font-semibold text-lg mr-4 mt-0.5"><User /> Informations générale</h2>
+                  <h2 class="font-semibold text-lg mr-4 mt-0.5"><User /> Informations générales</h2>
                   <button v-if="!editFormGeneral" type="button" @click="fEditGeneral" class="hover:text-white hover:bg-primary-100 flex items-center justify-start px-2 py-2  rounded-full w-8 h-8 hover:w-28 transition-all transition duration-300 relative">
                      <Edit class="absolute bottom-0.5" /> <span class="text-white absolute px-2  left-6">Modifier</span></button>
                   <button v-if="editFormGeneral" type="button" @click="fNotEdit" class="hover:text-white hover:bg-red-500 flex items-center justify-start px-2 py-2  rounded-full w-8 h-8 hover:w-28 transition-all transition duration-300 relative">
@@ -404,7 +404,7 @@ export default {
                   </div>
 
                   <div class="col-span-4 flex justify-center items-center">
-                     <button type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
+                     <button :class="{ 'opacity-25': formGeneral.processing }" :disabled="formGeneral.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
             </div>
@@ -454,7 +454,7 @@ export default {
                   </div>
 
                   <div class="col-span-4 flex justify-center items-center">
-                     <button type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
+                     <button :class="{ 'opacity-25': formSociete.processing }" :disabled="formSociete.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
             </div>
@@ -512,7 +512,7 @@ export default {
                   </div>
 
                   <div class="col-span-4 flex justify-center items-center">
-                     <button type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
+                     <button :class="{ 'opacity-25': formReseaux.processing }" :disabled="formReseaux.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
             </div>

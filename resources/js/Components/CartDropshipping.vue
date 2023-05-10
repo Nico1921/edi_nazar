@@ -64,12 +64,12 @@ var modifQte = (e,nomProduit,keyclient) => {
                panier.value.clients[keyclient].produits[formData.get("key_tab")].quantiter = formData.get("qte");
                Toast.fire({
                   icon: 'success',
-                  title: 'La quantiter du produit '+nomProduit+' à bien été modifier'
+                  title: 'La quantité du produit '+nomProduit+' a bien été modifiée.'
                });
             } else {
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur c\'est produit lors de la modification de la quantiter du produit.'
+                  title: 'Une erreur s\'est produite lors de la modification de la quantité du produit.'
                });
             }
 
@@ -81,7 +81,7 @@ var modifQte = (e,nomProduit,keyclient) => {
 var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous sur de supprimer cette article du panier ?',
+      text: 'Êtes-vous sûr de supprimer cet article du panier ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -101,12 +101,12 @@ var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
                if (e.props.session.status) {
                   Toast.fire({
                      icon: 'success',
-                     title: 'Le produit à bien été supprimer du panier'
+                     title: 'Le produit a bien été supprimé du panier.'
                   });
                } else {
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit du panier'
+                     title: 'Une erreur s\'est produite lors de la suppression du produit du panier.'
                   });
                }
 
@@ -120,7 +120,7 @@ var deleteClient = (e,id_client_edi,ref_externe) => {
    e.preventDefault();
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous sur de supprimer la commande client '+ref_externe+' ?',
+      text: 'Êtes-vous sûr de vouloir supprimer la commande client '+ref_externe+' ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -138,12 +138,12 @@ var deleteClient = (e,id_client_edi,ref_externe) => {
                if (e.props.session.status == true) {
                   Toast.fire({
                         icon: 'success',
-                        title: 'La commande client '+ref_externe+ ' à bien été suprimmer !'
+                        title: 'La commande client '+ref_externe+ ' a bien été supprimée !'
                      });
                }else{
                   Toast.fire({
                         icon: 'error',
-                        title: 'Une erreur s\'est produite lors de la supression de la commande client'+ref_externe+', veuillez ressayer !'
+                        title: 'Une erreur s\'est produite lors de la suppression de la commande client '+ref_externe+'. Veuillez réessayer !'
                      });
                }
          }});
@@ -165,7 +165,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 <template>
             <div v-if="isValidatePanier != undefined && isValidatePanier" class="w-full bg-red-200 px-4 py-2 rounded flex items-center my-2">
                <ExclamationTriangleIcon v-if="isValidatePanier" class="h-8 w-8 text-red-600" />
-               <span v-if="isValidatePanier" class="pl-2 text-red-600">Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.</span>
+               <span v-if="isValidatePanier" class="pl-2 text-red-600">Votre panier a déjà été validé. Vous pouvez consulter les détails de votre commande dans la section 'Expéditions'</span>
             </div>
             <div v-if="panier.clients != undefined" class="sm:my-4 rounded-lg border shadow-lg p-4 w-full h-90 max-h-screen scrollbarCustom overflow-y-auto">
                <div v-for="(client, key1) in panier.clients" :key="key1" class="sm:my-4 px-2 py-4 rounded-lg border shadow-lg bg-gray-100 w-full grid grid-cols-12   ">
@@ -224,7 +224,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                      </div>
                   </div>
                   <div class="text-center py-5" v-else>
-                     <span class="text-lg">Le panier de se client est vide !</span>
+                     <span class="text-lg">Le panier de ce client est vide !</span>
                   </div>
                </div>
                
@@ -240,7 +240,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                         </path>
                      </svg>
                   </span>
-                  <h2 class="mt-6 text-3xl font-medium text-gray-900">Votre panier est vide</h2>
+                  <h2 class="mt-6 text-3xl font-medium text-gray-900">Votre panier est vide.</h2>
                   
                   <p class="mt-4 text-gray-500 text-center">Vous n'avez pas encore ajouté d'articles à votre panier.</p>
                   

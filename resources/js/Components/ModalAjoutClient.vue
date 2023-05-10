@@ -30,7 +30,7 @@ var addRefClient = (event) => {
                setIsOpen(false);
                Toast.fire({
                   icon: 'success',
-                  title: 'La commande a été ajouter avec succès'
+                  title: 'La commande a été ajouter avec succès.'
                });
             }else{
                Toast.fire({
@@ -90,7 +90,7 @@ import { Inertia } from '@inertiajs/inertia';
                   </div>
 
                   <div class="mt-4 flex flex-row-reverse">
-                     <button type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                     <button :class="{ 'opacity-25': formClient.processing }" :disabled="formClient.processing" type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">
                         Valider

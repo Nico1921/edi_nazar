@@ -55,7 +55,7 @@ var editCommande = (key) =>{
 var deleteCommande = (id_panier_edi_list,key) =>{
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous sur de supprimer cette article du panier ?',
+      text: 'Êtes-vous sûr de supprimer cet article du panier ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -74,7 +74,7 @@ var deleteCommande = (id_panier_edi_list,key) =>{
                if(e.props.session.status){
                   Toast.fire({
                      icon: 'success',
-                     title: 'Le produit à bien été supprimer du panier'
+                     title: 'Le produit a bien été supprimé du panier.'
                   })
                   designs.value[key].isInPanier = false;
                   designs.value[key].panier.quantiter = 0;

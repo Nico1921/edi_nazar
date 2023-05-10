@@ -202,7 +202,7 @@ export default {
                </div>
             </div>
             <div class="bg-primary-50 my-8 px-2 py-2 relative">
-               <h2 class="text-xl font-semibold">Listes des commandes {{props.order.is_marketplace ? 'clients' : '' }}</h2>
+               <h2 class="text-xl font-semibold">Liste des commandes {{props.order.is_marketplace ? 'clients' : '' }}</h2>
                <div class="my-5 ">
                   <div class=" py-4 px-5">
                      <!-- What is term -->
@@ -216,7 +216,7 @@ export default {
       </div>
    </TabPanel>
       <TabPanel>
-         <h2 class="text-lg font-semibold">Document lier à la commande</h2>
+         <h2 class="text-lg font-semibold">Document lié à la commande</h2>
          <div class="lg:ml-4 flex flex-col ">
             <a v-if="props.order.total_ttc - props.order.total_payer == 0" :href="getUrl()+'/pdf/facture'" rel="noopener" target="_blank" class="p-2 m-2 lg:text-lg text-sm bg-primary-50 rounded-lg hover:drop-shadow-xl hover:scale-[1.02] transition-full duration-300"><Bill /> Facture de la commande {{props.order.num_commande}}</a>
             <a :href="getUrl()+'/pdf/proforma'" rel="noopener" target="_blank" class="p-2 m-2 lg:text-lg text-sm bg-primary-50 rounded-lg hover:drop-shadow-xl hover:scale-[1.02] transition-full duration-300"><Bill /> Devis de la commande {{props.order.num_commande}}</a>

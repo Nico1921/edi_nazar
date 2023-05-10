@@ -17,7 +17,7 @@ var links = [{
         icon: HomeIcon,
         active: false
     },{
-      title: 'Commande Entrepôt',
+      title: 'Commandes Entrepôt',
       link: '/order_entrepot/gamme',
       icon: ListBulletIcon,
       active: false
@@ -63,7 +63,7 @@ function closeModal() {
 function openModal(img,gamme,design) {
   isOpen.value = true;
   var nomProduit = gamme+" "+design;
-  document.getElementById("visuelImage").setAttribute('src','https://gestion.tapis-nazar.fr/img/produit/'+img);
+  document.getElementById("visuelImage").setAttribute('src','https://gestion.tapis-nazar.fr/img/produit/'+decode(img));
   document.getElementById("visuelImage").setAttribute('alt',nomProduit);
   document.getElementById("nomVisuelImage").textContent = nomProduit;
 };
@@ -84,7 +84,7 @@ var addCommande = (e,isPanier) => {
                isOpenAdd.value = false;
                Toast.fire({
                   icon: 'success',
-                  title: (isPanier ? 'La quantiter pour ce produit à bien été modifier' : 'Le produit à bien ajouter au panier')
+                  title: (isPanier ? 'La quantité pour ce produit a bien été modifier.' : 'Le produit à bien ajouter au panier.')
                });
             }else{
                Toast.fire({
@@ -103,7 +103,7 @@ var addCommande = (e,isPanier) => {
 var deleteCommande = (id_panier_edi_list,key,key2) =>{
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous sur de supprimer cette article du panier ?',
+      text: 'Êtes-vous sur de supprimer cet article du panier ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -122,7 +122,7 @@ var deleteCommande = (id_panier_edi_list,key,key2) =>{
                if(e.props.session.status){
                   Toast.fire({
                      icon: 'success',
-                     title: 'Le produit à bien été supprimer du panier'
+                     title: 'Le produit a bien été supprimer du panier.'
                   })
                   designpanier.value[key].produits[key2].isInPanier = false;
                   designpanier.value[key].produits[key2].panier.quantiter = 0;
@@ -215,7 +215,7 @@ var afficheIMG = (classAff,img) => {
       if(document.getElementsByClassName(classAff).length == 1){
          document.getElementsByClassName(classAff)[0].classList.remove('opacity-100');
          document.getElementsByClassName(classAff)[0].classList.add('opacity-50');
-         document.getElementsByClassName(classAff)[0].src = 'https://gestion.tapis-nazar.fr/img/produit/'+img;
+         document.getElementsByClassName(classAff)[0].src = 'https://gestion.tapis-nazar.fr/img/produit/'+decode(img);
          document.getElementsByClassName(classAff)[0].classList.remove('opacity-50');
          document.getElementsByClassName(classAff)[0].classList.add('opacity-100');
       }
@@ -256,7 +256,7 @@ export default {
          </div>
          <div class="col-span-3 rounded bg-primary-white border border-primary-100 text-center flex flex-col text-primary-300">
             <span>Tapis {{ (props.gamme.type_tapis == 0 ? 'intérieur' : props.gamme.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
-            <span>Poils {{ (props.gamme.type_poils == 1 ? 'court' : 'long') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
+            <span>Poils {{ (props.gamme.type_poils == 1 ? 'courts' : 'longs') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
             <span class="capitalize">{{ props.gamme.nom_special }}</span>
             <span>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
             <div class="sm:w-auto w-full py-2 flex items-center justify-center">
@@ -442,7 +442,7 @@ export default {
                      <button @click="isOpenAdd = false;" type="button" class="mx-10 inline-flex justify-center rounded-md border border-transparent hover:border-red-100 px-4 py-2 text-sm font-medium text-red-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition duration-300">
                         Annuler
                      </button>
-                     <button type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                     <button :class="{ 'opacity-25': formAddProduit.processing }" :disabled="formAddProduit.processing" type="submit" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">
                         Valider <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" />

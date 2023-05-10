@@ -89,10 +89,16 @@ const formClient = useForm({
 });
 
 var validationAdresse = () => {
-   console.log(formClient.data());
    formClient.post(route('cart/adresses'),{
+      onStart: (e) => {
+         const btnProcess = document.querySelectorAll('.btnProcess');
+         for(let i = 0;i<btnProcess.length;i++){
+            btnProcess[i].classList.add('opacity-25');
+            btnProcess[i].setAttribute('disabled','disabled');
+         }
+      },
       onSuccess: (e) => {
-           if(e.props.session.status == true){
+         if(e.props.session.status == true){
             document.location.href = "/cart/validation";
            }else if(e.props.session.status == false){
 
@@ -101,6 +107,11 @@ var validationAdresse = () => {
                title: 'Une erreur s\'est produite lors de l\'enregistrement de votre adresse, veuillez ressayer !'
             });
          };
+         const btnProcess = document.querySelectorAll('.btnProcess');
+            for(let i =0 ;i<btnProcess.length;i++){
+               btnProcess[i].classList.remove('opacity-25');
+               btnProcess[i].removeAttribute('disabled');
+            }
       }
    });
 };
@@ -141,7 +152,7 @@ export default {
          <div class="col-span-4 grid grid-cols-4 xl:mx-16 ">
          <div class="lg:col-span-3 col-span-4 xl:ml-0 lg:ml-16 lg:mx-0 sm:mx-12">
             <div class="bg-white border border-primary-100 rounded mb-5">
-               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-sm w-full">Information générale</h2>
+               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-sm w-full">Informations générale</h2>
                <div  class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="sm:col-span-4 col-span-5">

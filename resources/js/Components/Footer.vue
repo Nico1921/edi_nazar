@@ -30,7 +30,7 @@ import OekoTex from '@/Components/Logo/OekoTex.vue';
             </div>
          </div>
          <div class="col-span-4 ">
-            <h2 class="font-bold text-sm">Paiement Sécurisé</h2>
+            <h2 class="font-bold text-sm">Paiements Sécurisés</h2>
             <div class="flex items-center justify-center mt-4 text-xs">
                <div class="flex flex-col items-center px-4">
                   <CB classIcon="h-12 w-12" />
@@ -51,7 +51,7 @@ import OekoTex from '@/Components/Logo/OekoTex.vue';
             </div>
          </div>
          <div class="col-span-3">
-            <h2 class="font-bold text-sm">Certification</h2>
+            <h2 class="font-bold text-sm">Certifications</h2>
             <div class="flex flex-col items-center px-4">
                <OekoTex classIcon="h-24 w-24" />
              </div>

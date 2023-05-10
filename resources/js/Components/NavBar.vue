@@ -87,7 +87,7 @@ var modifQte = (e,nomProduit) => {
             if (e.props.session.status) {
                Toast.fire({
                   icon: 'success',
-                  title: 'La quantiter du produit '+nomProduit+' à bien été modifier'
+                  title: 'La quantité du produit '+nomProduit+' a bien été modifier.'
                });
             } else {
                Toast.fire({
@@ -104,7 +104,7 @@ var modifQte = (e,nomProduit) => {
 var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous sur de supprimer cette article du panier ?',
+      text: 'Êtes-vous sur de supprimer cet article du panier ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -124,7 +124,7 @@ var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
                if (e.props.session.status) {
                   Toast.fire({
                      icon: 'success',
-                     title: 'Le produit à bien été supprimer du panier'
+                     title: 'Le produit a bien été supprimer du panier.'
                   });
                } else {
                   Toast.fire({
@@ -142,7 +142,7 @@ var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
 var deleteCommandeDrop = (id_panier_edi_list) =>{
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous de supprimer cette article de la commande ?',
+      text: 'Êtes-vous de supprimer cet article de la commande ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -161,7 +161,7 @@ var deleteCommandeDrop = (id_panier_edi_list) =>{
                if(e.props.session.status){
                   Toast.fire({
                      icon: 'success',
-                     title: 'Le produit à bien été supprimer de la commande'
+                     title: 'Le produit a bien été supprimer de la commande.'
                   })
                }else{
                   Toast.fire({
@@ -197,7 +197,7 @@ var modifQteDrop = (e,nomProduit) => {
             if (e.props.session.status) {
                Toast.fire({
                   icon: 'success',
-                  title: 'La quantiter du produit '+nomProduit+' à bien été modifier'
+                  title: 'La quantité du produit '+nomProduit+' a bien été modifier.'
                });
             } else {
                Toast.fire({
@@ -261,7 +261,7 @@ export default {
 						<template #trigger>
 							<a href="/order_entrepot" :class="{ '!text-gray-800': $page.url.startsWith('/order_entrepot') }"
 								class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
-								Commande Entrepôt</a>
+								Commandes Entrepôt</a>
 							</template>
 							<template #content>
 								<ul class="bg-primary-50 text-center rounded w-full ">
@@ -344,8 +344,8 @@ export default {
 					<MenuItems
 						class="absolute px-4 right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-primary-50 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 						<MenuItem>
-						<Link href="/settings" :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-gray-700']">
-						{{ $t('navbar.profile') }}</Link>
+							<Link href="/settings" :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-gray-700']">
+							{{ $t('navbar.profile') }}</Link>
 						</MenuItem>
 						<!-- <MenuItem>
 						<div class="flex items-center">
@@ -354,8 +354,8 @@ export default {
 						</div>
 						</MenuItem> -->
 						<MenuItem>
-						<Link :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-red-700']"
-							:href="route('logout')" method="post" as="button">{{ $t('navbar.deconnexion') }}</Link>
+							<Link :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-red-700']"
+								:href="route('logout')" method="post" as="button">{{ $t('navbar.deconnexion') }}</Link>
 						</MenuItem>
 					</MenuItems>
 				</transition>
@@ -381,7 +381,7 @@ export default {
 								class="absolute z-[80] right-0 mt-2 w-72 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 								<div class="max-h-80 overflow-auto scrollbarCustom">
 									<div class="col-span-6 flex items-center justify-center mb-1 bg-primary-50">
-											<span class="font-bold text-lg">{{ typeVente == 1 ? 'Commande Entrepôt' : 'Dropshipping'}}</span>
+											<span class="font-bold text-lg">{{ typeVente == 1 ? 'Commandes Entrepôt' : 'Dropshipping'}}</span>
 										</div>
 									<div class="z-[80] relative px-1 py-1 grid grid-cols-6" v-if="typeVente == 1 && panier != undefined" v-for="(produit, key) in panier" :key="key">
 										<div class="col-span-1 flex items-center justify-center">
@@ -478,7 +478,7 @@ export default {
 											</div>
 										</div>
 									<div class="h-28 w-full flex items-center justify-center px-1 py-1" v-else>
-										<span class="w-full text-center">Votre panier est vide</span>
+										<span class="w-full text-center">Votre panier est vide.</span>
 									</div>
 								</div>
 								
@@ -513,7 +513,7 @@ export default {
 						<li class="mb-1">
 							<Link href="/order_entrepot" :class="{ 'text-primary-500': $page.url.startsWith('/order_entrepot') }"
 								class="block p-4 text-sm font-semibold text-gray-400 hover:text-gray-600 rounded">
-							Commande Entrepôt</Link>
+							Commandes Entrepôt</Link>
 						</li>
 						<li class="mb-1">
 							<Link href="/dropshipping" :class="{ 'text-primary-500': $page.url.startsWith('/dropshipping') }"

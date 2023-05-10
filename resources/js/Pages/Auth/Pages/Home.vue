@@ -52,7 +52,7 @@
     <section class="container mx-auto mt-5 ">
         <div class="w-full flex flex-col items-center justify-center py-5 px-4">
             <h1 class="font-bold lg:text-2xl sm:text-xl text-lg text-gray-800 text-center">
-            {{$page.props.auth.user[0].client.nom_societe}} - {{$t('accueil.titre_principal')}} - {{ (typeVente == 1 ? 'Commande entrepôt' : 'Dropshipping') }}
+            {{$page.props.auth.user[0].client.nom_societe}} - {{$t('accueil.titre_principal')}} - {{ (typeVente == 1 ? 'Commandes entrepôt' : 'Dropshipping') }}
             </h1>
             <span class="font-bold lg:text-xl sm:text-lg text-sm text-gray-400 text-center">
                 Découvrez nos collections

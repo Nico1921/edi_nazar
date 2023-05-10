@@ -1,5 +1,6 @@
 <script setup>
 import { ref,createApp } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3';
 import {
   TransitionRoot,
   TransitionChild,
@@ -8,11 +9,11 @@ import {
   DialogTitle,
 } from '@headlessui/vue';
 import ModalImportMKP_client from '@/Components/ModalImportMKP_client.vue';
-import axios from 'axios';
-
 
 const props = defineProps(['isOpen','importMKP','reussi','erreur','qteFinal','m2Final','prixHT_TT','prixTVA_TT','prixTTC_TT','stockInvalide']);
-
+var formFileImportValidation = useForm({
+  clients: props.importMKP
+});
 const isOpen = ref(props.isOpen);
 
 function closeModal() {
@@ -49,16 +50,17 @@ var viewDetails = (key) => {
 };
 
 var confirmImport = () => {
-  axios.post('/dropshipping/clients/import/validation',{clients: props.importMKP}).then((response) => {
-    if(response.status){
-      document.location.href = "/dropshipping/gamme";
-    }else{
-      Toast.fire({
-        icon: 'error',
-        title: 'Une erreur s\'est produite lors de la validation de l\'importation, veuillez renouveller l\'opération !'
-      });
-    }
-  })
+  formFileImportValidation.post('/dropshipping/clients/import/validation',{
+         onSuccess: (e) => {
+          closeModal()
+          document.location.href = "/dropshipping/gamme";
+         },
+         onError : (e) => {
+               Toast.fire({
+               icon: 'error',
+               title: 'Une erreur s\'est produite lors de la validation de votre importation, veuillez réessayer !'
+         });
+   }});
 };
 var roundNumber = (e) => {
    return (Math.round(e * 100) / 100).toFixed(2);
@@ -98,12 +100,12 @@ import Alert from 'icons/Alert.vue';
              </DialogTitle>
              <div class="mt-2">
                <p class="text-sm text-gray-500">
-                 Status de l'importation : {{(props.erreur > 0 ? 'echec !' : 'réussi !')}}
+                Statuts de l'importation : {{(props.erreur > 0 ? 'echec !' : 'réussi !')}}
                </p>
              </div>
 
              <div class="bg-yellow-100 rounded-lg text-center p-2" v-if="props.stockInvalide">
-                <span class="text-yellow-500"><Alert /> Vous avez une ou des commandes qui contienne des produits avec un stock insuffisant, ces commandes ne pourront être validées.</span>
+                <span class="text-yellow-500"><Alert /> Vous avez une où des commandes qui contiennent des produits avec un stock insuffisant, ces commandes ne pourront être validées.</span>
              </div>
 
              <div class="grid grid-cols-10 xl:ml-5 bg-primary-50 rounded-lg p-4 mb-4 mt-4">
@@ -142,7 +144,7 @@ import Alert from 'icons/Alert.vue';
             </div>
 
             <div class=" w-full py-2 bg-white flex items-center justify-center">
-              <button @click="confirmImport" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+              <button :class="{ 'opacity-25': formFileImportValidation.processing }" :disabled="formFileImportValidation.processing" @click="confirmImport" class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">Valider l'importation</button>
             </div>

@@ -11,7 +11,6 @@ import {
 } from '@headlessui/vue';
 
 const props = defineProps(['client','panier', 'produits']);
-console.log(props.produits);
 
 var clientUser = ref(usePage().props.value.auth.user[0].client);
 var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
@@ -25,6 +24,11 @@ var venteCondition = ref(0);
 var paymentType = ref(0);
 
 var validationCommande = () => {
+   const btnProcess = document.querySelectorAll('.btnProcess');
+         for(let i = 0;i<btnProcess.length;i++){
+            btnProcess[i].classList.add('opacity-25');
+            btnProcess[i].setAttribute('disabled','disabled');
+         }
    axios.post('/cart/validation/order',{paymentType: paymentType.value}).then((response) => {
            if(response.status == 200){
             document.location.href = "/shippings/order/clients/"+response.data.num_commande;
@@ -34,8 +38,14 @@ var validationCommande = () => {
                icon: 'error',
                title: 'Une erreur s\'est produite lors de l\'enregistrement de votre commande, veuillez ressayer !'
             });
+            const btnProcess = document.querySelectorAll('.btnProcess');
+            for(let i =0 ;i<btnProcess.length;i++){
+               btnProcess[i].classList.remove('opacity-25');
+               btnProcess[i].removeAttribute('disabled');
+            }
          };
    });
+   
 };
 
 var roundNumber = (e) => {
@@ -202,7 +212,7 @@ export default {
                </div>
                <div class="bg-gray-100 rounded-b-lg">
                   <div class="text-center bg-primary-50 rounded-t-lg py-1">
-                     <h2 class="text-lg font-bold">Moyen de paiement</h2>
+                     <h2 class="text-lg font-bold">Moyens de paiement</h2>
                   </div>
 
                   <div v-if="paymentType == 0 || !venteCondition" class="bg-yellow-200 px-4 py-2 rounded flex items-center">
@@ -270,7 +280,7 @@ export default {
                      </div>
                      <div v-if="paymentType == 1 || paymentType == 0" class="flex justify-center mb-5">
                         <button :disabled="((paymentType == 0 || !venteCondition) ? true : false)" @click="validationCommande" type="button" 
-                        class="py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
+                        class="btnProcess py-2 px-4 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
                            hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
                             disabled:bg-green-300">Finaliser la commande <ArrowRightCircleIcon class="h-6 w-6 ml-1 group-hover:translate-x-1 group-disabled:translate-x-0 transition-all duration-300" viewBox="0 0 24 24" fill="none" /></button>
                      </div>
