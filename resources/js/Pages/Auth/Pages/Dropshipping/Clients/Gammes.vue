@@ -79,7 +79,7 @@ const submit_file = () => {
          onError : (e) => {
                Toast.fire({
                icon: 'error',
-               title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
+               title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fourni puis ressayer !'
          });
    }});
 };
@@ -285,7 +285,7 @@ export default {
                <div class="absolute bottom-0 z-30 w-full overflow-hidden">
                  <div class="max-h-0 group-hover:max-h-60 group-hover:p-1 transition-full duration-500 bg-primary-300 text-center flex flex-col  bg-opacity-70 text-white">
                   <span>Tapis {{ (produit.type_tapis == 0 ? 'intérieur' : produit.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
-                  <span>Poils {{ (produit.type_poils == 1 ? 'court' : 'long') }} - {{ (produit.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
+                  <span>Poils {{ (produit.type_poils == 1 ? 'courts' : 'longs') }} - {{ (produit.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
                   <span class="capitalize">{{ lowercase(produit.nom_special) }}</span>
                   <div class="flex flex-wrap items-center justify-center text-center px-4 py-2">
                      <span v-for="(dimension, key) in find_dimensions(produit.id_gamme)" :key="key" class="block text-center w-auto px-1">

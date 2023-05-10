@@ -33,21 +33,19 @@ export default {
     <section class="container mx-auto px-7 mt-5">
         <Breadcrumbs :links="links" />
         <h1 class="font-semibold text-sm lg:text-xl sm:text-lg text-gray-800 text-center py-5">
-            Drop Shipping - Moteur de croissance
+            Le Drop Shipping - Moteur de croissance
         </h1>
 
         <div class="p-3 lg:text-lg text-sm">
                            <h2 class="lg:text-lg text-sm font-bold pb-4">Comment passer une commande ?</h2>
                            <p>
-                               Cliquez sur l’onglet ORDERS puis ADD AN ORDER:
-   Ensuite, renseignez tous les champs. Toutes ces informations nous servirons pour le transport ainsi que le suivi
-   des commandes.
-   Puis CONFIRM.
-   Nos équipes se chargerons de vous donner dans les meilleurs délais un suivi à votre commande.
+                            Pour passer une commande, cliquez sur l'onglet ORDERS, puis ADD AN ORDER. 
+                            Ensuite, remplissez tous les champs. Toutes ces informations nous seront utiles pour le transport et le suivi des commandes. 
+                            Puis, cliquez sur CONFIRM. Nos équipes se chargeront de vous fournir un suivi de votre commande dans les meilleurs délais.
                            </p>
                        </div>
                        <div class="p-3 lg:text-lg text-sm">
-                           <h2 class="lg:text-lg text-sm font-bold pb-4">L'onglet Products :</h2>
+                           <h2 class="lg:text-lg text-sm font-bold pb-4">L'onglet Commandes Entrepôts :</h2>
                            <p>
                                Sur cette onglet vous pouvez consulter l’état des stocks en temps réel. (le stock est mis à jour minimum 1 fois
    par jour).

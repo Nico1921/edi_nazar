@@ -152,7 +152,7 @@ export default {
          <div class="col-span-4 grid grid-cols-4 xl:mx-16 ">
          <div class="lg:col-span-3 col-span-4 xl:ml-0 lg:ml-16 lg:mx-0 sm:mx-12">
             <div class="bg-white border border-primary-100 rounded mb-5">
-               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-sm w-full">Information générale</h2>
+               <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-sm w-full">Informations générale</h2>
                <div  class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="sm:col-span-4 col-span-5">

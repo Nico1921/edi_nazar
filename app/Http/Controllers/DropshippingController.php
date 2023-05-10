@@ -614,7 +614,7 @@ class DropshippingController extends Controller
     * @return Array
     */
    public function add_ref_client(Request $request){
-      $message = "Une erreur est survenue lors de la création de la commande, veuillez recommencer plus tard !"; 
+      $message = "Une erreur est survenue lors de la création de la commande, veuillez réessayer plus tard !"; 
       if ($request->session()->has('panier_mkp')) {
          $panierMK = $request->session()->get('panier_mkp');
          $request->validate([
@@ -700,9 +700,9 @@ class DropshippingController extends Controller
       }else{
          $clientMarketplace = '';
          if($panierMarketplace->is_validate){
-            $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+            $message = "Votre panier a déjà été validé. Vous pouvez consulter les détails de votre commande dans la section 'Expéditions'";
          }else{
-            $message = "Une erreur c'est produit lors de l'ajout du client à la commande"; 
+            $message = "Une erreur s'est produite lors de l'ajout du client à la commande."; 
          }
       }
    
@@ -1033,7 +1033,7 @@ class DropshippingController extends Controller
             $erreur++;
             $clients[] = [
                'status' => false,
-               'message' => 'Le produit avec le gencode : '.$eanProduct.' n\'a pas été trouver dans notre liste de produits !'
+               'message' => 'Le produit avec le gencode : '.$eanProduct.', n\'a pas été trouvé dans notre liste de produits !'
             ];
          }
       }
@@ -1151,9 +1151,9 @@ class DropshippingController extends Controller
             $clientGet = ClientEDI::with('panier')->where('id_panier_edi','=',$panierMarketplace->id_panier_edi)->first();
             $request->session()->put('client_actuel',$clientGet);
          } 
-         return Redirect::route('dropshipping/gamme')->with(['status' => true, 'message' => 'Réussit !']);
+         return Redirect::route('dropshipping/gamme')->with(['status' => true, 'message' => 'Bien réussi !']);
       }else{
-         return redirect()->back()->with(['status' => false, 'message' => 'Une erreur s\'est produite, veuillez recommencer l\'importation !']);
+         return redirect()->back()->with(['status' => false, 'message' => 'Une erreur s\'est produite, veuillez réessayer l\'importation ultérieurement.']);
       }
     }   
 
@@ -1173,13 +1173,13 @@ class DropshippingController extends Controller
     */
     public function add_product_commande(Request $request) {
       
-      $message = 'Une erreur c\'est produit lors de l\'ajout ou de la modification du panier du client.';
+      $message = 'Une erreur s\'est produite lors de l\'ajout ou de la modification du panier du client.';
       $status = false;
       $id_panier_edi_list = 0;
       $id_client_edi = $request->id_client_edi;
       Log::debug($id_client_edi);
       if(empty($id_client_edi)){
-         $message = "Une erreur est survenue lors de la création de la commande, veuillez recommencer plus tard !"; 
+         $message = "Une erreur est survenue lors de la création de la commande, veuillez réessayer ultérieurement."; 
          if ($request->session()->has('panier_mkp')) {
             $panierMK = $request->session()->get('panier_mkp');
             $request->validate([
@@ -1263,7 +1263,7 @@ class DropshippingController extends Controller
          }else{
             $clientMarketplace = '';
             if($panierMarketplace->is_validate){
-               $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+               $message = "Votre panier a déjà été validé, vous pouvez aller dans 'Expéditions' pour voir les détails de votre commande.";
             }else{
                $message = "Une erreur c'est produit lors de l'ajout du client à la commande"; 
             }
@@ -1290,7 +1290,7 @@ class DropshippingController extends Controller
       }
       Log::debug($request);
       if(!empty($request->idProduit) && !empty($request->quantiter) && !empty($id_client_edi)){
-         $message = 'Une erreur c\'est produit lors de l\'ajout ou de la modification du panier du client.';
+         $message = 'Une erreur s\'est produite lors de l\'ajout ou de la modification du panier du client.';
          $client = ClientEDI::where('id_client_edi','=',$id_client_edi)->first();
          if(!empty($client->id_client_edi)){
             $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $client->id_panier_edi)->first();  
@@ -1350,10 +1350,10 @@ class DropshippingController extends Controller
                      $request->session()->put('dynamique_client', ($request->session()->has('dynamique_client') ? intval($request->session()->get('dynamique_client'))+1 : 1));
                   }
                }else{
-                  $message = 'La quantiter demander ne peux être fournis pour le moment, notre stock n\'est pas suffisant.';
+                  $message = 'La quantité demandée ne peut être fournie pour le moment, notre stock n\'est pas suffisant.';
                }
             }else{
-               $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+               $message = "Votre panier a déjà été validé, vous pouvez aller dans 'Expéditions' pour voir les détails de votre commande.";
             }
          }
         
@@ -1381,9 +1381,9 @@ class DropshippingController extends Controller
             $status = true;
             }else{
                if($panier->is_validate){
-                   $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                   $message = "Votre panier a déjà été validé, vous pouvez aller dans la section 'Expéditions' pour voir les détails de votre commande.";
                }else{
-                   $message = "'Une erreur c'est produit lors de la supression du produit du panier'"; 
+                   $message = "Une erreur s'est produite lors de la suppression du produit du panier."; 
                }
             }
          }

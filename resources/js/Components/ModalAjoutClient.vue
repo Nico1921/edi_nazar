@@ -30,7 +30,7 @@ var addRefClient = (event) => {
                setIsOpen(false);
                Toast.fire({
                   icon: 'success',
-                  title: 'La commande a été ajouter avec succès'
+                  title: 'La commande a été ajouter avec succès.'
                });
             }else{
                Toast.fire({

@@ -11,7 +11,7 @@ var links = [{
         icon: HomeIcon,
         active: false
     },{
-      title: 'Commande Entrepôt',
+      title: 'Commandes Entrepôt',
       link: '/order_entrepot/gamme',
       icon: ListBulletIcon,
       active: false
@@ -60,7 +60,7 @@ const submit_file = () => {
             onError : (e) => {
                Toast.fire({
                icon: 'error',
-               title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fournis puis ressayer !'
+               title: 'Une erreur s\'est produite lors de l\'importation de votre fichier, veuillez vérifier que votre fichier correspond bien à l\'exemple fourni puis ressayer !'
             });
    }});
 
@@ -192,7 +192,7 @@ export default {
    <section class="container mx-auto mt-5">
       <Breadcrumbs :links="links" />
       <div class="flex lg:flex-row flex-col items-center justify-center relative pb-10">
-         <h1 class="font-semibold text-center mx-1 lg:text-2xl text-lg text-gray-800 py-2">Commande Entrepôt - Gammes</h1>
+         <h1 class="font-semibold text-center mx-1 lg:text-2xl text-lg text-gray-800 py-2">Commandes Entrepôt - Gammes</h1>
 
          <div v-if="typeVente == 1" class="lg:absolute inset-0 lg:flex items-center justify-end">
             <div class="">
@@ -241,7 +241,7 @@ export default {
                <div class="absolute bottom-0 z-30 w-full overflow-hidden text-sm">
                  <div class="max-h-0 group-hover:max-h-60  rounded group-hover:p-1 transition-full duration-500 bg-primary-300 text-center flex flex-col  sm:bg-opacity-70 text-white z-30">
                   <span>Tapis {{ (produit.type_tapis == 0 ? 'intérieur' : produit.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
-                  <span>Poils {{ (produit.type_poils == 1 ? 'court' : 'long') }} - {{ (produit.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
+                  <span>Poils {{ (produit.type_poils == 1 ? 'courts' : 'longs') }} - {{ (produit.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
                   <span class="capitalize">{{ lowercase(produit.nom_special) }}</span>
                   <div class="flex flex-wrap items-center justify-center text-center lg:px-4 px-0 py-2">
                      <span v-for="(dimension, key) in find_dimensions(produit.id_gamme)" :key="key" class="block text-center w-auto lg:px-1">

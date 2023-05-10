@@ -62,12 +62,12 @@ var modifQte = (e,nomProduit) => {
                produits.value[formData.get("key_tab")].panier.quantiter = formData.get("qte");
                Toast.fire({
                   icon: 'success',
-                  title: 'La quantiter du produit '+nomProduit+' à bien été modifier'
+                  title: 'La quantité du produit '+nomProduit+' a bien été modifiée.'
                });
             } else {
                Toast.fire({
                   icon: 'error',
-                  title: 'Une erreur c\'est produit lors de la modification de la quantiter du produit.'
+                  title: 'Une erreur s\'est produite lors de la modification de la quantité du produit.'
                });
             }
 
@@ -79,7 +79,7 @@ var modifQte = (e,nomProduit) => {
 var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous sur de supprimer cette article du panier ?',
+      text: 'Êtes-vous sûr(e) de vouloir supprimer cet article du panier ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -99,12 +99,12 @@ var deleteCommande = (id_panier_edi_list,id_panier_edi, key) => {
                if (e.props.session.status) {
                   Toast.fire({
                      icon: 'success',
-                     title: 'Le produit à bien été supprimer du panier'
+                     title: 'Le produit a bien été supprimé du panier.'
                   });
                } else {
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit du panier'
+                     title: 'Une erreur s\'est produite lors de la suppression du produit du panier. Veuillez réessayer.'
                   });
                }
 
@@ -127,7 +127,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
 <template>
             <div v-if="prop.panier.is_validate" class="w-full bg-red-200 px-4 py-2 rounded flex items-center">
                <ExclamationTriangleIcon v-if="prop.panier.is_validate" class="h-8 w-8 text-red-600" />
-               <span v-if="prop.panier.is_validate" class="pl-2 text-red-600">Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.</span>
+               <span v-if="prop.panier.is_validate" class="pl-2 text-red-600">Votre panier a déjà été validé. Vous pouvez accéder à la page 'Expéditions' pour voir les détails de votre commande.</span>
             </div>
             <div v-if="produits != undefined" class="sm:my-4 px-2 py-4 rounded-lg border shadow-lg  w-full grid grid-cols-12 max-h-96 overflow-y-auto scrollbarCustom">
                <div v-for="(produit, key) in produits" :key="key" class="2xl:col-span-3 lg:col-span-4 sm:col-span-6 col-span-12 bg-gray-100 rounded grid grid-cols-12 px-2 py-4 my-2 lg:mx-4 sm:mx-2 mx-6" >
@@ -187,7 +187,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                         </path>
                      </svg>
                   </span>
-                  <h2 class="mt-6 text-3xl font-medium text-gray-900">Votre panier est vide</h2>
+                  <h2 class="mt-6 text-3xl font-medium text-gray-900">Votre panier est vide.</h2>
                   
                   <p class="mt-4 text-gray-500 text-center">Vous n'avez pas encore ajouté d'articles à votre panier.</p>
                   

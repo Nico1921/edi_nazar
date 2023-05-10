@@ -229,7 +229,7 @@ export default {
                </div>
                <div class="bg-gray-100 rounded-b-lg">
                   <div class="text-center bg-primary-50 rounded-t-lg py-1">
-                     <h2 class="text-lg font-bold">Moyen de paiement</h2>
+                     <h2 class="text-lg font-bold">Moyens de paiement</h2>
                   </div>
 
                   <div v-if="paymentType == 0 || !venteCondition" class="bg-yellow-200 px-4 py-2 rounded flex items-center">

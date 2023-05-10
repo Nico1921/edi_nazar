@@ -128,7 +128,7 @@ export default {
 <template>
       <form @submit.prevent="validationAdresse" >
             <div class="bg-primary-50 rounded mb-5">
-               <h2 class="text-center xl:text-3xl lg:text-2xl sm:text-xl text-lg text-primary-300 py-1 bg-primary-100 rounded-t-lg w-full">Information générale</h2>
+               <h2 class="text-center xl:text-3xl lg:text-2xl sm:text-xl text-lg text-primary-300 py-1 bg-primary-100 rounded-t-lg w-full">Informations générale</h2>
                <div  class="grid grid-cols-6 gap-4 mt-2 lg:p-5 sm:p-3 p-1 lg:mx-5 sm:mx-3 mx-2" id="form_client">
                   <div class="col-span-6 flex text-lg pb-2 ">
                      <input type="hidden" id="id_client_edi" name="id_client_edi" v-model="formClient.id_client_edi"/>

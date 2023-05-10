@@ -20,8 +20,8 @@ return [
     'labelPays' => 'Pays',
     'btnInscription' => 'Envoyer ma demande d\'inscription',
     'btnMobileOr' => 'Je me connecte',
-    'messageValidation' => 'Votre inscription a bien été prise en compte et sera traitée par nos équipe dans les meilleurs délais. Une fois validée vous recevrez vos identifiants par e-mail.',
-    'messageValidationError' => 'Une erreur s\'est produite lors de votre demande d\'inscription, veuillez ressayer plus tard !',
+    'messageValidation' => 'Votre inscription a bien été prise en compte et sera traitée par notre équipe dans les meilleurs délais. Une fois validée, vous recevrez vos identifiants par e-mail.',
+    'messageValidationError' => 'Une erreur s\'est produite lors de votre demande d\'inscription, veuillez réessayer plus tard !',
     'titleValidation' => 'Demande envoyée !',
     'titleValidationError' => 'Une erreur est survenue !',
 ];

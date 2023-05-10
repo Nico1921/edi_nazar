@@ -47,7 +47,7 @@ class CartController extends Controller
             if($request->error == 'import_stock'){
                 $message = 'Une erreur s\'est produite lors de l\'import de votre commande. Certains produits n\'étaient pas en stock.';
             }else{
-                $message = 'Une erreur s\'est produit !';
+                $message = 'Une erreur s\'est produite !';
             }
         }else{
             $message = '';
@@ -58,7 +58,7 @@ class CartController extends Controller
 
     public function edit_qte(Request $request){
         $status = false;
-        $message = 'Une erreur c\'est produit lors de la modification de la quantiter du produit.';
+        $message = 'Une erreur s\'est produite lors de la modification de la quantité du produit.';
         $id_panier_edi_list = 0;
         if (!empty($request->idProduit) && !empty($request->quantiter) && !empty($request->id_panier_edi) && !empty($request->id_client_edi)) {
             $stock = StatsProduit::where('id_produit','=',$request->idProduit)->first();
@@ -82,11 +82,11 @@ class CartController extends Controller
                             $id_panier_edi_list = $panierList->id_panier_edi_list;
                         }
                     }else{
-                        $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                        $message = "Votre panier a déjà été validé. Vous pouvez aller dans 'Expéditions' pour voir les détails de votre commande.";
                     }
                 } 
             }else{
-                $message = 'La quantiter demander ne peux être fournis pour le moment, notre stock n\'est pas suffisant.';
+                $message = 'La quantité demandée ne peut être fournie pour le moment, notre stock n\'est pas suffisant.';
             }
         }
         $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();
@@ -96,7 +96,7 @@ class CartController extends Controller
 
     public function edit_qte_drop(Request $request){
         $status = false;
-        $message = 'Une erreur c\'est produit lors de la modification de la quantiter du produit.';
+        $message = 'Une erreur s\'est produite lors de la modification de la quantité du produit.';
         $id_panier_edi_list = 0;
         if (!empty($request->idProduit) && !empty($request->quantiter) && !empty($request->id_panier_edi) && !empty($request->id_client_edi)) {
             $stock = StatsProduit::where('id_produit','=',$request->idProduit)->first();
@@ -120,11 +120,11 @@ class CartController extends Controller
                             $id_panier_edi_list = $panierList->id_panier_edi_list;
                         }
                     }else{
-                        $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                        $message = "Votre panier a déjà été validé. Vous pouvez aller dans 'Expéditions' pour voir les détails de votre commande.";
                     }
                 } 
             }else{
-                $message = 'La quantiter demander ne peux être fournis pour le moment, notre stock n\'est pas suffisant.';
+                $message = 'La quantité demandée ne peut être fournie pour le moment, notre stock n\'est pas suffisant.';
             }
         }
         $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();
@@ -150,9 +150,9 @@ class CartController extends Controller
                 $status = true;
             }else{
                 if($panier->is_validate){
-                    $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                    $message = "Votre panier a déjà été validé. Vous pouvez aller dans 'Expéditions' pour voir les détails de votre commande.";
                 }else{
-                    $message = "Une erreur c'est produit lors de la supression du produit du panier"; 
+                    $message = "Une erreur s'est produite lors de la suppression du produit du panier."; 
                 }
             }
            }
@@ -179,9 +179,9 @@ class CartController extends Controller
                 $status = true;
               }else{
                 if($panier->is_validate){
-                    $message = "Votre panier a déjà été valider, vous pouvez aller dans Expéditions pour voir les détails de votre commande.";
+                    $message = "Votre panier a déjà été validé. Vous pouvez aller dans 'Expéditions' pour voir les détails de votre commande.";
                 }else{
-                    $message = "Une erreur c'est produit lors de la supression du produit du panier"; 
+                    $message = "Une erreur s'est produite lors de la suppression du produit du panier."; 
                 }
             }
            }
@@ -561,23 +561,23 @@ class CartController extends Controller
                         ]);
                         $html = $paiement->render('<div id="submitPayButton"></div>');
                     }else{
-                        return ['statut' => false,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
+                        return ['statut' => false,'msg' => 'Une erreur est survenue. Veuillez réessayer ultérieurement.'];
                     }     
                 }else{
-                    return ['statut' => false,'msg' => 'Une erreur est survenue, vérifier que votre panier n\'est pas vide ou que vous êtes encore connecté !'];
+                    return ['statut' => false,'msg' => 'Une erreur est survenue. Veuillez vérifier que votre panier n\'est pas vide et que vous êtes toujours connecté(e).'];
                 }
             }else{
-                return ['statut' => false,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement, vérifier que vous êtes encore connecté !'];
+                return ['statut' => false,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement. Veuillez vérifier que vous êtes toujours connecté(e).'];
             }
             
         }else{
-            return ['statut' => false,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement, vérifier que vous êtes encore connecté !'];
+            return ['statut' => false,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement. Veuillez vérifier que vous êtes toujours connecté.'];
         }
 
         if(!empty($html)){
             return ['statut' => true,'formpay' => $html];
         }else{
-            return ['statut' => false,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
+            return ['statut' => false,'msg' => 'Une erreur est survenue, veuillez réessayer ultérieurement !'];
         }
     }
 
@@ -606,23 +606,23 @@ class CartController extends Controller
                         ]);
                         $html = $paiement->render('<div id="submitPayButton"></div>');
                     }else{
-                        return ['statut' => false,'erreur'=>5,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
+                        return ['statut' => false,'erreur'=>5,'msg' => 'Une erreur est survenue, veuillez réessayer plus tard !'];
                     }     
                 }else{
-                    return ['statut' => false,'erreur'=>4,'msg' => 'Une erreur est survenue, vérifier que votre panier n\'est pas vide ou que vous êtes encore connecté !'];
+                    return ['statut' => false,'erreur'=>4,'msg' => 'Une erreur est survenue, veuillez vérifier que votre panier n\'est pas vide et que vous êtes toujours connecté !'];
                 }
             }else{
-                return ['statut' => false,'erreur'=>3,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement, vérifier que vous êtes encore connecté !'];
+                return ['statut' => false,'erreur'=>3,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement. Veuillez vérifier que vous êtes toujours connecté(e) !'];
             }
             
         }else{
-            return ['statut' => false,'erreur'=>2,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement, vérifier que vous êtes encore connecté !'];
+            return ['statut' => false,'erreur'=>2,'msg' => 'Une erreur est survenue lors de la génération du formulaire de paiement. Veuillez vérifier que vous êtes toujours connecté.'];
         }
 
         if(!empty($html)){
             return ['statut' => true,'formpay' => $html];
         }else{
-            return ['statut' => false,'erreur'=>1,'msg' => 'Une erreur est survenue, veuillez ressayer plus tard !'];
+            return ['statut' => false,'erreur'=>1,'msg' => 'Une erreur est survenue, veuillez réessayer ultérieurement.'];
         }
     }
 
@@ -713,7 +713,7 @@ class CartController extends Controller
     }
 
     public function redirect_cb_error_drop(Request $request){
-        $message = "La commande n'a pas pu être payée en raison d'une erreur. Veuillez réessayer ultérieurement. Si l'erreur persiste, veuillez vérifier que vous disposez des fonds suffisants pour effectuer le paiement.";
+        $message = "La commande n'a pas pu être payée en raison d'une erreur inconnue. Veuillez réessayer ultérieurement. Si l'erreur persiste, veuillez vérifier que vous disposez des fonds suffisants pour effectuer le paiement.";
         if($request->session()->has('panier_mkp')){
             return redirect('/dropshipping/cart')->with(['messageError' => $message]);
         }else{

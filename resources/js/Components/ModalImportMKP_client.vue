@@ -19,8 +19,6 @@ function closeModal() {
   },200)
 }
 
-console.log(props.client);
-
 var gridModal = {
  grid4: 'grid-cols-4',
  grid3: 'grid-cols-3',

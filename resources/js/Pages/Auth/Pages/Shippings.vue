@@ -22,7 +22,7 @@
       of: "de",
       per_page: "par page",
       previous: "Précédent",
-      results: "Résultat",
+      results: "Résultat(s)",
       to: "à",
    });
 
@@ -66,7 +66,7 @@
    const deletePanier = (id_panier_edi,numCommande) => {
       Swal.fire({
          title: 'Attention',
-         text: 'Etes-vous sur de supprimer la commande ' + numCommande +' ?',
+         text: 'Êtes-vous sur de supprimer la commande ' + numCommande +' ?',
          icon: 'warning',
          showCancelButton: true,
          confirmButtonColor: '#3085d6',
@@ -83,12 +83,12 @@
                      document.getElementById('order_' + id_panier_edi).remove();
                      Toast.fire({
                         icon: 'success',
-                        title: 'La commande ' + numCommande + ' à bien été suprimmer !'
+                        title: 'La commande ' + numCommande + ' a bien été supprimer !'
                      });
                   } else {
                      Toast.fire({
                         icon: 'error',
-                        title: 'Une erreur s\'est produite lors de la supression de la commande ' + numCommande + ', veuillez ressayer !'
+                        title: 'Une erreur s\'est produite lors de la suppression de la commande ' + numCommande + ', veuillez ressayer !'
                      });
                   }
                }
@@ -100,7 +100,7 @@
    const deleteClient = (id_panier_edi,numCommande) => {
       Swal.fire({
          title: 'Attention',
-         text: 'Etes-vous sur de supprimer la commande ' + numCommande +' ?',
+         text: 'Êtes-vous sur de supprimer la commande ' + numCommande +' ?',
          icon: 'warning',
          showCancelButton: true,
          confirmButtonColor: '#3085d6',
@@ -117,12 +117,12 @@
                      document.getElementById('order_' + id_panier_edi).remove();
                      Toast.fire({
                         icon: 'success',
-                        title: 'La commande ' + numCommande + ' à bien été suprimmer !'
+                        title: 'La commande ' + numCommande + ' a bien été supprimer !'
                      });
                   } else {
                      Toast.fire({
                         icon: 'error',
-                        title: 'Une erreur s\'est produite lors de la supression de la commande ' + numCommande + ', veuillez ressayer !'
+                        title: 'Une erreur s\'est produite lors de la suppression de la commande ' + numCommande + ', veuillez ressayer !'
                      });
                   }
                }
@@ -155,7 +155,7 @@
       <Breadcrumbs :links="links" />
       <h1 class="text-center xl:text-3xl lg:text-2xl sm:text-xl text-lg text-primary-300 my-4">Historique des commandes</h1>
 
-      <h2 class="text-center text-1xl text-primary-300">Liste commande </h2>
+      <h2 class="text-center text-1xl text-primary-300">Liste commandes </h2>
       <Table :meta="props.panierEdi" id="TabProducts" class="table mx-6">
          <template v-slot:head="slotHead">
                 <tr class="font-medium text-xs uppercase text-left tracking-wider text-gray-500 py-3 px-6">
@@ -223,7 +223,7 @@
                     </th>
                     <th class="lg:table-cell hidden" @click="slotHead.sortBy('date_livraison')">
                         <button class="py-3 px-6 w-full flex flex-row items-center"  dusk="sort-date-livraison-estimer">
-                            <span class="flex flex-row items-center"><span class="uppercase">Date livraison estimer</span></span>
+                            <span class="flex flex-row items-center"><span class="uppercase">Date livraison estimée</span></span>
                             <ChevronDownIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('date_livraison').sorted == 'desc'" />
                               <ChevronUpIcon class="w-3 h-3 ml-2 text-green-600" v-if="slotHead.header('date_livraison').sorted == 'asc'" />
                               <ChevronUpDownIcon class="w-3 h-3 ml-2 text-gray-400" v-if="slotHead.header('date_livraison').sorted == false" />
@@ -244,7 +244,7 @@
          <template #body>
             <tr v-for="(panier, key) in props.panierEdi.data" :key="key" :id="'order_'+panier.id_panier_edi">
                <td data-label="TYPE COMMANDE" class="table-cell text-sm py-4 2xl:px-5 sm:px-5 px-2 text-gray-500 lg:text-center whitespace-nowrap">
-                  {{(panier.is_marketplace ? 'Dropshipping' : 'Commande Entrepôt')}}
+                  {{(panier.is_marketplace ? 'Dropshipping' : 'Commandes Entrepôt')}}
                </td>
                <td data-label="N° COMMANDE" class="table-cell text-sm py-4 2xl:px-6 sm:px-5 px-2 text-gray-500 lg:text-center whitespace-nowrap">
                   {{panier.num_commande}}

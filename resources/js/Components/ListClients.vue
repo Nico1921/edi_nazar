@@ -60,7 +60,7 @@ function openModal(e,client) {
 var deleteCommande = (id_panier_edi_list) =>{
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous de supprimer cette article de la commande ?',
+      text: 'Êtes-vous de supprimer cet article de la commande ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -79,12 +79,12 @@ var deleteCommande = (id_panier_edi_list) =>{
                if(e.props.session.status){
                   Toast.fire({
                      icon: 'success',
-                     title: 'Le produit à bien été supprimer de la commande'
+                     title: 'Le produit a bien été supprimer de la commande.'
                   })
                }else{
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
+                     title: 'Une erreur s\'est produite lors de la suppression du produit de la commande.'
                   });
                }
                
@@ -98,7 +98,7 @@ var deleteClient = (e,id_client_edi,ref_externe) => {
    e.preventDefault();
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous sur de supprimer la commande client '+ref_externe+' ?',
+      text: 'Êtes-vous sur de supprimer la commande client '+ref_externe+' ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -116,12 +116,12 @@ var deleteClient = (e,id_client_edi,ref_externe) => {
                if (e.props.session.status == true) {
                   Toast.fire({
                         icon: 'success',
-                        title: 'La commande client '+ref_externe+ ' à bien été suprimmer !'
+                        title: 'La commande client '+ref_externe+ ' a bien été supprimer !'
                      });
                }else{
                   Toast.fire({
                         icon: 'error',
-                        title: 'Une erreur s\'est produite lors de la supression de la commande client'+ref_externe+', veuillez ressayer !'
+                        title: 'Une erreur s\est produite lors de la suppression de la commande client'+ref_externe+', veuillez ressayer !'
                      });
                }
          }});
@@ -143,7 +143,7 @@ var addRefClient = (event) => {
                setIsOpen(false);
                Toast.fire({
                   icon: 'success',
-                  title: 'La commande a été ajouter avec succès'
+                  title: 'La commande a été ajouter avec succès.'
                });
             }else{
                Toast.fire({

@@ -45,7 +45,7 @@ var addCommande = (e,isPanier) => {
             products.value[formData.get("key_tab")].panier.quantiter = formData.get("qte");
             Toast.fire({
                icon: 'success',
-               title: (isPanier ? 'La quantiter pour ce produit à bien été modifier' : 'Le produit à bien ajouter au panier')
+               title: (isPanier ? 'La quantité pour ce produit a bien été modifier.' : 'Le produit à bien ajouter au panier.')
             });
          }else{
             Toast.fire({
@@ -65,7 +65,7 @@ var editCommande = (key) =>{
 var deleteCommande = (id_panier_edi_list,key) =>{
    Swal.fire({
       title: 'Attention',
-      text: 'Etes-vous de supprimer cette article de la commande ?',
+      text: 'Êtes-vous de supprimer cet article de la commande ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -84,7 +84,7 @@ var deleteCommande = (id_panier_edi_list,key) =>{
                if(e.props.session.status){
                   Toast.fire({
                      icon: 'success',
-                     title: 'Le produit à bien été supprimer de la commande'
+                     title: 'Le produit a bien été supprimer de la commande.'
                   })
                   products.value[key].isInPanier = false;
                   products.value[key].panier.quantiter = 0;
@@ -92,7 +92,7 @@ var deleteCommande = (id_panier_edi_list,key) =>{
                }else{
                   Toast.fire({
                      icon: 'error',
-                     title: 'Une erreur c\'est produit lors de la supression du produit de la commande'
+                     title: 'Une erreur s\'est produite lors de la suppression du produit de la commande.'
                   });
                }
                

@@ -100,12 +100,12 @@ import Alert from 'icons/Alert.vue';
              </DialogTitle>
              <div class="mt-2">
                <p class="text-sm text-gray-500">
-                 Status de l'importation : {{(props.erreur > 0 ? 'echec !' : 'réussi !')}}
+                Statuts de l'importation : {{(props.erreur > 0 ? 'echec !' : 'réussi !')}}
                </p>
              </div>
 
              <div class="bg-yellow-100 rounded-lg text-center p-2" v-if="props.stockInvalide">
-                <span class="text-yellow-500"><Alert /> Vous avez une ou des commandes qui contienne des produits avec un stock insuffisant, ces commandes ne pourront être validées.</span>
+                <span class="text-yellow-500"><Alert /> Vous avez une où des commandes qui contiennent des produits avec un stock insuffisant, ces commandes ne pourront être validées.</span>
              </div>
 
              <div class="grid grid-cols-10 xl:ml-5 bg-primary-50 rounded-lg p-4 mb-4 mt-4">
