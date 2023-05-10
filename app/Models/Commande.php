@@ -85,23 +85,45 @@ class Commande extends Model
         $facture = new stdClass;
         if(!empty($panier->id_panier_edi) && $panier->id_panier_edi > 0){
             $id_client = User::with('client')->where('id','=',$id_distributeur)->first(); 
-                        $adresse = Adresse::create([
-                            'date_ajout' => date('Y-m-d H:i:s'),
-                            'date_maj' => date('Y-m-d H:i:s'),
-                            'id_user' => '0',
-                            'id_user_maj' => '0',
-                            'id_client' => $id_client->client->id_client,
-                            'nom_contact' => $id_client->client->nom_adresse,
-                            'adresse1' => $id_client->client->adresse1,
-                            'adresse2' => $id_client->client->adresse2,
-                            'adresse3' => $id_client->client->adresse3,
-                            'code_postal' => $id_client->client->code_postal,
-                            'ville' => $id_client->client->ville,
-                            'pays' => $id_client->client->pays,
-                            'tel1' => $id_client->client->tel1,
-                            'tel2' => '',
-                            'statut' => '1',
-                        ]);
+            if($panier->is_marketplace == 0){
+                $clientGet = ClientEDI::where('id_panier_edi','=',$id_panier_edi)->first();
+                $adresse = Adresse::create([
+                    'date_ajout' => date('Y-m-d H:i:s'),
+                    'date_maj' => date('Y-m-d H:i:s'),
+                    'id_user' => '0',
+                    'id_user_maj' => '0',
+                    'id_client' => $id_client->client->id_client,
+                    'nom_contact' => $clientGet->nom_adresse,
+                    'adresse1' => $clientGet->adresse1,
+                    'adresse2' => $clientGet->adresse2,
+                    'adresse3' => $clientGet->adresse3,
+                    'code_postal' => $clientGet->code_postal,
+                    'ville' => $clientGet->ville,
+                    'pays' => $clientGet->pays,
+                    'tel1' => $clientGet->tel,
+                    'tel2' => '',
+                    'statut' => '1',
+                ]);
+            }else{
+                $adresse = Adresse::create([
+                    'date_ajout' => date('Y-m-d H:i:s'),
+                    'date_maj' => date('Y-m-d H:i:s'),
+                    'id_user' => '0',
+                    'id_user_maj' => '0',
+                    'id_client' => $id_client->client->id_client,
+                    'nom_contact' => $id_client->client->nom_societe,
+                    'adresse1' => $id_client->client->adresse1,
+                    'adresse2' => $id_client->client->adresse2,
+                    'adresse3' => $id_client->client->adresse3,
+                    'code_postal' => $id_client->client->code_postal,
+                    'ville' => $id_client->client->ville,
+                    'pays' => $id_client->client->pays,
+                    'tel1' => $id_client->client->tel1,
+                    'tel2' => '',
+                    'statut' => '1',
+                ]);
+            }
+                        
 
 
 

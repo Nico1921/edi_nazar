@@ -108,10 +108,17 @@ var validationAdresse = () => {
             });
          };
          const btnProcess = document.querySelectorAll('.btnProcess');
-            for(let i =0 ;i<btnProcess.length;i++){
+         for(let i =0 ;i<btnProcess.length;i++){
                btnProcess[i].classList.remove('opacity-25');
                btnProcess[i].removeAttribute('disabled');
-            }
+         }
+      },
+      onError: (e) =>{
+         const btnProcess = document.querySelectorAll('.btnProcess');
+         for(let i =0 ;i<btnProcess.length;i++){
+               btnProcess[i].classList.remove('opacity-25');
+               btnProcess[i].removeAttribute('disabled');
+         }
       }
    });
 };
