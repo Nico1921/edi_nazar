@@ -133,7 +133,11 @@ class ShippingsController extends Controller
                                     $produit = Produit::with(['photo','dimension','statsProduit'])->where('id_produit','=',$list->id_produit)->get();
                                     for($j=0;$j<count($produit);$j++){
                                         $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
-                                        $commande = Commande::where('num_commande_interne','=',$clients[$i]->num_commande)->first();
+                                        if($order->is_marketplace){
+                                            $commande = CommandeMarketplace::with(['etape','commande_stock'])->where('ref_externe','=',$clients[$i]->num_commande)->first();
+                                        }else{
+                                            $commande = Commande::where('num_commande_interne','=',$clients[$i]->num_commande)->first();
+                                        }
                                         $produit[$j]->panier = $panier;
                                         $produit[$j]->commande = $commande;
                                         $produit[$j]->isInPanier = true;
@@ -141,6 +145,14 @@ class ShippingsController extends Controller
                                     }           
                                 }        
                             }
+                            if($order->is_marketplace){
+                                $commande = CommandeMarketplace::with(['etape','commande_stock' => function ($query) {
+                                    $query->select('commande_stock.tracking','commande_stock.id_commande_mkp')->distinct();
+                                }])->where('ref_externe','=',$clients[$i]->num_commande)->first();
+                            }else{
+                                $commande = Commande::where('num_commande_interne','=',$clients[$i]->num_commande)->first();
+                            }
+                            $clients[$i]->commande = $commande;
                             $clients[$i]->produits = $produits;
                         }
                             

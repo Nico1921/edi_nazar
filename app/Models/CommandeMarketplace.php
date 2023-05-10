@@ -133,7 +133,7 @@ class CommandeMarketplace extends Model
      */
     public function commande_stock()
     {
-        return $this->hasOne(CommandeStock::class,'id_commande_mkp','id_commande');
+        return $this->hasMany(CommandeStock::class,'id_commande_mkp','id_commande');
     }
 
     public static function generateNumOrder(){

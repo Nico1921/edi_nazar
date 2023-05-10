@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import {decode} from 'html-entities';
 var props = defineProps(['client','isMK']);
 var client = props.client;
 const transitionClasses = {
@@ -112,15 +113,24 @@ import { PlusIcon,MinusIcon} from '@heroicons/vue/24/solid';
                <div class="col-span-6 border border-primary-300 rounded px-4 py-2 mx-4 space-y-1">
                   <h4 class="text-lg font-bold mb-2 text-center">Adresse commande</h4>
                   <p class="text-gray-600"><span class="font-semibold">Contact : </span>{{ client.nom_adresse }}</p>
-               <p class="text-gray-600">
-                  {{ client.adresse1 }},
-                  {{ (client.adresse2 != '' && client.adresse2 != null ? client.adresse2 + "," : '') }}
-                  {{ (client.adresse3 != '' && client.adresse3 != null ? client.adresse3 + "," : '') }}
-               </p>
-               <p class="text-gray-600">
-                  {{ client.code_postal }} {{ client.ville }},
-                  {{ client.pays }}
-               </p>
+                  <p class="text-gray-600">
+                     {{ client.adresse1 }},
+                     {{ (client.adresse2 != '' && client.adresse2 != null ? client.adresse2 + "," : '') }}
+                     {{ (client.adresse3 != '' && client.adresse3 != null ? client.adresse3 + "," : '') }}
+                  </p>
+                  <p class="text-gray-600">
+                     {{ client.code_postal }} {{ client.ville }},
+                     {{ client.pays }}
+                  </p>
+                  <div v-if="props.isMK" class="pt-4">
+                     Status : {{ decode(client.commande.etape.nom_etape) }}
+                     <div v-if="client.commande.commande_stock != null && client.commande.etape.id_etape > 3">
+                        <div v-for="(track, key) in client.commande.commande_stock" :key="key">
+                           <span>Suivi colis N°{{ key+1 }}: </span>
+                           <a class="text-gray-500 underline hover:text-[1.1rem] cursor-pointer transition-all duration-300" v-if="track.tracking != ''" :href="'https://gls-group.eu/FR/fr/suivi-colis?match='+track.tracking" target="_blank">{{ track.tracking }}</a>
+                        </div>
+                     </div>
+                  </div>
             </div>
          </div>
       </div>
