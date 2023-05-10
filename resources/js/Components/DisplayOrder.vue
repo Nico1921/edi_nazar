@@ -123,7 +123,7 @@ import { PlusIcon,MinusIcon} from '@heroicons/vue/24/solid';
                      {{ client.pays }}
                   </p>
                   <div v-if="props.isMK" class="pt-4">
-                     Status : {{ decode(client.commande.etape.nom_etape) }}
+                     <span class="text-gray-600"><span class="font-semibold">Status : </span>{{ decode(client.commande.etape.nom_etape) }}</span> 
                      <div v-if="client.commande.commande_stock != null && client.commande.etape.id_etape > 3">
                         <div v-for="(track, key) in client.commande.commande_stock" :key="key">
                            <span>Suivi colis N°{{ key+1 }}: </span>

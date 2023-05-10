@@ -162,12 +162,12 @@ class HandleInertiaRequests extends Middleware
                                     'email' => 'required|string|email|max:255',
                                     'tel' => 'required|numeric|phone:AUTO,FR',
                                     'nom_adresse' => 'required|string|max:255',
-                                    'adresse1' => 'required|string|max:32',
-                                    'adresse2' => 'nullable|string|max:32',
-                                    'adresse3' => 'nullable|string|max:32',
+                                    'adresse1' => 'required|string|max:250',
+                                    'adresse2' => 'nullable|string|max:250',
+                                    'adresse3' => 'nullable|string|max:250',
                                     'pays' => 'required|country_name',
                                     'code_postal' => 'required|postal_code:pays',
-                                    'ville' => 'required|string|max:32',
+                                    'ville' => 'required|string|max:50',
                                 ]);
 
                                 if ($validator->fails()) {
