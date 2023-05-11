@@ -48,3 +48,24 @@ defineProps(['TextTitre','SousTitre','TextBouttonTitre','hrefBtnTitre']);
         </div>
     </section>
 </template>
+
+<style>
+/* Style Tooltips */
+.v-popper--theme-tooltip .v-popper__inner {
+  background: #ececec !important;
+  color: #4f4f4f !important;
+}
+
+.v-popper--theme-tooltip .v-popper__arrow-outer {
+  border-color: #ececec !important;
+}
+
+.dark .v-popper--theme-tooltip .v-popper__inner {
+  background: #ececec !important;
+  color: #525252 !important;
+}
+
+.dark .v-popper--theme-tooltip .v-popper__arrow-outer {
+  border-color: #ececec !important;
+}
+</style>

@@ -2,7 +2,7 @@
 import { Head, usePage, useForm } from '@inertiajs/inertia-vue3';
 import { onMounted,ref,watchEffect } from 'vue';
 import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,} from '@headlessui/vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import { Tooltip } from 'floating-vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import InputError from '@/Components/InputError.vue';
 import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicons/vue/24/solid';
@@ -301,8 +301,8 @@ export default {
                                        {{ produit.largeur }}x{{ produit.longueur }}
                                     </div>
                                     <div  class="flex items-center justify-center ">
-                                          <Tooltip>
-                                             <template #header>
+                                          <Tooltip :placement="'right-start'" :triggers="['hover', 'focus','click']">
+                                             <div>
                                                 <div v-if="produit.stock_restant > 0" class="hover:scale-110 transition duration-300">
                                                    <button @click="setIsOpenAdd(true,produit,key1,key2)"
                                                       :class="produit.stock_restant > 10 ? 'bg-green-700' : (produit.stock_restant > 0 ? 'bg-orange-400 ' : 'bg-red-700')" 
@@ -314,13 +314,14 @@ export default {
                                                 </div>
                                                 
                                                 <span v-else class="bg-red-700 w-[35px] h-[35px] block rounded-full flex items-center justify-center"></span>
-                                             </template>
-                                             <template #body>
+                                             </div>
+                                             
+
+                                             <template #popper>
                                                 <span v-if="produit.stock_restant > 0"> {{(produit.isInPanier ? 'Modifier quantiter' : 'Ajouter au')}} panier</span>
                                                 <span v-else> Rupture de stock </span>
                                              </template>
                                           </Tooltip>
-                                          
                                     </div>
                                     <div class="text-center w-full">
                                        <span class="font-bold">{{ formatPrix(produit.prixProduit) }} HT</span>
