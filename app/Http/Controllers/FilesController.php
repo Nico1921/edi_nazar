@@ -24,6 +24,17 @@ class FilesController extends Controller
       abort(404);
     }
 
+    public function delete_kbis($file)
+    {
+      $path = "public/uploads/kbis/{$file}";
+
+      if(Storage::exists($path)){
+         return Storage::delete($path);
+      }
+
+      abort(404);
+    }
+
     /**
      * Display the registration view.
      *
@@ -35,6 +46,17 @@ class FilesController extends Controller
 
       if(Storage::exists($path)){
          return Storage::download($path);
+      }
+
+      abort(404);
+    }
+
+    public function delete_identiter($file)
+    {
+      $path = "public/uploads/identiter/{$file}";
+
+      if(Storage::exists($path)){
+         return Storage::delete($path);
       }
 
       abort(404);
