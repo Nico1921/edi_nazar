@@ -43,6 +43,7 @@ Route::middleware(['auth', 'verified','typeVente'])->group(function () {
    Route::get('/', [HomeController::class, 'create']);
    Route::get('/home', [HomeController::class, 'create'])->name('home');
    Route::get('/about-us', function () {return Inertia::render('Auth/Pages/AboutUs');})->name('about-us');
+   Route::get('/faq', function () {return Inertia::render('Auth/Pages/FAQ');})->name('faq');
    
    Route::get('/settings', [SettingsController::class, 'create'])->name('settings');
    Route::post('/settings/save/security', [SettingsController::class, 'edit_secu'])->name('settings/save/security');
