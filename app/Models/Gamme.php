@@ -39,6 +39,8 @@ class Gamme extends Model
         'uv_proof',
         'type_tapis',
         'in_edi',
+        'coup_de_coeur',
+        'nom_trame',
     ];
 
     /**

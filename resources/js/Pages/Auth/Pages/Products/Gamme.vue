@@ -2,11 +2,11 @@
 import { Head, usePage, useForm } from '@inertiajs/inertia-vue3';
 import { onMounted,ref,watchEffect } from 'vue';
 import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,} from '@headlessui/vue';
-import Tooltip from '@/Components/Tooltip.vue';
+import { Tooltip } from 'floating-vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
 import InputError from '@/Components/InputError.vue';
 import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicons/vue/24/solid';
-import { ArrowRightCircleIcon  } from '@heroicons/vue/24/outline';
+import { ArrowRightCircleIcon,ArrowSmallDownIcon  } from '@heroicons/vue/24/outline';
 import InputNumberProduit from '@/Components/InputNumberProduit.vue';
 import {decode} from 'html-entities';
 
@@ -225,9 +225,6 @@ var afficheIMG = (classAff,img) => {
 <script >
 import Eye from 'icons/EyeOutline.vue';
 import ImageOff from 'icons/ImageOff.vue';
-import Right from 'icons/ChevronRight.vue';
-import Left from 'icons/ChevronLeft.vue';
-import Search from 'icons/Magnify.vue';
 import CartAdd from 'icons/CartPlus.vue';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
@@ -259,6 +256,12 @@ export default {
             <span>Poils {{ (props.gamme.type_poils == 1 ? 'courts' : 'longs') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
             <span class="capitalize">{{ props.gamme.nom_special }}</span>
             <span>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
+            <div class="sm:w-auto w-full py-2 px-4 flex items-center justify-center" v-if="props.gamme.nom_trame != null && props.gamme.nom_trame != ''">
+               <a :href="'https://gestion.tapis-nazar.fr/xls/trame/'+props.gamme.nom_trame" 
+               class="py-2 px-4 w-full flex items-center justify-center group border border-blue-300 rounded bg-blue-700 bg-opacity-75 text-white
+                           hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
+                            disabled:bg-green-300" download><ArrowSmallDownIcon class="w-5 h-5 mr-2" />Télécharger la trame</a>
+            </div>
             <div class="sm:w-auto w-full py-2 flex items-center justify-center">
                <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
                <a href="/cart" class="py-2 px-4 ml-2 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white
@@ -301,8 +304,8 @@ export default {
                                        {{ produit.largeur }}x{{ produit.longueur }}
                                     </div>
                                     <div  class="flex items-center justify-center ">
-                                          <Tooltip>
-                                             <template #header>
+                                          <Tooltip :placement="'right-start'" :triggers="['hover', 'focus','click']">
+                                             <div>
                                                 <div v-if="produit.stock_restant > 0" class="hover:scale-110 transition duration-300">
                                                    <button @click="setIsOpenAdd(true,produit,key1,key2)"
                                                       :class="produit.stock_restant > 10 ? 'bg-green-700' : (produit.stock_restant > 0 ? 'bg-orange-400 ' : 'bg-red-700')" 
@@ -314,13 +317,14 @@ export default {
                                                 </div>
                                                 
                                                 <span v-else class="bg-red-700 w-[35px] h-[35px] block rounded-full flex items-center justify-center"></span>
-                                             </template>
-                                             <template #body>
+                                             </div>
+                                             
+
+                                             <template #popper>
                                                 <span v-if="produit.stock_restant > 0"> {{(produit.isInPanier ? 'Modifier quantiter' : 'Ajouter au')}} panier</span>
                                                 <span v-else> Rupture de stock </span>
                                              </template>
                                           </Tooltip>
-                                          
                                     </div>
                                     <div class="text-center w-full">
                                        <span class="font-bold">{{ formatPrix(produit.prixProduit) }} HT</span>

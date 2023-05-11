@@ -2,7 +2,8 @@
 import { Head, usePage,useForm } from '@inertiajs/inertia-vue3';
 import { ref, onMounted } from 'vue';
 import Breadcrumbs from '@/Components/Breadcrumbs.vue';
-import { HomeIcon,ListBulletIcon  } from '@heroicons/vue/24/solid';
+import { HomeIcon,ListBulletIcon,ArrowSmallDownIcon  } from '@heroicons/vue/24/solid';
+import { Tooltip } from 'floating-vue';
 import InputError from '@/Components/InputError.vue';
     
 var links = [{
@@ -254,8 +255,18 @@ export default {
                </div>
             </div>
 
-            <div>
+            <div class="flex items-center justify-center mt-1">
                <h2 class="capitalize text-center font-semibold">Collection {{ lowercase(produit.nom_gamme) }}</h2>
+               <Tooltip :placement="'right'" :triggers="['hover', 'focus', 'click']">
+                  <div>
+                     <a v-if="produit.nom_trame != null && produit.nom_trame != ''" :href="'https://gestion.tapis-nazar.fr/xls/trame/'+produit.nom_trame" 
+                     class="ml-2 flex items-center justify-center" download><ArrowSmallDownIcon class="rounded-full border border-black p-0.5 w-5 h-5 mr-2" /></a>
+                  </div>
+
+                  <template #popper>
+                     <span>Télécharger la trame</span>                           
+                  </template>
+               </Tooltip>
             </div>
          </a>
       </div>

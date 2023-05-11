@@ -4,6 +4,7 @@ import InputError from '@/Components/InputError.vue';
 import { wTrans } from 'laravel-vue-i18n';
 import { ref } from 'vue';
 import { useForm, usePage, Link, Head } from '@inertiajs/inertia-vue3';
+import { Tooltip } from 'floating-vue';
 const imageUrl = new URL('../../../images/Logo/Nazar Logo.svg', import.meta.url).href;
 
 
@@ -102,6 +103,7 @@ import pinterest from "icons/Pinterest.vue";
 import instagram from "icons/Instagram.vue";
 import facebook from "icons/Facebook.vue";
 import linkedin from "icons/Linkedin.vue";
+import question from "icons/HelpCircleOutline.vue";
 </script>
 
 <template>
@@ -141,7 +143,17 @@ import linkedin from "icons/Linkedin.vue";
                         <InputError class="mt-2" :message="form.errors.tel" />
                     </div>
                     <form enctype="multipart/form-data" class="grid grid-cols-2 items-center p-1">
-                        <label for="fileIdentiter">Pièce identiter du dirigeant :</label>
+                        <div class="col-span-1 flex">
+                            <Tooltip :placement="'left'" :triggers="['hover', 'focus', 'click']">
+                                <question />
+
+                              <template #popper>
+                                 <span class="w-52 block">Il s’agit d’une procédure afin de s’assurer de l’identité de la personne faisant la demande d’inscription, dans le but d’éviter toutes tentatives de fraudes.</span> 
+                                 <span class="w-52 block">Cette dernière sera supprimée une fois votre inscription validée.</span>
+                              </template>
+                           </Tooltip>
+                            <label class="pl-1" for="fileIdentiter"> Pièce identiter du dirigeant :</label>
+                        </div>
                         <label id="labelIdentiter" class="cursor-pointer text-center p-1 text-lg text-gray-700 border-[1px] border-primary-300 rounded-sm bg-primary-100" for="fileIdentiter">Importer ma pièce</label>
                         <span id="uploadIdentiter" class="hidden text-green-700">Importer avec succées</span>
                         <span id="uploadErrorIdentiter" class="hidden text-red-600"></span>

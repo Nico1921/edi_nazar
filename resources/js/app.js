@@ -9,6 +9,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { i18nVue } from 'laravel-vue-i18n';
 import 'vue-material-design-icons/styles.css';
+import 'floating-vue/dist/style.css';
 
 const classBody = {
     paddingLg : "lg:pb-20",
