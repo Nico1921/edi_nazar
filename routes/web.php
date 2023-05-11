@@ -29,6 +29,8 @@ Route::get('/cookies', function () {return Inertia::render('Auth/Pages/Legales/C
 Route::get('/mentions-legales', function () {return Inertia::render('Auth/Pages/Legales/MentionsLegales');})->name('mentions-legales');
 Route::get('/files/identiter/{file}', [FilesController::class, 'get_identiter']);
 Route::get('/files/kbis/{file}', [FilesController::class, 'get_kbis']);
+Route::get('/files/identiter/{file}/delete', [FilesController::class, 'delete_identiter']);
+Route::get('/files/kbis/{file}/delete', [FilesController::class, 'delete_kbis']);
 
 Route::middleware('guest')->group(function () {
    Route::get('/', [AuthenticatedSessionController::class, 'create']);
