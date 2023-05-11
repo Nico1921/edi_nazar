@@ -342,6 +342,12 @@ export default {
             <span>Poils {{ (props.gamme.type_poils == 1 ? 'courts' : 'longs') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
             <span class="capitalize">{{ props.gamme.nom_special }}</span>
             <span>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
+            <div class="sm:w-auto w-full py-2 px-4 flex items-center justify-center" v-if="props.gamme.nom_trame != null && props.gamme.nom_trame != ''">
+               <a :href="'https://gestion.tapis-nazar.fr/xls/trame/'+props.gamme.nom_trame" 
+               class="py-2 px-4 w-full flex items-center justify-center group border border-blue-300 rounded bg-blue-700 bg-opacity-75 text-white
+                           hover:bg-opacity-90 transition duration-300 disabled:cursor-not-allowed
+                            disabled:bg-green-300" download><ArrowSmallDownIcon class="w-5 h-5 mr-2" />Télécharger la trame</a>
+            </div>
             <div class="sm:w-auto w-full py-2 flex items-center justify-center">
                <button type="button" @click="deletePanier" class="sm:w-auto w-full px-5 py-2 flex items-center justify-center rounded bg-red-600 text-red-200 hover:bg-red-500 hover:text-red-800 transition duration-300"><BackspaceIcon class="w-5 h-5 mr-2" />Vider mon panier</button>
                <a href="/dropshipping/cart" class="py-2 px-4 ml-2 flex group border border-green-300 rounded bg-green-900 bg-opacity-75 text-white

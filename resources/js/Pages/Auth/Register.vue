@@ -148,7 +148,8 @@ import question from "icons/HelpCircleOutline.vue";
                                 <question />
 
                               <template #popper>
-                                 <span class="w-52 block">Il s’agit d’une procédure afin de s’assurer de l’identité de la personne faisant la demande d’inscription, dans le but d’éviter toutes tentatives de fraudes. Cette dernière sera supprimée une fois votre inscription validée.</span>
+                                 <span class="w-52 block">Il s’agit d’une procédure afin de s’assurer de l’identité de la personne faisant la demande d’inscription, dans le but d’éviter toutes tentatives de fraudes.</span> 
+                                 <span class="w-52 block">Cette dernière sera supprimée une fois votre inscription validée.</span>
                               </template>
                            </Tooltip>
                             <label class="pl-1" for="fileIdentiter"> Pièce identiter du dirigeant :</label>
