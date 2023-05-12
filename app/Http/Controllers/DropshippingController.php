@@ -15,6 +15,7 @@ use App\Models\PanierEdiList;
 use App\Models\Produit;
 use App\Models\User;
 use App\Models\Gamme;
+use App\Models\Photo;
 use App\Models\StatsProduit;
 use Illuminate\Database\Query\Builder;
 use Inertia\Inertia;
@@ -240,6 +241,12 @@ class DropshippingController extends Controller
             }
              $design->$i->nom_design = $designpanier[$i]->nom_design;
              $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
+             if($photo != null && $photo->photo != null && isset($photo->id_produit)){
+               $photos = Photo::where('id_produit','=',$photo->id_produit)->get();
+               $design->$i->img_produit_list = $photos;
+           }else{
+               $design->$i->img_produit_list = [];
+           }
 
              $produit = Produit::with(['dimension','statsProduit','photo' => function($query) {
                $query->where('principale', '=', '1');
@@ -301,6 +308,12 @@ class DropshippingController extends Controller
            }
              $design->$i->nom_design = $designpanier[$i]->nom_design;
              $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
+             if($photo != null && $photo->photo != null && isset($photo->id_produit)){
+               $photos = Photo::where('id_produit','=',$photo->id_produit)->get();
+               $design->$i->img_produit_list = $photos;
+            }else{
+                  $design->$i->img_produit_list = [];
+            }
 
              $produit = Produit::with(['dimension','statsProduit','photo' => function($query) {
                $query->where('principale', '=', '1');
@@ -389,6 +402,12 @@ class DropshippingController extends Controller
            }
              $design->$i->nom_design = $designpanier[$i]->nom_design;
              $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
+             if($photo != null && $photo->photo != null && isset($photo->id_produit)){
+               $photos = Photo::where('id_produit','=',$photo->id_produit)->get();
+               $design->$i->img_produit_list = $photos;
+           }else{
+               $design->$i->img_produit_list = [];
+           }
 
              $produit = Produit::with(['dimension','statsProduit','photo' => function($query) {
                $query->where('principale', '=', '1');
@@ -450,7 +469,12 @@ class DropshippingController extends Controller
            }
              $design->$i->nom_design = $designpanier[$i]->nom_design;
              $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
-
+            if($photo != null && $photo->photo != null && isset($photo->id_produit)){
+                    $photos = Photo::where('id_produit','=',$photo->id_produit)->get();
+                    $design->$i->img_produit_list = $photos;
+                }else{
+                    $design->$i->img_produit_list = [];
+                }
              $produit = Produit::with(['dimension','statsProduit','photo' => function($query) {
                $query->where('principale', '=', '1');
                }])
