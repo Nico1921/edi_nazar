@@ -93,6 +93,19 @@ class Gamme extends Model
         return $products;
     }
 
+    public static function setIfProduitPrixSpecifique($products){
+        $products->each(function($product){
+            $check = PrixProduitSpecifique::where('id_gamme','=',$product->id_gamme)->exists();
+            if($check){
+                $product->prix_piece = true;
+            }else{
+                $product->prix_piece = false;
+            }
+        });
+
+        return $products;
+    }
+
     public static function getM2withRemise($id_gamme){
         $remise = false;
         $user = User::with('client')->where('id','=',Auth::id())->first();

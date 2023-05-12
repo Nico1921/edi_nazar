@@ -6,6 +6,7 @@ use App\Models\ClientEDI;
 use App\Models\Gamme;
 use App\Models\PanierEdi;
 use App\Models\PanierEdiList;
+use App\Models\PrixProduitSpecifique;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -83,6 +84,16 @@ class HandleInertiaRequests extends Middleware
                                     $produit[$i]->panierActuel = $panierGet;
                                     $produit[$i]->id_panier_edi = $request->session()->get('panier_commercial')->id_panier_edi;
                                     $produit[$i]->isInPanier = true;
+                                    $prixSpecifique = PrixProduitSpecifique::where('id_produit','=',$produit[$i]->id_produit)->first();
+                                    if(isset($prixSpecifique->id_prix_produit_specifique) && !empty($prixSpecifique->id_prix_produit_specifique) && $prixSpecifique->id_prix_produit_specifique > 0){
+                                        $produit[$i]->isPrixPieceSpecifique = true;
+                                        $produit[$i]->prixPieceSpecifique = Produit::getPrixProduitwithRemise($prixSpecifique->prix,$produit[$i]->gamme_id);;
+                                    }else{
+                                        $produit[$i]->isPrixPieceSpecifique = false;
+                                        $produit[$i]->prixPieceSpecifique = 0;
+                                    }
+
+
                                     $produitsAchat->panier[] = $produit[$i];
                                 }
                             }
@@ -129,6 +140,14 @@ class HandleInertiaRequests extends Middleware
                                     $gamme =  $list->produit->gamme;
                                     $gamme->prix_vente_ht_m2_remise = Gamme::getM2withRemise($produit->gamme_id);
                                     $panier = PanierEdiList::with('panier')->where('id_panier_edi_list','=',$list->id_panier_edi_list)->first();
+                                    $prixSpecifique = PrixProduitSpecifique::where('id_produit','=',$produit->id_produit)->first();
+                                    if(isset($prixSpecifique->id_prix_produit_specifique) && !empty($prixSpecifique->id_prix_produit_specifique) && $prixSpecifique->id_prix_produit_specifique > 0){
+                                        $produit->isPrixPieceSpecifique = true;
+                                        $produit->prixPieceSpecifique = Produit::getPrixProduitwithRemise($prixSpecifique->prix,$produit->gamme_id);;
+                                    }else{
+                                        $produit->isPrixPieceSpecifique = false;
+                                        $produit->prixPieceSpecifique = 0;
+                                    }
                                     $produit->prixProduit = Produit::calcul_prix_produit($produit->id_produit);
                                     $produit->prixTransport = Produit::calcul_prix_livraison_drop($produit->id_produit,$list->quantiter,$clientList[$i]->pays);
                                     $produit->gamme = $gamme;

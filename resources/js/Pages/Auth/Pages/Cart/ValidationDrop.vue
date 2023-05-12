@@ -1,7 +1,7 @@
 <script setup>
 import { Head, usePage,useForm } from '@inertiajs/inertia-vue3';
 import EtapeOrder from '@/Components/EtapeOrder.vue';
-import { ref } from 'vue';
+import { ref,watchEffect } from 'vue';
 import BoutonPaiement from '@/Components/BouttonPaiement.vue';
 import {
   RadioGroup,
@@ -12,11 +12,8 @@ import {
 
 const props = defineProps(['client','panier', 'produits']);
 
-var clientUser = ref(usePage().props.value.auth.user[0].client);
 var clients = ref(usePage().props.value.PanierDrop.panier.clients);
-//console.log(clients);
 var panier = ref(usePage().props.value.PanierDrop.panier.panierActuel);
-var panierDrop = ref(usePage().props.value.PanierDrop);
 var hrefEtape = ['/dropshipping/cart', '/dropshipping/cart/adresses', '/dropshipping/cart/validation'];var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
 
 const imgBase64 = "data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDQwMDAgNDAwMCIgd2lkdGg9IjEwMDAiIGhlaWdodD0iMTAwMCI+PHN0eWxlPi5he2ZpbGw6I2EzYTNhM30uYntmaWxsOiNmZmZ9PC9zdHlsZT48cGF0aCBjbGFzcz0iYSIgZD0ibTQwMDAgNDAwMGgtNDAwMHYtNDAwMGg0MDAweiIvPjxwYXRoIGNsYXNzPSJiIiBkPSJtMzI2NSAzMDQ2Ljh2MjY1LjJoLTI1MzB2LTI2NS4yYzAtNDg5IDU2Ni40LTg4NS41IDEyNjUtODg1LjUgNjk4LjYgMCAxMjY1IDM5Ni41IDEyNjUgODg1LjV6Ii8+PHBhdGggY2xhc3M9ImIiIGQ9Im0yNjI0LjEgMTMxMi4xYzAgMzQ0LjYtMjc5LjQgNjI0LTYyNC4xIDYyNC0zNDQuNyAwLTYyNC4xLTI3OS40LTYyNC4xLTYyNCAwLTM0NC43IDI3OS40LTYyNC4xIDYyNC4xLTYyNC4xIDM0NC43IDAgNjI0LjEgMjc5LjQgNjI0LjEgNjI0LjF6Ii8+PC9zdmc+";
@@ -65,9 +62,10 @@ var validationCommande = () => {
    });
 };
 
-var roundNumber = (e) => {
-   return (Math.round(e * 100) / 100).toFixed(2);
-};
+watchEffect(() => {
+	clients.value = usePage().props.value.PanierDrop.panier.clients;
+   panier.value = usePage().props.value.PanierDrop.panier.panierActuel;
+});
 /*
 var calcul_prix_gamme = (prix_gamme) => {
    var HT = prix_gamme;
@@ -208,10 +206,11 @@ export default {
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">SKU : {{ produit.code_sku }}</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Taille : {{produit.dimension.largeur + 'x' +
                                           produit.dimension.longueur }}</span>
-                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2 }} € HT</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold" v-if="produit.isPrixPieceSpecifique">Prix par pièce : {{ produit.prixPieceSpecifique }} € HT</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold" v-else>Prix du M² : {{ produit.gamme.prix_vente_ht_m2_remise }} € HT</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">M² : {{ roundResult((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter,2) }} m²</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Quantité : {{ produit.panier.quantiter }}</span>
-                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT hors transport : {{ roundResult(((produit.dimension.largeur/100) *  (produit.dimension.longueur/100)*produit.panier.quantiter) * (produit.gamme.prix_vente_ht_m2_remise?produit.gamme.prix_vente_ht_m2_remise:produit.gamme.prix_vente_ht_m2),2)}} €</span>
+                                       <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix HT hors transport : {{ (produit.panier.prix_ht_total)}} €</span>
                                        <span class="text-gray-600 sm:text-sm text-[0.700rem] font-bold">Prix transport HT : {{ produit.prixTransport }} €</span>
                                     </div>
                                  </div>

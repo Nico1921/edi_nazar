@@ -350,7 +350,8 @@ export default {
             <span>Tapis {{ (props.gamme.type_tapis == 0 ? 'intérieur' : props.gamme.type_tapis == 1 ? 'extérieur' : 'intérieur / extérieur') }}</span>
             <span>Poils {{ (props.gamme.type_poils == 1 ? 'courts' : 'longs') }} - {{ (props.gamme.uv_proof == 1 ? 'Résistants aux UV' : 'Non Résistants aux UV') }}</span>
             <span class="capitalize">{{ props.gamme.nom_special }}</span>
-            <span>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
+            <span v-if="props.gamme.prix_piece">Prix HT à la pièce</span>
+            <span v-else>Prix HT m² : {{ props.gamme.prix_vente_ht_m2_remise?props.gamme.prix_vente_ht_m2_remise:props.gamme.prix_vente_ht_m2 }} €</span>
             <div class="sm:w-auto w-full py-2 px-4 flex items-center justify-center" v-if="props.gamme.nom_trame != null && props.gamme.nom_trame != ''">
                <a :href="'https://gestion.tapis-nazar.fr/xls/trame/'+props.gamme.nom_trame" 
                class="py-2 px-4 w-full flex items-center justify-center group border border-blue-300 rounded bg-blue-700 bg-opacity-75 text-white
