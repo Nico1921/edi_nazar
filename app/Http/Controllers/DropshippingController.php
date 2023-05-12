@@ -16,6 +16,7 @@ use App\Models\Produit;
 use App\Models\User;
 use App\Models\Gamme;
 use App\Models\Photo;
+use App\Models\PrixProduitSpecifique;
 use App\Models\StatsProduit;
 use Illuminate\Database\Query\Builder;
 use Inertia\Inertia;
@@ -110,6 +111,7 @@ class DropshippingController extends Controller
             ->withQueryString();
 
             $products = Gamme::setRemiseGamme($products);
+            $products = Gamme::setIfProduitPrixSpecifique($products);
 
             
         
@@ -189,7 +191,12 @@ class DropshippingController extends Controller
 
      //rajoute la remise si il y a une remise par client et gamme ou si il y a une remise par client global. sinon renvoie faux
      $gammeSearch->prix_vente_ht_m2_remise = isset($gammeSearch->remiseGamme)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($gammeSearch->remiseGamme / 100)), 2) . "":(isset($user->client->taux_remise)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($user->client->taux_remise / 100)), 2) . "":false);
-
+     $check = PrixProduitSpecifique::where('id_gamme','=',$gammeSearch->id_gamme)->exists();
+      if($check){
+         $gammeSearch->prix_piece = true;
+      }else{
+         $gammeSearch->prix_piece = false;
+      }
 
      $designpanier = DB::table('design')
          ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
@@ -524,15 +531,24 @@ class DropshippingController extends Controller
         });
 
 
+        $user = User::with('client')->where('id','=',Auth::id())->first();
+        
         $products = QueryBuilder::for(Gamme::class)
             ->defaultSort('gamme.nom_gamme')
-            ->select(['gamme.*','special.nom_special'])
+            ->select(['gamme.*','special.nom_special', 'client_edi_remise_gamme.remise AS remiseGamme'])
             ->join('special', 'special.id_special', 'gamme.id_special')
+            ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
+                $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
+                     ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
+            })
             ->where('gamme.in_edi', '=', '1')
             ->where('gamme.statut', '=', '1')
             ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
+
+            $products = Gamme::setRemiseGamme($products);
+            $products = Gamme::setIfProduitPrixSpecifique($products);
 
 
         // error_log(print_r($products));

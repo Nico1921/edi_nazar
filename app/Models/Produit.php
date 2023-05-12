@@ -134,7 +134,7 @@ class Produit extends Model
                     $prixLivraison = $prixL->prix;
                 }
             }else{
-                $prixL = PaysLivraison::getPaysLivraison('France',30);
+                $prixL = PaysLivraison::getPaysLivraison($pays,30);
                 $prixLivraison = $prixL->prix;
             }
         }else{
@@ -178,13 +178,38 @@ class Produit extends Model
         return $superficie;
     }
 
+    public static function getPrixProduitwithRemise($prix,$id_gamme){
+        $remise = false;
+        $user = User::with('client')->where('id','=',Auth::id())->first();
+
+        $gamme = Gamme::where('id_gamme','=',$id_gamme)->first();
+        //Log::debug(clientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->exists());
+        if(ClientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->exists()){
+            $remise = ClientEdiRemiseGamme::where('id_gamme', "=", $id_gamme)->where('id_client_edi', $user->id_client)->first()->remise;
+        }
+
+        if(!$remise && $user->client->taux_remise > 0){
+            $remise = $user->client->taux_remise;
+        }
+
+        if($remise){
+            $prix = $prix - (($prix) * ($remise /100));
+        }
+        Log::debug(round($prix,2));
+        return round($prix,2);
+    }
+
     public static function calcul_prix_produit($id_produit,$isTTC=0){
         $produit = Produit::with(['dimension'])->where('id_produit','=',$id_produit)->first();
-        $gamme = Gamme::getM2withRemise($produit->gamme_id);
-        $m2 = ($produit->dimension->largeur/100) * ($produit->dimension->longueur/100);
-        $prixProduit = $gamme * $m2;
-        
-
+        $prixSpecifique = PrixProduitSpecifique::where('id_produit','=',$id_produit)->first();
+        if(isset($prixSpecifique->id_prix_produit_specifique) && !empty($prixSpecifique->id_prix_produit_specifique) && $prixSpecifique->id_prix_produit_specifique > 0){
+            $prixProduit = Produit::getPrixProduitwithRemise($prixSpecifique->prix,$produit->gamme_id);
+        }else{
+            $gamme = Gamme::getM2withRemise($produit->gamme_id);
+            $m2 = ($produit->dimension->largeur/100) * ($produit->dimension->longueur/100);
+            $prixProduit = $gamme * $m2;
+        }
+             
         if($isTTC){
             $prixProduit = ($prixProduit * 1.20);
         }

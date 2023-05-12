@@ -249,7 +249,8 @@ export default {
                          {{ (!Number.isInteger(key/3) && key != 0 ? ' - ' : '') }} {{ dimension.largeur }}x{{ dimension.longueur }}cm
                      </span>
                   </div>
-                  <span>Prix HT m² : {{ produit.prix_vente_ht_m2_remise?produit.prix_vente_ht_m2_remise:produit.prix_vente_ht_m2 }} €</span>
+                  <span v-if="produit.prix_piece">Prix HT à la pièce</span>
+                  <span v-else>Prix HT m² : {{ produit.prix_vente_ht_m2_remise?produit.prix_vente_ht_m2_remise:produit.prix_vente_ht_m2 }} €</span>
                  </div>
                   
                </div>

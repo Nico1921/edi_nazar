@@ -18,6 +18,7 @@ use App\Models\PanierEdi;
 use App\Models\Gamme;
 use App\Models\Produit;
 use App\Models\PanierEdiList;
+use App\Models\PrixProduitSpecifique;
 use App\Models\StatsProduit;
 use App\Models\TransactionPaiement;
 use Illuminate\Support\Facades\Redirect;
@@ -518,6 +519,14 @@ class CartController extends Controller
                               $produit[$i]->gamme = $gamme;
                               $produit[$i]->panier = $panier;
                               $produit[$i]->isInPanier = true;
+                              $prixSpecifique = PrixProduitSpecifique::where('id_produit','=',$produit[$i]->id_produit)->first();
+                              if(isset($prixSpecifique->id_prix_produit_specifique) && !empty($prixSpecifique->id_prix_produit_specifique) && $prixSpecifique->id_prix_produit_specifique > 0){
+                                $produit[$i]->isPrixPieceSpecifique = true;
+                                $produit[$i]->prixPieceSpecifique = Produit::getPrixProduitwithRemise($prixSpecifique->prix,$produit[$i]->gamme_id);;
+                              }else{
+                                $produit[$i]->isPrixPieceSpecifique = false;
+                                $produit[$i]->prixPieceSpecifique = 0;
+                              }
                               $produits->panier[] = $produit[$i];
                            }
                         }
