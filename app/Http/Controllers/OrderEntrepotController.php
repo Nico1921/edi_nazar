@@ -11,6 +11,7 @@ use App\Models\Facture;
 use App\Models\Gamme;
 use App\Models\PanierEdi;
 use App\Models\PanierEdiList;
+use App\Models\Photo;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -71,17 +72,6 @@ class OrderEntrepotController extends Controller
             ->withQueryString();
 
             $products = Gamme::setRemiseGamme($products);
-
-
-            /*//permet de recuperer les features de la gamme
-        $products->each(function($product){
-            $product->caracteristique = DB::table('gammes_features')
-            ->select(['gammes_features.*', 'features.*'])
-            ->join('features', 'features.id', 'gammes_features.feature_id')
-            ->where('gammes_features.gamme_id', '=', $product->id_gamme)
-            ->get();
-        });
-        var_dump($products);*/
         
         $dimensions = DB::table('gamme')
             ->select(['gamme.id_gamme','dimension.largeur','dimension.longueur'])
@@ -140,21 +130,6 @@ class OrderEntrepotController extends Controller
      */
     public function create_product($gamme,Request $request)
     {
-        
-        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
-            $query->where(function ($query) use ($value) {
-                Collection::wrap($value)->each(function ($value) use ($query) {
-                    $query
-                        ->orWhere('couleur.nom_couleur', 'LIKE', "%{$value}%")
-                        ->orWhere('gamme.nom_gamme', '=', $value)
-                        ->orWhere('code_sku', 'LIKE', "%{$value}%")
-                        ->orWhere('gencode', 'LIKE', "%{$value}%")
-                        ->orWhere('design.nom_design', 'LIKE', "%{$value}%");
-                });
-            });
-        });            
-
-        //$gammeSearch = Gamme::where('nom_gamme', 'like', '%'.$gamme.'%')->first();
         $user = User::with('client')->where('id','=',Auth::id())->first();
 
         $gammeSearch = DB::table('gamme')
@@ -169,24 +144,6 @@ class OrderEntrepotController extends Controller
 
         //rajoute la remise si il y a une remise par client et gamme ou si il y a une remise par client global. sinon renvoie faux
         $gammeSearch->prix_vente_ht_m2_remise = isset($gammeSearch->remiseGamme)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($gammeSearch->remiseGamme / 100)), 2) . "":(isset($user->client->taux_remise)?"".round($gammeSearch->prix_vente_ht_m2 * (1 - ($user->client->taux_remise / 100)), 2) . "":false);
-
-
-        /*$gammeSearch->prix_vente_ht_m2_remise = function($gammeSearch, $user){
-            $remise = 0;
-            if(isset($gammeSearch->remiseGamme)){
-                $remise = $gammeSearch->remiseGamme;
-            }
-            elseif(isset($user->taux_remise)){
-                $remise = $user->taux_remise;
-            }
-
-            if($remise > 0){
-                $gammeSearch->prix_vente_ht_m2_remise = "".round($gammeSearch->prix_vente_ht_m2 * (1 - ($remise / 100)), 2) . "";
-            }
-            else{
-                $gammeSearch->prix_vente_ht_m2_remise = false;
-            }
-        };*/
         
         $designpanier = DB::table('design')
             ->select(['gamme.id_gamme','design.nom_design','design.id_design'])
@@ -237,6 +194,12 @@ class OrderEntrepotController extends Controller
                 }
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
+                if($photo != null && $photo->photo != null && isset($photo->id_produit)){
+                    $photos = Photo::where('id_produit','=',$photo->id_produit)->get();
+                    $design->$i->img_produit_list = $photos;
+                }else{
+                    $design->$i->img_produit_list = [];
+                }
 
                 $produit = Produit::with(['dimension','statsProduit','photo' => function($query) {
                     $query->where('principale', '=', '1');
@@ -298,7 +261,13 @@ class OrderEntrepotController extends Controller
                 }
                 $design->$i->nom_design = $designpanier[$i]->nom_design;
                 $design->$i->img_produit = ($photo != null && $photo->photo != null ? $photo->photo->img_produit : '');
-
+                if($photo != null && $photo->photo != null && isset($photo->id_produit)){
+                    $photos = Photo::where('id_produit','=',$photo->id_produit)->get();
+                    $design->$i->img_produit_list = $photos;
+                }else{
+                    $design->$i->img_produit_list = [];
+                }
+                
                 $produit = Produit::with(['dimension','statsProduit','photo' => function($query) {
                     $query->where('principale', '=', '1');
                 }])

@@ -1,16 +1,21 @@
 <script setup>
-import { Head, usePage, useForm } from '@inertiajs/inertia-vue3';
-import { onMounted,ref,watchEffect } from 'vue';
+import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { ref } from 'vue';
 import {TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,} from '@headlessui/vue';
 import { Tooltip } from 'floating-vue';
-import Breadcrumbs from '@/Components/Breadcrumbs.vue';
-import InputError from '@/Components/InputError.vue';
 import { HomeIcon,ListBulletIcon,BackspaceIcon, ArrowLeftIcon  } from '@heroicons/vue/24/solid';
 import { ArrowRightCircleIcon,ArrowSmallDownIcon  } from '@heroicons/vue/24/outline';
-import InputNumberProduit from '@/Components/InputNumberProduit.vue';
+import { Swiper, SwiperSlide } from "swiper/vue";
 import {decode} from 'html-entities';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import InputNumberProduit from '@/Components/InputNumberProduit.vue';
+import Breadcrumbs from '@/Components/Breadcrumbs.vue';
+import InputError from '@/Components/InputError.vue';
+import "swiper/css";
+import "swiper/css/navigation";
+import 'swiper/css/pagination';
 
-const props = defineProps(["products","gamme","designpanier"]);
+const props = defineProps(["gamme","designpanier"]);
 var links = [{
         title: 'Accueil',
         link: '/',
@@ -32,6 +37,11 @@ var links = [{
       icon: '',
       active: true
 }];
+
+var imgModal = ref({
+   nom_visuel: null,
+   visuels: [{'img_produit' : null}]
+});
 
 const isOpen = ref(false);
 const isOpenAdd = ref(false);
@@ -60,12 +70,16 @@ function closeModal() {
   isOpen.value = false;
 }
 
-function openModal(img,gamme,design) {
+function openModal(img,gamme,design,imgList) {
   isOpen.value = true;
-  var nomProduit = gamme+" "+design;
-  document.getElementById("visuelImage").setAttribute('src','https://gestion.tapis-nazar.fr/img/produit/'+decode(img));
-  document.getElementById("visuelImage").setAttribute('alt',nomProduit);
-  document.getElementById("nomVisuelImage").textContent = nomProduit;
+  imgModal.value.nom_visuel = gamme+" "+design;
+  if(imgList != undefined && imgList != null){
+   imgModal.value.visuels = imgList;
+  }else if(img != undefined && img != null){
+   imgModal.value.visuels = [{'img_produit' : img}];
+  }else{
+   imgModal.value.visuels = [{'img_produit' : null}];
+  }
 };
 
 var addCommande = (e,isPanier) => {
@@ -226,6 +240,8 @@ var afficheIMG = (classAff,img) => {
 import Eye from 'icons/EyeOutline.vue';
 import ImageOff from 'icons/ImageOff.vue';
 import CartAdd from 'icons/CartPlus.vue';
+import Left from 'icons/MenuLeft.vue';
+import Right from 'icons/MenuRight.vue';
 import { Inertia } from '@inertiajs/inertia';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 export default {
@@ -286,7 +302,7 @@ export default {
                                        <div class="absolute flex items-center justify-center w-full h-full">
                                           <Eye class="text-lg text-black" />
                                        </div>
-                                       <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.nom_design)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.img_produit)"
+                                       <img @click="openModal(gamme.img_produit,props.gamme.nom_gamme,gamme.nom_design,gamme.img_produit_list)" :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(gamme.img_produit)"
                                           :alt="gamme.code_sku" :class="'imgView_'+key1" class="z-20 relative hover:opacity-50 transition-all duration-300 w-full h-full object-contain" />
                                     </div>
                                     <div v-else class="text-3xl h-full w-full flex items-center justify-center bg-gray-300">
@@ -369,19 +385,40 @@ export default {
             leave="duration-200 ease-in"
             leave-from="opacity-100 scale-100"
             leave-to="opacity-0 scale-95"
-            :unmount="false"
-          >
-            <DialogPanel
-              class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all" :unmount="false"
-            >
-              <DialogTitle :unmount="false"
-                as="h3"
-                class="text-lg font-medium leading-6 text-gray-900"
-              >
-                Visuel image <span id="nomVisuelImage"></span>
+            :unmount="false" >
+            <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all" :unmount="false">
+              <DialogTitle :unmount="false" as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                Visuel image {{ imgModal.nom_visuel }} 
               </DialogTitle>
               <div class="mt-2 h-[40rem] w-full">
-                  <img id="visuelImage" class="w-full h-full object-cover" />
+               <swiper :modules="[Navigation, Pagination, Scrollbar, A11y]"
+                    :slides-per-view="1"
+                    :space-between="40"
+                    :pagination="{ clickable: true, el: '.swiper-pagination-custom',bulletActiveClass: 'opacity-full',bulletClass:'swiper-pagination-bullet mx-2 !bg-primary-300', type: 'bullets' }"
+                    :scrollbar="{ draggable: true }"
+                    :navigation="{nextEl: '.swiper-button-prev-custom', prevEl: '.swiper-button-next-custom', disabledClass: 'lg:hidden'}"
+                    class="lg:!px-10 !px-0 lg:!py-2 lg:!pt-4 !py-2 !relative h-full">
+                <div class="swiper-button-prev-custom absolute justify-center items-center top-0 bottom-0 right-0 z-40 cursor-pointer lg:flex hidden">
+                    <Right class="!h-6 !w-12 text-5xl flex items-center justify-center text-primary-100" />
+                </div>
+                <div class="swiper-button-next-custom absolute justify-center items-center top-0 bottom-0 left-0 z-40 cursor-pointer lg:flex hidden">
+                    <Left class="!h-6 !w-12 text-5xl flex items-center justify-center text-primary-100" />
+                </div>
+                <div class="swiper-pagination-custom lg:hidden flex items-center justify-center py-2"></div>
+                <swiper-slide class="lg:px-2" v-for="(visuel, key) in imgModal.visuels" :key="key">
+                  <div class="flex items-stretch justify-center w-full h-full">
+                     <div v-if="visuel.img_produit != null" class="relative w-full h-full">
+                        <img  :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(visuel.img_produit)"
+                           :alt="imgModal.nom_visuel" 
+                           class="z-20 rounded relative w-full h-full object-contain" />
+                     </div>
+                     <div v-else class="text-3xl w-full flex items-stretch justify-center bg-gray-300">
+                        <ImageOff />
+                     </div>
+                  </div>
+                </swiper-slide>
+            </swiper>
+                  <!-- <img id="visuelImage" class="w-full h-full object-cover" /> -->
               </div>
               <div class="flex flex-row-reverse">
                   <button type="button" class="mt-4 inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 transition duration-300"
@@ -463,3 +500,8 @@ export default {
   </TransitionRoot>
 </template>
 
+<style>
+.opacity-full {
+    opacity: 1 !important;
+}
+</style>
