@@ -357,7 +357,7 @@ class CommandeMarketplace extends Model
                      'id_produit' => $produitCommande->id_produit,
                      'id_stock' => 0,
                      'quantite' => $produitCommande->quantiter,
-                     'etape' => 3,
+                     'etape' => 2,
                      'id_preparation' => 0,
                      'id_livraison' => 0,
                      'id_facture' => NULL,
