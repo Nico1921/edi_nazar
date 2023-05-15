@@ -60,14 +60,21 @@ class OrderEntrepotController extends Controller
         
         $products = QueryBuilder::for(Gamme::class)
             ->defaultSort('gamme.nom_gamme')
-            ->select(['gamme.*','special.nom_special', 'client_edi_remise_gamme.remise AS remiseGamme'])
+            ->distinct()
+            ->select(['gamme.*','special.nom_special', 'client_edi_remise_gamme.remise AS remiseGamme',])
             ->join('special', 'special.id_special', 'gamme.id_special')
             ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
                 $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
                      ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
             })
+            ->leftJoin('prix_produit_specifique', function ($join) {
+                $join->on('prix_produit_specifique.id_gamme', '=', 'gamme.id_gamme');
+            })
             ->where('gamme.in_edi', '=', '1')
             ->where('gamme.statut', '=', '1')
+            ->whereRaw('prix_produit_specifique.id_gamme IS NULL OR
+            (SELECT COUNT(*) FROM produit WHERE gamme_id = gamme.id_gamme)
+            = (SELECT COUNT(*) FROM prix_produit_specifique WHERE id_gamme = gamme.id_gamme)')
             ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
@@ -111,14 +118,21 @@ class OrderEntrepotController extends Controller
 
         $products = QueryBuilder::for(Gamme::class)
             ->defaultSort('gamme.nom_gamme')
-            ->select(['gamme.*','special.nom_special', 'client_edi_remise_gamme.remise AS remiseGamme'])
+            ->distinct()
+            ->select(['gamme.*','special.nom_special', 'client_edi_remise_gamme.remise AS remiseGamme',])
             ->join('special', 'special.id_special', 'gamme.id_special')
             ->leftJoin('client_edi_remise_gamme', function ($join) use ($user) {
                 $join->on('client_edi_remise_gamme.id_gamme', '=', 'gamme.id_gamme')
                      ->where('client_edi_remise_gamme.id_client_edi', '=', $user->id_client);
             })
+            ->leftJoin('prix_produit_specifique', function ($join) {
+                $join->on('prix_produit_specifique.id_gamme', '=', 'gamme.id_gamme');
+            })
             ->where('gamme.in_edi', '=', '1')
             ->where('gamme.statut', '=', '1')
+            ->whereRaw('prix_produit_specifique.id_gamme IS NULL OR
+            (SELECT COUNT(*) FROM produit WHERE gamme_id = gamme.id_gamme)
+            = (SELECT COUNT(*) FROM prix_produit_specifique WHERE id_gamme = gamme.id_gamme)')
             ->allowedFilters([$gammeSearch])
             ->paginate((request('perPage') != "" ? request('perPage') : '12'))
             ->withQueryString();
