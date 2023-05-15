@@ -83,6 +83,7 @@ class Commande extends Model
         $panier = PanierEdi::where('id_panier_edi','=',$id_panier_edi)->first();
         $commande = new stdClass;
         $facture = new stdClass;
+        $preparation = new stdClass;
         if(!empty($panier->id_panier_edi) && $panier->id_panier_edi > 0){
             $id_client = User::with('client')->where('id','=',$id_distributeur)->first(); 
             if($panier->is_marketplace == 0){
@@ -210,8 +211,11 @@ class Commande extends Model
                                 $commandeList->prix_total_ttc = $commandeList->prix_total_ttc + $produitCommande->prix_ttc_total;
                                 $commandeList->quantite = intval($commandeList->quantite) + intval($produitCommande->quantiter);
                                 CommandeList::where('id_commande_list','=',$commandeList->id_commande_list)->update(array('prix_total_ht' => $commandeList->prix_total_ht,'prix_total_ttc' => $commandeList->prix_total_ttc,'quantite' => $commandeList->quantite));
+                                if($panier->is_marketplace == 0){
+                                    CommandeStock::where('id_commande_list','=',$commandeList->id_commande_list)->update(array('quantite' => $commandeList->quantite));
+                                }
                             }else{
-                               CommandeList::create([
+                               $commandeList = CommandeList::create([
                                     'date_ajout' => date('Y-m-d H:i:s'),
                                     'date_maj' => date('Y-m-d H:i:s'),
                                     'id_user' => '0',
@@ -239,6 +243,24 @@ class Commande extends Model
                                     'etat' => '1',
                                     'date_livraison' => null
                                 ]);
+                                if($panier->is_marketplace == 0){
+                                    CommandeStock::create([
+                                        'id_commande' => $commande->id_commande,
+                                        'id_commande_list' => $commandeList->id_commande,
+                                        'id_produit' => $produitCommande->id_produit,
+                                        'id_stock' => 0,
+                                        'quantite' => $produitCommande->quantiter,
+                                        'etape' => 3,
+                                        'id_preparation' => (isset($preparation->id_preparation) ? $preparation->id_preparation : 0),
+                                        'id_livraison' => 0,
+                                        'id_facture' => $facture->id_facture,
+                                        'id_commande_mkp' => NULL,
+                                        'id_commande_mkp_list' => NULL,
+                                        'date_expedition' => NULL,
+                                        'tracking' => '',
+                                        'qte_preparee' => 0
+                                    ]);
+                                }
                             }
                             
                         }
