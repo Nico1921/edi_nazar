@@ -312,7 +312,7 @@ class CommandeMarketplace extends Model
                     $prix_achat_ht = $gamme->prix_achat_ht_m2 * ($p->dimension->longueur / 100 * $p->dimension->largeur / 100);
                     $prix_achat_ht = sprintf("%.2f", $prix_achat_ht);
  
-                    CommandeMarketplaceList::create([
+                    $commandeList = CommandeMarketplaceList::create([
                        'id_commande' =>$commandeMarketplace->id_commande,
                        'id_produit' => $produitCommande->id_produit,
                        'ref_produit' => $p->code_sku,
@@ -349,6 +349,23 @@ class CommandeMarketplace extends Model
                        'rupture' => 0,
                        'manuel' => 0,
                        'order_item_id' => '',
+                    ]);
+
+                    CommandeStock::create([
+                     'id_commande' => '',
+                     'id_commande_list' => '',
+                     'id_produit' => $produitCommande->id_produit,
+                     'id_stock' => 0,
+                     'quantite' => $produitCommande->quantiter,
+                     'etape' => 3,
+                     'id_preparation' => 0,
+                     'id_livraison' => 0,
+                     'id_facture' => NULL,
+                     'id_commande_mkp' => $commandeMarketplace->id_commande,
+                     'id_commande_mkp_list' => $commandeList->id_commande_list,
+                     'date_expedition' => NULL,
+                     'tracking' => '',
+                     'qte_preparee' => 0
                     ]);
                  }
  
