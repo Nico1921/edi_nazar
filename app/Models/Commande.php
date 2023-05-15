@@ -210,8 +210,9 @@ class Commande extends Model
                                 $commandeList->prix_total_ttc = $commandeList->prix_total_ttc + $produitCommande->prix_ttc_total;
                                 $commandeList->quantite = intval($commandeList->quantite) + intval($produitCommande->quantiter);
                                 CommandeList::where('id_commande_list','=',$commandeList->id_commande_list)->update(array('prix_total_ht' => $commandeList->prix_total_ht,'prix_total_ttc' => $commandeList->prix_total_ttc,'quantite' => $commandeList->quantite));
+                                CommandeStock::where('id_commande_list','=',$commandeList->id_commande_list)->update(array('quantite' => $commandeList->quantite));
                             }else{
-                               CommandeList::create([
+                               $commandeList = CommandeList::create([
                                     'date_ajout' => date('Y-m-d H:i:s'),
                                     'date_maj' => date('Y-m-d H:i:s'),
                                     'id_user' => '0',
@@ -239,6 +240,23 @@ class Commande extends Model
                                     'etat' => '1',
                                     'date_livraison' => null
                                 ]);
+
+                                CommandeStock::create([
+                                    'id_commande' => $commande->id_commande,
+                                    'id_commande_list' => $commandeList->id_commande,
+                                    'id_produit' => $produitCommande->id_produit,
+                                    'id_stock' => 0,
+                                    'quantite' => $produitCommande->quantiter,
+                                    'etape' => 3,
+                                    'id_preparation' => 0,
+                                    'id_livraison' => 0,
+                                    'id_facture' => $facture->id_facture,
+                                    'id_commande_mkp' => NULL,
+                                    'id_commande_mkp_list' => NULL,
+                                    'date_expedition' => NULL,
+                                    'tracking' => '',
+                                    'qte_preparee' => 0
+                                   ]);
                             }
                             
                         }
