@@ -51,6 +51,7 @@ Route::middleware(['auth', 'verified','typeVente'])->group(function () {
    Route::post('/settings/save/company', [SettingsController::class, 'edit_societe'])->name('settings/save/company');
    Route::post('/settings/save/profil', [SettingsController::class, 'edit_profil'])->name('settings/save/profil');
    Route::post('/settings/save/sociaux', [SettingsController::class, 'edit_sociaux'])->name('settings/save/sociaux');
+   Route::get('/settings/get_stock_csv', [SettingsController::class, 'exportStockCsv'])->name('settings/get_stock_csv');
 
    Route::get('/order_entrepot', [OrderEntrepotController::class, 'create_type_vente'])->name('order_entrepot');
    Route::get('/order_entrepot/view/{gamme}', [OrderEntrepotController::class, 'create_type_vente_choix_gamme']);
