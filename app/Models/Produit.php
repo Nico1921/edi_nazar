@@ -81,6 +81,14 @@ class Produit extends Model
     }
 
     /**
+     * Permet la récupération de la gamme lier au produit
+     */
+    public function gamme()
+    {
+        return $this->hasOne(Gamme::class,'id_gamme','gamme_id');
+    }
+
+    /**
      * Permet la récupération de la couleur lier au produit
      */
     public function couleur()
@@ -215,10 +223,5 @@ class Produit extends Model
         }
 
         return $prixProduit;
-    }
-
-    public function gamme()
-    {
-        return $this->hasOne(Gamme::class,'id_gamme','gamme_id');
     }
 }
