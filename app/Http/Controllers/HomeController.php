@@ -54,7 +54,52 @@ class HomeController extends Controller
         ->get();
 
         $bestSeller = Gamme::setRemiseGamme($bestSeller);
-        
-        return Inertia::render('Auth/Pages/Home',['latestCollection' => $latestCollection, 'bestSeller' => $bestSeller]);
+
+        $bandeau = Gamme::select(['gamme.*','tag_edi.text'])
+        ->join('gamme_tag_edi','gamme_tag_edi.id_gamme','=','gamme.id_gamme')
+        ->join('tag_edi','tag_edi.id_tag','=','gamme_tag_edi.id_tag_edi')
+        ->where('tag_edi.slug','=','bandeau_com')
+        ->first();
+
+        $coupDeCoeur = Gamme::select(['gamme.*','tag_edi.text','tag_edi.description_tag'])
+        ->join('gamme_tag_edi','gamme_tag_edi.id_gamme','=','gamme.id_gamme')
+        ->join('tag_edi','tag_edi.id_tag','=','gamme_tag_edi.id_tag_edi')
+        ->where('tag_edi.slug','=','coup_de_coeur')
+        ->first();
+
+        $news = Gamme::select(['gamme.*','tag_edi.text'])
+        ->join('gamme_tag_edi','gamme_tag_edi.id_gamme','=','gamme.id_gamme')
+        ->join('tag_edi','tag_edi.id_tag','=','gamme_tag_edi.id_tag_edi')
+        ->where('tag_edi.slug','=','nouveaux')
+        ->limit(3)
+        ->get();
+
+        $best = Gamme::select(['gamme.*','tag_edi.text'])
+        ->join('gamme_tag_edi','gamme_tag_edi.id_gamme','=','gamme.id_gamme')
+        ->join('tag_edi','tag_edi.id_tag','=','gamme_tag_edi.id_tag_edi')
+        ->where('tag_edi.slug','=','meilleurs')
+        ->limit(3)
+        ->get();
+
+        $hey = Gamme::select(['gamme.*','tag_edi.text'])
+        ->join('gamme_tag_edi','gamme_tag_edi.id_gamme','=','gamme.id_gamme')
+        ->join('tag_edi','tag_edi.id_tag','=','gamme_tag_edi.id_tag_edi')
+        ->where('tag_edi.slug','=','hey')
+        ->limit(3)
+        ->get();
+
+        $lost = Gamme::select(['gamme.*','tag_edi.text'])
+        ->join('gamme_tag_edi','gamme_tag_edi.id_gamme','=','gamme.id_gamme')
+        ->join('tag_edi','tag_edi.id_tag','=','gamme_tag_edi.id_tag_edi')
+        ->where('tag_edi.slug','=','oublies')
+        ->limit(3)
+        ->get();
+        return Inertia::render('Auth/Pages/Home',[
+            'bandeau' => $bandeau, 
+            'coupDeCoeur' => $coupDeCoeur, 
+            'news' => $news, 
+            'best' => $best, 
+            'hey' => $hey, 
+            'lost' => $lost]);
     }
 }

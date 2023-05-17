@@ -1,25 +1,26 @@
 <script setup>
     import { Head,usePage } from '@inertiajs/inertia-vue3';
     import { ref } from 'vue';
-    import { Swiper, SwiperSlide } from "swiper/vue";
-    import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-    import "swiper/css";
-    import "swiper/css/navigation";
-    import 'swiper/css/pagination';
-
-    var props = defineProps(['latestCollection','bestSeller']);
+    const tag = new URL('../../../../images/Symbole/Tag.svg', import.meta.url).href;
+    const bulle = new URL('../../../../images/Symbole/Bulle.svg', import.meta.url).href;
+    const coeur = new URL('../../../../images/Symbole/Coeur.svg', import.meta.url).href;
+    const main = new URL('../../../../images/Symbole/Main.svg', import.meta.url).href;
+    const note = new URL('../../../../images/Symbole/Note.svg', import.meta.url).href;
+    const smiley = new URL('../../../../images/Symbole/Smiley.svg', import.meta.url).href;
+    const trait = new URL('../../../../images/Symbole/Trait.svg', import.meta.url).href;
+    const carre = new URL('../../../../images/Symbole/Carre.svg', import.meta.url).href;
+    const newI = new URL('../../../../images/Symbole/New.svg', import.meta.url).href;
+    var props = defineProps([
+            'bandeau', 
+            'coupDeCoeur', 
+            'news', 
+            'best', 
+            'hey', 
+            'lost']);
     var clientUser = ref(usePage().props.value.auth.user[0].client);
-    console.log(props);
 
     var typeVente = ref(usePage().props.value.session.typeVente);
     var linkVente  = (typeVente.value == 1 ? '/order_entrepot/gamme/' : '/dropshipping/gamme/');
-    /*var calcul_prix_gamme = (prix_gamme) => {
-        var HT = prix_gamme;
-        if(clientUser.value.taux_remise > 0){
-            HT = HT - ((HT) * (clientUser.value.taux_remise /100));
-        }
-        return roundNumber(HT);
-    };*/
 
     var roundNumber = (e) => {
         return (Math.round(e * 100) / 100).toFixed(2);
@@ -58,109 +59,154 @@
                 Découvrez nos collections
             </span>
         </div>
-        
-
-        <div class="">
-            <h2 class="font-bold lg:text-xl sm:text-lg text-sm lg:!px-10 !px-0">Nos nouvelles collections</h2>
-            <swiper :modules="[Navigation, Pagination, Scrollbar, A11y]"
-                    :slides-per-view="3"
-                    :space-between="40"
-                    :breakpoints="{ 1280:{ slidesPerView:3}, 640:{ slidesPerView:2}, 0:{ slidesPerView:1} }"
-                    :pagination="{ clickable: true, el: '.swiper-pagination-custom',bulletActiveClass: 'opacity-full',bulletClass:'swiper-pagination-bullet mx-2 !bg-primary-300', type: 'bullets' }"
-                    :scrollbar="{ draggable: true }"
-                    :navigation="{nextEl: '.swiper-button-prev-custom', prevEl: '.swiper-button-next-custom', disabledClass: 'lg:hidden'}"
-                    class="lg:!px-10 !px-0 lg:!py-2 lg:!pt-4 !py-2 !relative">
-                <div class="swiper-button-prev-custom absolute justify-center items-center top-0 bottom-0 right-0 z-40 cursor-pointer lg:flex hidden">
-                    <Right class="!h-6 !w-12 text-5xl flex items-center justify-center text-primary-100" />
-                </div>
-                <div class="swiper-button-next-custom absolute justify-center items-center top-0 bottom-0 left-0 z-40 cursor-pointer lg:flex hidden">
-                    <Left class="!h-6 !w-12 text-5xl flex items-center justify-center text-primary-100" />
-                </div>
-                <div class="swiper-pagination-custom lg:hidden flex items-center justify-center py-2"></div>
-                <swiper-slide class="lg:px-2" v-for="(gamme, key) in props.latestCollection" :key="key">
-                    <a :href="linkVente+lowercase(gamme.nom_gamme)" class="group h-full flex flex-col relative border border-primary-200 hover:scale-105 transition-all duration-300">
-                        
-                        <div class="relative group">
-                            <div class="flex items-stretch justify-center w-full !h-52">
-                                <div v-if="gamme.img_gamme != null" class="relative w-full ">
-                                    <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + gamme.img_gamme"
-                                            :alt="gamme.nom_gamme" 
-                                            class="z-20 rounded relative  w-full h-full object-cover" />
-                                </div>
-                                <div v-else class="text-3xl w-full flex items-stretch justify-center bg-gray-300">
-                                    <ImageOff />
-                                </div>
+    </section>
+    <section class="mt-5 bg-primary-50 relative h-[45rem]" v-if="props.bandeau != null">
+        <a :href="linkVente+lowercase(props.bandeau.nom_gamme)" class="h-full relative w-full container mx-auto">
+            <div v-if="props.bandeau.img_gamme !=null" class="h-full relative container mx-auto w-full z-10">
+                <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + props.bandeau.img_gamme"
+                    :alt="props.bandeau.nom_gamme" 
+                    class="z-20 rounded relative  w-full h-full object-cover" />
+            </div>
+            <div v-else class="container mx-auto text-3xl w-full flex items-stretch justify-center bg-gray-300">
+                <ImageOff />
+            </div>
+        </a>
+        <span class="absolute top-1/2 bottom-1/2 right-1/4 left-1/4 text-white z-20 uppercase text-5xl text-center">{{ props.bandeau.text }}</span>
+    </section>
+    <section class="container mx-auto grid grid-cols-6 h-full">
+        <div class="col-span-2 h-full mt-5" v-if="props.coupDeCoeur != null">
+            <div class="grid grid-cols-3 items-center relative">
+                <h2 class="text-xl font-semibold col-span-2 ml-[8rem] absolute -bottom-7">{{props.coupDeCoeur.text }}</h2>
+            </div>
+            <div class="relative mt-2">
+                <img :src="coeur" alt="coup de coeur" class="absolute left-0 top-0 z-30 h-24 w-24 object-cover col-span-1 -rotate-12" />
+                <div class="relative ml-16">
+                    <img :src="carre" alt="coup de coeur" class="absolute z-20 h-full w-full object-cover col-span-1" />
+                    <a :href="linkVente+lowercase(props.coupDeCoeur.nom_gamme)" class="p-16 h-full relative w-full container mx-auto block hover:scale-105 transition-all duration-300 z-40">
+                        <div class="relative pl-12 h-full">    
+                            <div v-if="props.coupDeCoeur.img_gamme !=null" class=" relative container mx-auto w-full z-10">
+                                <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + props.coupDeCoeur.img_gamme"
+                                    :alt="props.coupDeCoeur.nom_gamme" 
+                                    class="z-20 rounded relative  w-full h-full object-cover" />
                             </div>
-                            <div class="absolute bottom-0 z-30 w-full h-full overflow-hidden">
-                                <div class="absolute bottom-0 max-h-0 group-hover:max-h-full h-full w-full overflow-hidden group-hover:p-1 transition-full duration-500 bg-primary-100 text-center flex flex-col items-center justify-center  bg-opacity-80 text-white">
-                                    <span class="px-4 py-2 rounded border border-primary-300 bg-primary-100 text-primary-300 font-bold">Découvrir la collection</span>
-                                </div>
-                                
+                            <div v-else class="container mx-auto text-3xl w-full h-full flex items-stretch justify-center bg-gray-300">
+                                <ImageOff />
                             </div>
-                        </div>
-                        
-                        <div class="bg-white px-4 py-2 w-full ">
-                            <h3 class="font-bold lg:text-lg text-sm">
-                                Collection {{ gamme.nom_gamme }}
-                            </h3>
-                            <span class="font-bold text-gray-400">Prix au m² : {{ gamme.prix_vente_ht_m2_remise?gamme.prix_vente_ht_m2_remise:gamme.prix_vente_ht_m2 }} €</span>
+                            <div class="absolute top-4 left-0 z-30">
+                                <span class="relative px-12 font-semibold uppercase z-30 h-full flex items-center">{{ props.coupDeCoeur.nom_gamme }}</span>
+                                <img :src="tag" alt="tag" class="absolute top-0 z-20 opacity-80 h-full w-full object-cover" />
+                            </div>
                         </div>
                     </a>
-                </swiper-slide>
-            </swiper>
-        </div>
-        <hr class="border border-primary-300 lg:!mx-10 !mx-0 my-5" />
-        <div>
-            <h2 class="font-bold lg:text-xl sm:text-lg text-sm lg:!px-10 !px-0">Meilleures ventes</h2>
-            <swiper :modules="[Navigation, Pagination, Scrollbar, A11y]"
-                    :slides-per-view="6"
-                    :space-between="40"
-                    :breakpoints="{ 1536:{ slidesPerView:6}, 1280:{ slidesPerView:5}, 1024:{ slidesPerView:4}, 640:{ slidesPerView:3}, 460:{ slidesPerView:2}, 0:{ slidesPerView:1} }"
-                    :pagination="{ clickable: true, el: '.swiper-pagination-custom',bulletActiveClass: 'opacity-full',bulletClass:'swiper-pagination-bullet mx-2 !bg-primary-300', type: 'bullets' }"
-                    :scrollbar="{ draggable: true }"
-                    :navigation="{nextEl: '.swiper-button-prev-custom', prevEl: '.swiper-button-next-custom', disabledClass: 'lg:hidden'}"
-                    class="lg:!px-10 !px-0 lg:!py-2 lg:!pt-4 !py-2 !relative">
-                <div class="swiper-button-prev-custom absolute justify-center items-center top-0 bottom-0 right-0 z-40 cursor-pointer lg:flex hidden">
-                    <Right class="!h-6 !w-12 text-5xl flex items-center justify-center text-primary-100" />
                 </div>
-                <div class="swiper-button-next-custom absolute justify-center items-center top-0 bottom-0 left-0 z-40 cursor-pointer lg:flex hidden">
-                    <Left class="!h-6 !w-12 text-5xl flex items-center justify-center text-primary-100" />
-                </div>
-                <div class="swiper-pagination-custom lg:hidden flex items-center justify-center py-2"></div>
-                <swiper-slide class="lg:px-2" v-for="(gamme, key) in props.bestSeller" :key="key">
-                    <a :href="linkVente+lowercase(gamme.nom_gamme)" class="h-full flex flex-col relative border border-primary-200 hover:scale-105 transition-all duration-300">
-                        <div class="relative group">
-                            <div class="flex items-stretch justify-center w-full !h-52">
-                                <div v-if="gamme.img_gamme != null" class="relative w-full ">
-                                    <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + gamme.img_gamme"
-                                            :alt="gamme.nom_gamme" 
-                                            class="z-20 rounded relative  w-full h-full object-cover" />
-                                </div>
-                                <div v-else class="text-3xl w-full flex items-stretch justify-center bg-gray-300">
-                                    <ImageOff />
-                                </div>
-                            </div>
-                            <div class="absolute bottom-0 z-30 w-full h-full overflow-hidden">
-                                <div class="absolute bottom-0 max-h-0 group-hover:max-h-full h-full w-full overflow-hidden group-hover:p-1 transition-full duration-500 bg-primary-100 text-center flex flex-col items-center justify-center  bg-opacity-80 text-white">
-                                    <span class="px-4 py-2 rounded border border-primary-300 bg-primary-100 text-primary-300 font-bold">Découvrir la collection</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <div class="bg-white px-4 py-2 w-full ">
-                            <h3 class="font-bold lg:text-lg text-sm flex flex-col justify-center text-center">
-                                <span>Collection</span> 
-                                <span>{{ gamme.nom_gamme }}</span>
-                            </h3>
-                            <span class="font-bold text-gray-400 flex flex-col justify-center text-center">
-                                <span>Prix au m² : </span>
-                                <span>{{ gamme.prix_vente_ht_m2_remise?gamme.prix_vente_ht_m2_remise:gamme.prix_vente_ht_m2 }} €</span>
-                            </span>
-                        </div>
-                    </a>
-                </swiper-slide>
-            </swiper>
+            </div>
+            
         </div>
+        <div class="col-span-4 h-full flex items-center justify-center mx-28 mt-5" v-if="props.coupDeCoeur != null">
+            <p>{{ props.coupDeCoeur.description_tag }}</p>
+        </div>
+    </section>
+    <hr class="container mx-auto border-2 border-primary-50 mb-8 mt-12" />
+        <section class="container mx-auto grid grid-cols-6 h-full">
+        <div class="col-span-6 grid grid-cols-3" v-if="props.news != null">
+            <div class="flex items-center  col-span-3 relative mb-5">
+                <h2 class="text-xl z-30 font-semibold ml-28">{{props.news[0].text }}</h2>
+                <img :src="newI" alt="tag" class="absolute -bottom-4 left-5 -rotate-12 z-20 h-full w-20 overflow-visible object-cover" />
+            </div>
+            <div v-for="(newP,key) in props.news" :key="key" class="col-span-1 mx-8 z-30">
+                <a :href="linkVente+lowercase(newP.nom_gamme)" class="h-72 relative w-full container mx-auto block hover:scale-105 transition-all duration-300">
+                    <div class="relative pl-12 h-full">    
+                        <div v-if="newP.img_gamme !=null" class="h-full relative container mx-auto w-full z-10">
+                            <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + newP.img_gamme"
+                                :alt="newP.nom_gamme" 
+                                class="z-20 rounded relative  w-full h-full object-cover" />
+                        </div>
+                        <div v-else class="container mx-auto text-3xl w-full flex items-stretch justify-center bg-gray-300">
+                            <ImageOff />
+                        </div>
+                        <div class="absolute -bottom-7 left-1/4 right-1/4 z-40 flex justify-center">
+                            <span class="relative px-12 font-semibold uppercase z-30 h-full w-full text-center text-xl py-5">{{ newP.nom_gamme }}</span>
+                            <img :src="tag" alt="tag" class="absolute top-0 z-20 opacity-80 h-full w-full object-cover" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <hr class="container mx-auto border-2 border-primary-50 mb-8 mt-12" />
+    <section class="container mx-auto grid grid-cols-6" v-if="props.best != null">
+        <div class="relative flex items-center  col-span-6 ">
+            <h2 class="text-xl z-30 font-semibold ml-28 mb-5">{{props.best[0].text }}</h2>
+            <img :src="note" alt="Note" class="absolute -bottom-4 left-5 -rotate-12 z-20 h-full w-20 overflow-visible object-cover" />
+        </div>
+            <div v-for="(bestP,key) in props.best" :key="key" class="col-span-2 mx-8">
+                <a :href="linkVente+lowercase(bestP.nom_gamme)" class="z-20 h-72 relative w-full container mx-auto block hover:scale-105 transition-all duration-300">
+                    <div class="relative pl-12 h-full">    
+                        <div v-if="bestP.img_gamme !=null" class="h-full relative container mx-auto w-full z-10">
+                            <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + bestP.img_gamme"
+                                :alt="bestP.nom_gamme" 
+                                class="z-20 rounded relative  w-full h-full object-cover" />
+                        </div>
+                        <div v-else class="container mx-auto text-3xl w-full flex items-stretch justify-center bg-gray-300">
+                            <ImageOff />
+                        </div>
+                        <div class="absolute -bottom-7 left-1/4 right-1/4 z-40 flex justify-center">
+                            <span class="relative px-12 font-semibold uppercase z-30 h-full w-full text-center text-xl py-5">{{ bestP.nom_gamme }}</span>
+                            <img :src="tag" alt="tag" class="absolute top-0 z-20 opacity-80 h-full w-full object-cover" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+    </section>
+    <hr class="container mx-auto border-2 border-primary-50 mb-8 mt-12" />
+    <section class="container mx-auto grid grid-cols-6" v-if="props.hey != null">
+        <div class="flex items-center justify-start col-span-6 relative pb-3">
+                <img :src="main" alt="bulle" class="absolute -bottom-4 left-2 -rotate-12 z-20 h-full w-32 overflow-visible object-cover" />
+                <h2 class="text-xl z-30 font-semibold ml-28">{{props.hey[0].text }}</h2>
+            </div>
+            <div v-for="(heyP,key) in props.hey" :key="key" class="col-span-2 mx-8">
+                <a :href="linkVente+lowercase(heyP.nom_gamme)" class="h-72 relative w-full container mx-auto z-20 block hover:scale-105 transition-all duration-300">
+                    <div class="relative pl-12 h-full">    
+                        <div v-if="heyP.img_gamme !=null" class="h-full relative container mx-auto w-full z-30">
+                            <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + heyP.img_gamme"
+                                :alt="heyP.nom_gamme" 
+                                class="z-20 rounded relative  w-full h-full object-cover" />
+                        </div>
+                        <div v-else class="container mx-auto text-3xl w-full flex items-stretch justify-center bg-gray-300">
+                            <ImageOff />
+                        </div>
+                        <div class="absolute -bottom-7 left-1/4 right-1/4 z-40 flex justify-center">
+                            <span class="relative px-12 font-semibold uppercase z-30 h-full w-full text-center text-xl py-5">{{ heyP.nom_gamme }}</span>
+                            <img :src="tag" alt="tag" class="absolute top-0 z-20 opacity-80 h-full w-full object-cover" />
+                        </div>
+                    </div>
+                </a>
+            </div>
+    </section>
+    <hr class="container mx-auto border-2 border-primary-50 mb-8 mt-12" />
+    <section class="container mx-auto grid grid-cols-6 mb-12" v-if="props.best != null">
+        <div class="flex items-center col-span-6 relative">
+                <h2 class="text-xl z-30 font-semibold ml-28 mb-5">{{props.lost[0].text }}</h2>
+                <img :src="smiley" alt="smiley" class="absolute -bottom-2 left-8 -rotate-12 z-20 h-full w-16 overflow-visible object-cover" />
+            </div>
+            <div v-for="(lostP,key) in props.lost" :key="key" class="col-span-2 mx-8">
+                <a :href="linkVente+lowercase(lostP.nom_gamme)" class="h-72 relative w-full container mx-auto block hover:scale-105 transition-all duration-300 z-20">
+                    <div class="relative pl-12 h-full">    
+                        <div v-if="lostP.img_gamme !=null" class="h-full relative container mx-auto w-full z-30">
+                            <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + lostP.img_gamme"
+                                :alt="lostP.nom_gamme" 
+                                class="z-20 rounded relative w-full h-full object-cover" />
+                        </div>
+                        <div v-else class="container mx-auto text-3xl w-full flex items-stretch justify-center bg-gray-300">
+                            <ImageOff />
+                        </div>
+                        <div class="absolute -bottom-7 left-1/4 right-1/4 z-40 flex justify-center">
+                            <span class="relative px-12 font-semibold uppercase z-30 h-full w-full text-center text-xl py-5">{{ lostP.nom_gamme }}</span>
+                            <img :src="tag" alt="tag" class="absolute top-0 z-20 opacity-80 h-full w-full object-cover" />
+                        </div>
+                    </div>
+                </a>
+            </div>
     </section>
 </template>
 <style>

@@ -154,7 +154,7 @@ class Commande extends Model
                             'date_proforma' => date('Y-m-d'),
                             'num_proforma' => Facture::genNumProforma(),
                             'date_facture' => ($paymentType == 2 ? date('Y-m-d') : ''),
-                            'num_facture' => ($paymentType == 2 ? Facture::genNumFacture() : ''),
+                            'num_facture' => ($paymentType == 2 || $id_client->client->paiement_comptant == 0 ? Facture::genNumFacture() : ''),
                             'montant_ttc' => $panier->total_ttc,
                             'taux_tva' => 20,
                             'montant_ht' => $panier->montant_ht,
