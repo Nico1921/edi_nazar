@@ -83,7 +83,7 @@
                 <div class="relative ml-16">
                     <img :src="carre" alt="coup de coeur" class="absolute z-20 h-full w-full object-cover col-span-1" />
                     <a :href="linkVente+lowercase(props.coupDeCoeur.nom_gamme)" class="p-16 h-full relative w-full container mx-auto block hover:scale-105 transition-all duration-300 z-40">
-                        <div class="relative pl-12 h-full">    
+                        <div class="relative p-8 h-full">    
                             <div v-if="props.coupDeCoeur.img_gamme !=null" class=" relative container mx-auto w-full z-10">
                                 <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + props.coupDeCoeur.img_gamme"
                                     :alt="props.coupDeCoeur.nom_gamme" 
@@ -92,7 +92,7 @@
                             <div v-else class="container mx-auto text-3xl w-full h-full flex items-stretch justify-center bg-gray-300">
                                 <ImageOff />
                             </div>
-                            <div class="absolute top-4 left-0 z-30">
+                            <div class="absolute top-10 -left-4 z-30">
                                 <span class="relative px-12 font-semibold uppercase z-30 h-full flex items-center">{{ props.coupDeCoeur.nom_gamme }}</span>
                                 <img :src="tag" alt="tag" class="absolute top-0 z-20 opacity-80 h-full w-full object-cover" />
                             </div>

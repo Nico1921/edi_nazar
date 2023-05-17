@@ -269,6 +269,7 @@ import KeyAccount from "icons/AccountKey.vue";
 import Mail from "icons/Email.vue";
 import Phone from "icons/Phone.vue";
 import WebSocial from "icons/SearchWeb.vue";
+import Documents from "icons/FileDocumentMultiple.vue";
 import Web from "icons/Web.vue";
 import Twitter from "icons/Twitter.vue";
 import Facebook from "icons/Facebook.vue";
@@ -515,6 +516,25 @@ export default {
                      <button :class="{ 'opacity-25': formReseaux.processing }" :disabled="formReseaux.processing" type="submit" class="rounded-2xl bg-primary-100 text-white px-4 py-2 m-2 hover:bg-primary-50 transition duration-300">Sauvegarder</button>
                   </div>
                </form>
+            </div>
+            <div class="m-4">
+               <div class="flex flex-col">
+                  <h2 class="font-semibold text-lg mr-4 mt-0.5"><Documents/> Documents</h2>
+                  <div class="flex flex-col mt-4">
+                     <div class="flex">
+                        <h3>Nos Condition générale de vente : </h3>
+                        <a href="/cgv" class="underline text-blue-500 ml-2 hover:text-blue-800 transition duration-300">ici</a>
+                     </div>
+                     <div class="flex">
+                        <h3>Nos mentions légales : </h3>
+                        <a href="/mentions-legales" class="underline text-blue-500 ml-2 hover:text-blue-800 transition duration-300">ici</a>
+                     </div>
+                     <div class="flex">
+                        <h3>Votre fichier de stock : </h3>
+                        <a href="/settings/get_stock_csv" class="underline text-blue-500 ml-2 hover:text-blue-800 transition duration-300">Téléchargez mon stock</a>
+                     </div>
+                  </div>
+               </div>
             </div>
          </div>
          <div class="col-span-1 m-2 relative h-full w-full pt-20 lg:block hidden">
