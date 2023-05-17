@@ -114,7 +114,7 @@
                 <img :src="newI" alt="tag" class="absolute -bottom-4 left-5 -rotate-12 z-20 h-full w-20 overflow-visible object-cover" />
             </div>
             <div v-for="(newP,key) in props.news" :key="key" class="col-span-1 mx-8 z-30">
-                <a :href="linkVente+lowercase(newP.nom_gamme)" class="h-full relative w-full container mx-auto block hover:scale-105 transition-all duration-300">
+                <a :href="linkVente+lowercase(newP.nom_gamme)" class="h-72 relative w-full container mx-auto block hover:scale-105 transition-all duration-300">
                     <div class="relative pl-12 h-full">    
                         <div v-if="newP.img_gamme !=null" class="h-full relative container mx-auto w-full z-10">
                             <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + newP.img_gamme"
@@ -140,7 +140,7 @@
             <img :src="note" alt="Note" class="absolute -bottom-4 left-5 -rotate-12 z-20 h-full w-20 overflow-visible object-cover" />
         </div>
             <div v-for="(bestP,key) in props.best" :key="key" class="col-span-2 mx-8">
-                <a :href="linkVente+lowercase(bestP.nom_gamme)" class="z-20 h-full relative w-full container mx-auto block hover:scale-105 transition-all duration-300">
+                <a :href="linkVente+lowercase(bestP.nom_gamme)" class="z-20 h-72 relative w-full container mx-auto block hover:scale-105 transition-all duration-300">
                     <div class="relative pl-12 h-full">    
                         <div v-if="bestP.img_gamme !=null" class="h-full relative container mx-auto w-full z-10">
                             <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + bestP.img_gamme"
@@ -165,7 +165,7 @@
                 <h2 class="text-xl z-30 font-semibold ml-28">{{props.hey[0].text }}</h2>
             </div>
             <div v-for="(heyP,key) in props.hey" :key="key" class="col-span-2 mx-8">
-                <a :href="linkVente+lowercase(heyP.nom_gamme)" class="h-full relative w-full container mx-auto z-20 block hover:scale-105 transition-all duration-300">
+                <a :href="linkVente+lowercase(heyP.nom_gamme)" class="h-72 relative w-full container mx-auto z-20 block hover:scale-105 transition-all duration-300">
                     <div class="relative pl-12 h-full">    
                         <div v-if="heyP.img_gamme !=null" class="h-full relative container mx-auto w-full z-30">
                             <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + heyP.img_gamme"
@@ -190,7 +190,7 @@
                 <img :src="smiley" alt="smiley" class="absolute -bottom-2 left-8 -rotate-12 z-20 h-full w-16 overflow-visible object-cover" />
             </div>
             <div v-for="(lostP,key) in props.lost" :key="key" class="col-span-2 mx-8">
-                <a :href="linkVente+lowercase(lostP.nom_gamme)" class="h-full relative w-full container mx-auto block hover:scale-105 transition-all duration-300 z-20">
+                <a :href="linkVente+lowercase(lostP.nom_gamme)" class="h-72 relative w-full container mx-auto block hover:scale-105 transition-all duration-300 z-20">
                     <div class="relative pl-12 h-full">    
                         <div v-if="lostP.img_gamme !=null" class="h-full relative container mx-auto w-full z-30">
                             <img  :src="'https://gestion.tapis-nazar.fr/img/produit/gamme/' + lostP.img_gamme"
