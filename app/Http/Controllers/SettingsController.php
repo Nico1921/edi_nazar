@@ -164,23 +164,7 @@ class SettingsController extends Controller
 
     public function exportStockCsv(Request $request){
         $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
-        $fileName = strtolower(trim(preg_replace('#\W+#', '_', $user->client->nom_societe), '_')).'.csv';
-        // $stocks = StatsProduit::with(['produit' => function($query){
-        //     $query->with(['gamme'=> function($query){
-        //         $query->leftJoin('prix_produit_specifique', function ($join) {
-        //             $join->on('prix_produit_specifique.id_gamme', '=', 'gamme.id_gamme');
-        //         })
-        //         ->where('gamme.in_edi', '=', '1')
-        //         ->where('gamme.statut', '=', '1')
-        //         ->whereRaw('prix_produit_specifique.id_gamme IS NULL OR
-        //         (SELECT COUNT(*) FROM produit WHERE gamme_id = gamme.id_gamme)
-        //         = (SELECT COUNT(*) FROM prix_produit_specifique WHERE id_gamme = gamme.id_gamme)');
-        //     },'dimension','couleur']);
-        //     $query->where('produit.code_sku', '!=', 'null')
-        //     ->where('produit.code_sku', '!=', '""')
-        //     ->where('produit.drop_shipping', '=', '1')
-        //     ->where('produit.statut', '=', '1');
-        // }])->get();
+        $fileName = 'Stock_Nazar_'.strtolower(trim(preg_replace('#\W+#', '_', $user->client->nom_societe), '_')).'.csv';
 
         $stocks = StatsProduit::select([
             'stats_produit.stock_restant',

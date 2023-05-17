@@ -531,7 +531,7 @@ export default {
                      </div>
                      <div class="flex">
                         <h3>Votre fichier de stock : </h3>
-                        <a href="/settings/get_stock_csv" class="underline text-blue-500 ml-2 hover:text-blue-800 transition duration-300">Télécharger mon stock</a>
+                        <a href="/settings/get_stock_csv" class="underline text-blue-500 ml-2 hover:text-blue-800 transition duration-300">Téléchargez mon stock</a>
                      </div>
                   </div>
                </div>
