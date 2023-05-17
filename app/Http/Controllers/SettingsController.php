@@ -205,7 +205,7 @@ class SettingsController extends Controller
             "Expires"             => "0"
         );
 
-        $columns = array('GAMME', 'SKU', 'GENCODE', 'DIMENSION', 'COULEUR');
+        $columns = array('GAMME', 'SKU', 'GENCODE', 'DIMENSION', 'COULEUR','STOCK');
 
         $callback = function() use($stocks, $columns) {
             $file = fopen('php://output', 'w');
