@@ -256,6 +256,14 @@ export default {
 				<li class="text-primary-300">
 					<dotsVertical />
 				</li>
+				<li>
+					<Link href="/about-us" :class="{ '!text-gray-800': $page.url.startsWith('/about-us') }"
+						class="text-sm font-bold text-primary-300 hover:text-primary-500 transition duration-300">
+					A propos</Link>
+				</li>
+				<li class="text-primary-300">
+					<dotsVertical />
+				</li>
 				<li class="relative">	
 					<Dropdown alignDrop="bottom" >
 						<template #trigger>
@@ -509,6 +517,11 @@ export default {
 							<Link href="/faq" :class="{ 'text-primary-500': $page.url.startsWith('/faq') }"
 								class="block p-4 text-sm font-semibold text-gray-400 hover:text-gray-600 rounded">
 							FAQ</Link>
+						</li>
+						<li class="mb-1">
+							<Link href="/about-us" :class="{ 'text-primary-500': $page.url.startsWith('/about-us') }"
+								class="block p-4 text-sm font-semibold text-gray-400 hover:text-gray-600 rounded">
+							A propos</Link>
 						</li>
 						<li class="mb-1">
 							<Link href="/order_entrepot" :class="{ 'text-primary-500': $page.url.startsWith('/order_entrepot') }"
