@@ -266,8 +266,8 @@ class Commande extends Model
                         }
                 }
             }
-            //Mail::to($id_client->client->email)->send(new confirmationCommande());
             Mail::to($id_client->client->email)->send(new confirmationCommande($commande->id_commande));
+            // Mail::to("nbertrandnazar@gmail.com")->send(new confirmationCommande($commande->id_commande));
         }
         
 

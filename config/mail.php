@@ -43,7 +43,7 @@ return [
             'username' => env('MAIL_USERNAME', 'contact@nazarrugs.fr'),
             'password' => env('MAIL_PASSWORD', "!3V|JIY|7j5@QK?n"),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'local_domain' => env('MAIL_EHLO_DOMAIN','mail.nazarrugs.fr'),
         ],
 
         'ses' => [
