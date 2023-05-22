@@ -529,9 +529,9 @@ export default {
                         <h3>Nos mentions légales : </h3>
                         <a href="/mentions-legales" class="underline text-blue-500 ml-2 hover:text-blue-800 transition duration-300">ici</a>
                      </div>
-                     <div class="flex">
+                     <div class="flex" v-if="user.token_client != undefined && user.token_client != ''">
                         <h3>Votre fichier de stock : </h3>
-                        <a href="/settings/get_stock_csv" class="underline text-blue-500 ml-2 hover:text-blue-800 transition duration-300">Téléchargez mon stock</a>
+                        <a :href="'/stock/get_stock_csv?token='+user.token_client" class="underline text-blue-500 ml-2 hover:text-blue-800 transition duration-300">Téléchargez mon stock</a>
                      </div>
                   </div>
                </div>

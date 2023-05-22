@@ -268,8 +268,7 @@ class Commande extends Model
             }
             Mail::to($id_client->client->email)->send(new confirmationCommande($commande->id_commande));
             // Mail::to("nbertrandnazar@gmail.com")->send(new confirmationCommande($commande->id_commande));
-        }
-        
+        }       
 
         if(!empty($facture->id_facture) && $facture->id_facture){
             if($paymentType == 2){

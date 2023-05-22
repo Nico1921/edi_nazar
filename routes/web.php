@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ShippingsController;
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Session;
@@ -37,6 +38,10 @@ Route::middleware('guest')->group(function () {
    Route::post('/uploadIdentiter', [RegisteredUserController::class, 'uploadIdentiter']);
    Route::post('/uploadKbis', [RegisteredUserController::class, 'uploadKbis']);
 });
+Route::middleware(['check-token-client'])->group(function () {
+   Route::get('/stock/get_stock_csv', [StockController::class, 'exportStockCsv'])->name('stock/get_stock_csv');
+});
+
 
 
 Route::middleware(['auth', 'verified','typeVente'])->group(function () {
@@ -51,7 +56,6 @@ Route::middleware(['auth', 'verified','typeVente'])->group(function () {
    Route::post('/settings/save/company', [SettingsController::class, 'edit_societe'])->name('settings/save/company');
    Route::post('/settings/save/profil', [SettingsController::class, 'edit_profil'])->name('settings/save/profil');
    Route::post('/settings/save/sociaux', [SettingsController::class, 'edit_sociaux'])->name('settings/save/sociaux');
-   Route::get('/settings/get_stock_csv', [SettingsController::class, 'exportStockCsv'])->name('settings/get_stock_csv');
 
    Route::get('/order_entrepot', [OrderEntrepotController::class, 'create_type_vente'])->name('order_entrepot');
    Route::get('/order_entrepot/view/{gamme}', [OrderEntrepotController::class, 'create_type_vente_choix_gamme']);
