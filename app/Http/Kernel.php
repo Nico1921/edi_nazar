@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'type-client' => \App\Http\Middleware\TypeClients::class,
         'check-panier-drop' => \App\Http\Middleware\CheckPanierDropValide::class,
         'check-panier-com' => \App\Http\Middleware\CheckPanierEntrepotValide::class,
+        'check-token-client' => \App\Http\Middleware\CheckTokenClient::class,
     ];
 }
