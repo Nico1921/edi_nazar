@@ -37,8 +37,8 @@ class CartController extends Controller
     public function create(Request $request)
     {
         if($request->session()->has('panier_commercial')){
-            $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
-            $this->update_price_product_cart($panierGet);
+            //$panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+            //$this->update_price_product_cart($panierGet);
             $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
             $request->session()->put('panier_commercial', $panierGet);
             $panierCom = $panierGet;
@@ -322,6 +322,9 @@ class CartController extends Controller
     }
 
     public function create_adresses_validation_drop(Request $request) {
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+        $this->update_price_product_cart($panierGet);
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
         $panier = array();
         if($request->session()->has('panier_mkp')){
             $panier = $request->session()->get('panier_mkp');
@@ -481,6 +484,10 @@ class CartController extends Controller
     }
 
     public function create_adresses_validation(Request $request) {
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+        $this->update_price_product_cart($panierGet);
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+        $request->session()->put('panier_commercial', $panierGet);
         $panierCom = array();
         $produits = array();
         $clientEDI = null;
