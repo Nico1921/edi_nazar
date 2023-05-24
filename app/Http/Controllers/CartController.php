@@ -40,6 +40,7 @@ class CartController extends Controller
             $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
             $request->session()->put('panier_commercial', $panierGet);
             $panierCom = $panierGet;
+
         }else{
             $panierCom = array();
         }
@@ -69,7 +70,12 @@ class CartController extends Controller
                     $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();  
                     if(!$panier->is_validate){
                         if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
-                            $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
+
+                            //refresh prix produit
+                            $produit = Produit::where('id_produit', '=', $request->idProduit)->first();
+                            $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
+                            $prix_TTC_TT = round($prix_ttc_unitaire * $request->quantiter,2);
                             $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
                             $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
                             $panierList->quantiter = $request->quantiter;
@@ -107,6 +113,10 @@ class CartController extends Controller
                     $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();  
                     if(!$panier->is_validate){
                         if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
+                            //refresh prix produit
+                            $produit = Produit::where('id_produit', '=', $request->idProduit)->first();
+                            $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
                             $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
                             $prix_HT_TT = round($prix_TTC_TT / 1.2,2);;
                             $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
