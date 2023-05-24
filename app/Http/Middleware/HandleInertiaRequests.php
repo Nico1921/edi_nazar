@@ -75,7 +75,7 @@ class HandleInertiaRequests extends Middleware
                             $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
                             foreach($panierList as $list){
                                 //metre a jour le prix de chaque produit a chaque appel
-                                $produit = Produit::where('id_produit', '=', $list->id_produit)->first();
+                                /*$produit = Produit::where('id_produit', '=', $list->id_produit)->first();
                                 $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
 
                                 $prix_TTC_TT = round($prix_ttc_unitaire * $list->quantiter,2);
@@ -87,7 +87,7 @@ class HandleInertiaRequests extends Middleware
                                 $list->prix_ht_total = $prix_HT_TT;
                                 $list->save();
                                 PanierEdi::calculPrixPanier($panierGet->id_panier_edi);
-                                ClientEDI::calculPrixPanier($id_client_edi);
+                                ClientEDI::calculPrixPanier($id_client_edi);*/
                                 //-------------------------------------------------------
 
 
@@ -155,7 +155,7 @@ class HandleInertiaRequests extends Middleware
                                     $list = $panierList[$j];  
    
                                 //metre a jour le prix de chaque produit a chaque appel
-                                $produit = Produit::where('id_produit', '=', $list->id_produit)->first();
+                                /*$produit = Produit::where('id_produit', '=', $list->id_produit)->first();
                                 $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
 
                                 $prix_TTC_TT = round($prix_ttc_unitaire * $list->quantiter,2);
@@ -166,7 +166,7 @@ class HandleInertiaRequests extends Middleware
                                 $list->prix_ht_total = $prix_HT_TT;
                                 $list->save();
                                 PanierEdi::calculPrixPanier($panierGet->id_panier_edi);
-                                ClientEDI::calculPrixPanier($id_client_edi);
+                                ClientEDI::calculPrixPanier($id_client_edi);*/
                                 //-------------------------------------------------------                            
                                                                       
                                     $produit = $list->produit;
