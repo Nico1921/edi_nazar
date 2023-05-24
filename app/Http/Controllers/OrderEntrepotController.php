@@ -514,7 +514,11 @@ class OrderEntrepotController extends Controller
             if (isset($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0) {
                 $panierList = PanierEdiList::where('id_panier_edi_list', '=', $request->id_panier_edi_list)->first();
                 if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
-                    $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
+                    //refresh prix produit
+                    $produit = Produit::where('id_produit', '=', $request->idProduit)->first();
+                    $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
+                    $prix_TTC_TT = round($prix_ttc_unitaire * $request->quantiter,2);
                     $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
                     $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
                      $panierList->quantiter = $request->quantiter;
