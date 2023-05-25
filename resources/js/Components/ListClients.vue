@@ -14,6 +14,7 @@ import {
   DialogTitle,
 } from '@headlessui/vue';
 import InputError from '@/Components/InputError.vue';
+import {decode} from 'html-entities';
 import { CheckIcon, ChevronUpDownIcon,PlusIcon,TrashIcon,EyeIcon,XMarkIcon } from '@heroicons/vue/20/solid';
 
 var prop =  defineProps(['data']);
@@ -305,7 +306,7 @@ import { Inertia } from '@inertiajs/inertia';
                      <div class="col-span-1 flex items-center justify-center">
                         <div v-if="produit.photo != null && produit.photo.img_produit != null"
                            class="lg:w-[45px] lg:h-[75px] sm:w-[60px] sm:h-[90px] w-[70px] h-[100px]">
-                           <img  :src="'https://gestion.tapis-nazar.fr/img/produit/' + produit.photo.img_produit"
+                           <img  :src="'https://gestion.tapis-nazar.fr/img/produit/' + deocde(produit.photo.img_produit)"
                               :alt="produit.code_sku" class="w-full h-full object-cover" />
                         </div>
                         <div v-else class="h-full w-full py-2 px-1">

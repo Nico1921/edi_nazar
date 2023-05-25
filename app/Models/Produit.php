@@ -203,7 +203,6 @@ class Produit extends Model
         if($remise){
             $prix = $prix - (($prix) * ($remise /100));
         }
-        Log::debug(round($prix,2));
         return round($prix,2);
     }
 

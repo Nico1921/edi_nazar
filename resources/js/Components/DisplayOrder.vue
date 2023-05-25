@@ -74,7 +74,7 @@ import { PlusIcon,MinusIcon} from '@heroicons/vue/24/solid';
                      <td class="px-4 py-4 whitespace-nowrap text-center">
                         <div :class="props.classGridImage" class="flex items-stretch justify-center w-full">
                            <div v-if="design.photo != null" class="w-full h-20">
-                              <img :src="'https://gestion.tapis-nazar.fr/img/produit/' + design.photo.img_produit"
+                              <img :src="'https://gestion.tapis-nazar.fr/img/produit/' + decode(design.photo.img_produit)"
                                  :alt="design.code_sku" class="w-full h-full  object-contain" />
                            </div>
                            <div v-else class="text-3xl w-full flex items-stretch justify-center bg-gray-300">

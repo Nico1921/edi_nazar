@@ -82,7 +82,7 @@ function openModal(img,gamme,design,imgList) {
   if(imgList != undefined && imgList != null){
    imgModal.value.visuels = imgList;
   }else if(img != undefined && img != null){
-   imgModal.value.visuels = [{'img_produit' : img}];
+   imgModal.value.visuels = [{'img_produit' : decode(img)}];
   }else{
    imgModal.value.visuels = [{'img_produit' : null}];
   }
@@ -287,7 +287,7 @@ var formatPrix = (prix) => {
 var afficheIMG = (classAff,img) => {
    if(typeof img === 'object' || img instanceof Object){
       if(img != undefined && img != null && img != ''){ 
-         img = img.img_produit;
+         img = decode(img.img_produit);
       }
    }
    if(img != undefined && img != null && img != ''){ 
