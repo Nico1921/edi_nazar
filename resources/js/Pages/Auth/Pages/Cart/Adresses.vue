@@ -242,7 +242,7 @@ export default {
                                     <ComboboxInput
                                        class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-sm leading-5 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                                        :displayValue="(adresseOne) => {autocompletForm();return adresseOne.nom_adresse;}" @change="queryAL.value = $event.target.value;autocompletForm()" 
-                                       placeholder="Sélectionnez votre adresse" name="adresse" required autofocus />
+                                       placeholder="Sélectionnez votre adresse" name="adresse" autofocus />
                                     <ComboboxButton class="absolute inset-y-0 right-0 flex items-center pr-2">
                                        <UnfoldMoreHorizontal class="h-5 w-5 text-gray-400" aria-hidden="true" />
                                     </ComboboxButton>

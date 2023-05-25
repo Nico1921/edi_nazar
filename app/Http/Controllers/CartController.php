@@ -42,7 +42,6 @@ class CartController extends Controller
             $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
             $request->session()->put('panier_commercial', $panierGet);
             $panierCom = $panierGet;
-
         }else{
             $panierCom = array();
         }

@@ -126,8 +126,7 @@ class Commande extends Model
                         'tel2' => '',
                         'statut' => '1',
                     ]);
-                }
-                
+                }             
             }else{
                 $adresseCheck = Adresse::where('id_client','=',$id_client->client->id_client)
                                 ->where('nom_contact','=',$id_client->client->nom_adresse)
@@ -171,9 +170,6 @@ class Commande extends Model
                 
             }
                         
-
-
-
                         $commande = Commande::create([
                             'date_ajout' => date('Y-m-d H:i:s'),
                             'date_maj' => date('Y-m-d H:i:s'),
