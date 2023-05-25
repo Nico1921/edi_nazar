@@ -861,7 +861,7 @@ class CartController extends Controller
     }
 
     public function update_price_product_cart($panier){
-        $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+        $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
         if (isset($user->id) && !empty($user->id) && isset($user->client->id_client) && !empty($user->client->id_client)) {
             if(isset($panier->client_edi_list) && count($panier->client_edi_list) > 0){
                 

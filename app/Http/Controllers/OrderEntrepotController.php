@@ -448,7 +448,7 @@ class OrderEntrepotController extends Controller
             ]);
 
             if (isset($panier->id_panier_edi) && !empty($panier->id_panier_edi)) {
-                $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+                $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
                 if (isset($user->id) && !empty($user->id) && isset($user->client->id_client) && !empty($user->client->id_client)) {
                     $num_commande = ClientEdi::genNumCommande($panier->id_panier_edi);
                     $contact = explode(' ', $user->client->contact);
@@ -637,7 +637,7 @@ class OrderEntrepotController extends Controller
             ]);
 
             if (isset($panier->id_panier_edi) && !empty($panier->id_panier_edi)) {
-                $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+                $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
                 if (isset($user->id) && !empty($user->id) && isset($user->client->id_client) && !empty($user->client->id_client)) {
                     $num_commande = ClientEdi::genNumCommande($panier->id_panier_edi);
                     $contact = explode(' ', $user->client->contact);

@@ -282,7 +282,7 @@ class HandleInertiaRequests extends Middleware
             },
             'adressesList' => function() use($request) {
                 if(isset($request->user()->id) && !empty($request->user()->id)){
-                    $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+                    $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
                     $adresseEDI = AdresseEdi::with(['adresse'])->where('id_client','=',$user->client->id_client)->get();
                     return $adresseEDI;
                 }else{

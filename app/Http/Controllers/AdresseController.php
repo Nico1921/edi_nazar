@@ -22,7 +22,8 @@ class AdresseController extends Controller
      */
     public function create()
     {
-        $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+        Log::debug(Auth::user()->getAuthIdentifier());
+        $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
         $adresseEDI = AdresseEdi::with(['adresse'])->where('id_client','=',$user->client->id_client)->get();
         return Inertia::render('Auth/Pages/User/Adresses',[
             'adresses' => $adresseEDI
@@ -30,7 +31,7 @@ class AdresseController extends Controller
     }
 
     public function save_adresse(Request $request){
-        $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+        $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
 
         $request->validate([
             'nom_adresse' => [
