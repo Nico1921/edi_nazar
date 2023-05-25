@@ -322,9 +322,10 @@ class CartController extends Controller
     }
 
     public function create_adresses_validation_drop(Request $request) {
-        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_mkp')->id_panier_edi)->first();
         $this->update_price_product_cart($panierGet);
-        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_mkp')->id_panier_edi)->first();
+        $request->session()->put('panier_mkp', $panierGet);
         $panier = array();
         if($request->session()->has('panier_mkp')){
             $panier = $request->session()->get('panier_mkp');
