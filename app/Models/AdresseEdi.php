@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Adresse extends Model
+class AdresseEdi extends Model
 {
     use HasFactory;
 
-    protected $table = "adresse";
-    protected $primaryKey = "id_adresse";
+    protected $table = "adresse_edi";
+    protected $primaryKey = "id_adresse_edi";
     public $timestamps = false;
 
     /**
@@ -19,21 +19,9 @@ class Adresse extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'date_ajout',
-        'date_maj',
-        'id_user',
-        'id_user_maj',
+        'id_adresse',
         'id_client',
-        'nom_contact',
-        'adresse1',
-        'adresse2',
-        'adresse3',
-        'code_postal',
-        'ville',
-        'pays',
-        'tel1',
-        'tel2',
-        'statut'
+        'nom_adresse',
     ];
 
     /**
@@ -42,10 +30,6 @@ class Adresse extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'date_ajout',
-        'date_maj',
-        'id_user',
-        'id_user_maj',
     ];
 
     /**
@@ -62,6 +46,6 @@ class Adresse extends Model
      */
     public function adresse()
     {
-        return $this->belongsTo(AdresseEdi::class,'id_adresse','id_adresse');
+        return $this->hasOne(Adresse::class,'id_adresse','id_adresse');
     }
 }

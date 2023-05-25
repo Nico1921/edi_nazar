@@ -355,6 +355,10 @@ export default {
 							<Link href="/settings" :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-gray-700']">
 							{{ $t('navbar.profile') }}</Link>
 						</MenuItem>
+						<MenuItem>
+							<Link href="/settings/adresses" :class="[active ? 'bg-gray-100' : '', 'block  py-2 text-sm text-gray-700']">
+							Mes adresses</Link>
+						</MenuItem>
 						<!-- <MenuItem>
 						<div class="flex items-center">
 							<span class="block pr-2 pt-1 text-sm text-gray-700">Langue : </span>

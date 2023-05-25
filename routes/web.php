@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdresseController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderEntrepotController;
@@ -56,6 +57,10 @@ Route::middleware(['auth', 'verified','typeVente'])->group(function () {
    Route::post('/settings/save/company', [SettingsController::class, 'edit_societe'])->name('settings/save/company');
    Route::post('/settings/save/profil', [SettingsController::class, 'edit_profil'])->name('settings/save/profil');
    Route::post('/settings/save/sociaux', [SettingsController::class, 'edit_sociaux'])->name('settings/save/sociaux');
+
+   Route::get('/settings/adresses', [AdresseController::class, 'create'])->name('settings/adresses');
+   Route::post('/settings/adresses/save', [AdresseController::class, 'save_adresse'])->name('settings/adresses/save');
+   Route::post('/settings/adresses/delete', [AdresseController::class, 'delete_adresse'])->name('settings/adresses/delete');
 
    Route::get('/order_entrepot', [OrderEntrepotController::class, 'create_type_vente'])->name('order_entrepot');
    Route::get('/order_entrepot/view/{gamme}', [OrderEntrepotController::class, 'create_type_vente_choix_gamme']);

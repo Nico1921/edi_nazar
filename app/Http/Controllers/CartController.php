@@ -69,18 +69,28 @@ class CartController extends Controller
                     $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();  
                     if(!$panier->is_validate){
                         if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
-                            $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
-                            $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
-                            $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
-                            $panierList->quantiter = $request->quantiter;
-                            $panierList->prix_ttc_total = $prix_TTC_TT;
-                            $panierList->prix_taxe_total = $prix_TVA_TT;
-                            $panierList->prix_ht_total = $prix_HT_TT;
-                            $panierList->save();
-                            PanierEdi::calculPrixPanier($request->id_panier_edi);
-                            ClientEDI::calculPrixPanier($request->id_client_edi);
-                            $status = true;
-                            $id_panier_edi_list = $panierList->id_panier_edi_list;
+                            $produit = Produit::where('id_produit', '=', $request->idProduit)->first();
+                            if (!empty($produit->id_produit)) {
+                                $prix_produit =  round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+                                $prix_ht = round($prix_produit / 1.2,2); 
+                                $prix_TVA = round($prix_produit - $prix_ht,2);
+
+                                $prix_TTC_TT = round($prix_produit * $request->quantiter,2);
+                                $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
+                                $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
+                                $panierList->quantiter = $request->quantiter;
+                                $panierList->prix_ttc_total = $prix_TTC_TT;
+                                $panierList->prix_taxe_total = $prix_TVA_TT;
+                                $panierList->prix_ht_total = $prix_HT_TT;
+                                $panierList->prix_ht_unitaire = $prix_ht;
+                                $panierList->prix_taxe_unitaire = $prix_TVA;
+                                $panierList->prix_ttc_unitaire = $prix_produit;
+                                $panierList->save();
+                                PanierEdi::calculPrixPanier($request->id_panier_edi);
+                                ClientEDI::calculPrixPanier($request->id_client_edi);
+                                $status = true;
+                                $id_panier_edi_list = $panierList->id_panier_edi_list;
+                            }
                         }
                     }else{
                         $message = "Votre panier a déjà été validé. Vous pouvez aller dans 'Expéditions' pour voir les détails de votre commande.";

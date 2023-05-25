@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/inertia-vue3';
+import { Head, useForm,usePage } from '@inertiajs/inertia-vue3';
 import InputError from '@/Components/InputError.vue';
 import ResumeOrder from '@/Components/ResumeOrder.vue';
 import ResumeOrderVertical from '@/Components/ResumeOrderVertical.vue';
@@ -16,7 +16,7 @@ import {
 } from '@headlessui/vue';
 
 const props = defineProps(['panier','client']);
-
+const sameAdresseFact = ref(true);
 const pays = [
   'Allemagne',
   'Autriche',
@@ -46,6 +46,61 @@ const pays = [
   'Slovénie',
   'Suède',
 ];
+const formClient = useForm({
+    email: (props.client.email != undefined ? props.client.email : ''),
+    tel: (props.client.tel != undefined ? props.client.tel : ''),
+    num_commande: (props.client.ref_externe != undefined ? props.client.ref_externe : ''),
+    nom_adresse: (props.client.nom_adresse != undefined ? props.client.nom_adresse : ''),
+    adresse1: (props.client.adresse1 != undefined ? props.client.adresse1 : ''),
+    adresse2: (props.client.adresse2 != undefined ? props.client.adresse2 : ''),
+    adresse3: (props.client.adresse3 != undefined ? props.client.adresse3 : ''),
+    code_postal: (props.client.code_postal != undefined ? props.client.code_postal : ''),
+    ville: (props.client.ville != undefined ? props.client.ville : ''),
+    pays: ref(pays[(props.client.pays != undefined ? (pays.indexOf(props.client.pays) ? pays.indexOf(props.client.pays) : 10) : '')]),
+    sameAdresseFact: ref(sameAdresseFact),
+    nom_adresse_facturation: (props.client.nom_adresse_facturation != undefined ? props.client.nom_adresse_facturation : ''),
+    adresse1_facturation: (props.client.adresse1_facturation != undefined ? props.client.adresse1_facturation : ''),
+    adresse2_facturation: (props.client.adresse2_facturation != undefined ? props.client.adresse2_facturation : ''),
+    adresse3_facturation: (props.client.adresse3_facturation != undefined ? props.client.adresse3_facturation : ''),
+    code_postal_facturation: (props.client.code_postal_facturation != undefined ? props.client.code_postal_facturation : ''),
+    ville_facturation: (props.client.ville_facturation != undefined ? props.client.ville_facturation : ''),
+    pays_facturation: ref(pays[(props.client.pays_facturation != undefined ? (pays.indexOf(props.client.pays_facturation) ? pays.indexOf(props.client.pays_facturation) : 10) : '')]),
+});
+
+var listeAdresses = usePage().props.value.adressesList;
+let queryAL = ref('');
+const selectedAdresseL = ref('');
+let filteredadresseLivraison = computed(() =>
+   queryAL.value === '' ? listeAdresses : listeAdresses.filter((adresseOne) =>{
+      return adresseOne.nom_adresse.toLowerCase().includes(queryAL.value.toLowerCase())
+   })
+);
+
+var autocompletForm = () => {
+   if(selectedAdresseL.value != ''){
+      var adresse = selectedAdresseL.value.adresse;
+      console.log(adresse)
+      formClient.tel= (adresse.tel1 != undefined ? adresse.tel1 : '');
+      formClient.nom_adresse= (adresse.nom_contact != undefined ? adresse.nom_contact : '');
+      formClient.adresse1= (adresse.adresse1 != undefined ? adresse.adresse1 : '');
+      formClient.adresse2= (adresse.adresse2 != undefined ? adresse.adresse2 : '');
+      formClient.adresse3= (adresse.adresse3 != undefined ? adresse.adresse3 : '');
+      formClient.code_postal= (adresse.code_postal != undefined ? adresse.code_postal : '');
+      formClient.ville= (adresse.ville != undefined ? adresse.ville : '');
+      formClient.pays= ref(pays[(adresse.pays != undefined ? (pays.indexOf(adresse.pays) ? pays.indexOf(adresse.pays) : 10) : '')]);
+      formClient.sameAdresseFact= ref(sameAdresseFact);
+      formClient.nom_adresse_facturation= (adresse.nom_contact != undefined ? adresse.nom_contact : '');
+      formClient.adresse1_facturation= (adresse.adresse1 != undefined ? adresse.adresse1 : '');
+      formClient.adresse2_facturation= (adresse.adresse2 != undefined ? adresse.adresse2 : '');
+      formClient.adresse3_facturation= (adresse.adresse3 != undefined ? adresse.adresse3 : '');
+      formClient.code_postal_facturation= (adresse.code_postal != undefined ? adresse.code_postal : '');
+      formClient.ville_facturation = (adresse.ville != undefined ? adresse.ville : '');
+      formClient.pays_facturation= ref(pays[(adresse.pays != undefined ? (pays.indexOf(adresse.pays) ? pays.indexOf(adresse.pays) : 10) : '')]);
+   }
+}
+
+
+
 
 var listeEtape = ['Panier', 'Adresse Livraison / Facturation', 'Finaliser commande'];
 var hrefEtape = ['/cart', '/cart/adresses', '/cart/validation'];
@@ -63,30 +118,10 @@ let filteredPays = computed(() =>
       )
 );
 
-const sameAdresseFact = ref(true);
 
 // const paysForm = ref(pays[(props.client.pays != undefined ? (pays.indexOf(props.client.pays) ? pays.indexOf(props.client.pays) : 10) : 10)]);
 
-const formClient = useForm({
-    email: (props.client.email != undefined ? props.client.email : ''),
-    tel: (props.client.tel != undefined ? props.client.tel : ''),
-    num_commande: '',
-    nom_adresse: (props.client.nom_adresse != undefined ? props.client.nom_adresse : ''),
-    adresse1: (props.client.adresse1 != undefined ? props.client.adresse1 : ''),
-    adresse2: (props.client.adresse2 != undefined ? props.client.adresse2 : ''),
-    adresse3: (props.client.adresse3 != undefined ? props.client.adresse3 : ''),
-    code_postal: (props.client.code_postal != undefined ? props.client.code_postal : ''),
-    ville: (props.client.ville != undefined ? props.client.ville : ''),
-    pays: ref(pays[(props.client.pays != undefined ? (pays.indexOf(props.client.pays) ? pays.indexOf(props.client.pays) : 10) : '')]),
-    sameAdresseFact: ref(sameAdresseFact),
-    nom_adresse_facturation: (props.client.nom_adresse_facturation != undefined ? props.client.nom_adresse_facturation : ''),
-    adresse1_facturation: (props.client.adresse1_facturation != undefined ? props.client.adresse1_facturation : ''),
-    adresse2_facturation: (props.client.adresse2_facturation != undefined ? props.client.adresse2_facturation : ''),
-    adresse3_facturation: (props.client.adresse3_facturation != undefined ? props.client.adresse3_facturation : ''),
-    code_postal_facturation: (props.client.code_postal_facturation != undefined ? props.client.code_postal_facturation : ''),
-    ville_facturation: (props.client.ville_facturation != undefined ? props.client.ville_facturation : ''),
-    pays_facturation: ref(pays[(props.client.pays_facturation != undefined ? (pays.indexOf(props.client.pays_facturation) ? pays.indexOf(props.client.pays_facturation) : 10) : '')]),
-});
+
 
 var validationAdresse = () => {
    formClient.post(route('cart/adresses'),{
@@ -160,10 +195,13 @@ export default {
          <div class="lg:col-span-3 col-span-4 xl:ml-0 lg:ml-16 lg:mx-0 sm:mx-12">
             <div class="bg-white border border-primary-100 rounded mb-5">
                <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-sm w-full">Informations générale</h2>
+               <div class="text-center w-full my-2">
+                  <span>* Informations obligatoires</span>
+               </div>
                <div  class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="sm:col-span-4 col-span-5">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="mail_client"><span class="pr-2"><Mail /></span> E-Mail :</label>
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="mail_client"><span class="pr-2">* <Mail /></span> E-Mail :</label>
                         </div>
                         <div class="sm:col-span-8 col-span-7">
                            <input type="text" id="mail_client"
@@ -172,21 +210,10 @@ export default {
                            <InputError class="mt-2" :message="formClient.errors.email" />
                         </div>
                      </div>
-                  <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="sm:col-span-4 col-span-6">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="tel_client"><span class="mr-2"><Phone /> </span> Téléphone :</label>
-                        </div>
-                        <div class="sm:col-span-8 col-span-6">
-                           <input type="text" id="tel_client"
-                           class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" 
-                              name="tel" required="" autofocus="" autocomplete="tel" v-model="formClient.tel"/>
-                           <InputError class="mt-2" :message="formClient.errors.tel" />
-                        </div>
-                     </div>
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="sm:col-span-4 col-span-5">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="mail_client"><span class="pr-2"><Box /></span> N° Commande :</label>
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="mail_client"><span class="pr-2">* <Box /></span> N° Commande :</label>
                         </div>
                         <div class="sm:col-span-8 col-span-7">
                            <input type="text" id="num_commande"
@@ -199,13 +226,64 @@ export default {
             </div>
             <div class="bg-white border border-primary-100 rounded my-5">
                <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-sm w-full">Saisir l'adresse de livraison</h2>
+               <div class="text-center w-full my-2">
+                  <span>* Informations obligatoires</span>
+               </div>
                <div class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
-
-                  <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="nom_adresse_client"><span class="pr-2"><City /></span> Contact:</label>
+                  <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12" v-if="adressesList != ''">
+                        <div class="sm:col-span-3 col-span-4">
+                           <label for="adresses_client" class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"><span class=" inline-flex left-3 items-center justify-items-center justify-center h-3/4 top-1"><City /> </span> Liste des adresses enregistrées :</label>
                         </div>
-                        <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
+                        <div class="sm:col-span-9 col-span-8">
+                           <Combobox v-model="selectedAdresseL">
+                              <div class="relative">
+                                 <div class="relative w-full cursor-default overflow-hidden rounded-lg bg-transparent text-left shadow-md 
+                                 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 
+                                 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                                    <ComboboxInput
+                                       class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-sm leading-5 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
+                                       :displayValue="(adresseOne) => {autocompletForm();return adresseOne.nom_adresse;}" @change="queryAL.value = $event.target.value;autocompletForm()" 
+                                       placeholder="Sélectionnez votre adresse" name="adresse" required autofocus />
+                                    <ComboboxButton class="absolute inset-y-0 right-0 flex items-center pr-2">
+                                       <UnfoldMoreHorizontal class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    </ComboboxButton>
+                                 </div>
+                                 <TransitionRoot leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0"
+                                    @after-leave="queryAL = ''">
+                                    <ComboboxOptions
+                                       class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                       <div v-if="filteredadresseLivraison.length === 0 && queryAL !== ''"
+                                          class="relative cursor-default select-none py-2 px-4 text-gray-700">
+                                          Aucun résultat.
+                                       </div>
+
+                                       <ComboboxOption v-for="adresseOne in filteredadresseLivraison" as="template" :key="adresseOne"
+                                          :value="adresseOne" v-slot="{ selected, active }">
+                                          <li class="relative cursor-default select-none py-2 pl-10 pr-4" :class="{
+                                             'bg-teal-600 text-white': active,
+                                             'text-gray-900': !active,
+                                          }">
+                                             <span class="block truncate"
+                                                :class="{ 'font-medium': selected, 'font-normal': !selected }">
+                                                {{ adresseOne.nom_adresse }}
+                                             </span>
+                                             <span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3"
+                                                :class="{ 'text-white': active, 'text-teal-600': !active }">
+                                                <Check class="h-5 w-5" aria-hidden="true" />
+                                             </span>
+                                          </li>
+                                       </ComboboxOption>
+                                    </ComboboxOptions>
+                                 </TransitionRoot>
+                              </div>
+                           </Combobox>
+                        </div>
+                     </div>
+                  <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
+                        <div class="2xl:col-span-4 lg:col-span-6 sm:col-span-5 col-span-8">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="nom_adresse_client"><span class="pr-2">* <City /></span> Contact:</label>
+                        </div>
+                        <div class="2xl:col-span-8 lg:col-span-6 sm:col-span-7 col-span-4">
                            <input type="text" id="nom_adresse_client"
                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                               name="nom_adresse" required="" autofocus="" v-model="formClient.nom_adresse"/>
@@ -214,10 +292,10 @@ export default {
                      </div>
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="adresse_client"><span class="pr-2"><City /></span> Adresse :</label>
+                        <div class="2xl:col-span-4 lg:col-span-6 sm:col-span-5 col-span-8">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="adresse_client"><span class="pr-2">* <City /></span> Adresse :</label>
                         </div>
-                        <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
+                        <div class="2xl:col-span-8 lg:col-span-6 sm:col-span-7 col-span-4">
                            <input type="text" id="adresse_client"
                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                               name="adresse1" required autofocus autocomplete="address-line1" v-model="formClient.adresse1"/>
@@ -226,10 +304,10 @@ export default {
                      </div>
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="complement_adresse_client"><span class="pr-2"><City /></span> Adresse 2 :</label>
+                        <div class="2xl:col-span-4 lg:col-span-6 sm:col-span-5 col-span-8">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="complement_adresse_client"><span class="pr-2">* <City /></span> Complément d'adresse :</label>
                         </div>
-                        <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
+                        <div class="2xl:col-span-8 lg:col-span-6 sm:col-span-7 col-span-4">
                            <input type="text" id="complement_adresse_client"
                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                               name="adresse2" autofocus autocomplete="address-line2" v-model="formClient.adresse2"/>
@@ -238,10 +316,10 @@ export default {
                      </div>
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="information_adresse_client"><span class="pr-2"><City /></span> Adresse 3 :</label>
+                        <div class="2xl:col-span-4 lg:col-span-6 sm:col-span-5 col-span-8">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="information_adresse_client"><span class="pr-2">* <City /></span> Information complèmentaires :</label>
                         </div>
-                        <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
+                        <div class="2xl:col-span-8 lg:col-span-6 sm:col-span-7 col-span-4">
                            <input type="text" id="information_adresse_client"
                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                               name="adresse3" autofocus autocomplete="address-line3" v-model="formClient.adresse3"/>
@@ -251,7 +329,7 @@ export default {
 
                      <div class="col-span-6 2xl:col-span-3 grid grid-cols-12 flex text-lg pb-2">
                         <div class="2xl:col-span-6 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="cp_client"><span class="pr-2"><City /></span> Code postal :</label>
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="cp_client"><span class="pr-2">* <City /></span> Code postal :</label>
                         </div>
                         <div class="2xl:col-span-6 lg:col-span-7 sm:col-span-8 col-span-5">
                            <input type="text" id="cp_client"
@@ -263,7 +341,7 @@ export default {
 
                      <div class="col-span-6 2xl:col-span-3 grid grid-cols-12 flex text-lg pb-2">
                         <div class="2xl:col-span-5 lg:col-span-3 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="ville_client"><span class="pr-2"><City /> </span> Ville :</label>
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="ville_client"><span class="pr-2">* <City /> </span> Ville :</label>
                         </div>
                         <div class="2xl:col-span-7 lg:col-span-9 sm:col-span-8 col-span-5">
                            <input type="text" id="ville_client"
@@ -275,7 +353,7 @@ export default {
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="sm:col-span-3 col-span-4">
-                           <label for="ville_client" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"><span class=" inline-flex left-3 items-center justify-items-center justify-center h-3/4 top-1"> <Flag /> </span> Pays :</label>
+                           <label for="pays_client" class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"><span class=" inline-flex left-3 items-center justify-items-center justify-center h-3/4 top-1">* <Flag /> </span> Pays :</label>
                         </div>
                         <div class="sm:col-span-9 col-span-8">
                            <Combobox v-model="formClient.pays">
@@ -294,7 +372,7 @@ export default {
                                  <TransitionRoot leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0"
                                     @after-leave="query = ''">
                                     <ComboboxOptions
-                                       class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                       class="absolute z-30 mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                        <div v-if="filteredPays.length === 0 && query !== ''"
                                           class="relative cursor-default select-none py-2 px-4 text-gray-700">
                                           Nothing found.
@@ -323,8 +401,19 @@ export default {
                            <InputError class="mt-2" :message="formClient.errors.pays" />
                         </div>
                      </div>
+                     <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
+                        <div class="sm:col-span-3 col-span-5">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="tel_client"><span class="mr-2">* <Phone /> </span> Téléphone :</label>
+                        </div>
+                        <div class="sm:col-span-9 col-span-7">
+                           <input type="text" id="tel_client"
+                           class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0" 
+                              name="tel" required="" autofocus="" autocomplete="tel" v-model="formClient.tel"/>
+                           <InputError class="mt-2" :message="formClient.errors.tel" />
+                        </div>
+                     </div>
                   <div class="col-span-6 z-10 relative py-1 pl-4 pr-4 text-lg rounded bg-primary-50 w-full text-primary-400 flex flex-row items-center">
-                     <label for="sameAdresseFact" class="sm:w-11/12 w-10/12">Utiliser cette adresse comme adresse de facturation</label>
+                     <label for="sameAdresseFact" class="sm:w-11/12 w-10/12 text-[0.9rem]">Utiliser cette adresse comme adresse de facturation</label>
                      <div class="sm:w-1/12 w-2/12 flex justify-center">
                         <Switch id="sameAdresseFact" v-model="sameAdresseFact" :class="sameAdresseFact ? 'bg-blue-600' : 'bg-gray-200'" class="relative inline-flex h-6 w-11 items-center rounded-full">
                            <span class="sr-only">Même adresse de facturation</span>
@@ -337,12 +426,16 @@ export default {
             </div>
             <div v-if="!sameAdresseFact" class="bg-white border border-primary-100 rounded my-5">
                <h2 class="text-center text-3xl text-primary-300 py-1 bg-primary-50 rounded-t-lg w-full">Saisir l'adresse de facturation</h2>
-               <div @submit.prevent="submit" class="grid grid-cols-1 gap-4 p-5 mx-5" id="form_client">
+               <div class="text-center w-full my-2">
+                  <span>* Informations obligatoires</span>
+               </div>
+               <div @submit.prevent="submit" class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
+                  
                   <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="nom_adresse_client"><span class="pr-2"><City /></span> Nom adresse :</label>
+                        <div class="2xl:col-span-4 lg:col-span-6 sm:col-span-5 col-span-8">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="nom_adresse_client"><span class="pr-2">* <City /></span> Nom adresse :</label>
                         </div>
-                        <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
+                        <div class="2xl:col-span-8 lg:col-span-6 sm:col-span-7 col-span-4">
                            <input type="text" id="nom_adresse_client"
                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                               name="nom_adresse" required="" autofocus="" v-model="formClient.nom_adresse_facturation"/>
@@ -351,10 +444,10 @@ export default {
                      </div>
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="adresse_client"><span class="pr-2"><City /></span> Adresse 1 :</label>
+                        <div class="2xl:col-span-4 lg:col-span-6 sm:col-span-5 col-span-8">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="adresse_client"><span class="pr-2">* <City /></span> Adresse :</label>
                         </div>
-                        <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
+                        <div class="2xl:col-span-8 lg:col-span-6 sm:col-span-7 col-span-4">
                            <input type="text" id="adresse_client"
                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                               name="adresse1" required autofocus autocomplete="address-line1" v-model="formClient.adresse1_facturation"/>
@@ -363,10 +456,10 @@ export default {
                      </div>
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="complement_adresse_client"><span class="pr-2"><City /></span> Adresse 2 :</label>
+                        <div class="2xl:col-span-4 lg:col-span-6 sm:col-span-5 col-span-8">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="complement_adresse_client"><span class="pr-2"> <City /></span> Complément d'adresse :</label>
                         </div>
-                        <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
+                        <div class="2xl:col-span-8 lg:col-span-6 sm:col-span-7 col-span-4">
                            <input type="text" id="complement_adresse_client"
                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                               name="adresse2" autofocus autocomplete="address-line2" v-model="formClient.adresse2_facturation"/>
@@ -375,10 +468,10 @@ export default {
                      </div>
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
-                        <div class="2xl:col-span-3 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="information_adresse_client"><span class="pr-2"><City /></span> Adresse 3 :</label>
+                        <div class="2xl:col-span-4 lg:col-span-6 sm:col-span-5 col-span-8">
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="information_adresse_client"><span class="pr-2"> <City /></span> Information complèmentaires :</label>
                         </div>
-                        <div class="2xl:col-span-9 lg:col-span-7 sm:col-span-8 col-span-5">
+                        <div class="2xl:col-span-8 lg:col-span-6 sm:col-span-7 col-span-4">
                            <input type="text" id="information_adresse_client"
                            class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-primary-200 focus:ring-0"
                               name="adresse3" autofocus autocomplete="address-line3" v-model="formClient.adresse3_facturation"/>
@@ -388,7 +481,7 @@ export default {
 
                      <div class="col-span-6 2xl:col-span-3 grid grid-cols-12 flex text-lg pb-2">
                         <div class="2xl:col-span-6 lg:col-span-5 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-2" for="cp_client"><span class="pr-1"><City /></span> Code postal :</label>
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-2" for="cp_client"><span class="pr-1">* <City /></span> Code postal :</label>
                         </div>
                         <div class="2xl:col-span-6 lg:col-span-7 sm:col-span-8 col-span-5">
                            <input type="text" id="cp_client"
@@ -400,7 +493,7 @@ export default {
 
                      <div class="col-span-6 2xl:col-span-3 grid grid-cols-12 flex text-lg pb-2">
                         <div class="2xl:col-span-5 lg:col-span-3 sm:col-span-4 col-span-7">
-                           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="ville_client"><span class="pr-2"><City /> </span> Ville :</label>
+                           <label class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="ville_client"><span class="pr-2">* <City /> </span> Ville :</label>
                         </div>
                         <div class="2xl:col-span-7 lg:col-span-9 sm:col-span-8 col-span-5">
                            <input type="text" id="ville_client"
@@ -412,7 +505,7 @@ export default {
 
                      <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12">
                         <div class="sm:col-span-3 col-span-4">
-                           <label for="ville_client" class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"><span class=" inline-flex left-3 items-center justify-items-center justify-center h-3/4 top-1"> <Flag /> </span> Pays :</label>
+                           <label for="pays_client" class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"><span class=" inline-flex left-3 items-center justify-items-center justify-center h-3/4 top-1">* <Flag /> </span> Pays :</label>
                         </div>
                         <div class="sm:col-span-9 col-span-8">
                            <Combobox v-model="formClient.pays_facturation">
@@ -431,7 +524,7 @@ export default {
                                  <TransitionRoot leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0"
                                     @after-leave="query = ''">
                                     <ComboboxOptions
-                                       class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                       class="absolute z-30 mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                        <div v-if="filteredPays.length === 0 && query !== ''"
                                           class="relative cursor-default select-none py-2 px-4 text-gray-700">
                                           Nothing found.

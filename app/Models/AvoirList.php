@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Adresse extends Model
+class AvoirList extends Model
 {
     use HasFactory;
 
-    protected $table = "adresse";
-    protected $primaryKey = "id_adresse";
+    protected $table = "avoir_list";
+    protected $primaryKey = "id_avoir_list";
     public $timestamps = false;
 
     /**
@@ -23,17 +23,27 @@ class Adresse extends Model
         'date_maj',
         'id_user',
         'id_user_maj',
-        'id_client',
-        'nom_contact',
-        'adresse1',
-        'adresse2',
-        'adresse3',
-        'code_postal',
-        'ville',
-        'pays',
-        'tel1',
-        'tel2',
-        'statut'
+        'id_commande',
+        'id_avoir',
+        'id_commande_list',
+        'id_produit',
+        'code_sku',
+        'gencode',
+        'prix_achat_ht',
+        'prix_ht',
+        'prix_total_ht',
+        'prix_total_ttc',
+        'taux_tva',
+        'quantite',
+        'remise',
+        'prix_remise_ht',
+        'total_tva',
+        'note',
+        'id_facture',
+        'statut',
+        'drop_shipping',
+        'designation',
+        'is_supplement'
     ];
 
     /**
@@ -56,12 +66,4 @@ class Adresse extends Model
     protected $casts = [
 
     ];
-
-    /**
-     * Permet la récupération de l'adresse lier a cette ligne
-     */
-    public function adresse()
-    {
-        return $this->belongsTo(AdresseEdi::class,'id_adresse','id_adresse');
-    }
 }

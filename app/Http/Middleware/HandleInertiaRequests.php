@@ -2,17 +2,22 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Adresse;
+use App\Models\AdresseEdi;
 use App\Models\ClientEDI;
 use App\Models\Gamme;
 use App\Models\PanierEdi;
 use App\Models\PanierEdiList;
 use App\Models\PrixProduitSpecifique;
 use App\Models\Produit;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -240,6 +245,15 @@ class HandleInertiaRequests extends Middleware
                     ->where('gamme.statut', '=', '1')->orderBy('nom_gamme', 'asc')->get();
                 }
                 return $gammeList;
+            },
+            'adressesList' => function() use($request) {
+                if(isset($request->user()->id) && !empty($request->user()->id)){
+                    $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+                    $adresseEDI = AdresseEdi::with(['adresse'])->where('id_client','=',$user->client->id_client)->get();
+                    return $adresseEDI;
+                }else{
+                    return new stdClass;
+                }
             },
             'session' => function () use ($request) {
                 return $request->session()->all();
