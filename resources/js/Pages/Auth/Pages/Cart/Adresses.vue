@@ -79,7 +79,6 @@ let filteredadresseLivraison = computed(() =>
 var autocompletForm = () => {
    if(selectedAdresseL.value != ''){
       var adresse = selectedAdresseL.value.adresse;
-      console.log(adresse)
       formClient.tel= (adresse.tel1 != undefined ? adresse.tel1 : '');
       formClient.nom_adresse= (adresse.nom_contact != undefined ? adresse.nom_contact : '');
       formClient.adresse1= (adresse.adresse1 != undefined ? adresse.adresse1 : '');
@@ -230,7 +229,7 @@ export default {
                   <span>* Informations obligatoires</span>
                </div>
                <div class="grid grid-cols-6 gap-4 p-5 mx-5" id="form_client">
-                  <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12" v-if="adressesList != ''">
+                  <div class="col-span-6 flex text-lg pb-2 grid grid-cols-12" v-if="listeAdresses != ''">
                         <div class="sm:col-span-3 col-span-4">
                            <label for="adresses_client" class="text-[0.9rem] block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"><span class=" inline-flex left-3 items-center justify-items-center justify-center h-3/4 top-1"><City /> </span> Liste des adresses enregistrées :</label>
                         </div>

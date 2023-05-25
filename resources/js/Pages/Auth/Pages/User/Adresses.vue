@@ -247,7 +247,7 @@ export default {
                         </div>
                      </div>
                   </div>
-                  <div v-else class="col-span-2">
+                  <div v-else class="col-span-3">
                      <div class="flex flex-col items-center justify-center">
                         <span class="text-xl font-semibold my-5">Votre carnet d'adresse est vide !</span>
                         <button @click="setIsOpen(true)" class="px-2 bg-primary-50 hover:scale-110 transition duration-300 rounded h-auto flex items-center justify-center">

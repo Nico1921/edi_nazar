@@ -2,6 +2,7 @@
 import InputNumber from '@/Components/InputNumber.vue';
 import { useForm,usePage } from '@inertiajs/inertia-vue3';
 import { ref, watchEffect, onMounted } from 'vue';
+import {decode} from 'html-entities';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import "swiper/css";
@@ -145,7 +146,7 @@ import Right from 'icons/MenuRight.vue';
                <div class=" bg-gray-200 grid grid-cols-12 px-4 py-4" :class="hBlock" >
                   <div :class="props.classGridImage" class="flex items-stretch justify-center w-full">
                      <div v-if="design.photo != null" class=" w-full" >
-                        <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+design.photo.img_produit" :alt="design.code_sku" class="w-full h-full object-content"/>
+                        <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+decode(design.photo.img_produit)" :alt="design.code_sku" class="w-full h-full object-content"/>
                      </div>
                      <div v-else class="text-3xl  w-full flex items-stretch justify-center bg-gray-300">
                         <ImageOff />

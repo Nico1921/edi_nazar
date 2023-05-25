@@ -2,6 +2,7 @@
 import { Head, usePage,useForm } from '@inertiajs/inertia-vue3';
 import EtapeOrder from '@/Components/EtapeOrder.vue';
 import { ref,watchEffect } from 'vue';
+import {decode} from 'html-entities';
 import BoutonPaiement from '@/Components/BouttonPaiement.vue';
 import {
   RadioGroup,
@@ -195,7 +196,7 @@ export default {
                                     <div class="xl:col-span-4 lg:col-span-4 sm:col-span-2 xsm:col-span-4 col-span-4 flex items-center justify-center">
                                        <div v-if="produit.photo != null"
                                           class="lg:h-[150px] sm:h-[130px] h-full w-full px-2">
-                                          <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+produit.photo.img_produit"
+                                          <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+decode(produit.photo.img_produit)"
                                              :alt="produit.code_sku" class="w-full h-full object-cover rounded-xl" />
                                        </div>
                                        <div v-else>

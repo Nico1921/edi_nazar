@@ -2,6 +2,7 @@
 import InputNumber from '@/Components/InputNumber.vue';
 import InputError from '@/Components/InputError.vue';
 import { useForm,usePage } from '@inertiajs/inertia-vue3';
+import {decode} from 'html-entities';
 import { ref, watchEffect, onMounted } from 'vue';
 import {
    TransitionRoot,
@@ -229,7 +230,7 @@ import { Inertia } from '@inertiajs/inertia';
                <div class="swiper-pagination-custom flex items-center justify-center !z-40 relative py-2"></div>
                <swiper-slide class="xl:!h-full !h-52 !flex items-center justify-center" v-for="(design, key) in designs" :key="key">
                   <div v-if="design.photo != null" class="h-full w-full">
-                     <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+design.photo.img_produit" :alt="design.code_sku" class="w-full h-full object-contain"/>
+                     <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+decode(design.photo.img_produit)" :alt="design.code_sku" class="w-full h-full object-contain"/>
                   </div>
                   <div v-else class="text-3xl h-full w-full flex items-stretch justify-center bg-gray-300">
                      <ImageOff />
