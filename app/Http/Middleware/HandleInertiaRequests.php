@@ -2,17 +2,22 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Adresse;
+use App\Models\AdresseEdi;
 use App\Models\ClientEDI;
 use App\Models\Gamme;
 use App\Models\PanierEdi;
 use App\Models\PanierEdiList;
 use App\Models\PrixProduitSpecifique;
 use App\Models\Produit;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
@@ -74,6 +79,23 @@ class HandleInertiaRequests extends Middleware
                             $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
                             $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
                             foreach($panierList as $list){
+                                //metre a jour le prix de chaque produit a chaque appel
+                                /*$produit = Produit::where('id_produit', '=', $list->id_produit)->first();
+                                $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
+                                $prix_TTC_TT = round($prix_ttc_unitaire * $list->quantiter,2);
+                                $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
+                                $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
+                                $list->quantiter = $list->quantiter;
+                                $list->prix_ttc_total = $prix_TTC_TT;
+                                $list->prix_taxe_total = $prix_TVA_TT;
+                                $list->prix_ht_total = $prix_HT_TT;
+                                $list->save();
+                                PanierEdi::calculPrixPanier($panierGet->id_panier_edi);
+                                ClientEDI::calculPrixPanier($id_client_edi);*/
+                                //-------------------------------------------------------
+
+
                                 $produit = Produit::with(['photo','dimension','statsProduit','design','couleur'])->where('id_produit','=',$list->id_produit)->get();
                                 for($i=0;$i<count($produit);$i++){
                                     $gamme = Gamme::where('id_gamme','=',$produit[$i]->gamme_id)->first();
@@ -133,8 +155,25 @@ class HandleInertiaRequests extends Middleware
                                     $query->with(['photo','dimension','statsProduit','design','gamme', 'couleur']);
                                     }])->where('id_client_edi','=',$id_client_edi)->get();
                                 $produits =array();
+
                                 for($j=0;$j<count($panierList);$j++){
-                                    $list = $panierList[$j];                                    
+                                    $list = $panierList[$j];  
+   
+                                //metre a jour le prix de chaque produit a chaque appel
+                                /*$produit = Produit::where('id_produit', '=', $list->id_produit)->first();
+                                $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
+                                $prix_TTC_TT = round($prix_ttc_unitaire * $list->quantiter,2);
+                                $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
+                                $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
+                                $list->prix_ttc_total = $prix_TTC_TT;
+                                $list->prix_taxe_total = $prix_TVA_TT;
+                                $list->prix_ht_total = $prix_HT_TT;
+                                $list->save();
+                                PanierEdi::calculPrixPanier($panierGet->id_panier_edi);
+                                ClientEDI::calculPrixPanier($id_client_edi);*/
+                                //-------------------------------------------------------                            
+                                                                      
                                     $produit = $list->produit;
 
                                     $gamme =  $list->produit->gamme;
@@ -240,6 +279,15 @@ class HandleInertiaRequests extends Middleware
                     ->where('gamme.statut', '=', '1')->orderBy('nom_gamme', 'asc')->get();
                 }
                 return $gammeList;
+            },
+            'adressesList' => function() use($request) {
+                if(isset($request->user()->id) && !empty($request->user()->id)){
+                    $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
+                    $adresseEDI = AdresseEdi::with(['adresse'])->where('id_client','=',$user->client->id_client)->get();
+                    return $adresseEDI;
+                }else{
+                    return new stdClass;
+                }
             },
             'session' => function () use ($request) {
                 return $request->session()->all();

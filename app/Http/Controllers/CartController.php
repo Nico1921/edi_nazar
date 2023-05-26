@@ -37,6 +37,8 @@ class CartController extends Controller
     public function create(Request $request)
     {
         if($request->session()->has('panier_commercial')){
+            //$panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+            //$this->update_price_product_cart($panierGet);
             $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
             $request->session()->put('panier_commercial', $panierGet);
             $panierCom = $panierGet;
@@ -69,7 +71,12 @@ class CartController extends Controller
                     $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();  
                     if(!$panier->is_validate){
                         if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
-                            $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
+
+                            //refresh prix produit
+                            $produit = Produit::where('id_produit', '=', $request->idProduit)->first();
+                            $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
+                            $prix_TTC_TT = round($prix_ttc_unitaire * $request->quantiter,2);
                             $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
                             $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
                             $panierList->quantiter = $request->quantiter;
@@ -107,6 +114,10 @@ class CartController extends Controller
                     $panier = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=', $request->id_panier_edi)->first();  
                     if(!$panier->is_validate){
                         if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
+                            //refresh prix produit
+                            $produit = Produit::where('id_produit', '=', $request->idProduit)->first();
+                            $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
                             $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
                             $prix_HT_TT = round($prix_TTC_TT / 1.2,2);;
                             $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
@@ -310,6 +321,10 @@ class CartController extends Controller
     }
 
     public function create_adresses_validation_drop(Request $request) {
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_mkp')->id_panier_edi)->first();
+        $this->update_price_product_cart($panierGet);
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_mkp')->id_panier_edi)->first();
+        $request->session()->put('panier_mkp', $panierGet);
         $panier = array();
         if($request->session()->has('panier_mkp')){
             $panier = $request->session()->get('panier_mkp');
@@ -469,6 +484,10 @@ class CartController extends Controller
     }
 
     public function create_adresses_validation(Request $request) {
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+        $this->update_price_product_cart($panierGet);
+        $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $request->session()->get('panier_commercial')->id_panier_edi)->first();
+        $request->session()->put('panier_commercial', $panierGet);
         $panierCom = array();
         $produits = array();
         $clientEDI = null;
@@ -839,6 +858,39 @@ class CartController extends Controller
         }
 
         return Inertia::render('Auth/Pages/Cart/AdressesDrop');
+    }
+
+    public function update_price_product_cart($panier){
+        $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
+        if (isset($user->id) && !empty($user->id) && isset($user->client->id_client) && !empty($user->client->id_client)) {
+            if(isset($panier->client_edi_list) && count($panier->client_edi_list) > 0){
+                
+
+                //echo json_encode($panier);die();
+                    $id_client_edi = $panier->client_edi_list[0]->id_client_edi;
+                    $panierGet = PanierEdi::with(['client_edi_list'])->where('id_panier_edi', '=',  $panier->id_panier_edi)->first();
+                    $panierCount = PanierEdiList::where('id_client_edi','=',$id_client_edi)->sum('quantiter');
+                    $panierList = PanierEdiList::where('id_client_edi','=',$id_client_edi)->get();
+                    foreach($panierList as $list){
+                        //metre a jour le prix de chaque produit a chaque appel
+                        $produit = Produit::where('id_produit', '=', $list->id_produit)->first();
+                        $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
+                        $prix_TTC_TT = round($prix_ttc_unitaire * $list->quantiter,2);
+                        $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
+                        $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
+                        $list->quantiter = $list->quantiter;
+                        $list->prix_ttc_total = $prix_TTC_TT;
+                        $list->prix_taxe_total = $prix_TVA_TT;
+                        $list->prix_ht_total = $prix_HT_TT;
+                        $list->save();
+                        PanierEdi::calculPrixPanier($panierGet->id_panier_edi);
+                        ClientEDI::calculPrixPanier($id_client_edi);
+                }
+
+            }  
+            
+        }
     }
 
 }

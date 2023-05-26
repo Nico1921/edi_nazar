@@ -1,5 +1,6 @@
 <script setup>
 import InputNumber from '@/Components/InputNumber.vue';
+import {decode} from 'html-entities';
 import { useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 
@@ -114,7 +115,7 @@ import Edit from 'icons/Pencil.vue';
                <tr v-for="(product, key) in products" :key="key" >
                   <td class="w-1/12 text-sm py-4 px-6 text-gray-500 whitespace-nowrap">
                      <div v-if="product.photo != null" class="lg:w-[45px] lg:h-[75px] sm:w-[60px] sm:h-[90px] w-[70px] h-[100px]">
-                        <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+product.photo.img_produit" :alt="product.code_sku" class="w-full h-full object-cover"/>
+                        <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+decode(product.photo.img_produit)" :alt="product.code_sku" class="w-full h-full object-cover"/>
                      </div>
                      <div v-else>
                         <span>Pas de photo pour ce produit !</span>

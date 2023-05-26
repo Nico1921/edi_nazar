@@ -56,4 +56,12 @@ class Adresse extends Model
     protected $casts = [
 
     ];
+
+    /**
+     * Permet la récupération de l'adresse lier a cette ligne
+     */
+    public function adresse()
+    {
+        return $this->belongsTo(AdresseEdi::class,'id_adresse','id_adresse');
+    }
 }

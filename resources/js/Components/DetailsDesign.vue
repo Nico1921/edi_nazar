@@ -4,6 +4,7 @@ import { useForm,usePage } from '@inertiajs/inertia-vue3';
 import { ref,watchEffect, onMounted  } from 'vue';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import {decode} from 'html-entities';
 import "swiper/css";
 import "swiper/css/navigation";
 import 'swiper/css/pagination';
@@ -125,7 +126,7 @@ import Right from 'icons/MenuRight.vue';
                <div class="swiper-pagination-custom flex items-center justify-center !z-40 relative py-2"></div>
                <swiper-slide class="xl:!h-full !h-52 !flex items-center justify-center" v-for="(design, key) in designs" :key="key">
                   <div v-if="design.photo != null" class="h-full w-full">
-                     <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+design.photo.img_produit" :alt="design.code_sku" class="w-full h-full object-contain"/>
+                     <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+decoed(design.photo.img_produit)" :alt="design.code_sku" class="w-full h-full object-contain"/>
                   </div>
                   <div v-else class="text-3xl h-full w-full flex items-stretch justify-center bg-gray-300">
                      <ImageOff />

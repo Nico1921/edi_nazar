@@ -448,7 +448,7 @@ class OrderEntrepotController extends Controller
             ]);
 
             if (isset($panier->id_panier_edi) && !empty($panier->id_panier_edi)) {
-                $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+                $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
                 if (isset($user->id) && !empty($user->id) && isset($user->client->id_client) && !empty($user->client->id_client)) {
                     $num_commande = ClientEdi::genNumCommande($panier->id_panier_edi);
                     $contact = explode(' ', $user->client->contact);
@@ -514,7 +514,11 @@ class OrderEntrepotController extends Controller
             if (isset($request->id_panier_edi_list) && !empty($request->id_panier_edi_list) && $request->id_panier_edi_list > 0) {
                 $panierList = PanierEdiList::where('id_panier_edi_list', '=', $request->id_panier_edi_list)->first();
                 if (isset($panierList->id_panier_edi_list) && !empty($panierList->id_panier_edi_list)) {
-                    $prix_TTC_TT = round($panierList->prix_ttc_unitaire * $request->quantiter,2);
+                    //refresh prix produit
+                    $produit = Produit::where('id_produit', '=', $request->idProduit)->first();
+                    $prix_ttc_unitaire = round(round(Produit::calcul_prix_produit($produit->id_produit,1),3),2);
+
+                    $prix_TTC_TT = round($prix_ttc_unitaire * $request->quantiter,2);
                     $prix_HT_TT = round($prix_TTC_TT / 1.2,2);
                     $prix_TVA_TT = round($prix_TTC_TT - $prix_HT_TT,2);
                      $panierList->quantiter = $request->quantiter;
@@ -633,7 +637,7 @@ class OrderEntrepotController extends Controller
             ]);
 
             if (isset($panier->id_panier_edi) && !empty($panier->id_panier_edi)) {
-                $user = User::with(['client'])->find(Auth::user()->getAuthIdentifier())->first();
+                $user = User::with(['client'])->where('id','=',Auth::user()->getAuthIdentifier())->first();
                 if (isset($user->id) && !empty($user->id) && isset($user->client->id_client) && !empty($user->client->id_client)) {
                     $num_commande = ClientEdi::genNumCommande($panier->id_panier_edi);
                     $contact = explode(' ', $user->client->contact);

@@ -1,6 +1,7 @@
 <script setup>
 import { usePage, useForm  } from '@inertiajs/inertia-vue3';
 import { ref, watchEffect } from 'vue';
+import {decode} from 'html-entities';
 import InputNumber from '@/Components/InputNumber.vue';
 
 var prop = defineProps(['produits','panier']);
@@ -134,7 +135,7 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/20/solid';
                   <div class="sm:col-span-4 xsm:col-span-3 col-span-4 flex items-center justify-center">
                      <div v-if="produit.photo != null"
                         class="h-full w-full lg:max-h-52 max-h-42 min-h-min px-2">
-                        <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+produit.photo.img_produit"
+                        <img :src="'https://gestion.tapis-nazar.fr/img/produit/'+decode(produit.photo.img_produit)"
                            :alt="produit.code_sku" class="w-full h-full object-cover rounded-xl" />
                      </div>
                      <div v-else class="text-3xl m-2 lg:h-[150px] sm:h-[130px] h-full w-full flex items-stretch justify-center bg-gray-300">

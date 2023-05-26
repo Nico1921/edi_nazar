@@ -1,4 +1,8 @@
 {
+  "resources/fonts/Sofia/Sofia Pro ExtraLight Az.otf": {
+    "file": "assets/Sofia Pro ExtraLight Az.d334dbb0.otf",
+    "src": "resources/fonts/Sofia/Sofia Pro ExtraLight Az.otf"
+  },
   "resources/fonts/Sofia/Sofia Pro ExtraLight Az.svg": {
     "file": "assets/Sofia Pro ExtraLight Az.1f4e0d21.svg",
     "src": "resources/fonts/Sofia/Sofia Pro ExtraLight Az.svg"
@@ -10,10 +14,6 @@
   "resources/fonts/Sofia/Sofia Pro Regular Az.svg": {
     "file": "assets/Sofia Pro Regular Az.2967ffef.svg",
     "src": "resources/fonts/Sofia/Sofia Pro Regular Az.svg"
-  },
-  "resources/fonts/Sofia/Sofia Pro ExtraLight Az.ttf": {
-    "file": "assets/Sofia Pro ExtraLight Az.0e5ccaf9.ttf",
-    "src": "resources/fonts/Sofia/Sofia Pro ExtraLight Az.ttf"
   },
   "resources/fonts/Sofia/Sofia Pro Regular Az.woff": {
     "file": "assets/Sofia Pro Regular Az.fb81f185.woff",
@@ -27,17 +27,17 @@
     "file": "assets/schema.8ec98f90.webp",
     "src": "resources/images/AboutUs/schema.webp"
   },
-  "resources/images/AboutUs/bandeau_a_propos.webp": {
-    "file": "assets/bandeau_a_propos.1b588a9b.webp",
-    "src": "resources/images/AboutUs/bandeau_a_propos.webp"
-  },
-  "resources/fonts/Sofia/Sofia Pro ExtraLight Az.otf": {
-    "file": "assets/Sofia Pro ExtraLight Az.d334dbb0.otf",
-    "src": "resources/fonts/Sofia/Sofia Pro ExtraLight Az.otf"
-  },
   "resources/fonts/Sofia/Sofia Pro Regular Az.ttf": {
     "file": "assets/Sofia Pro Regular Az.fff1b55a.ttf",
     "src": "resources/fonts/Sofia/Sofia Pro Regular Az.ttf"
+  },
+  "resources/fonts/Sofia/Sofia Pro ExtraLight Az.ttf": {
+    "file": "assets/Sofia Pro ExtraLight Az.0e5ccaf9.ttf",
+    "src": "resources/fonts/Sofia/Sofia Pro ExtraLight Az.ttf"
+  },
+  "resources/images/AboutUs/bandeau_a_propos.webp": {
+    "file": "assets/bandeau_a_propos.1b588a9b.webp",
+    "src": "resources/images/AboutUs/bandeau_a_propos.webp"
   },
   "resources/images/Accueil/BtoB.webp": {
     "file": "assets/BtoB.5be39b6a.webp",
@@ -67,17 +67,13 @@
     "file": "assets/default.03bed8d0.svg",
     "src": "resources/images/Logo/Profile/default.svg"
   },
-  "resources/images/Accueil/Collection_ASMA.webp": {
-    "file": "assets/Collection_ASMA.94bb0d13.webp",
-    "src": "resources/images/Accueil/Collection_ASMA.webp"
+  "resources/images/Accueil/Collection_HARMONIE.webp": {
+    "file": "assets/Collection_HARMONIE.6b32c896.webp",
+    "src": "resources/images/Accueil/Collection_HARMONIE.webp"
   },
   "resources/images/Accueil/Collection_CARRY.webp": {
     "file": "assets/Collection_CARRY.c6a46794.webp",
     "src": "resources/images/Accueil/Collection_CARRY.webp"
-  },
-  "resources/images/Accueil/Collection_HARMONIE.webp": {
-    "file": "assets/Collection_HARMONIE.6b32c896.webp",
-    "src": "resources/images/Accueil/Collection_HARMONIE.webp"
   },
   "resources/images/Logo/nazar2019.jpg": {
     "file": "assets/nazar2019.b01b3ae8.jpg",
@@ -87,10 +83,6 @@
     "file": "assets/Collection_STAMPA.3a58f71c.webp",
     "src": "resources/images/Accueil/Collection_STAMPA.webp"
   },
-  "resources/images/Logo/Nazar-Logo.ico": {
-    "file": "assets/Nazar-Logo.95ead63e.ico",
-    "src": "resources/images/Logo/Nazar-Logo.ico"
-  },
   "resources/images/Symbole/Bulle.svg": {
     "file": "assets/Bulle.cbe2481e.svg",
     "src": "resources/images/Symbole/Bulle.svg"
@@ -99,9 +91,21 @@
     "file": "assets/Carre.682ee309.svg",
     "src": "resources/images/Symbole/Carre.svg"
   },
+  "resources/images/Logo/Nazar-Logo.ico": {
+    "file": "assets/Nazar-Logo.95ead63e.ico",
+    "src": "resources/images/Logo/Nazar-Logo.ico"
+  },
   "resources/images/Symbole/Coeur.svg": {
     "file": "assets/Coeur.3fe788d3.svg",
     "src": "resources/images/Symbole/Coeur.svg"
+  },
+  "resources/images/Accueil/Collection_ASMA.webp": {
+    "file": "assets/Collection_ASMA.94bb0d13.webp",
+    "src": "resources/images/Accueil/Collection_ASMA.webp"
+  },
+  "resources/images/FondLogin/fond2.webp": {
+    "file": "assets/fond2.5b70c94d.webp",
+    "src": "resources/images/FondLogin/fond2.webp"
   },
   "resources/images/Symbole/Main.svg": {
     "file": "assets/Main.a6b72dab.svg",
@@ -122,10 +126,6 @@
   "resources/images/Symbole/Trait.svg": {
     "file": "assets/Trait.c42339f4.svg",
     "src": "resources/images/Symbole/Trait.svg"
-  },
-  "resources/images/FondLogin/fond2.webp": {
-    "file": "assets/fond2.5b70c94d.webp",
-    "src": "resources/images/FondLogin/fond2.webp"
   },
   "resources/images/Symbole/Tag.svg": {
     "file": "assets/Tag.25020b16.svg",
@@ -159,21 +159,25 @@
     "file": "assets/fond1.9132eec8.jpg",
     "src": "resources/images/FondLogin/fond1.jpg"
   },
-  "node_modules/flag-icons/flags/1x1/xx.svg": {
-    "file": "assets/xx.e2d258c5.svg",
-    "src": "node_modules/flag-icons/flags/1x1/xx.svg"
-  },
   "node_modules/flag-icons/flags/4x3/xx.svg": {
     "file": "assets/xx.972e0781.svg",
     "src": "node_modules/flag-icons/flags/4x3/xx.svg"
   },
-  "node_modules/flag-icons/flags/4x3/af.svg": {
-    "file": "assets/af.318f28f1.svg",
-    "src": "node_modules/flag-icons/flags/4x3/af.svg"
+  "node_modules/flag-icons/flags/1x1/xx.svg": {
+    "file": "assets/xx.e2d258c5.svg",
+    "src": "node_modules/flag-icons/flags/1x1/xx.svg"
   },
   "node_modules/flag-icons/flags/4x3/ae.svg": {
     "file": "assets/ae.e646ea13.svg",
     "src": "node_modules/flag-icons/flags/4x3/ae.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ag.svg": {
+    "file": "assets/ag.7cc7d9ec.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ag.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/ae.svg": {
+    "file": "assets/ae.534fefed.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ae.svg"
   },
   "node_modules/flag-icons/flags/4x3/ad.svg": {
     "file": "assets/ad.e411c81d.svg",
@@ -183,61 +187,53 @@
     "file": "assets/ad.399354a9.svg",
     "src": "node_modules/flag-icons/flags/1x1/ad.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ae.svg": {
-    "file": "assets/ae.534fefed.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ae.svg"
+  "node_modules/flag-icons/flags/1x1/ag.svg": {
+    "file": "assets/ag.2760f340.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ag.svg"
   },
   "node_modules/flag-icons/flags/1x1/af.svg": {
     "file": "assets/af.6c420329.svg",
     "src": "node_modules/flag-icons/flags/1x1/af.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ag.svg": {
-    "file": "assets/ag.7cc7d9ec.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ag.svg"
+  "node_modules/flag-icons/flags/4x3/af.svg": {
+    "file": "assets/af.318f28f1.svg",
+    "src": "node_modules/flag-icons/flags/4x3/af.svg"
   },
   "node_modules/flag-icons/flags/4x3/ai.svg": {
     "file": "assets/ai.2113432b.svg",
     "src": "node_modules/flag-icons/flags/4x3/ai.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ag.svg": {
-    "file": "assets/ag.2760f340.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ag.svg"
+  "node_modules/flag-icons/flags/4x3/al.svg": {
+    "file": "assets/al.f9b79f25.svg",
+    "src": "node_modules/flag-icons/flags/4x3/al.svg"
   },
   "node_modules/flag-icons/flags/4x3/am.svg": {
     "file": "assets/am.efb6cdaa.svg",
     "src": "node_modules/flag-icons/flags/4x3/am.svg"
   },
-  "node_modules/flag-icons/flags/4x3/al.svg": {
-    "file": "assets/al.f9b79f25.svg",
-    "src": "node_modules/flag-icons/flags/4x3/al.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/am.svg": {
-    "file": "assets/am.57edcffa.svg",
-    "src": "node_modules/flag-icons/flags/1x1/am.svg"
-  },
   "node_modules/flag-icons/flags/1x1/ai.svg": {
     "file": "assets/ai.61c43adb.svg",
     "src": "node_modules/flag-icons/flags/1x1/ai.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/ao.svg": {
-    "file": "assets/ao.3c52ff53.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ao.svg"
   },
   "node_modules/flag-icons/flags/1x1/ao.svg": {
     "file": "assets/ao.a296c39c.svg",
     "src": "node_modules/flag-icons/flags/1x1/ao.svg"
   },
-  "node_modules/flag-icons/flags/1x1/al.svg": {
-    "file": "assets/al.2253bcd8.svg",
-    "src": "node_modules/flag-icons/flags/1x1/al.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/aq.svg": {
-    "file": "assets/aq.733794b7.svg",
-    "src": "node_modules/flag-icons/flags/1x1/aq.svg"
+  "node_modules/flag-icons/flags/1x1/am.svg": {
+    "file": "assets/am.57edcffa.svg",
+    "src": "node_modules/flag-icons/flags/1x1/am.svg"
   },
   "node_modules/flag-icons/flags/4x3/aq.svg": {
     "file": "assets/aq.454424bf.svg",
     "src": "node_modules/flag-icons/flags/4x3/aq.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ao.svg": {
+    "file": "assets/ao.3c52ff53.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ao.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/aq.svg": {
+    "file": "assets/aq.733794b7.svg",
+    "src": "node_modules/flag-icons/flags/1x1/aq.svg"
   },
   "node_modules/flag-icons/flags/4x3/ar.svg": {
     "file": "assets/ar.49a0084b.svg",
@@ -247,25 +243,25 @@
     "file": "assets/as.a9ea837d.svg",
     "src": "node_modules/flag-icons/flags/4x3/as.svg"
   },
-  "node_modules/flag-icons/flags/1x1/at.svg": {
-    "file": "assets/at.9152f136.svg",
-    "src": "node_modules/flag-icons/flags/1x1/at.svg"
-  },
   "node_modules/flag-icons/flags/4x3/at.svg": {
     "file": "assets/at.2754ed2f.svg",
     "src": "node_modules/flag-icons/flags/4x3/at.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/at.svg": {
+    "file": "assets/at.9152f136.svg",
+    "src": "node_modules/flag-icons/flags/1x1/at.svg"
   },
   "node_modules/flag-icons/flags/1x1/ar.svg": {
     "file": "assets/ar.92dd89b1.svg",
     "src": "node_modules/flag-icons/flags/1x1/ar.svg"
   },
+  "node_modules/flag-icons/flags/1x1/al.svg": {
+    "file": "assets/al.2253bcd8.svg",
+    "src": "node_modules/flag-icons/flags/1x1/al.svg"
+  },
   "node_modules/flag-icons/flags/1x1/as.svg": {
     "file": "assets/as.0af12c4a.svg",
     "src": "node_modules/flag-icons/flags/1x1/as.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/au.svg": {
-    "file": "assets/au.6cf0b0da.svg",
-    "src": "node_modules/flag-icons/flags/4x3/au.svg"
   },
   "node_modules/flag-icons/flags/4x3/ax.svg": {
     "file": "assets/ax.e2162713.svg",
@@ -275,25 +271,33 @@
     "file": "assets/ax.140f94bb.svg",
     "src": "node_modules/flag-icons/flags/1x1/ax.svg"
   },
-  "node_modules/flag-icons/flags/4x3/az.svg": {
-    "file": "assets/az.b942e12d.svg",
-    "src": "node_modules/flag-icons/flags/4x3/az.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/aw.svg": {
-    "file": "assets/aw.5e136f5b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/aw.svg"
-  },
   "node_modules/flag-icons/flags/1x1/au.svg": {
     "file": "assets/au.01aa7963.svg",
     "src": "node_modules/flag-icons/flags/1x1/au.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/au.svg": {
+    "file": "assets/au.6cf0b0da.svg",
+    "src": "node_modules/flag-icons/flags/4x3/au.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/az.svg": {
+    "file": "assets/az.b942e12d.svg",
+    "src": "node_modules/flag-icons/flags/4x3/az.svg"
   },
   "node_modules/flag-icons/flags/1x1/az.svg": {
     "file": "assets/az.fef5c465.svg",
     "src": "node_modules/flag-icons/flags/1x1/az.svg"
   },
+  "node_modules/flag-icons/flags/1x1/aw.svg": {
+    "file": "assets/aw.0379172e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/aw.svg"
+  },
   "node_modules/flag-icons/flags/4x3/bb.svg": {
     "file": "assets/bb.beaf3ae6.svg",
     "src": "node_modules/flag-icons/flags/4x3/bb.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ba.svg": {
+    "file": "assets/ba.7fe2acc6.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ba.svg"
   },
   "node_modules/flag-icons/flags/1x1/bb.svg": {
     "file": "assets/bb.20bd0c90.svg",
@@ -303,29 +307,25 @@
     "file": "assets/bd.1aabb4a7.svg",
     "src": "node_modules/flag-icons/flags/4x3/bd.svg"
   },
-  "node_modules/flag-icons/flags/1x1/aw.svg": {
-    "file": "assets/aw.0379172e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/aw.svg"
+  "node_modules/flag-icons/flags/1x1/ba.svg": {
+    "file": "assets/ba.f7fbd614.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ba.svg"
   },
-  "node_modules/flag-icons/flags/1x1/bd.svg": {
-    "file": "assets/bd.90f8f20e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/bd.svg"
+  "node_modules/flag-icons/flags/4x3/aw.svg": {
+    "file": "assets/aw.5e136f5b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/aw.svg"
   },
   "node_modules/flag-icons/flags/4x3/be.svg": {
     "file": "assets/be.42f09ed6.svg",
     "src": "node_modules/flag-icons/flags/4x3/be.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ba.svg": {
-    "file": "assets/ba.7fe2acc6.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ba.svg"
+  "node_modules/flag-icons/flags/1x1/bd.svg": {
+    "file": "assets/bd.90f8f20e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/bd.svg"
   },
   "node_modules/flag-icons/flags/4x3/bf.svg": {
     "file": "assets/bf.606b17ad.svg",
     "src": "node_modules/flag-icons/flags/4x3/bf.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/be.svg": {
-    "file": "assets/be.a2f62b54.svg",
-    "src": "node_modules/flag-icons/flags/1x1/be.svg"
   },
   "node_modules/flag-icons/flags/1x1/bf.svg": {
     "file": "assets/bf.62cdc2bd.svg",
@@ -335,33 +335,33 @@
     "file": "assets/bg.a2282477.svg",
     "src": "node_modules/flag-icons/flags/4x3/bg.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ba.svg": {
-    "file": "assets/ba.f7fbd614.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ba.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/bg.svg": {
-    "file": "assets/bg.40e29b66.svg",
-    "src": "node_modules/flag-icons/flags/1x1/bg.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/bh.svg": {
-    "file": "assets/bh.102fe27e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/bh.svg"
+  "node_modules/flag-icons/flags/1x1/be.svg": {
+    "file": "assets/be.a2f62b54.svg",
+    "src": "node_modules/flag-icons/flags/1x1/be.svg"
   },
   "node_modules/flag-icons/flags/4x3/bh.svg": {
     "file": "assets/bh.7a519f58.svg",
     "src": "node_modules/flag-icons/flags/4x3/bh.svg"
   },
-  "node_modules/flag-icons/flags/1x1/bj.svg": {
-    "file": "assets/bj.ab7b5a85.svg",
-    "src": "node_modules/flag-icons/flags/1x1/bj.svg"
+  "node_modules/flag-icons/flags/1x1/bl.svg": {
+    "file": "assets/bl.025f596f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/bl.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/bh.svg": {
+    "file": "assets/bh.102fe27e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/bh.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/bg.svg": {
+    "file": "assets/bg.40e29b66.svg",
+    "src": "node_modules/flag-icons/flags/1x1/bg.svg"
   },
   "node_modules/flag-icons/flags/4x3/bl.svg": {
     "file": "assets/bl.5da1d4f8.svg",
     "src": "node_modules/flag-icons/flags/4x3/bl.svg"
   },
-  "node_modules/flag-icons/flags/1x1/bl.svg": {
-    "file": "assets/bl.025f596f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/bl.svg"
+  "node_modules/flag-icons/flags/1x1/bj.svg": {
+    "file": "assets/bj.ab7b5a85.svg",
+    "src": "node_modules/flag-icons/flags/1x1/bj.svg"
   },
   "node_modules/flag-icons/flags/1x1/bi.svg": {
     "file": "assets/bi.46ceb5f8.svg",
@@ -379,6 +379,10 @@
     "file": "assets/bm.d0a9f672.svg",
     "src": "node_modules/flag-icons/flags/1x1/bm.svg"
   },
+  "node_modules/flag-icons/flags/4x3/bj.svg": {
+    "file": "assets/bj.6f5043b4.svg",
+    "src": "node_modules/flag-icons/flags/4x3/bj.svg"
+  },
   "node_modules/flag-icons/flags/4x3/bn.svg": {
     "file": "assets/bn.07740542.svg",
     "src": "node_modules/flag-icons/flags/4x3/bn.svg"
@@ -395,6 +399,14 @@
     "file": "assets/bn.db17f97a.svg",
     "src": "node_modules/flag-icons/flags/1x1/bn.svg"
   },
+  "node_modules/flag-icons/flags/4x3/br.svg": {
+    "file": "assets/br.fc872e71.svg",
+    "src": "node_modules/flag-icons/flags/4x3/br.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/bs.svg": {
+    "file": "assets/bs.90305318.svg",
+    "src": "node_modules/flag-icons/flags/4x3/bs.svg"
+  },
   "node_modules/flag-icons/flags/1x1/bs.svg": {
     "file": "assets/bs.ee46721d.svg",
     "src": "node_modules/flag-icons/flags/1x1/bs.svg"
@@ -403,37 +415,37 @@
     "file": "assets/bo.63594b20.svg",
     "src": "node_modules/flag-icons/flags/4x3/bo.svg"
   },
-  "node_modules/flag-icons/flags/4x3/br.svg": {
-    "file": "assets/br.fc872e71.svg",
-    "src": "node_modules/flag-icons/flags/4x3/br.svg"
-  },
   "node_modules/flag-icons/flags/1x1/br.svg": {
     "file": "assets/br.ce7e334e.svg",
     "src": "node_modules/flag-icons/flags/1x1/br.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/bv.svg": {
-    "file": "assets/bv.03917bba.svg",
-    "src": "node_modules/flag-icons/flags/4x3/bv.svg"
   },
   "node_modules/flag-icons/flags/1x1/bo.svg": {
     "file": "assets/bo.4806a8c7.svg",
     "src": "node_modules/flag-icons/flags/1x1/bo.svg"
   },
+  "node_modules/flag-icons/flags/4x3/bv.svg": {
+    "file": "assets/bv.03917bba.svg",
+    "src": "node_modules/flag-icons/flags/4x3/bv.svg"
+  },
   "node_modules/flag-icons/flags/1x1/bv.svg": {
     "file": "assets/bv.091fb966.svg",
     "src": "node_modules/flag-icons/flags/1x1/bv.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/bt.svg": {
-    "file": "assets/bt.dc7fe8fa.svg",
-    "src": "node_modules/flag-icons/flags/4x3/bt.svg"
   },
   "node_modules/flag-icons/flags/4x3/bw.svg": {
     "file": "assets/bw.1fc9322c.svg",
     "src": "node_modules/flag-icons/flags/4x3/bw.svg"
   },
-  "node_modules/flag-icons/flags/4x3/bs.svg": {
-    "file": "assets/bs.90305318.svg",
-    "src": "node_modules/flag-icons/flags/4x3/bs.svg"
+  "node_modules/flag-icons/flags/1x1/bt.svg": {
+    "file": "assets/bt.84e84171.svg",
+    "src": "node_modules/flag-icons/flags/1x1/bt.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/bt.svg": {
+    "file": "assets/bt.dc7fe8fa.svg",
+    "src": "node_modules/flag-icons/flags/4x3/bt.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/by.svg": {
+    "file": "assets/by.c74090d5.svg",
+    "src": "node_modules/flag-icons/flags/1x1/by.svg"
   },
   "node_modules/flag-icons/flags/1x1/bw.svg": {
     "file": "assets/bw.e1e15926.svg",
@@ -443,117 +455,117 @@
     "file": "assets/ca.73bd9657.svg",
     "src": "node_modules/flag-icons/flags/4x3/ca.svg"
   },
-  "node_modules/flag-icons/flags/1x1/bt.svg": {
-    "file": "assets/bt.84e84171.svg",
-    "src": "node_modules/flag-icons/flags/1x1/bt.svg"
-  },
   "node_modules/flag-icons/flags/1x1/ca.svg": {
     "file": "assets/ca.5e8736c4.svg",
     "src": "node_modules/flag-icons/flags/1x1/ca.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/by.svg": {
-    "file": "assets/by.c74090d5.svg",
-    "src": "node_modules/flag-icons/flags/1x1/by.svg"
   },
   "node_modules/flag-icons/flags/4x3/bz.svg": {
     "file": "assets/bz.c57817a5.svg",
     "src": "node_modules/flag-icons/flags/4x3/bz.svg"
   },
+  "node_modules/flag-icons/flags/4x3/by.svg": {
+    "file": "assets/by.b0ac20fe.svg",
+    "src": "node_modules/flag-icons/flags/4x3/by.svg"
+  },
   "node_modules/flag-icons/flags/4x3/cd.svg": {
     "file": "assets/cd.23f049df.svg",
     "src": "node_modules/flag-icons/flags/4x3/cd.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/cc.svg": {
-    "file": "assets/cc.eec3b923.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cc.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/bz.svg": {
-    "file": "assets/bz.4085bcd0.svg",
-    "src": "node_modules/flag-icons/flags/1x1/bz.svg"
   },
   "node_modules/flag-icons/flags/1x1/cd.svg": {
     "file": "assets/cd.620c7263.svg",
     "src": "node_modules/flag-icons/flags/1x1/cd.svg"
   },
-  "node_modules/flag-icons/flags/4x3/cc.svg": {
-    "file": "assets/cc.f4e9b00e.svg",
-    "src": "node_modules/flag-icons/flags/4x3/cc.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/cg.svg": {
-    "file": "assets/cg.f8467d04.svg",
-    "src": "node_modules/flag-icons/flags/4x3/cg.svg"
+  "node_modules/flag-icons/flags/1x1/bz.svg": {
+    "file": "assets/bz.4085bcd0.svg",
+    "src": "node_modules/flag-icons/flags/1x1/bz.svg"
   },
   "node_modules/flag-icons/flags/4x3/cf.svg": {
     "file": "assets/cf.cd11e360.svg",
     "src": "node_modules/flag-icons/flags/4x3/cf.svg"
   },
-  "node_modules/flag-icons/flags/4x3/by.svg": {
-    "file": "assets/by.b0ac20fe.svg",
-    "src": "node_modules/flag-icons/flags/4x3/by.svg"
+  "node_modules/flag-icons/flags/1x1/cf.svg": {
+    "file": "assets/cf.3c6b6c0b.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cf.svg"
   },
-  "node_modules/flag-icons/flags/1x1/cg.svg": {
-    "file": "assets/cg.66f98bc1.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cg.svg"
+  "node_modules/flag-icons/flags/4x3/cg.svg": {
+    "file": "assets/cg.f8467d04.svg",
+    "src": "node_modules/flag-icons/flags/4x3/cg.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ch.svg": {
-    "file": "assets/ch.be4b8257.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ch.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/ci.svg": {
-    "file": "assets/ci.4ecfea70.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ci.svg"
+  "node_modules/flag-icons/flags/1x1/cc.svg": {
+    "file": "assets/cc.eec3b923.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cc.svg"
   },
   "node_modules/flag-icons/flags/4x3/ch.svg": {
     "file": "assets/ch.ac676cd3.svg",
     "src": "node_modules/flag-icons/flags/4x3/ch.svg"
   },
-  "node_modules/flag-icons/flags/1x1/cl.svg": {
-    "file": "assets/cl.dc9bc06f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cl.svg"
+  "node_modules/flag-icons/flags/1x1/cg.svg": {
+    "file": "assets/cg.66f98bc1.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cg.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/cc.svg": {
+    "file": "assets/cc.f4e9b00e.svg",
+    "src": "node_modules/flag-icons/flags/4x3/cc.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/ch.svg": {
+    "file": "assets/ch.be4b8257.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ch.svg"
   },
   "node_modules/flag-icons/flags/1x1/ci.svg": {
     "file": "assets/ci.c3f20b8e.svg",
     "src": "node_modules/flag-icons/flags/1x1/ci.svg"
   },
+  "node_modules/flag-icons/flags/4x3/ci.svg": {
+    "file": "assets/ci.4ecfea70.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ci.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/cl.svg": {
+    "file": "assets/cl.dc9bc06f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cl.svg"
+  },
   "node_modules/flag-icons/flags/4x3/cl.svg": {
     "file": "assets/cl.bde5c7c2.svg",
     "src": "node_modules/flag-icons/flags/4x3/cl.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/cf.svg": {
-    "file": "assets/cf.3c6b6c0b.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cf.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/cm.svg": {
-    "file": "assets/cm.f351617f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cm.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ck.svg": {
-    "file": "assets/ck.e5457495.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ck.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/cm.svg": {
-    "file": "assets/cm.db88be4b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/cm.svg"
   },
   "node_modules/flag-icons/flags/4x3/ck.svg": {
     "file": "assets/ck.b17c039f.svg",
     "src": "node_modules/flag-icons/flags/4x3/ck.svg"
   },
-  "node_modules/flag-icons/flags/1x1/co.svg": {
-    "file": "assets/co.596558a2.svg",
-    "src": "node_modules/flag-icons/flags/1x1/co.svg"
+  "node_modules/flag-icons/flags/1x1/ck.svg": {
+    "file": "assets/ck.e5457495.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ck.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/cm.svg": {
+    "file": "assets/cm.f351617f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cm.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/cm.svg": {
+    "file": "assets/cm.db88be4b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/cm.svg"
   },
   "node_modules/flag-icons/flags/4x3/co.svg": {
     "file": "assets/co.6bab3c96.svg",
     "src": "node_modules/flag-icons/flags/4x3/co.svg"
   },
-  "node_modules/flag-icons/flags/1x1/cr.svg": {
-    "file": "assets/cr.b70b33c4.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cr.svg"
+  "node_modules/flag-icons/flags/1x1/co.svg": {
+    "file": "assets/co.596558a2.svg",
+    "src": "node_modules/flag-icons/flags/1x1/co.svg"
   },
   "node_modules/flag-icons/flags/4x3/cr.svg": {
     "file": "assets/cr.4775ef01.svg",
     "src": "node_modules/flag-icons/flags/4x3/cr.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/cr.svg": {
+    "file": "assets/cr.b70b33c4.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cr.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/cu.svg": {
+    "file": "assets/cu.f7f44c3e.svg",
+    "src": "node_modules/flag-icons/flags/4x3/cu.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/cu.svg": {
+    "file": "assets/cu.5bd635ae.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cu.svg"
   },
   "node_modules/flag-icons/flags/4x3/cn.svg": {
     "file": "assets/cn.c1f22841.svg",
@@ -563,14 +575,6 @@
     "file": "assets/cn.9f7f1ab6.svg",
     "src": "node_modules/flag-icons/flags/1x1/cn.svg"
   },
-  "node_modules/flag-icons/flags/1x1/cu.svg": {
-    "file": "assets/cu.5bd635ae.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cu.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/cu.svg": {
-    "file": "assets/cu.f7f44c3e.svg",
-    "src": "node_modules/flag-icons/flags/4x3/cu.svg"
-  },
   "node_modules/flag-icons/flags/4x3/cw.svg": {
     "file": "assets/cw.929063b2.svg",
     "src": "node_modules/flag-icons/flags/4x3/cw.svg"
@@ -579,57 +583,57 @@
     "file": "assets/cw.a689736d.svg",
     "src": "node_modules/flag-icons/flags/1x1/cw.svg"
   },
-  "node_modules/flag-icons/flags/4x3/cv.svg": {
-    "file": "assets/cv.237307fe.svg",
-    "src": "node_modules/flag-icons/flags/4x3/cv.svg"
-  },
   "node_modules/flag-icons/flags/1x1/cv.svg": {
     "file": "assets/cv.a855505a.svg",
     "src": "node_modules/flag-icons/flags/1x1/cv.svg"
   },
-  "node_modules/flag-icons/flags/1x1/cx.svg": {
-    "file": "assets/cx.81387568.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cx.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/de.svg": {
-    "file": "assets/de.7318c9aa.svg",
-    "src": "node_modules/flag-icons/flags/4x3/de.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/cz.svg": {
-    "file": "assets/cz.d601fcc2.svg",
-    "src": "node_modules/flag-icons/flags/4x3/cz.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/cy.svg": {
-    "file": "assets/cy.aa9b4c30.svg",
-    "src": "node_modules/flag-icons/flags/4x3/cy.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/cz.svg": {
-    "file": "assets/cz.5a462b5f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cz.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/dj.svg": {
-    "file": "assets/dj.0a60922e.svg",
-    "src": "node_modules/flag-icons/flags/4x3/dj.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/de.svg": {
-    "file": "assets/de.d5f40046.svg",
-    "src": "node_modules/flag-icons/flags/1x1/de.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/dj.svg": {
-    "file": "assets/dj.7baede08.svg",
-    "src": "node_modules/flag-icons/flags/1x1/dj.svg"
+  "node_modules/flag-icons/flags/4x3/cv.svg": {
+    "file": "assets/cv.237307fe.svg",
+    "src": "node_modules/flag-icons/flags/4x3/cv.svg"
   },
   "node_modules/flag-icons/flags/4x3/cx.svg": {
     "file": "assets/cx.8c09357b.svg",
     "src": "node_modules/flag-icons/flags/4x3/cx.svg"
   },
-  "node_modules/flag-icons/flags/4x3/dk.svg": {
-    "file": "assets/dk.d2847c0b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/dk.svg"
+  "node_modules/flag-icons/flags/1x1/cx.svg": {
+    "file": "assets/cx.81387568.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cx.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/cz.svg": {
+    "file": "assets/cz.d601fcc2.svg",
+    "src": "node_modules/flag-icons/flags/4x3/cz.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/cz.svg": {
+    "file": "assets/cz.5a462b5f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cz.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/de.svg": {
+    "file": "assets/de.7318c9aa.svg",
+    "src": "node_modules/flag-icons/flags/4x3/de.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/de.svg": {
+    "file": "assets/de.d5f40046.svg",
+    "src": "node_modules/flag-icons/flags/1x1/de.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/dj.svg": {
+    "file": "assets/dj.0a60922e.svg",
+    "src": "node_modules/flag-icons/flags/4x3/dj.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/dj.svg": {
+    "file": "assets/dj.7baede08.svg",
+    "src": "node_modules/flag-icons/flags/1x1/dj.svg"
   },
   "node_modules/flag-icons/flags/1x1/dk.svg": {
     "file": "assets/dk.4d7c9c44.svg",
     "src": "node_modules/flag-icons/flags/1x1/dk.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/dk.svg": {
+    "file": "assets/dk.d2847c0b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/dk.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/cy.svg": {
+    "file": "assets/cy.aa9b4c30.svg",
+    "src": "node_modules/flag-icons/flags/4x3/cy.svg"
   },
   "node_modules/flag-icons/flags/1x1/cy.svg": {
     "file": "assets/cy.ed929efd.svg",
@@ -639,6 +643,10 @@
     "file": "assets/dz.9ea0cf93.svg",
     "src": "node_modules/flag-icons/flags/4x3/dz.svg"
   },
+  "node_modules/flag-icons/flags/1x1/dz.svg": {
+    "file": "assets/dz.73f56cc7.svg",
+    "src": "node_modules/flag-icons/flags/1x1/dz.svg"
+  },
   "node_modules/flag-icons/flags/4x3/dm.svg": {
     "file": "assets/dm.5758b806.svg",
     "src": "node_modules/flag-icons/flags/4x3/dm.svg"
@@ -646,10 +654,6 @@
   "node_modules/flag-icons/flags/1x1/dm.svg": {
     "file": "assets/dm.4ac56c6b.svg",
     "src": "node_modules/flag-icons/flags/1x1/dm.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/dz.svg": {
-    "file": "assets/dz.73f56cc7.svg",
-    "src": "node_modules/flag-icons/flags/1x1/dz.svg"
   },
   "node_modules/flag-icons/flags/4x3/ec.svg": {
     "file": "assets/ec.73be1a4b.svg",
@@ -659,137 +663,137 @@
     "file": "assets/ee.1c30ac2c.svg",
     "src": "node_modules/flag-icons/flags/4x3/ee.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ee.svg": {
-    "file": "assets/ee.733a082e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ee.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/do.svg": {
-    "file": "assets/do.d0790bb3.svg",
-    "src": "node_modules/flag-icons/flags/1x1/do.svg"
+  "node_modules/flag-icons/flags/4x3/do.svg": {
+    "file": "assets/do.6722b711.svg",
+    "src": "node_modules/flag-icons/flags/4x3/do.svg"
   },
   "node_modules/flag-icons/flags/1x1/ec.svg": {
     "file": "assets/ec.c1196d0f.svg",
     "src": "node_modules/flag-icons/flags/1x1/ec.svg"
   },
-  "node_modules/flag-icons/flags/4x3/do.svg": {
-    "file": "assets/do.6722b711.svg",
-    "src": "node_modules/flag-icons/flags/4x3/do.svg"
+  "node_modules/flag-icons/flags/1x1/ee.svg": {
+    "file": "assets/ee.733a082e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ee.svg"
   },
   "node_modules/flag-icons/flags/1x1/eh.svg": {
     "file": "assets/eh.cd0c4d05.svg",
     "src": "node_modules/flag-icons/flags/1x1/eh.svg"
   },
-  "node_modules/flag-icons/flags/4x3/eg.svg": {
-    "file": "assets/eg.bc19c9ba.svg",
-    "src": "node_modules/flag-icons/flags/4x3/eg.svg"
-  },
   "node_modules/flag-icons/flags/4x3/eh.svg": {
     "file": "assets/eh.5661bb32.svg",
     "src": "node_modules/flag-icons/flags/4x3/eh.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/eg.svg": {
-    "file": "assets/eg.60288e26.svg",
-    "src": "node_modules/flag-icons/flags/1x1/eg.svg"
   },
   "node_modules/flag-icons/flags/4x3/er.svg": {
     "file": "assets/er.21cdc1d1.svg",
     "src": "node_modules/flag-icons/flags/4x3/er.svg"
   },
-  "node_modules/flag-icons/flags/1x1/er.svg": {
-    "file": "assets/er.6e90ebb6.svg",
-    "src": "node_modules/flag-icons/flags/1x1/er.svg"
+  "node_modules/flag-icons/flags/1x1/eg.svg": {
+    "file": "assets/eg.60288e26.svg",
+    "src": "node_modules/flag-icons/flags/1x1/eg.svg"
   },
-  "node_modules/flag-icons/flags/4x3/es.svg": {
-    "file": "assets/es.6fe80291.svg",
-    "src": "node_modules/flag-icons/flags/4x3/es.svg"
+  "node_modules/flag-icons/flags/1x1/do.svg": {
+    "file": "assets/do.d0790bb3.svg",
+    "src": "node_modules/flag-icons/flags/1x1/do.svg"
   },
-  "node_modules/flag-icons/flags/4x3/fi.svg": {
-    "file": "assets/fi.012edd98.svg",
-    "src": "node_modules/flag-icons/flags/4x3/fi.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/fi.svg": {
-    "file": "assets/fi.f4064089.svg",
-    "src": "node_modules/flag-icons/flags/1x1/fi.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/fj.svg": {
-    "file": "assets/fj.f8b5b752.svg",
-    "src": "node_modules/flag-icons/flags/4x3/fj.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/es.svg": {
-    "file": "assets/es.edd3ba17.svg",
-    "src": "node_modules/flag-icons/flags/1x1/es.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/fo.svg": {
-    "file": "assets/fo.87270006.svg",
-    "src": "node_modules/flag-icons/flags/4x3/fo.svg"
+  "node_modules/flag-icons/flags/4x3/eg.svg": {
+    "file": "assets/eg.bc19c9ba.svg",
+    "src": "node_modules/flag-icons/flags/4x3/eg.svg"
   },
   "node_modules/flag-icons/flags/4x3/et.svg": {
     "file": "assets/et.b2239ad7.svg",
     "src": "node_modules/flag-icons/flags/4x3/et.svg"
   },
+  "node_modules/flag-icons/flags/4x3/es.svg": {
+    "file": "assets/es.6fe80291.svg",
+    "src": "node_modules/flag-icons/flags/4x3/es.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/fi.svg": {
+    "file": "assets/fi.f4064089.svg",
+    "src": "node_modules/flag-icons/flags/1x1/fi.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/fi.svg": {
+    "file": "assets/fi.012edd98.svg",
+    "src": "node_modules/flag-icons/flags/4x3/fi.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/er.svg": {
+    "file": "assets/er.6e90ebb6.svg",
+    "src": "node_modules/flag-icons/flags/1x1/er.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/et.svg": {
+    "file": "assets/et.25b637b7.svg",
+    "src": "node_modules/flag-icons/flags/1x1/et.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/es.svg": {
+    "file": "assets/es.edd3ba17.svg",
+    "src": "node_modules/flag-icons/flags/1x1/es.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/fj.svg": {
+    "file": "assets/fj.f8b5b752.svg",
+    "src": "node_modules/flag-icons/flags/4x3/fj.svg"
+  },
   "node_modules/flag-icons/flags/1x1/fj.svg": {
     "file": "assets/fj.0243d39f.svg",
     "src": "node_modules/flag-icons/flags/1x1/fj.svg"
   },
-  "node_modules/flag-icons/flags/1x1/fo.svg": {
-    "file": "assets/fo.9b46d4a8.svg",
-    "src": "node_modules/flag-icons/flags/1x1/fo.svg"
+  "node_modules/flag-icons/flags/1x1/fm.svg": {
+    "file": "assets/fm.f7906ddc.svg",
+    "src": "node_modules/flag-icons/flags/1x1/fm.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ga.svg": {
-    "file": "assets/ga.cb2951db.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ga.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/fr.svg": {
-    "file": "assets/fr.c19557a7.svg",
-    "src": "node_modules/flag-icons/flags/4x3/fr.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/fr.svg": {
-    "file": "assets/fr.0d02622a.svg",
-    "src": "node_modules/flag-icons/flags/1x1/fr.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/ga.svg": {
-    "file": "assets/ga.f7b775c4.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ga.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/gb.svg": {
-    "file": "assets/gb.51a8613a.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gb.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/fm.svg": {
-    "file": "assets/fm.07fe66ad.svg",
-    "src": "node_modules/flag-icons/flags/4x3/fm.svg"
+  "node_modules/flag-icons/flags/4x3/fo.svg": {
+    "file": "assets/fo.87270006.svg",
+    "src": "node_modules/flag-icons/flags/4x3/fo.svg"
   },
   "node_modules/flag-icons/flags/4x3/fk.svg": {
     "file": "assets/fk.4862e30d.svg",
     "src": "node_modules/flag-icons/flags/4x3/fk.svg"
   },
-  "node_modules/flag-icons/flags/1x1/gb.svg": {
-    "file": "assets/gb.4b739ae8.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gb.svg"
+  "node_modules/flag-icons/flags/4x3/fr.svg": {
+    "file": "assets/fr.c19557a7.svg",
+    "src": "node_modules/flag-icons/flags/4x3/fr.svg"
   },
-  "node_modules/flag-icons/flags/1x1/gd.svg": {
-    "file": "assets/gd.b8fdff46.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gd.svg"
+  "node_modules/flag-icons/flags/1x1/fo.svg": {
+    "file": "assets/fo.9b46d4a8.svg",
+    "src": "node_modules/flag-icons/flags/1x1/fo.svg"
   },
-  "node_modules/flag-icons/flags/4x3/gd.svg": {
-    "file": "assets/gd.495e20bd.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gd.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/ge.svg": {
-    "file": "assets/ge.e9d0f108.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ge.svg"
+  "node_modules/flag-icons/flags/1x1/fr.svg": {
+    "file": "assets/fr.0d02622a.svg",
+    "src": "node_modules/flag-icons/flags/1x1/fr.svg"
   },
   "node_modules/flag-icons/flags/1x1/fk.svg": {
     "file": "assets/fk.398be37e.svg",
     "src": "node_modules/flag-icons/flags/1x1/fk.svg"
   },
+  "node_modules/flag-icons/flags/1x1/ga.svg": {
+    "file": "assets/ga.cb2951db.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ga.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ga.svg": {
+    "file": "assets/ga.f7b775c4.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ga.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/fm.svg": {
+    "file": "assets/fm.07fe66ad.svg",
+    "src": "node_modules/flag-icons/flags/4x3/fm.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/gb.svg": {
+    "file": "assets/gb.51a8613a.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gb.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/gb.svg": {
+    "file": "assets/gb.4b739ae8.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gb.svg"
+  },
   "node_modules/flag-icons/flags/1x1/gf.svg": {
     "file": "assets/gf.56168b44.svg",
     "src": "node_modules/flag-icons/flags/1x1/gf.svg"
   },
-  "node_modules/flag-icons/flags/4x3/gf.svg": {
-    "file": "assets/gf.53afc127.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gf.svg"
+  "node_modules/flag-icons/flags/1x1/gd.svg": {
+    "file": "assets/gd.b8fdff46.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gd.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ge.svg": {
+    "file": "assets/ge.e9d0f108.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ge.svg"
   },
   "node_modules/flag-icons/flags/4x3/gg.svg": {
     "file": "assets/gg.3457d341.svg",
@@ -799,6 +803,10 @@
     "file": "assets/gg.f6ec0e51.svg",
     "src": "node_modules/flag-icons/flags/1x1/gg.svg"
   },
+  "node_modules/flag-icons/flags/1x1/ge.svg": {
+    "file": "assets/ge.9f2584df.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ge.svg"
+  },
   "node_modules/flag-icons/flags/4x3/gh.svg": {
     "file": "assets/gh.86635202.svg",
     "src": "node_modules/flag-icons/flags/4x3/gh.svg"
@@ -807,81 +815,77 @@
     "file": "assets/gh.4afd4198.svg",
     "src": "node_modules/flag-icons/flags/1x1/gh.svg"
   },
-  "node_modules/flag-icons/flags/1x1/et.svg": {
-    "file": "assets/et.25b637b7.svg",
-    "src": "node_modules/flag-icons/flags/1x1/et.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ge.svg": {
-    "file": "assets/ge.9f2584df.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ge.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/fm.svg": {
-    "file": "assets/fm.f7906ddc.svg",
-    "src": "node_modules/flag-icons/flags/1x1/fm.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/gl.svg": {
-    "file": "assets/gl.debe7773.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gl.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/gm.svg": {
-    "file": "assets/gm.26a1fd6b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gm.svg"
+  "node_modules/flag-icons/flags/4x3/gf.svg": {
+    "file": "assets/gf.53afc127.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gf.svg"
   },
   "node_modules/flag-icons/flags/4x3/gl.svg": {
     "file": "assets/gl.15a60b07.svg",
     "src": "node_modules/flag-icons/flags/4x3/gl.svg"
   },
-  "node_modules/flag-icons/flags/1x1/gm.svg": {
-    "file": "assets/gm.726e760b.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gm.svg"
+  "node_modules/flag-icons/flags/4x3/gm.svg": {
+    "file": "assets/gm.26a1fd6b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gm.svg"
   },
-  "node_modules/flag-icons/flags/1x1/gi.svg": {
-    "file": "assets/gi.053a0a90.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gi.svg"
+  "node_modules/flag-icons/flags/4x3/gd.svg": {
+    "file": "assets/gd.495e20bd.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gd.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/gl.svg": {
+    "file": "assets/gl.debe7773.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gl.svg"
   },
   "node_modules/flag-icons/flags/4x3/gn.svg": {
     "file": "assets/gn.ee01e7dd.svg",
     "src": "node_modules/flag-icons/flags/4x3/gn.svg"
   },
-  "node_modules/flag-icons/flags/4x3/gi.svg": {
-    "file": "assets/gi.05d68008.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gi.svg"
+  "node_modules/flag-icons/flags/4x3/gp.svg": {
+    "file": "assets/gp.22ae75ed.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gp.svg"
   },
   "node_modules/flag-icons/flags/1x1/gn.svg": {
     "file": "assets/gn.8d20e686.svg",
     "src": "node_modules/flag-icons/flags/1x1/gn.svg"
   },
-  "node_modules/flag-icons/flags/4x3/gp.svg": {
-    "file": "assets/gp.22ae75ed.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gp.svg"
+  "node_modules/flag-icons/flags/4x3/gi.svg": {
+    "file": "assets/gi.05d68008.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gi.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/gm.svg": {
+    "file": "assets/gm.726e760b.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gm.svg"
   },
   "node_modules/flag-icons/flags/1x1/gp.svg": {
     "file": "assets/gp.5b6e2777.svg",
     "src": "node_modules/flag-icons/flags/1x1/gp.svg"
   },
-  "node_modules/flag-icons/flags/1x1/gr.svg": {
-    "file": "assets/gr.a4519d98.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gr.svg"
+  "node_modules/flag-icons/flags/4x3/gq.svg": {
+    "file": "assets/gq.be2561d6.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gq.svg"
   },
   "node_modules/flag-icons/flags/1x1/gq.svg": {
     "file": "assets/gq.a3bf98e3.svg",
     "src": "node_modules/flag-icons/flags/1x1/gq.svg"
   },
-  "node_modules/flag-icons/flags/4x3/gq.svg": {
-    "file": "assets/gq.be2561d6.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gq.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/gs.svg": {
-    "file": "assets/gs.fd6ad76e.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gs.svg"
-  },
   "node_modules/flag-icons/flags/4x3/gr.svg": {
     "file": "assets/gr.a184070f.svg",
     "src": "node_modules/flag-icons/flags/4x3/gr.svg"
   },
+  "node_modules/flag-icons/flags/1x1/gr.svg": {
+    "file": "assets/gr.a4519d98.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gr.svg"
+  },
   "node_modules/flag-icons/flags/1x1/gs.svg": {
     "file": "assets/gs.dcac009d.svg",
     "src": "node_modules/flag-icons/flags/1x1/gs.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/gi.svg": {
+    "file": "assets/gi.053a0a90.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gi.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/gt.svg": {
+    "file": "assets/gt.53d6bd19.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gt.svg"
   },
   "node_modules/flag-icons/flags/4x3/gu.svg": {
     "file": "assets/gu.865d2c85.svg",
@@ -895,21 +899,13 @@
     "file": "assets/gy.81301929.svg",
     "src": "node_modules/flag-icons/flags/4x3/gy.svg"
   },
-  "node_modules/flag-icons/flags/1x1/gy.svg": {
-    "file": "assets/gy.97253f86.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gy.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/gt.svg": {
-    "file": "assets/gt.53d6bd19.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gt.svg"
-  },
   "node_modules/flag-icons/flags/1x1/gu.svg": {
     "file": "assets/gu.0fc8abf7.svg",
     "src": "node_modules/flag-icons/flags/1x1/gu.svg"
   },
-  "node_modules/flag-icons/flags/1x1/hk.svg": {
-    "file": "assets/hk.89b05a22.svg",
-    "src": "node_modules/flag-icons/flags/1x1/hk.svg"
+  "node_modules/flag-icons/flags/1x1/gy.svg": {
+    "file": "assets/gy.97253f86.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gy.svg"
   },
   "node_modules/flag-icons/flags/4x3/gw.svg": {
     "file": "assets/gw.9383444c.svg",
@@ -923,37 +919,49 @@
     "file": "assets/gw.35d8c841.svg",
     "src": "node_modules/flag-icons/flags/1x1/gw.svg"
   },
-  "node_modules/flag-icons/flags/4x3/hm.svg": {
-    "file": "assets/hm.962e9410.svg",
-    "src": "node_modules/flag-icons/flags/4x3/hm.svg"
+  "node_modules/flag-icons/flags/4x3/gs.svg": {
+    "file": "assets/gs.fd6ad76e.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gs.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/hk.svg": {
+    "file": "assets/hk.89b05a22.svg",
+    "src": "node_modules/flag-icons/flags/1x1/hk.svg"
   },
   "node_modules/flag-icons/flags/1x1/hm.svg": {
     "file": "assets/hm.3c45173f.svg",
     "src": "node_modules/flag-icons/flags/1x1/hm.svg"
   },
-  "node_modules/flag-icons/flags/1x1/hn.svg": {
-    "file": "assets/hn.2b4bafff.svg",
-    "src": "node_modules/flag-icons/flags/1x1/hn.svg"
-  },
   "node_modules/flag-icons/flags/4x3/hn.svg": {
     "file": "assets/hn.f7828d93.svg",
     "src": "node_modules/flag-icons/flags/4x3/hn.svg"
   },
-  "node_modules/flag-icons/flags/4x3/hr.svg": {
-    "file": "assets/hr.c853a9f1.svg",
-    "src": "node_modules/flag-icons/flags/4x3/hr.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/hu.svg": {
-    "file": "assets/hu.9e6bc6d7.svg",
-    "src": "node_modules/flag-icons/flags/1x1/hu.svg"
+  "node_modules/flag-icons/flags/1x1/hn.svg": {
+    "file": "assets/hn.2b4bafff.svg",
+    "src": "node_modules/flag-icons/flags/1x1/hn.svg"
   },
   "node_modules/flag-icons/flags/4x3/hu.svg": {
     "file": "assets/hu.ffc4edd5.svg",
     "src": "node_modules/flag-icons/flags/4x3/hu.svg"
   },
+  "node_modules/flag-icons/flags/4x3/hr.svg": {
+    "file": "assets/hr.c853a9f1.svg",
+    "src": "node_modules/flag-icons/flags/4x3/hr.svg"
+  },
   "node_modules/flag-icons/flags/4x3/id.svg": {
     "file": "assets/id.5cd3acc4.svg",
     "src": "node_modules/flag-icons/flags/4x3/id.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/hr.svg": {
+    "file": "assets/hr.a6187e3f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/hr.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/hu.svg": {
+    "file": "assets/hu.9e6bc6d7.svg",
+    "src": "node_modules/flag-icons/flags/1x1/hu.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/ht.svg": {
+    "file": "assets/ht.84187767.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ht.svg"
   },
   "node_modules/flag-icons/flags/1x1/id.svg": {
     "file": "assets/id.b8cd30f2.svg",
@@ -963,85 +971,77 @@
     "file": "assets/ie.f82568d7.svg",
     "src": "node_modules/flag-icons/flags/4x3/ie.svg"
   },
-  "node_modules/flag-icons/flags/1x1/hr.svg": {
-    "file": "assets/hr.a6187e3f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/hr.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ht.svg": {
-    "file": "assets/ht.84187767.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ht.svg"
+  "node_modules/flag-icons/flags/1x1/ie.svg": {
+    "file": "assets/ie.860168f5.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ie.svg"
   },
   "node_modules/flag-icons/flags/4x3/ht.svg": {
     "file": "assets/ht.9877b482.svg",
     "src": "node_modules/flag-icons/flags/4x3/ht.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ie.svg": {
-    "file": "assets/ie.860168f5.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ie.svg"
+  "node_modules/flag-icons/flags/1x1/il.svg": {
+    "file": "assets/il.0004f90f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/il.svg"
   },
   "node_modules/flag-icons/flags/4x3/il.svg": {
     "file": "assets/il.a9c90b0c.svg",
     "src": "node_modules/flag-icons/flags/4x3/il.svg"
   },
-  "node_modules/flag-icons/flags/1x1/il.svg": {
-    "file": "assets/il.0004f90f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/il.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/im.svg": {
-    "file": "assets/im.bf7e365b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/im.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/im.svg": {
-    "file": "assets/im.56a6eed5.svg",
-    "src": "node_modules/flag-icons/flags/1x1/im.svg"
+  "node_modules/flag-icons/flags/1x1/in.svg": {
+    "file": "assets/in.9a372951.svg",
+    "src": "node_modules/flag-icons/flags/1x1/in.svg"
   },
   "node_modules/flag-icons/flags/4x3/in.svg": {
     "file": "assets/in.24cd1522.svg",
     "src": "node_modules/flag-icons/flags/4x3/in.svg"
   },
-  "node_modules/flag-icons/flags/1x1/in.svg": {
-    "file": "assets/in.9a372951.svg",
-    "src": "node_modules/flag-icons/flags/1x1/in.svg"
+  "node_modules/flag-icons/flags/1x1/im.svg": {
+    "file": "assets/im.56a6eed5.svg",
+    "src": "node_modules/flag-icons/flags/1x1/im.svg"
   },
-  "node_modules/flag-icons/flags/4x3/io.svg": {
-    "file": "assets/io.73b9748a.svg",
-    "src": "node_modules/flag-icons/flags/4x3/io.svg"
+  "node_modules/flag-icons/flags/4x3/im.svg": {
+    "file": "assets/im.bf7e365b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/im.svg"
   },
   "node_modules/flag-icons/flags/4x3/iq.svg": {
     "file": "assets/iq.798e6f15.svg",
     "src": "node_modules/flag-icons/flags/4x3/iq.svg"
   },
-  "node_modules/flag-icons/flags/1x1/io.svg": {
-    "file": "assets/io.547920b7.svg",
-    "src": "node_modules/flag-icons/flags/1x1/io.svg"
+  "node_modules/flag-icons/flags/1x1/iq.svg": {
+    "file": "assets/iq.591149b8.svg",
+    "src": "node_modules/flag-icons/flags/1x1/iq.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/io.svg": {
+    "file": "assets/io.73b9748a.svg",
+    "src": "node_modules/flag-icons/flags/4x3/io.svg"
   },
   "node_modules/flag-icons/flags/4x3/is.svg": {
     "file": "assets/is.eec3f1e9.svg",
     "src": "node_modules/flag-icons/flags/4x3/is.svg"
   },
-  "node_modules/flag-icons/flags/4x3/bj.svg": {
-    "file": "assets/bj.6f5043b4.svg",
-    "src": "node_modules/flag-icons/flags/4x3/bj.svg"
+  "node_modules/flag-icons/flags/1x1/io.svg": {
+    "file": "assets/io.547920b7.svg",
+    "src": "node_modules/flag-icons/flags/1x1/io.svg"
   },
   "node_modules/flag-icons/flags/1x1/is.svg": {
     "file": "assets/is.33111797.svg",
     "src": "node_modules/flag-icons/flags/1x1/is.svg"
   },
+  "node_modules/flag-icons/flags/4x3/hm.svg": {
+    "file": "assets/hm.962e9410.svg",
+    "src": "node_modules/flag-icons/flags/4x3/hm.svg"
+  },
   "node_modules/flag-icons/flags/4x3/it.svg": {
     "file": "assets/it.9fa88118.svg",
     "src": "node_modules/flag-icons/flags/4x3/it.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ir.svg": {
-    "file": "assets/ir.0473dddb.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ir.svg"
+  "node_modules/flag-icons/flags/1x1/it.svg": {
+    "file": "assets/it.03086f2e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/it.svg"
   },
-  "node_modules/flag-icons/flags/1x1/iq.svg": {
-    "file": "assets/iq.591149b8.svg",
-    "src": "node_modules/flag-icons/flags/1x1/iq.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/jm.svg": {
-    "file": "assets/jm.a556453f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/jm.svg"
+  "node_modules/flag-icons/flags/4x3/je.svg": {
+    "file": "assets/je.6a220774.svg",
+    "src": "node_modules/flag-icons/flags/4x3/je.svg"
   },
   "node_modules/flag-icons/flags/4x3/jm.svg": {
     "file": "assets/jm.61441775.svg",
@@ -1051,25 +1051,25 @@
     "file": "assets/jo.844439f2.svg",
     "src": "node_modules/flag-icons/flags/4x3/jo.svg"
   },
+  "node_modules/flag-icons/flags/1x1/jm.svg": {
+    "file": "assets/jm.a556453f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/jm.svg"
+  },
   "node_modules/flag-icons/flags/1x1/jo.svg": {
     "file": "assets/jo.5cef1493.svg",
     "src": "node_modules/flag-icons/flags/1x1/jo.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ir.svg": {
-    "file": "assets/ir.0d921dd5.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ir.svg"
   },
   "node_modules/flag-icons/flags/1x1/jp.svg": {
     "file": "assets/jp.d1182a34.svg",
     "src": "node_modules/flag-icons/flags/1x1/jp.svg"
   },
+  "node_modules/flag-icons/flags/1x1/ir.svg": {
+    "file": "assets/ir.0d921dd5.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ir.svg"
+  },
   "node_modules/flag-icons/flags/4x3/jp.svg": {
     "file": "assets/jp.48cbe3d7.svg",
     "src": "node_modules/flag-icons/flags/4x3/jp.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/it.svg": {
-    "file": "assets/it.03086f2e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/it.svg"
   },
   "node_modules/flag-icons/flags/1x1/je.svg": {
     "file": "assets/je.38af9b35.svg",
@@ -1079,21 +1079,21 @@
     "file": "assets/ke.ec022d0b.svg",
     "src": "node_modules/flag-icons/flags/1x1/ke.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ke.svg": {
-    "file": "assets/ke.be4fa3bd.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ke.svg"
-  },
   "node_modules/flag-icons/flags/4x3/kg.svg": {
     "file": "assets/kg.d9788d16.svg",
     "src": "node_modules/flag-icons/flags/4x3/kg.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ke.svg": {
+    "file": "assets/ke.be4fa3bd.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ke.svg"
   },
   "node_modules/flag-icons/flags/1x1/kg.svg": {
     "file": "assets/kg.bc5fb7c3.svg",
     "src": "node_modules/flag-icons/flags/1x1/kg.svg"
   },
-  "node_modules/flag-icons/flags/4x3/je.svg": {
-    "file": "assets/je.6a220774.svg",
-    "src": "node_modules/flag-icons/flags/4x3/je.svg"
+  "node_modules/flag-icons/flags/4x3/kh.svg": {
+    "file": "assets/kh.53ac72c8.svg",
+    "src": "node_modules/flag-icons/flags/4x3/kh.svg"
   },
   "node_modules/flag-icons/flags/1x1/kh.svg": {
     "file": "assets/kh.d4e0c527.svg",
@@ -1103,17 +1103,13 @@
     "file": "assets/ki.9c323e29.svg",
     "src": "node_modules/flag-icons/flags/4x3/ki.svg"
   },
-  "node_modules/flag-icons/flags/4x3/kh.svg": {
-    "file": "assets/kh.53ac72c8.svg",
-    "src": "node_modules/flag-icons/flags/4x3/kh.svg"
+  "node_modules/flag-icons/flags/1x1/ki.svg": {
+    "file": "assets/ki.c275fe86.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ki.svg"
   },
   "node_modules/flag-icons/flags/1x1/km.svg": {
     "file": "assets/km.d84d85a0.svg",
     "src": "node_modules/flag-icons/flags/1x1/km.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ki.svg": {
-    "file": "assets/ki.c275fe86.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ki.svg"
   },
   "node_modules/flag-icons/flags/1x1/kn.svg": {
     "file": "assets/kn.a57a8e10.svg",
@@ -1127,14 +1123,6 @@
     "file": "assets/km.467ca3de.svg",
     "src": "node_modules/flag-icons/flags/4x3/km.svg"
   },
-  "node_modules/flag-icons/flags/1x1/kw.svg": {
-    "file": "assets/kw.c976ecde.svg",
-    "src": "node_modules/flag-icons/flags/1x1/kw.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/kw.svg": {
-    "file": "assets/kw.0a98e54b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/kw.svg"
-  },
   "node_modules/flag-icons/flags/1x1/kp.svg": {
     "file": "assets/kp.7495f008.svg",
     "src": "node_modules/flag-icons/flags/1x1/kp.svg"
@@ -1143,33 +1131,33 @@
     "file": "assets/kp.536277a9.svg",
     "src": "node_modules/flag-icons/flags/4x3/kp.svg"
   },
-  "node_modules/flag-icons/flags/1x1/kr.svg": {
-    "file": "assets/kr.f4369bf4.svg",
-    "src": "node_modules/flag-icons/flags/1x1/kr.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/kz.svg": {
-    "file": "assets/kz.cba65c56.svg",
-    "src": "node_modules/flag-icons/flags/1x1/kz.svg"
+  "node_modules/flag-icons/flags/1x1/kw.svg": {
+    "file": "assets/kw.c976ecde.svg",
+    "src": "node_modules/flag-icons/flags/1x1/kw.svg"
   },
   "node_modules/flag-icons/flags/4x3/kr.svg": {
     "file": "assets/kr.268e0a2d.svg",
     "src": "node_modules/flag-icons/flags/4x3/kr.svg"
   },
-  "node_modules/flag-icons/flags/1x1/la.svg": {
-    "file": "assets/la.012421df.svg",
-    "src": "node_modules/flag-icons/flags/1x1/la.svg"
+  "node_modules/flag-icons/flags/4x3/ir.svg": {
+    "file": "assets/ir.0473dddb.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ir.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/kz.svg": {
+    "file": "assets/kz.5106f76e.svg",
+    "src": "node_modules/flag-icons/flags/4x3/kz.svg"
   },
   "node_modules/flag-icons/flags/4x3/ky.svg": {
     "file": "assets/ky.6b48ca73.svg",
     "src": "node_modules/flag-icons/flags/4x3/ky.svg"
   },
-  "node_modules/flag-icons/flags/4x3/lc.svg": {
-    "file": "assets/lc.525ad8c3.svg",
-    "src": "node_modules/flag-icons/flags/4x3/lc.svg"
-  },
   "node_modules/flag-icons/flags/4x3/la.svg": {
     "file": "assets/la.e9e3ae6b.svg",
     "src": "node_modules/flag-icons/flags/4x3/la.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/la.svg": {
+    "file": "assets/la.012421df.svg",
+    "src": "node_modules/flag-icons/flags/1x1/la.svg"
   },
   "node_modules/flag-icons/flags/1x1/ky.svg": {
     "file": "assets/ky.762191bf.svg",
@@ -1179,25 +1167,29 @@
     "file": "assets/lc.539914cb.svg",
     "src": "node_modules/flag-icons/flags/1x1/lc.svg"
   },
-  "node_modules/flag-icons/flags/4x3/kz.svg": {
-    "file": "assets/kz.5106f76e.svg",
-    "src": "node_modules/flag-icons/flags/4x3/kz.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/lb.svg": {
-    "file": "assets/lb.727faae7.svg",
-    "src": "node_modules/flag-icons/flags/1x1/lb.svg"
+  "node_modules/flag-icons/flags/4x3/lc.svg": {
+    "file": "assets/lc.525ad8c3.svg",
+    "src": "node_modules/flag-icons/flags/4x3/lc.svg"
   },
   "node_modules/flag-icons/flags/4x3/lb.svg": {
     "file": "assets/lb.8fa85ea1.svg",
     "src": "node_modules/flag-icons/flags/4x3/lb.svg"
   },
-  "node_modules/flag-icons/flags/1x1/lr.svg": {
-    "file": "assets/lr.a75c0e30.svg",
-    "src": "node_modules/flag-icons/flags/1x1/lr.svg"
+  "node_modules/flag-icons/flags/1x1/kz.svg": {
+    "file": "assets/kz.cba65c56.svg",
+    "src": "node_modules/flag-icons/flags/1x1/kz.svg"
   },
-  "node_modules/flag-icons/flags/4x3/lr.svg": {
-    "file": "assets/lr.2521f360.svg",
-    "src": "node_modules/flag-icons/flags/4x3/lr.svg"
+  "node_modules/flag-icons/flags/1x1/lb.svg": {
+    "file": "assets/lb.727faae7.svg",
+    "src": "node_modules/flag-icons/flags/1x1/lb.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/kr.svg": {
+    "file": "assets/kr.f4369bf4.svg",
+    "src": "node_modules/flag-icons/flags/1x1/kr.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/kw.svg": {
+    "file": "assets/kw.0a98e54b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/kw.svg"
   },
   "node_modules/flag-icons/flags/1x1/li.svg": {
     "file": "assets/li.3694c865.svg",
@@ -1207,21 +1199,25 @@
     "file": "assets/li.c312a745.svg",
     "src": "node_modules/flag-icons/flags/4x3/li.svg"
   },
+  "node_modules/flag-icons/flags/4x3/lr.svg": {
+    "file": "assets/lr.2521f360.svg",
+    "src": "node_modules/flag-icons/flags/4x3/lr.svg"
+  },
   "node_modules/flag-icons/flags/4x3/lk.svg": {
     "file": "assets/lk.f54e3c5a.svg",
     "src": "node_modules/flag-icons/flags/4x3/lk.svg"
   },
-  "node_modules/flag-icons/flags/4x3/lu.svg": {
-    "file": "assets/lu.a6c17cd0.svg",
-    "src": "node_modules/flag-icons/flags/4x3/lu.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/lt.svg": {
-    "file": "assets/lt.dc040199.svg",
-    "src": "node_modules/flag-icons/flags/4x3/lt.svg"
+  "node_modules/flag-icons/flags/1x1/lr.svg": {
+    "file": "assets/lr.a75c0e30.svg",
+    "src": "node_modules/flag-icons/flags/1x1/lr.svg"
   },
   "node_modules/flag-icons/flags/1x1/lk.svg": {
     "file": "assets/lk.8e2d1942.svg",
     "src": "node_modules/flag-icons/flags/1x1/lk.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/lt.svg": {
+    "file": "assets/lt.dc040199.svg",
+    "src": "node_modules/flag-icons/flags/4x3/lt.svg"
   },
   "node_modules/flag-icons/flags/1x1/lu.svg": {
     "file": "assets/lu.965964b5.svg",
@@ -1235,21 +1231,25 @@
     "file": "assets/lv.15d4e812.svg",
     "src": "node_modules/flag-icons/flags/4x3/lv.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ly.svg": {
-    "file": "assets/ly.9f3bec18.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ly.svg"
+  "node_modules/flag-icons/flags/1x1/lv.svg": {
+    "file": "assets/lv.f4e0567e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/lv.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ly.svg": {
-    "file": "assets/ly.167e6177.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ly.svg"
+  "node_modules/flag-icons/flags/1x1/ls.svg": {
+    "file": "assets/ls.d59e8226.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ls.svg"
   },
   "node_modules/flag-icons/flags/4x3/ls.svg": {
     "file": "assets/ls.9491616e.svg",
     "src": "node_modules/flag-icons/flags/4x3/ls.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ls.svg": {
-    "file": "assets/ls.d59e8226.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ls.svg"
+  "node_modules/flag-icons/flags/1x1/ly.svg": {
+    "file": "assets/ly.167e6177.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ly.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ly.svg": {
+    "file": "assets/ly.9f3bec18.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ly.svg"
   },
   "node_modules/flag-icons/flags/1x1/ma.svg": {
     "file": "assets/ma.8f1a0be2.svg",
@@ -1259,9 +1259,9 @@
     "file": "assets/mc.690c23fe.svg",
     "src": "node_modules/flag-icons/flags/4x3/mc.svg"
   },
-  "node_modules/flag-icons/flags/1x1/lv.svg": {
-    "file": "assets/lv.f4e0567e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/lv.svg"
+  "node_modules/flag-icons/flags/4x3/ma.svg": {
+    "file": "assets/ma.28cfcdec.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ma.svg"
   },
   "node_modules/flag-icons/flags/1x1/mc.svg": {
     "file": "assets/mc.c3aaba7e.svg",
@@ -1271,9 +1271,13 @@
     "file": "assets/mf.81f598ea.svg",
     "src": "node_modules/flag-icons/flags/4x3/mf.svg"
   },
-  "node_modules/flag-icons/flags/4x3/mg.svg": {
-    "file": "assets/mg.59246c21.svg",
-    "src": "node_modules/flag-icons/flags/4x3/mg.svg"
+  "node_modules/flag-icons/flags/4x3/lu.svg": {
+    "file": "assets/lu.a6c17cd0.svg",
+    "src": "node_modules/flag-icons/flags/4x3/lu.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/md.svg": {
+    "file": "assets/md.ae4fd022.svg",
+    "src": "node_modules/flag-icons/flags/4x3/md.svg"
   },
   "node_modules/flag-icons/flags/1x1/mf.svg": {
     "file": "assets/mf.8d6fb31e.svg",
@@ -1283,21 +1287,13 @@
     "file": "assets/mg.f16ffe66.svg",
     "src": "node_modules/flag-icons/flags/1x1/mg.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ma.svg": {
-    "file": "assets/ma.28cfcdec.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ma.svg"
+  "node_modules/flag-icons/flags/4x3/me.svg": {
+    "file": "assets/me.73f05f92.svg",
+    "src": "node_modules/flag-icons/flags/4x3/me.svg"
   },
-  "node_modules/flag-icons/flags/1x1/mk.svg": {
-    "file": "assets/mk.8faba052.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mk.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/mh.svg": {
-    "file": "assets/mh.f4d41b34.svg",
-    "src": "node_modules/flag-icons/flags/4x3/mh.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/md.svg": {
-    "file": "assets/md.ae4fd022.svg",
-    "src": "node_modules/flag-icons/flags/4x3/md.svg"
+  "node_modules/flag-icons/flags/4x3/mg.svg": {
+    "file": "assets/mg.59246c21.svg",
+    "src": "node_modules/flag-icons/flags/4x3/mg.svg"
   },
   "node_modules/flag-icons/flags/1x1/md.svg": {
     "file": "assets/md.e678dd90.svg",
@@ -1311,69 +1307,73 @@
     "file": "assets/ml.49e84081.svg",
     "src": "node_modules/flag-icons/flags/4x3/ml.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ml.svg": {
-    "file": "assets/ml.34021383.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ml.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/mm.svg": {
-    "file": "assets/mm.24ae103d.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mm.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/mh.svg": {
-    "file": "assets/mh.7bd55f27.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mh.svg"
+  "node_modules/flag-icons/flags/1x1/mk.svg": {
+    "file": "assets/mk.8faba052.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mk.svg"
   },
   "node_modules/flag-icons/flags/4x3/mm.svg": {
     "file": "assets/mm.02b92ceb.svg",
     "src": "node_modules/flag-icons/flags/4x3/mm.svg"
   },
-  "node_modules/flag-icons/flags/4x3/mn.svg": {
-    "file": "assets/mn.0d3973cf.svg",
-    "src": "node_modules/flag-icons/flags/4x3/mn.svg"
+  "node_modules/flag-icons/flags/4x3/mh.svg": {
+    "file": "assets/mh.f4d41b34.svg",
+    "src": "node_modules/flag-icons/flags/4x3/mh.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/mh.svg": {
+    "file": "assets/mh.7bd55f27.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mh.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/mm.svg": {
+    "file": "assets/mm.24ae103d.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mm.svg"
   },
   "node_modules/flag-icons/flags/1x1/me.svg": {
     "file": "assets/me.8d3f7f89.svg",
     "src": "node_modules/flag-icons/flags/1x1/me.svg"
   },
-  "node_modules/flag-icons/flags/4x3/mq.svg": {
-    "file": "assets/mq.4b09348a.svg",
-    "src": "node_modules/flag-icons/flags/4x3/mq.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/mq.svg": {
-    "file": "assets/mq.c8b2e579.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mq.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/mn.svg": {
-    "file": "assets/mn.9b39f1b9.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mn.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/me.svg": {
-    "file": "assets/me.73f05f92.svg",
-    "src": "node_modules/flag-icons/flags/4x3/me.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/mr.svg": {
-    "file": "assets/mr.c106d19e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mr.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/mr.svg": {
-    "file": "assets/mr.1fe95778.svg",
-    "src": "node_modules/flag-icons/flags/4x3/mr.svg"
+  "node_modules/flag-icons/flags/4x3/mn.svg": {
+    "file": "assets/mn.0d3973cf.svg",
+    "src": "node_modules/flag-icons/flags/4x3/mn.svg"
   },
   "node_modules/flag-icons/flags/1x1/mo.svg": {
     "file": "assets/mo.42ae5ab4.svg",
     "src": "node_modules/flag-icons/flags/1x1/mo.svg"
   },
+  "node_modules/flag-icons/flags/1x1/ml.svg": {
+    "file": "assets/ml.34021383.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ml.svg"
+  },
   "node_modules/flag-icons/flags/4x3/mo.svg": {
     "file": "assets/mo.f23114c3.svg",
     "src": "node_modules/flag-icons/flags/4x3/mo.svg"
   },
-  "node_modules/flag-icons/flags/1x1/mp.svg": {
-    "file": "assets/mp.0072e467.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mp.svg"
+  "node_modules/flag-icons/flags/4x3/mq.svg": {
+    "file": "assets/mq.4b09348a.svg",
+    "src": "node_modules/flag-icons/flags/4x3/mq.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/mr.svg": {
+    "file": "assets/mr.1fe95778.svg",
+    "src": "node_modules/flag-icons/flags/4x3/mr.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/mq.svg": {
+    "file": "assets/mq.c8b2e579.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mq.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/mr.svg": {
+    "file": "assets/mr.c106d19e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mr.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/mn.svg": {
+    "file": "assets/mn.9b39f1b9.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mn.svg"
   },
   "node_modules/flag-icons/flags/4x3/ms.svg": {
     "file": "assets/ms.62f315e0.svg",
     "src": "node_modules/flag-icons/flags/4x3/ms.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/mp.svg": {
+    "file": "assets/mp.ede556ff.svg",
+    "src": "node_modules/flag-icons/flags/4x3/mp.svg"
   },
   "node_modules/flag-icons/flags/4x3/mu.svg": {
     "file": "assets/mu.51f86810.svg",
@@ -1383,13 +1383,13 @@
     "file": "assets/mu.3a73b077.svg",
     "src": "node_modules/flag-icons/flags/1x1/mu.svg"
   },
-  "node_modules/flag-icons/flags/4x3/mv.svg": {
-    "file": "assets/mv.5546d527.svg",
-    "src": "node_modules/flag-icons/flags/4x3/mv.svg"
-  },
   "node_modules/flag-icons/flags/1x1/ms.svg": {
     "file": "assets/ms.3ec666d9.svg",
     "src": "node_modules/flag-icons/flags/1x1/ms.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/mv.svg": {
+    "file": "assets/mv.5546d527.svg",
+    "src": "node_modules/flag-icons/flags/4x3/mv.svg"
   },
   "node_modules/flag-icons/flags/1x1/mv.svg": {
     "file": "assets/mv.ecc358a3.svg",
@@ -1399,21 +1399,17 @@
     "file": "assets/mt.5b9d6101.svg",
     "src": "node_modules/flag-icons/flags/4x3/mt.svg"
   },
-  "node_modules/flag-icons/flags/1x1/mt.svg": {
-    "file": "assets/mt.ae7e5df1.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mt.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/mp.svg": {
-    "file": "assets/mp.ede556ff.svg",
-    "src": "node_modules/flag-icons/flags/4x3/mp.svg"
-  },
   "node_modules/flag-icons/flags/4x3/mw.svg": {
     "file": "assets/mw.2a3cc640.svg",
     "src": "node_modules/flag-icons/flags/4x3/mw.svg"
   },
-  "node_modules/flag-icons/flags/1x1/mw.svg": {
-    "file": "assets/mw.18dfe0c3.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mw.svg"
+  "node_modules/flag-icons/flags/1x1/mp.svg": {
+    "file": "assets/mp.0072e467.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mp.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/mt.svg": {
+    "file": "assets/mt.ae7e5df1.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mt.svg"
   },
   "node_modules/flag-icons/flags/4x3/my.svg": {
     "file": "assets/my.e37ec1b0.svg",
@@ -1423,41 +1419,33 @@
     "file": "assets/my.4910911e.svg",
     "src": "node_modules/flag-icons/flags/1x1/my.svg"
   },
-  "node_modules/flag-icons/flags/1x1/mz.svg": {
-    "file": "assets/mz.8c3ebb36.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mz.svg"
+  "node_modules/flag-icons/flags/4x3/mz.svg": {
+    "file": "assets/mz.c087cb47.svg",
+    "src": "node_modules/flag-icons/flags/4x3/mz.svg"
   },
   "node_modules/flag-icons/flags/4x3/mx.svg": {
     "file": "assets/mx.64553d6b.svg",
     "src": "node_modules/flag-icons/flags/4x3/mx.svg"
   },
-  "node_modules/flag-icons/flags/4x3/mz.svg": {
-    "file": "assets/mz.c087cb47.svg",
-    "src": "node_modules/flag-icons/flags/4x3/mz.svg"
+  "node_modules/flag-icons/flags/1x1/mw.svg": {
+    "file": "assets/mw.18dfe0c3.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mw.svg"
   },
-  "node_modules/flag-icons/flags/1x1/mx.svg": {
-    "file": "assets/mx.e5a0dc8c.svg",
-    "src": "node_modules/flag-icons/flags/1x1/mx.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/nc.svg": {
-    "file": "assets/nc.8b7ef8a4.svg",
-    "src": "node_modules/flag-icons/flags/1x1/nc.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/ne.svg": {
-    "file": "assets/ne.4b91653d.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ne.svg"
+  "node_modules/flag-icons/flags/1x1/mz.svg": {
+    "file": "assets/mz.8c3ebb36.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mz.svg"
   },
   "node_modules/flag-icons/flags/1x1/na.svg": {
     "file": "assets/na.fbbde88c.svg",
     "src": "node_modules/flag-icons/flags/1x1/na.svg"
   },
-  "node_modules/flag-icons/flags/4x3/na.svg": {
-    "file": "assets/na.80df4b01.svg",
-    "src": "node_modules/flag-icons/flags/4x3/na.svg"
+  "node_modules/flag-icons/flags/1x1/mx.svg": {
+    "file": "assets/mx.e5a0dc8c.svg",
+    "src": "node_modules/flag-icons/flags/1x1/mx.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ng.svg": {
-    "file": "assets/ng.b7a2a45a.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ng.svg"
+  "node_modules/flag-icons/flags/4x3/ne.svg": {
+    "file": "assets/ne.4b91653d.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ne.svg"
   },
   "node_modules/flag-icons/flags/1x1/ne.svg": {
     "file": "assets/ne.c92686fc.svg",
@@ -1467,29 +1455,29 @@
     "file": "assets/nc.cff3afeb.svg",
     "src": "node_modules/flag-icons/flags/4x3/nc.svg"
   },
+  "node_modules/flag-icons/flags/4x3/ng.svg": {
+    "file": "assets/ng.b7a2a45a.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ng.svg"
+  },
   "node_modules/flag-icons/flags/1x1/ng.svg": {
     "file": "assets/ng.a41dbb75.svg",
     "src": "node_modules/flag-icons/flags/1x1/ng.svg"
   },
-  "node_modules/flag-icons/flags/4x3/nf.svg": {
-    "file": "assets/nf.9cf4bf10.svg",
-    "src": "node_modules/flag-icons/flags/4x3/nf.svg"
+  "node_modules/flag-icons/flags/1x1/nc.svg": {
+    "file": "assets/nc.8b7ef8a4.svg",
+    "src": "node_modules/flag-icons/flags/1x1/nc.svg"
   },
-  "node_modules/flag-icons/flags/1x1/nl.svg": {
-    "file": "assets/nl.a8b56f7d.svg",
-    "src": "node_modules/flag-icons/flags/1x1/nl.svg"
+  "node_modules/flag-icons/flags/4x3/na.svg": {
+    "file": "assets/na.80df4b01.svg",
+    "src": "node_modules/flag-icons/flags/4x3/na.svg"
   },
   "node_modules/flag-icons/flags/1x1/nf.svg": {
     "file": "assets/nf.d458b917.svg",
     "src": "node_modules/flag-icons/flags/1x1/nf.svg"
   },
-  "node_modules/flag-icons/flags/4x3/no.svg": {
-    "file": "assets/no.ceea17af.svg",
-    "src": "node_modules/flag-icons/flags/4x3/no.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/nl.svg": {
-    "file": "assets/nl.54b194d9.svg",
-    "src": "node_modules/flag-icons/flags/4x3/nl.svg"
+  "node_modules/flag-icons/flags/1x1/nl.svg": {
+    "file": "assets/nl.a8b56f7d.svg",
+    "src": "node_modules/flag-icons/flags/1x1/nl.svg"
   },
   "node_modules/flag-icons/flags/1x1/no.svg": {
     "file": "assets/no.55fc1564.svg",
@@ -1499,21 +1487,33 @@
     "file": "assets/ni.23bfeacd.svg",
     "src": "node_modules/flag-icons/flags/4x3/ni.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ni.svg": {
-    "file": "assets/ni.1d464374.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ni.svg"
+  "node_modules/flag-icons/flags/4x3/nl.svg": {
+    "file": "assets/nl.54b194d9.svg",
+    "src": "node_modules/flag-icons/flags/4x3/nl.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/no.svg": {
+    "file": "assets/no.ceea17af.svg",
+    "src": "node_modules/flag-icons/flags/4x3/no.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/nf.svg": {
+    "file": "assets/nf.9cf4bf10.svg",
+    "src": "node_modules/flag-icons/flags/4x3/nf.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/nr.svg": {
+    "file": "assets/nr.707765a6.svg",
+    "src": "node_modules/flag-icons/flags/4x3/nr.svg"
   },
   "node_modules/flag-icons/flags/1x1/nr.svg": {
     "file": "assets/nr.68ffbe53.svg",
     "src": "node_modules/flag-icons/flags/1x1/nr.svg"
   },
+  "node_modules/flag-icons/flags/1x1/ni.svg": {
+    "file": "assets/ni.1d464374.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ni.svg"
+  },
   "node_modules/flag-icons/flags/4x3/np.svg": {
     "file": "assets/np.ecab347b.svg",
     "src": "node_modules/flag-icons/flags/4x3/np.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/nr.svg": {
-    "file": "assets/nr.707765a6.svg",
-    "src": "node_modules/flag-icons/flags/4x3/nr.svg"
   },
   "node_modules/flag-icons/flags/1x1/np.svg": {
     "file": "assets/np.580e9676.svg",
@@ -1522,10 +1522,6 @@
   "node_modules/flag-icons/flags/4x3/nu.svg": {
     "file": "assets/nu.835c94f3.svg",
     "src": "node_modules/flag-icons/flags/4x3/nu.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/nz.svg": {
-    "file": "assets/nz.30a785d1.svg",
-    "src": "node_modules/flag-icons/flags/4x3/nz.svg"
   },
   "node_modules/flag-icons/flags/1x1/nz.svg": {
     "file": "assets/nz.8e77ded3.svg",
@@ -1539,13 +1535,17 @@
     "file": "assets/pa.6f2195a5.svg",
     "src": "node_modules/flag-icons/flags/1x1/pa.svg"
   },
-  "node_modules/flag-icons/flags/4x3/om.svg": {
-    "file": "assets/om.b19a16d1.svg",
-    "src": "node_modules/flag-icons/flags/4x3/om.svg"
+  "node_modules/flag-icons/flags/4x3/nz.svg": {
+    "file": "assets/nz.30a785d1.svg",
+    "src": "node_modules/flag-icons/flags/4x3/nz.svg"
   },
   "node_modules/flag-icons/flags/1x1/om.svg": {
     "file": "assets/om.78351c31.svg",
     "src": "node_modules/flag-icons/flags/1x1/om.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/pe.svg": {
+    "file": "assets/pe.5272e92f.svg",
+    "src": "node_modules/flag-icons/flags/4x3/pe.svg"
   },
   "node_modules/flag-icons/flags/4x3/pa.svg": {
     "file": "assets/pa.9d1b2b70.svg",
@@ -1555,57 +1555,53 @@
     "file": "assets/pe.b68f41fa.svg",
     "src": "node_modules/flag-icons/flags/1x1/pe.svg"
   },
-  "node_modules/flag-icons/flags/4x3/pe.svg": {
-    "file": "assets/pe.5272e92f.svg",
-    "src": "node_modules/flag-icons/flags/4x3/pe.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/pf.svg": {
-    "file": "assets/pf.cea36e28.svg",
-    "src": "node_modules/flag-icons/flags/4x3/pf.svg"
+  "node_modules/flag-icons/flags/4x3/om.svg": {
+    "file": "assets/om.b19a16d1.svg",
+    "src": "node_modules/flag-icons/flags/4x3/om.svg"
   },
   "node_modules/flag-icons/flags/1x1/pf.svg": {
     "file": "assets/pf.eea47b61.svg",
     "src": "node_modules/flag-icons/flags/1x1/pf.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ph.svg": {
-    "file": "assets/ph.4cccf403.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ph.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ph.svg": {
-    "file": "assets/ph.3c2c5087.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ph.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/pk.svg": {
-    "file": "assets/pk.e2e82907.svg",
-    "src": "node_modules/flag-icons/flags/1x1/pk.svg"
+  "node_modules/flag-icons/flags/4x3/pf.svg": {
+    "file": "assets/pf.cea36e28.svg",
+    "src": "node_modules/flag-icons/flags/4x3/pf.svg"
   },
   "node_modules/flag-icons/flags/1x1/pg.svg": {
     "file": "assets/pg.04752d7c.svg",
     "src": "node_modules/flag-icons/flags/1x1/pg.svg"
   },
-  "node_modules/flag-icons/flags/4x3/pk.svg": {
-    "file": "assets/pk.f812c368.svg",
-    "src": "node_modules/flag-icons/flags/4x3/pk.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/pl.svg": {
-    "file": "assets/pl.698cda1f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/pl.svg"
-  },
   "node_modules/flag-icons/flags/4x3/pg.svg": {
     "file": "assets/pg.45e15441.svg",
     "src": "node_modules/flag-icons/flags/4x3/pg.svg"
   },
-  "node_modules/flag-icons/flags/4x3/pm.svg": {
-    "file": "assets/pm.dc303241.svg",
-    "src": "node_modules/flag-icons/flags/4x3/pm.svg"
+  "node_modules/flag-icons/flags/1x1/ph.svg": {
+    "file": "assets/ph.3c2c5087.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ph.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ph.svg": {
+    "file": "assets/ph.4cccf403.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ph.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/pk.svg": {
+    "file": "assets/pk.e2e82907.svg",
+    "src": "node_modules/flag-icons/flags/1x1/pk.svg"
   },
   "node_modules/flag-icons/flags/4x3/pl.svg": {
     "file": "assets/pl.369bb3e1.svg",
     "src": "node_modules/flag-icons/flags/4x3/pl.svg"
   },
-  "node_modules/flag-icons/flags/1x1/pm.svg": {
-    "file": "assets/pm.33c655b4.svg",
-    "src": "node_modules/flag-icons/flags/1x1/pm.svg"
+  "node_modules/flag-icons/flags/1x1/pl.svg": {
+    "file": "assets/pl.698cda1f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/pl.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/pk.svg": {
+    "file": "assets/pk.f812c368.svg",
+    "src": "node_modules/flag-icons/flags/4x3/pk.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/pm.svg": {
+    "file": "assets/pm.dc303241.svg",
+    "src": "node_modules/flag-icons/flags/4x3/pm.svg"
   },
   "node_modules/flag-icons/flags/4x3/pr.svg": {
     "file": "assets/pr.ed792fc3.svg",
@@ -1619,61 +1615,65 @@
     "file": "assets/ps.accd4461.svg",
     "src": "node_modules/flag-icons/flags/4x3/ps.svg"
   },
-  "node_modules/flag-icons/flags/1x1/pn.svg": {
-    "file": "assets/pn.e0f59844.svg",
-    "src": "node_modules/flag-icons/flags/1x1/pn.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/pw.svg": {
-    "file": "assets/pw.cab1c31f.svg",
-    "src": "node_modules/flag-icons/flags/4x3/pw.svg"
-  },
   "node_modules/flag-icons/flags/1x1/ps.svg": {
     "file": "assets/ps.1ebcb0e1.svg",
     "src": "node_modules/flag-icons/flags/1x1/ps.svg"
   },
-  "node_modules/flag-icons/flags/1x1/pw.svg": {
-    "file": "assets/pw.452a030a.svg",
-    "src": "node_modules/flag-icons/flags/1x1/pw.svg"
+  "node_modules/flag-icons/flags/1x1/pm.svg": {
+    "file": "assets/pm.33c655b4.svg",
+    "src": "node_modules/flag-icons/flags/1x1/pm.svg"
   },
   "node_modules/flag-icons/flags/4x3/pn.svg": {
     "file": "assets/pn.ae3c517c.svg",
     "src": "node_modules/flag-icons/flags/4x3/pn.svg"
   },
-  "node_modules/flag-icons/flags/4x3/pt.svg": {
-    "file": "assets/pt.a24d5bb8.svg",
-    "src": "node_modules/flag-icons/flags/4x3/pt.svg"
+  "node_modules/flag-icons/flags/4x3/pw.svg": {
+    "file": "assets/pw.cab1c31f.svg",
+    "src": "node_modules/flag-icons/flags/4x3/pw.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/pw.svg": {
+    "file": "assets/pw.452a030a.svg",
+    "src": "node_modules/flag-icons/flags/1x1/pw.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/pn.svg": {
+    "file": "assets/pn.e0f59844.svg",
+    "src": "node_modules/flag-icons/flags/1x1/pn.svg"
   },
   "node_modules/flag-icons/flags/1x1/pt.svg": {
     "file": "assets/pt.21237ce4.svg",
     "src": "node_modules/flag-icons/flags/1x1/pt.svg"
   },
-  "node_modules/flag-icons/flags/4x3/qa.svg": {
-    "file": "assets/qa.4d41fa3c.svg",
-    "src": "node_modules/flag-icons/flags/4x3/qa.svg"
+  "node_modules/flag-icons/flags/1x1/qa.svg": {
+    "file": "assets/qa.a781df63.svg",
+    "src": "node_modules/flag-icons/flags/1x1/qa.svg"
   },
-  "node_modules/flag-icons/flags/4x3/re.svg": {
-    "file": "assets/re.419513fe.svg",
-    "src": "node_modules/flag-icons/flags/4x3/re.svg"
+  "node_modules/flag-icons/flags/4x3/pt.svg": {
+    "file": "assets/pt.a24d5bb8.svg",
+    "src": "node_modules/flag-icons/flags/4x3/pt.svg"
   },
   "node_modules/flag-icons/flags/1x1/re.svg": {
     "file": "assets/re.a5347d1a.svg",
     "src": "node_modules/flag-icons/flags/1x1/re.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ro.svg": {
-    "file": "assets/ro.17a3a747.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ro.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/qa.svg": {
-    "file": "assets/qa.a781df63.svg",
-    "src": "node_modules/flag-icons/flags/1x1/qa.svg"
+  "node_modules/flag-icons/flags/4x3/qa.svg": {
+    "file": "assets/qa.4d41fa3c.svg",
+    "src": "node_modules/flag-icons/flags/4x3/qa.svg"
   },
   "node_modules/flag-icons/flags/1x1/ro.svg": {
     "file": "assets/ro.b56a867a.svg",
     "src": "node_modules/flag-icons/flags/1x1/ro.svg"
   },
-  "node_modules/flag-icons/flags/4x3/py.svg": {
-    "file": "assets/py.6eb85947.svg",
-    "src": "node_modules/flag-icons/flags/4x3/py.svg"
+  "node_modules/flag-icons/flags/1x1/py.svg": {
+    "file": "assets/py.93651722.svg",
+    "src": "node_modules/flag-icons/flags/1x1/py.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/re.svg": {
+    "file": "assets/re.419513fe.svg",
+    "src": "node_modules/flag-icons/flags/4x3/re.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ro.svg": {
+    "file": "assets/ro.17a3a747.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ro.svg"
   },
   "node_modules/flag-icons/flags/4x3/ru.svg": {
     "file": "assets/ru.6c62f886.svg",
@@ -1683,77 +1683,85 @@
     "file": "assets/ru.5224e89e.svg",
     "src": "node_modules/flag-icons/flags/1x1/ru.svg"
   },
-  "node_modules/flag-icons/flags/1x1/py.svg": {
-    "file": "assets/py.93651722.svg",
-    "src": "node_modules/flag-icons/flags/1x1/py.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/rw.svg": {
-    "file": "assets/rw.726c1546.svg",
-    "src": "node_modules/flag-icons/flags/1x1/rw.svg"
+  "node_modules/flag-icons/flags/4x3/py.svg": {
+    "file": "assets/py.6eb85947.svg",
+    "src": "node_modules/flag-icons/flags/4x3/py.svg"
   },
   "node_modules/flag-icons/flags/4x3/rw.svg": {
     "file": "assets/rw.67a5e9a0.svg",
     "src": "node_modules/flag-icons/flags/4x3/rw.svg"
   },
-  "node_modules/flag-icons/flags/1x1/rs.svg": {
-    "file": "assets/rs.1f2c25e6.svg",
-    "src": "node_modules/flag-icons/flags/1x1/rs.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/rs.svg": {
-    "file": "assets/rs.4d92f460.svg",
-    "src": "node_modules/flag-icons/flags/4x3/rs.svg"
+  "node_modules/flag-icons/flags/1x1/rw.svg": {
+    "file": "assets/rw.726c1546.svg",
+    "src": "node_modules/flag-icons/flags/1x1/rw.svg"
   },
   "node_modules/flag-icons/flags/4x3/sa.svg": {
     "file": "assets/sa.c4aab49d.svg",
     "src": "node_modules/flag-icons/flags/4x3/sa.svg"
   },
-  "node_modules/flag-icons/flags/4x3/sb.svg": {
-    "file": "assets/sb.f1a38c9d.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sb.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/sc.svg": {
-    "file": "assets/sc.30cdbe42.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sc.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/sd.svg": {
-    "file": "assets/sd.7c85028c.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sd.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/sd.svg": {
-    "file": "assets/sd.43f9ed92.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sd.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/sc.svg": {
-    "file": "assets/sc.4363a818.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sc.svg"
+  "node_modules/flag-icons/flags/4x3/rs.svg": {
+    "file": "assets/rs.4d92f460.svg",
+    "src": "node_modules/flag-icons/flags/4x3/rs.svg"
   },
   "node_modules/flag-icons/flags/1x1/sa.svg": {
     "file": "assets/sa.27dd5421.svg",
     "src": "node_modules/flag-icons/flags/1x1/sa.svg"
   },
-  "node_modules/flag-icons/flags/4x3/se.svg": {
-    "file": "assets/se.bc8a97e1.svg",
-    "src": "node_modules/flag-icons/flags/4x3/se.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/se.svg": {
-    "file": "assets/se.b4cc09f1.svg",
-    "src": "node_modules/flag-icons/flags/1x1/se.svg"
+  "node_modules/flag-icons/flags/4x3/sb.svg": {
+    "file": "assets/sb.f1a38c9d.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sb.svg"
   },
   "node_modules/flag-icons/flags/1x1/sb.svg": {
     "file": "assets/sb.b28813c8.svg",
     "src": "node_modules/flag-icons/flags/1x1/sb.svg"
   },
+  "node_modules/flag-icons/flags/1x1/sd.svg": {
+    "file": "assets/sd.43f9ed92.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sd.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/sd.svg": {
+    "file": "assets/sd.7c85028c.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sd.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/sc.svg": {
+    "file": "assets/sc.30cdbe42.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sc.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/rs.svg": {
+    "file": "assets/rs.1f2c25e6.svg",
+    "src": "node_modules/flag-icons/flags/1x1/rs.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/sc.svg": {
+    "file": "assets/sc.4363a818.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sc.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/se.svg": {
+    "file": "assets/se.b4cc09f1.svg",
+    "src": "node_modules/flag-icons/flags/1x1/se.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/se.svg": {
+    "file": "assets/se.bc8a97e1.svg",
+    "src": "node_modules/flag-icons/flags/4x3/se.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/sg.svg": {
+    "file": "assets/sg.010b1e94.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sg.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/sg.svg": {
+    "file": "assets/sg.b0a8dfe9.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sg.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/sh.svg": {
+    "file": "assets/sh.22794630.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sh.svg"
+  },
   "node_modules/flag-icons/flags/4x3/sj.svg": {
     "file": "assets/sj.b60dad0e.svg",
     "src": "node_modules/flag-icons/flags/4x3/sj.svg"
   },
-  "node_modules/flag-icons/flags/1x1/si.svg": {
-    "file": "assets/si.494ab288.svg",
-    "src": "node_modules/flag-icons/flags/1x1/si.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/si.svg": {
-    "file": "assets/si.260a7276.svg",
-    "src": "node_modules/flag-icons/flags/4x3/si.svg"
+  "node_modules/flag-icons/flags/4x3/sh.svg": {
+    "file": "assets/sh.78eb5275.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sh.svg"
   },
   "node_modules/flag-icons/flags/4x3/sl.svg": {
     "file": "assets/sl.d0c384b0.svg",
@@ -1763,89 +1771,69 @@
     "file": "assets/sj.880802e4.svg",
     "src": "node_modules/flag-icons/flags/1x1/sj.svg"
   },
-  "node_modules/flag-icons/flags/1x1/sh.svg": {
-    "file": "assets/sh.22794630.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sh.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/sg.svg": {
-    "file": "assets/sg.b0a8dfe9.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sg.svg"
+  "node_modules/flag-icons/flags/1x1/si.svg": {
+    "file": "assets/si.494ab288.svg",
+    "src": "node_modules/flag-icons/flags/1x1/si.svg"
   },
   "node_modules/flag-icons/flags/1x1/sl.svg": {
     "file": "assets/sl.e8ca2dae.svg",
     "src": "node_modules/flag-icons/flags/1x1/sl.svg"
   },
-  "node_modules/flag-icons/flags/4x3/sn.svg": {
-    "file": "assets/sn.6437db13.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sn.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/sh.svg": {
-    "file": "assets/sh.78eb5275.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sh.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/sk.svg": {
-    "file": "assets/sk.01a41b70.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sk.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/sm.svg": {
-    "file": "assets/sm.c2055b28.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sm.svg"
+  "node_modules/flag-icons/flags/4x3/si.svg": {
+    "file": "assets/si.260a7276.svg",
+    "src": "node_modules/flag-icons/flags/4x3/si.svg"
   },
   "node_modules/flag-icons/flags/1x1/sk.svg": {
     "file": "assets/sk.40b3a188.svg",
     "src": "node_modules/flag-icons/flags/1x1/sk.svg"
   },
-  "node_modules/flag-icons/flags/4x3/so.svg": {
-    "file": "assets/so.b85dd16d.svg",
-    "src": "node_modules/flag-icons/flags/4x3/so.svg"
+  "node_modules/flag-icons/flags/4x3/sn.svg": {
+    "file": "assets/sn.6437db13.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sn.svg"
   },
   "node_modules/flag-icons/flags/1x1/sn.svg": {
     "file": "assets/sn.2c7a8737.svg",
     "src": "node_modules/flag-icons/flags/1x1/sn.svg"
   },
-  "node_modules/flag-icons/flags/1x1/sm.svg": {
-    "file": "assets/sm.d2f10302.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sm.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/sr.svg": {
-    "file": "assets/sr.5194a6af.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sr.svg"
-  },
   "node_modules/flag-icons/flags/1x1/so.svg": {
     "file": "assets/so.09df0ab2.svg",
     "src": "node_modules/flag-icons/flags/1x1/so.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ss.svg": {
-    "file": "assets/ss.d09319a4.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ss.svg"
+  "node_modules/flag-icons/flags/4x3/sk.svg": {
+    "file": "assets/sk.01a41b70.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sk.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/so.svg": {
+    "file": "assets/so.b85dd16d.svg",
+    "src": "node_modules/flag-icons/flags/4x3/so.svg"
   },
   "node_modules/flag-icons/flags/1x1/sr.svg": {
     "file": "assets/sr.81b54581.svg",
     "src": "node_modules/flag-icons/flags/1x1/sr.svg"
   },
+  "node_modules/flag-icons/flags/4x3/ss.svg": {
+    "file": "assets/ss.d09319a4.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ss.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/sr.svg": {
+    "file": "assets/sr.5194a6af.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sr.svg"
+  },
   "node_modules/flag-icons/flags/1x1/ss.svg": {
     "file": "assets/ss.6aa031ba.svg",
     "src": "node_modules/flag-icons/flags/1x1/ss.svg"
   },
-  "node_modules/flag-icons/flags/4x3/sg.svg": {
-    "file": "assets/sg.010b1e94.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sg.svg"
+  "node_modules/flag-icons/flags/4x3/sm.svg": {
+    "file": "assets/sm.c2055b28.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sm.svg"
   },
   "node_modules/flag-icons/flags/4x3/st.svg": {
     "file": "assets/st.16db84cc.svg",
     "src": "node_modules/flag-icons/flags/4x3/st.svg"
   },
-  "node_modules/flag-icons/flags/1x1/st.svg": {
-    "file": "assets/st.fc411d32.svg",
-    "src": "node_modules/flag-icons/flags/1x1/st.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/sx.svg": {
-    "file": "assets/sx.3a56525c.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sx.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/sv.svg": {
-    "file": "assets/sv.a382a7a3.svg",
-    "src": "node_modules/flag-icons/flags/4x3/sv.svg"
+  "node_modules/flag-icons/flags/1x1/sm.svg": {
+    "file": "assets/sm.d2f10302.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sm.svg"
   },
   "node_modules/flag-icons/flags/4x3/sy.svg": {
     "file": "assets/sy.38125aa4.svg",
@@ -1855,29 +1843,37 @@
     "file": "assets/sx.2d9fbccb.svg",
     "src": "node_modules/flag-icons/flags/4x3/sx.svg"
   },
-  "node_modules/flag-icons/flags/1x1/sy.svg": {
-    "file": "assets/sy.6e3feb72.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sy.svg"
+  "node_modules/flag-icons/flags/4x3/sv.svg": {
+    "file": "assets/sv.a382a7a3.svg",
+    "src": "node_modules/flag-icons/flags/4x3/sv.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/st.svg": {
+    "file": "assets/st.fc411d32.svg",
+    "src": "node_modules/flag-icons/flags/1x1/st.svg"
   },
   "node_modules/flag-icons/flags/4x3/sz.svg": {
     "file": "assets/sz.00015a76.svg",
     "src": "node_modules/flag-icons/flags/4x3/sz.svg"
   },
-  "node_modules/flag-icons/flags/1x1/sz.svg": {
-    "file": "assets/sz.e92e7315.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sz.svg"
+  "node_modules/flag-icons/flags/1x1/sy.svg": {
+    "file": "assets/sy.6e3feb72.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sy.svg"
   },
-  "node_modules/flag-icons/flags/4x3/tc.svg": {
-    "file": "assets/tc.f44b6d22.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tc.svg"
+  "node_modules/flag-icons/flags/1x1/sx.svg": {
+    "file": "assets/sx.3a56525c.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sx.svg"
   },
   "node_modules/flag-icons/flags/4x3/td.svg": {
     "file": "assets/td.ec75ab08.svg",
     "src": "node_modules/flag-icons/flags/4x3/td.svg"
   },
-  "node_modules/flag-icons/flags/1x1/sv.svg": {
-    "file": "assets/sv.ebbd7d5a.svg",
-    "src": "node_modules/flag-icons/flags/1x1/sv.svg"
+  "node_modules/flag-icons/flags/4x3/tc.svg": {
+    "file": "assets/tc.f44b6d22.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tc.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/sz.svg": {
+    "file": "assets/sz.e92e7315.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sz.svg"
   },
   "node_modules/flag-icons/flags/1x1/td.svg": {
     "file": "assets/td.8e475ace.svg",
@@ -1891,33 +1887,25 @@
     "file": "assets/th.329cc0d5.svg",
     "src": "node_modules/flag-icons/flags/4x3/th.svg"
   },
-  "node_modules/flag-icons/flags/1x1/tc.svg": {
-    "file": "assets/tc.1a90d773.svg",
-    "src": "node_modules/flag-icons/flags/1x1/tc.svg"
+  "node_modules/flag-icons/flags/4x3/tf.svg": {
+    "file": "assets/tf.5dbdbb8b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tf.svg"
   },
   "node_modules/flag-icons/flags/1x1/th.svg": {
     "file": "assets/th.bb8a18d6.svg",
     "src": "node_modules/flag-icons/flags/1x1/th.svg"
   },
-  "node_modules/flag-icons/flags/4x3/tf.svg": {
-    "file": "assets/tf.5dbdbb8b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tf.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/tg.svg": {
-    "file": "assets/tg.921aad6e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/tg.svg"
+  "node_modules/flag-icons/flags/1x1/sv.svg": {
+    "file": "assets/sv.ebbd7d5a.svg",
+    "src": "node_modules/flag-icons/flags/1x1/sv.svg"
   },
   "node_modules/flag-icons/flags/1x1/tf.svg": {
     "file": "assets/tf.280ce967.svg",
     "src": "node_modules/flag-icons/flags/1x1/tf.svg"
   },
-  "node_modules/flag-icons/flags/1x1/tk.svg": {
-    "file": "assets/tk.a12ef3ff.svg",
-    "src": "node_modules/flag-icons/flags/1x1/tk.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/tl.svg": {
-    "file": "assets/tl.41be899b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tl.svg"
+  "node_modules/flag-icons/flags/1x1/tg.svg": {
+    "file": "assets/tg.921aad6e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/tg.svg"
   },
   "node_modules/flag-icons/flags/4x3/tj.svg": {
     "file": "assets/tj.2df43c7b.svg",
@@ -1927,41 +1915,21 @@
     "file": "assets/tl.3da88325.svg",
     "src": "node_modules/flag-icons/flags/1x1/tl.svg"
   },
-  "node_modules/flag-icons/flags/4x3/tk.svg": {
-    "file": "assets/tk.a8540a4a.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tk.svg"
-  },
   "node_modules/flag-icons/flags/1x1/tj.svg": {
     "file": "assets/tj.9a2533f9.svg",
     "src": "node_modules/flag-icons/flags/1x1/tj.svg"
   },
-  "node_modules/flag-icons/flags/4x3/tn.svg": {
-    "file": "assets/tn.7dbc4969.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tn.svg"
+  "node_modules/flag-icons/flags/1x1/tk.svg": {
+    "file": "assets/tk.a12ef3ff.svg",
+    "src": "node_modules/flag-icons/flags/1x1/tk.svg"
   },
-  "node_modules/flag-icons/flags/1x1/tr.svg": {
-    "file": "assets/tr.be7d115b.svg",
-    "src": "node_modules/flag-icons/flags/1x1/tr.svg"
+  "node_modules/flag-icons/flags/4x3/tk.svg": {
+    "file": "assets/tk.a8540a4a.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tk.svg"
   },
-  "node_modules/flag-icons/flags/4x3/to.svg": {
-    "file": "assets/to.b351703f.svg",
-    "src": "node_modules/flag-icons/flags/4x3/to.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/to.svg": {
-    "file": "assets/to.8f2f476b.svg",
-    "src": "node_modules/flag-icons/flags/1x1/to.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/tr.svg": {
-    "file": "assets/tr.479d84d0.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tr.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/tt.svg": {
-    "file": "assets/tt.125d18de.svg",
-    "src": "node_modules/flag-icons/flags/1x1/tt.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/tt.svg": {
-    "file": "assets/tt.92f1261b.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tt.svg"
+  "node_modules/flag-icons/flags/4x3/tl.svg": {
+    "file": "assets/tl.41be899b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tl.svg"
   },
   "node_modules/flag-icons/flags/1x1/tn.svg": {
     "file": "assets/tn.2240465e.svg",
@@ -1971,37 +1939,65 @@
     "file": "assets/tm.d8491445.svg",
     "src": "node_modules/flag-icons/flags/4x3/tm.svg"
   },
+  "node_modules/flag-icons/flags/4x3/tr.svg": {
+    "file": "assets/tr.479d84d0.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tr.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/tn.svg": {
+    "file": "assets/tn.7dbc4969.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tn.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/tr.svg": {
+    "file": "assets/tr.be7d115b.svg",
+    "src": "node_modules/flag-icons/flags/1x1/tr.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/to.svg": {
+    "file": "assets/to.8f2f476b.svg",
+    "src": "node_modules/flag-icons/flags/1x1/to.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/tt.svg": {
+    "file": "assets/tt.92f1261b.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tt.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/to.svg": {
+    "file": "assets/to.b351703f.svg",
+    "src": "node_modules/flag-icons/flags/4x3/to.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/tt.svg": {
+    "file": "assets/tt.125d18de.svg",
+    "src": "node_modules/flag-icons/flags/1x1/tt.svg"
+  },
   "node_modules/flag-icons/flags/1x1/tm.svg": {
     "file": "assets/tm.abeba3aa.svg",
     "src": "node_modules/flag-icons/flags/1x1/tm.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/tv.svg": {
-    "file": "assets/tv.d94fa5f1.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tv.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/tz.svg": {
-    "file": "assets/tz.7fa97f71.svg",
-    "src": "node_modules/flag-icons/flags/4x3/tz.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/tz.svg": {
-    "file": "assets/tz.0130959e.svg",
-    "src": "node_modules/flag-icons/flags/1x1/tz.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/ua.svg": {
-    "file": "assets/ua.2d869c23.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ua.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ua.svg": {
-    "file": "assets/ua.fd9ad29b.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ua.svg"
   },
   "node_modules/flag-icons/flags/1x1/tv.svg": {
     "file": "assets/tv.7415f816.svg",
     "src": "node_modules/flag-icons/flags/1x1/tv.svg"
   },
+  "node_modules/flag-icons/flags/4x3/tz.svg": {
+    "file": "assets/tz.7fa97f71.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tz.svg"
+  },
   "node_modules/flag-icons/flags/4x3/tw.svg": {
     "file": "assets/tw.8b830c51.svg",
     "src": "node_modules/flag-icons/flags/4x3/tw.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/tv.svg": {
+    "file": "assets/tv.d94fa5f1.svg",
+    "src": "node_modules/flag-icons/flags/4x3/tv.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/ua.svg": {
+    "file": "assets/ua.fd9ad29b.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ua.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ua.svg": {
+    "file": "assets/ua.2d869c23.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ua.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/tz.svg": {
+    "file": "assets/tz.0130959e.svg",
+    "src": "node_modules/flag-icons/flags/1x1/tz.svg"
   },
   "node_modules/flag-icons/flags/1x1/tw.svg": {
     "file": "assets/tw.822ce3b1.svg",
@@ -2011,14 +2007,6 @@
     "file": "assets/ug.1b9f3a17.svg",
     "src": "node_modules/flag-icons/flags/4x3/ug.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ug.svg": {
-    "file": "assets/ug.06e928bb.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ug.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/um.svg": {
-    "file": "assets/um.58e347e9.svg",
-    "src": "node_modules/flag-icons/flags/1x1/um.svg"
-  },
   "node_modules/flag-icons/flags/4x3/um.svg": {
     "file": "assets/um.0cbf7a17.svg",
     "src": "node_modules/flag-icons/flags/4x3/um.svg"
@@ -2027,89 +2015,109 @@
     "file": "assets/us.553867d3.svg",
     "src": "node_modules/flag-icons/flags/4x3/us.svg"
   },
+  "node_modules/flag-icons/flags/1x1/um.svg": {
+    "file": "assets/um.58e347e9.svg",
+    "src": "node_modules/flag-icons/flags/1x1/um.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/ug.svg": {
+    "file": "assets/ug.06e928bb.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ug.svg"
+  },
   "node_modules/flag-icons/flags/1x1/us.svg": {
     "file": "assets/us.740efcc1.svg",
     "src": "node_modules/flag-icons/flags/1x1/us.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/uz.svg": {
-    "file": "assets/uz.0d059f47.svg",
-    "src": "node_modules/flag-icons/flags/1x1/uz.svg"
   },
   "node_modules/flag-icons/flags/4x3/uy.svg": {
     "file": "assets/uy.3a18a094.svg",
     "src": "node_modules/flag-icons/flags/4x3/uy.svg"
   },
+  "node_modules/flag-icons/flags/1x1/uy.svg": {
+    "file": "assets/uy.1b07da41.svg",
+    "src": "node_modules/flag-icons/flags/1x1/uy.svg"
+  },
   "node_modules/flag-icons/flags/4x3/uz.svg": {
     "file": "assets/uz.f5f13057.svg",
     "src": "node_modules/flag-icons/flags/4x3/uz.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/vc.svg": {
-    "file": "assets/vc.2ef7fd06.svg",
-    "src": "node_modules/flag-icons/flags/1x1/vc.svg"
   },
   "node_modules/flag-icons/flags/4x3/vc.svg": {
     "file": "assets/vc.6357f389.svg",
     "src": "node_modules/flag-icons/flags/4x3/vc.svg"
   },
-  "node_modules/flag-icons/flags/1x1/uy.svg": {
-    "file": "assets/uy.1b07da41.svg",
-    "src": "node_modules/flag-icons/flags/1x1/uy.svg"
+  "node_modules/flag-icons/flags/1x1/uz.svg": {
+    "file": "assets/uz.0d059f47.svg",
+    "src": "node_modules/flag-icons/flags/1x1/uz.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ve.svg": {
-    "file": "assets/ve.4a331236.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ve.svg"
+  "node_modules/flag-icons/flags/1x1/vc.svg": {
+    "file": "assets/vc.2ef7fd06.svg",
+    "src": "node_modules/flag-icons/flags/1x1/vc.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ve.svg": {
-    "file": "assets/ve.5005d69f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ve.svg"
+  "node_modules/flag-icons/flags/1x1/tc.svg": {
+    "file": "assets/tc.1a90d773.svg",
+    "src": "node_modules/flag-icons/flags/1x1/tc.svg"
   },
   "node_modules/flag-icons/flags/4x3/va.svg": {
     "file": "assets/va.24701344.svg",
     "src": "node_modules/flag-icons/flags/4x3/va.svg"
   },
-  "node_modules/flag-icons/flags/4x3/vg.svg": {
-    "file": "assets/vg.ad72d6eb.svg",
-    "src": "node_modules/flag-icons/flags/4x3/vg.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/va.svg": {
-    "file": "assets/va.b46ebf1a.svg",
-    "src": "node_modules/flag-icons/flags/1x1/va.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/vn.svg": {
-    "file": "assets/vn.cc93480c.svg",
-    "src": "node_modules/flag-icons/flags/1x1/vn.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/vg.svg": {
-    "file": "assets/vg.f2cf67f2.svg",
-    "src": "node_modules/flag-icons/flags/1x1/vg.svg"
+  "node_modules/flag-icons/flags/4x3/ve.svg": {
+    "file": "assets/ve.4a331236.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ve.svg"
   },
   "node_modules/flag-icons/flags/4x3/vi.svg": {
     "file": "assets/vi.8db50145.svg",
     "src": "node_modules/flag-icons/flags/4x3/vi.svg"
   },
-  "node_modules/flag-icons/flags/1x1/wf.svg": {
-    "file": "assets/wf.904c226f.svg",
-    "src": "node_modules/flag-icons/flags/1x1/wf.svg"
+  "node_modules/flag-icons/flags/1x1/vg.svg": {
+    "file": "assets/vg.f2cf67f2.svg",
+    "src": "node_modules/flag-icons/flags/1x1/vg.svg"
   },
-  "node_modules/flag-icons/flags/4x3/wf.svg": {
-    "file": "assets/wf.c7863248.svg",
-    "src": "node_modules/flag-icons/flags/4x3/wf.svg"
+  "node_modules/flag-icons/flags/1x1/ve.svg": {
+    "file": "assets/ve.5005d69f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ve.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ws.svg": {
-    "file": "assets/ws.6b1a7ebc.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ws.svg"
+  "node_modules/flag-icons/flags/1x1/va.svg": {
+    "file": "assets/va.b46ebf1a.svg",
+    "src": "node_modules/flag-icons/flags/1x1/va.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/vg.svg": {
+    "file": "assets/vg.ad72d6eb.svg",
+    "src": "node_modules/flag-icons/flags/4x3/vg.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/vn.svg": {
+    "file": "assets/vn.cc93480c.svg",
+    "src": "node_modules/flag-icons/flags/1x1/vn.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/vi.svg": {
+    "file": "assets/vi.9a9baae2.svg",
+    "src": "node_modules/flag-icons/flags/1x1/vi.svg"
   },
   "node_modules/flag-icons/flags/4x3/vn.svg": {
     "file": "assets/vn.2ac15179.svg",
     "src": "node_modules/flag-icons/flags/4x3/vn.svg"
   },
-  "node_modules/flag-icons/flags/1x1/ws.svg": {
-    "file": "assets/ws.48d15d76.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ws.svg"
+  "node_modules/flag-icons/flags/4x3/wf.svg": {
+    "file": "assets/wf.c7863248.svg",
+    "src": "node_modules/flag-icons/flags/4x3/wf.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/vu.svg": {
+    "file": "assets/vu.612e2497.svg",
+    "src": "node_modules/flag-icons/flags/4x3/vu.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/vu.svg": {
+    "file": "assets/vu.f61a101c.svg",
+    "src": "node_modules/flag-icons/flags/1x1/vu.svg"
   },
   "node_modules/flag-icons/flags/4x3/ye.svg": {
     "file": "assets/ye.dc5607f4.svg",
     "src": "node_modules/flag-icons/flags/4x3/ye.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/ws.svg": {
+    "file": "assets/ws.48d15d76.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ws.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/wf.svg": {
+    "file": "assets/wf.904c226f.svg",
+    "src": "node_modules/flag-icons/flags/1x1/wf.svg"
   },
   "node_modules/flag-icons/flags/1x1/ye.svg": {
     "file": "assets/ye.15c1b50c.svg",
@@ -2123,97 +2131,65 @@
     "file": "assets/yt.7fa7f850.svg",
     "src": "node_modules/flag-icons/flags/1x1/yt.svg"
   },
-  "node_modules/flag-icons/flags/1x1/vu.svg": {
-    "file": "assets/vu.f61a101c.svg",
-    "src": "node_modules/flag-icons/flags/1x1/vu.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/vi.svg": {
-    "file": "assets/vi.9a9baae2.svg",
-    "src": "node_modules/flag-icons/flags/1x1/vi.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/vu.svg": {
-    "file": "assets/vu.612e2497.svg",
-    "src": "node_modules/flag-icons/flags/4x3/vu.svg"
-  },
   "node_modules/flag-icons/flags/4x3/za.svg": {
     "file": "assets/za.91238fb5.svg",
     "src": "node_modules/flag-icons/flags/4x3/za.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ws.svg": {
+    "file": "assets/ws.6b1a7ebc.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ws.svg"
   },
   "node_modules/flag-icons/flags/1x1/za.svg": {
     "file": "assets/za.4ed696bd.svg",
     "src": "node_modules/flag-icons/flags/1x1/za.svg"
   },
-  "node_modules/flag-icons/flags/1x1/zw.svg": {
-    "file": "assets/zw.66b55a96.svg",
-    "src": "node_modules/flag-icons/flags/1x1/zw.svg"
+  "node_modules/flag-icons/flags/4x3/zm.svg": {
+    "file": "assets/zm.dced1cb7.svg",
+    "src": "node_modules/flag-icons/flags/4x3/zm.svg"
   },
   "node_modules/flag-icons/flags/1x1/zm.svg": {
     "file": "assets/zm.8a105b73.svg",
     "src": "node_modules/flag-icons/flags/1x1/zm.svg"
   },
-  "node_modules/flag-icons/flags/4x3/zm.svg": {
-    "file": "assets/zm.dced1cb7.svg",
-    "src": "node_modules/flag-icons/flags/4x3/zm.svg"
+  "node_modules/flag-icons/flags/4x3/zw.svg": {
+    "file": "assets/zw.8629d7c5.svg",
+    "src": "node_modules/flag-icons/flags/4x3/zw.svg"
   },
   "node_modules/flag-icons/flags/4x3/cp.svg": {
     "file": "assets/cp.907b4b54.svg",
     "src": "node_modules/flag-icons/flags/4x3/cp.svg"
   },
-  "node_modules/flag-icons/flags/4x3/zw.svg": {
-    "file": "assets/zw.8629d7c5.svg",
-    "src": "node_modules/flag-icons/flags/4x3/zw.svg"
+  "node_modules/flag-icons/flags/1x1/cp.svg": {
+    "file": "assets/cp.582fc375.svg",
+    "src": "node_modules/flag-icons/flags/1x1/cp.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/zw.svg": {
+    "file": "assets/zw.66b55a96.svg",
+    "src": "node_modules/flag-icons/flags/1x1/zw.svg"
   },
   "node_modules/flag-icons/flags/4x3/ac.svg": {
     "file": "assets/ac.a4ddad70.svg",
     "src": "node_modules/flag-icons/flags/4x3/ac.svg"
   },
-  "node_modules/flag-icons/flags/1x1/cp.svg": {
-    "file": "assets/cp.582fc375.svg",
-    "src": "node_modules/flag-icons/flags/1x1/cp.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ac.svg": {
-    "file": "assets/ac.7f066d2b.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ac.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/dg.svg": {
-    "file": "assets/dg.aa35d3b2.svg",
-    "src": "node_modules/flag-icons/flags/1x1/dg.svg"
+  "node_modules/flag-icons/flags/1x1/es-ct.svg": {
+    "file": "assets/es-ct.95f4033c.svg",
+    "src": "node_modules/flag-icons/flags/1x1/es-ct.svg"
   },
   "node_modules/flag-icons/flags/4x3/es-ct.svg": {
     "file": "assets/es-ct.11229703.svg",
     "src": "node_modules/flag-icons/flags/4x3/es-ct.svg"
   },
-  "node_modules/flag-icons/flags/1x1/es-ct.svg": {
-    "file": "assets/es-ct.95f4033c.svg",
-    "src": "node_modules/flag-icons/flags/1x1/es-ct.svg"
+  "node_modules/flag-icons/flags/1x1/ac.svg": {
+    "file": "assets/ac.7f066d2b.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ac.svg"
   },
   "node_modules/flag-icons/flags/4x3/dg.svg": {
     "file": "assets/dg.347ef660.svg",
     "src": "node_modules/flag-icons/flags/4x3/dg.svg"
   },
-  "node_modules/flag-icons/flags/4x3/ea.svg": {
-    "file": "assets/ea.e86d317d.svg",
-    "src": "node_modules/flag-icons/flags/4x3/ea.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/eu.svg": {
-    "file": "assets/eu.f8fd4ae7.svg",
-    "src": "node_modules/flag-icons/flags/4x3/eu.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/ea.svg": {
-    "file": "assets/ea.bb4ff4a8.svg",
-    "src": "node_modules/flag-icons/flags/1x1/ea.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/es-ga.svg": {
-    "file": "assets/es-ga.1955fb3b.svg",
-    "src": "node_modules/flag-icons/flags/1x1/es-ga.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/gb-eng.svg": {
-    "file": "assets/gb-eng.2dd36838.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gb-eng.svg"
-  },
-  "node_modules/flag-icons/flags/4x3/gb-eng.svg": {
-    "file": "assets/gb-eng.53797ba9.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gb-eng.svg"
+  "node_modules/flag-icons/flags/1x1/dg.svg": {
+    "file": "assets/dg.aa35d3b2.svg",
+    "src": "node_modules/flag-icons/flags/1x1/dg.svg"
   },
   "node_modules/flag-icons/flags/4x3/es-ga.svg": {
     "file": "assets/es-ga.0f1c2551.svg",
@@ -2223,6 +2199,26 @@
     "file": "assets/eu.605225b6.svg",
     "src": "node_modules/flag-icons/flags/1x1/eu.svg"
   },
+  "node_modules/flag-icons/flags/4x3/eu.svg": {
+    "file": "assets/eu.f8fd4ae7.svg",
+    "src": "node_modules/flag-icons/flags/4x3/eu.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/es-ga.svg": {
+    "file": "assets/es-ga.1955fb3b.svg",
+    "src": "node_modules/flag-icons/flags/1x1/es-ga.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/gb-eng.svg": {
+    "file": "assets/gb-eng.53797ba9.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gb-eng.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/gb-eng.svg": {
+    "file": "assets/gb-eng.2dd36838.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gb-eng.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/ea.svg": {
+    "file": "assets/ea.e86d317d.svg",
+    "src": "node_modules/flag-icons/flags/4x3/ea.svg"
+  },
   "node_modules/flag-icons/flags/4x3/gb-sct.svg": {
     "file": "assets/gb-sct.7b55bce7.svg",
     "src": "node_modules/flag-icons/flags/4x3/gb-sct.svg"
@@ -2231,9 +2227,9 @@
     "file": "assets/gb-sct.19ed371e.svg",
     "src": "node_modules/flag-icons/flags/1x1/gb-sct.svg"
   },
-  "node_modules/flag-icons/flags/1x1/gb-nir.svg": {
-    "file": "assets/gb-nir.14593385.svg",
-    "src": "node_modules/flag-icons/flags/1x1/gb-nir.svg"
+  "node_modules/flag-icons/flags/1x1/ea.svg": {
+    "file": "assets/ea.bb4ff4a8.svg",
+    "src": "node_modules/flag-icons/flags/1x1/ea.svg"
   },
   "node_modules/flag-icons/flags/4x3/gb-nir.svg": {
     "file": "assets/gb-nir.ae91c319.svg",
@@ -2243,17 +2239,21 @@
     "file": "assets/ic.4e5a5e63.svg",
     "src": "node_modules/flag-icons/flags/1x1/ic.svg"
   },
+  "node_modules/flag-icons/flags/1x1/gb-nir.svg": {
+    "file": "assets/gb-nir.14593385.svg",
+    "src": "node_modules/flag-icons/flags/1x1/gb-nir.svg"
+  },
   "node_modules/flag-icons/flags/4x3/ic.svg": {
     "file": "assets/ic.9a584e04.svg",
     "src": "node_modules/flag-icons/flags/4x3/ic.svg"
   },
-  "node_modules/flag-icons/flags/4x3/gb-wls.svg": {
-    "file": "assets/gb-wls.3a95845d.svg",
-    "src": "node_modules/flag-icons/flags/4x3/gb-wls.svg"
-  },
   "node_modules/flag-icons/flags/1x1/gb-wls.svg": {
     "file": "assets/gb-wls.d3c5b996.svg",
     "src": "node_modules/flag-icons/flags/1x1/gb-wls.svg"
+  },
+  "node_modules/flag-icons/flags/4x3/gb-wls.svg": {
+    "file": "assets/gb-wls.3a95845d.svg",
+    "src": "node_modules/flag-icons/flags/4x3/gb-wls.svg"
   },
   "node_modules/flag-icons/flags/1x1/ta.svg": {
     "file": "assets/ta.d8fc0858.svg",
@@ -2263,24 +2263,24 @@
     "file": "assets/ta.3a19b022.svg",
     "src": "node_modules/flag-icons/flags/4x3/ta.svg"
   },
-  "node_modules/flag-icons/flags/4x3/un.svg": {
-    "file": "assets/un.d8446e2c.svg",
-    "src": "node_modules/flag-icons/flags/4x3/un.svg"
-  },
   "node_modules/flag-icons/flags/4x3/xk.svg": {
     "file": "assets/xk.69f770ff.svg",
     "src": "node_modules/flag-icons/flags/4x3/xk.svg"
-  },
-  "node_modules/flag-icons/flags/1x1/xk.svg": {
-    "file": "assets/xk.b55b1b7c.svg",
-    "src": "node_modules/flag-icons/flags/1x1/xk.svg"
   },
   "node_modules/flag-icons/flags/1x1/un.svg": {
     "file": "assets/un.a7c66b36.svg",
     "src": "node_modules/flag-icons/flags/1x1/un.svg"
   },
+  "node_modules/flag-icons/flags/4x3/un.svg": {
+    "file": "assets/un.d8446e2c.svg",
+    "src": "node_modules/flag-icons/flags/4x3/un.svg"
+  },
+  "node_modules/flag-icons/flags/1x1/xk.svg": {
+    "file": "assets/xk.b55b1b7c.svg",
+    "src": "node_modules/flag-icons/flags/1x1/xk.svg"
+  },
   "resources/js/app.js": {
-    "file": "assets/app.87be743b.js",
+    "file": "assets/app.97255e9c.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
@@ -2291,10 +2291,8 @@
       "resources/js/Pages/Auth/Pages/Cart/AdressesDrop.vue",
       "resources/js/Pages/Auth/Pages/Cart/Validation.vue",
       "resources/js/Pages/Auth/Pages/Cart/ValidationDrop.vue",
-      "resources/js/Pages/Auth/Pages/Dropshipping/Clients.vue",
       "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Gammes.vue",
       "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Products.vue",
-      "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Validation.vue",
       "resources/js/Pages/Auth/Pages/FAQ.vue",
       "resources/js/Pages/Auth/Pages/Home.vue",
       "resources/js/Pages/Auth/Pages/Legales/CGV.vue",
@@ -2305,6 +2303,7 @@
       "resources/js/Pages/Auth/Pages/Products/Gamme.vue",
       "resources/js/Pages/Auth/Pages/Shippings.vue",
       "resources/js/Pages/Auth/Pages/Shippings/Orders.vue",
+      "resources/js/Pages/Auth/Pages/User/Adresses.vue",
       "resources/js/Pages/Auth/Pages/User/Settings.vue",
       "resources/js/Pages/Auth/Register.vue",
       "resources/js/Pages/Auth/TypeVente.vue",
@@ -2315,7 +2314,7 @@
       "lang/php_fr.json"
     ],
     "css": [
-      "assets/app.afe7bed2.css"
+      "assets/app.77b8f595.css"
     ],
     "assets": [
       "assets/Sofia Pro ExtraLight Az.0e5ccaf9.ttf",
@@ -2323,26 +2322,26 @@
     ]
   },
   "resources/js/Pages/Auth/Login.vue": {
-    "file": "assets/Login.2ca2f13f.js",
+    "file": "assets/Login.e874a705.js",
     "src": "resources/js/Pages/Auth/Login.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_GuestLayout.5dae3127.js",
-      "_Linkedin.bdf4359a.js",
-      "_InputError.62b8dee6.js",
+      "_GuestLayout.3fa8858f.js",
+      "_Linkedin.89485f9c.js",
+      "_InputError.930e3767.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "assets": [
       "assets/Nazar Logo.42bad03b.svg"
     ]
   },
-  "_GuestLayout.5dae3127.js": {
-    "file": "assets/GuestLayout.5dae3127.js",
+  "_GuestLayout.3fa8858f.js": {
+    "file": "assets/GuestLayout.3fa8858f.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js",
-      "_Linkedin.bdf4359a.js"
+      "_Linkedin.89485f9c.js"
     ],
     "css": [
       "assets/GuestLayout.86319e99.css"
@@ -2881,15 +2880,15 @@
       "assets/xk.b55b1b7c.svg"
     ]
   },
-  "_Linkedin.bdf4359a.js": {
-    "file": "assets/Linkedin.bdf4359a.js",
+  "_Linkedin.89485f9c.js": {
+    "file": "assets/Linkedin.89485f9c.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
-  "_InputError.62b8dee6.js": {
-    "file": "assets/InputError.62b8dee6.js",
+  "_InputError.930e3767.js": {
+    "file": "assets/InputError.930e3767.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -2898,23 +2897,23 @@
     "file": "assets/_plugin-vue_export-helper.cdc0426e.js"
   },
   "resources/js/Pages/Auth/Pages/AboutUs.vue": {
-    "file": "assets/AboutUs.03802f5a.js",
+    "file": "assets/AboutUs.71a6a1cc.js",
     "src": "resources/js/Pages/Auth/Pages/AboutUs.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_ChevronDownIcon.3792a865.js",
-      "_LightBulbIcon.9cf7b48a.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_ChevronDownIcon.49d7442b.js",
+      "_LightBulbIcon.558d94f2.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "assets": [
       "assets/bandeau_a_propos.1b588a9b.webp"
     ]
   },
-  "_AuthenticatedLayout.f865475b.js": {
-    "file": "assets/AuthenticatedLayout.f865475b.js",
+  "_AuthenticatedLayout.872a0e20.js": {
+    "file": "assets/AuthenticatedLayout.872a0e20.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper.cdc0426e.js"
@@ -2926,237 +2925,237 @@
       "assets/Nazar Logo.42bad03b.svg"
     ]
   },
-  "_Breadcrumbs.34e18b45.js": {
-    "file": "assets/Breadcrumbs.34e18b45.js",
+  "_Breadcrumbs.d6d20c8d.js": {
+    "file": "assets/Breadcrumbs.d6d20c8d.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_ChevronDownIcon.3792a865.js": {
-    "file": "assets/ChevronDownIcon.3792a865.js",
+  "_ChevronDownIcon.49d7442b.js": {
+    "file": "assets/ChevronDownIcon.49d7442b.js",
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js"
     ]
   },
-  "_LightBulbIcon.9cf7b48a.js": {
-    "file": "assets/LightBulbIcon.9cf7b48a.js",
+  "_LightBulbIcon.558d94f2.js": {
+    "file": "assets/LightBulbIcon.558d94f2.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Cart.vue": {
-    "file": "assets/Cart.c8923fc1.js",
+    "file": "assets/Cart.e3b5921e.js",
     "src": "resources/js/Pages/Auth/Pages/Cart.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js",
-      "_EtapeOrder.6756f01e.js",
-      "_ResumeOrderVertical.88e5c899.js",
-      "_InputNumber.334f97ba.js",
-      "_ExclamationCircleIcon.b8236f28.js",
+      "_EtapeOrder.604ef844.js",
+      "_ResumeOrderVertical.856b7153.js",
+      "_ExclamationCircleIcon.15633042.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_ArrowRightCircleIcon.13827048.js"
-    ]
-  },
-  "_EtapeOrder.6756f01e.js": {
-    "file": "assets/EtapeOrder.6756f01e.js",
-    "imports": [
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "resources/js/app.js"
-    ]
-  },
-  "_ResumeOrderVertical.88e5c899.js": {
-    "file": "assets/ResumeOrderVertical.88e5c899.js",
-    "imports": [
-      "resources/js/app.js",
-      "_ArrowRightCircleIcon.13827048.js"
-    ]
-  },
-  "_ExclamationCircleIcon.b8236f28.js": {
-    "file": "assets/ExclamationCircleIcon.b8236f28.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "_ArrowRightCircleIcon.13827048.js": {
-    "file": "assets/ArrowRightCircleIcon.13827048.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "_InputNumber.334f97ba.js": {
-    "file": "assets/InputNumber.334f97ba.js",
-    "imports": [
-      "resources/js/app.js"
+      "_ArrowRightCircleIcon.1b6e47c6.js"
     ],
     "css": [
-      "assets/InputNumber.c9ec092f.css"
+      "assets/Cart.c9ec092f.css"
+    ]
+  },
+  "_EtapeOrder.604ef844.js": {
+    "file": "assets/EtapeOrder.604ef844.js",
+    "imports": [
+      "__plugin-vue_export-helper.cdc0426e.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_ResumeOrderVertical.856b7153.js": {
+    "file": "assets/ResumeOrderVertical.856b7153.js",
+    "imports": [
+      "resources/js/app.js",
+      "_ArrowRightCircleIcon.1b6e47c6.js"
+    ]
+  },
+  "_ExclamationCircleIcon.15633042.js": {
+    "file": "assets/ExclamationCircleIcon.15633042.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_ArrowRightCircleIcon.1b6e47c6.js": {
+    "file": "assets/ArrowRightCircleIcon.1b6e47c6.js",
+    "imports": [
+      "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Cart/Adresses.vue": {
-    "file": "assets/Adresses.70ec6802.js",
+    "file": "assets/Adresses.71842738.js",
     "src": "resources/js/Pages/Auth/Pages/Cart/Adresses.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Flag.22b620c2.js",
-      "_Check.1ccd0d76.js",
-      "_Email.c370b17f.js",
-      "_package.c48a2d2b.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_InputError.62b8dee6.js",
-      "_ResumeOrder.46a78742.js",
-      "_ResumeOrderVertical.88e5c899.js",
-      "_EtapeOrder.6756f01e.js",
-      "_combobox.5fc38c89.js",
-      "_switch.0d0c31ad.js",
-      "_transition.bba72eae.js",
+      "_Flag.9de4923b.js",
+      "_ResumeOrder.2309edd2.js",
+      "_Phone.1a49bb41.js",
+      "_Email.ff3f353c.js",
+      "_package.eca1c0b0.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_InputError.930e3767.js",
+      "_ResumeOrderVertical.856b7153.js",
+      "_EtapeOrder.604ef844.js",
+      "_combobox.71d1c2c3.js",
+      "_transition.e1c78aeb.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_ArrowRightCircleIcon.13827048.js",
-      "_use-controllable.813f3e32.js",
-      "_label.0691f485.js",
-      "_description.19b305b3.js"
+      "_label.7ff9aede.js",
+      "_description.0128158c.js",
+      "_use-controllable.fa0acec4.js",
+      "_ArrowRightCircleIcon.1b6e47c6.js"
     ]
   },
-  "_Flag.22b620c2.js": {
-    "file": "assets/Flag.22b620c2.js",
+  "_Flag.9de4923b.js": {
+    "file": "assets/Flag.9de4923b.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
-  "_Check.1ccd0d76.js": {
-    "file": "assets/Check.1ccd0d76.js",
+  "_ResumeOrder.2309edd2.js": {
+    "file": "assets/ResumeOrder.2309edd2.js",
     "imports": [
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "resources/js/app.js"
-    ]
-  },
-  "_Email.c370b17f.js": {
-    "file": "assets/Email.c370b17f.js",
-    "imports": [
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "resources/js/app.js"
-    ]
-  },
-  "_package.c48a2d2b.js": {
-    "file": "assets/package.c48a2d2b.js",
-    "imports": [
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "resources/js/app.js"
-    ]
-  },
-  "_ResumeOrder.46a78742.js": {
-    "file": "assets/ResumeOrder.46a78742.js",
-    "imports": [
+      "_AuthenticatedLayout.872a0e20.js",
+      "_label.7ff9aede.js",
+      "_description.0128158c.js",
+      "_use-controllable.fa0acec4.js",
       "resources/js/app.js",
-      "_ArrowRightCircleIcon.13827048.js"
+      "__plugin-vue_export-helper.cdc0426e.js",
+      "_ArrowRightCircleIcon.1b6e47c6.js"
     ]
   },
-  "_combobox.5fc38c89.js": {
-    "file": "assets/combobox.5fc38c89.js",
+  "_Phone.1a49bb41.js": {
+    "file": "assets/Phone.1a49bb41.js",
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
-      "_use-controllable.813f3e32.js",
+      "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
-  "_switch.0d0c31ad.js": {
-    "file": "assets/switch.0d0c31ad.js",
+  "_Email.ff3f353c.js": {
+    "file": "assets/Email.ff3f353c.js",
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
-      "_label.0691f485.js",
-      "_description.19b305b3.js",
-      "_use-controllable.813f3e32.js",
+      "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
-  "_transition.bba72eae.js": {
-    "file": "assets/transition.bba72eae.js",
+  "_package.eca1c0b0.js": {
+    "file": "assets/package.eca1c0b0.js",
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
-  "_use-controllable.813f3e32.js": {
-    "file": "assets/use-controllable.813f3e32.js",
+  "_combobox.71d1c2c3.js": {
+    "file": "assets/combobox.71d1c2c3.js",
+    "imports": [
+      "_AuthenticatedLayout.872a0e20.js",
+      "_use-controllable.fa0acec4.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_transition.e1c78aeb.js": {
+    "file": "assets/transition.e1c78aeb.js",
+    "imports": [
+      "_AuthenticatedLayout.872a0e20.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_use-controllable.fa0acec4.js": {
+    "file": "assets/use-controllable.fa0acec4.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_label.0691f485.js": {
-    "file": "assets/label.0691f485.js",
+  "_label.7ff9aede.js": {
+    "file": "assets/label.7ff9aede.js",
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js"
     ]
   },
-  "_description.19b305b3.js": {
-    "file": "assets/description.19b305b3.js",
+  "_description.0128158c.js": {
+    "file": "assets/description.0128158c.js",
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Cart/AdressesDrop.vue": {
-    "file": "assets/AdressesDrop.333acdd6.js",
+    "file": "assets/AdressesDrop.7653d826.js",
     "src": "resources/js/Pages/Auth/Pages/Cart/AdressesDrop.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js",
-      "_ResumeOrder.46a78742.js",
-      "_ResumeOrderVertical.88e5c899.js",
-      "_EtapeOrder.6756f01e.js",
-      "_floating-vue.es.4bfe148f.js",
-      "_Account.40de7194.js",
-      "_Flag.22b620c2.js",
-      "_Check.1ccd0d76.js",
-      "_Email.c370b17f.js",
-      "_InputError.62b8dee6.js",
-      "_combobox.5fc38c89.js",
-      "_transition.bba72eae.js",
-      "_switch.0d0c31ad.js",
-      "_ExclamationCircleIcon.b8236f28.js",
-      "_XMarkIcon.216053aa.js",
-      "_dialog.8164dc0c.js",
+      "_ResumeOrder.2309edd2.js",
+      "_ResumeOrderVertical.856b7153.js",
+      "_EtapeOrder.604ef844.js",
+      "_floating-vue.es.561bf362.js",
+      "_Account.72cedee1.js",
+      "_Flag.9de4923b.js",
+      "_Phone.1a49bb41.js",
+      "_Email.ff3f353c.js",
+      "_InputError.930e3767.js",
+      "_combobox.71d1c2c3.js",
+      "_transition.e1c78aeb.js",
+      "_ExclamationCircleIcon.15633042.js",
+      "_XMarkIcon.740c0002.js",
+      "_CheckIcon.3f973ed7.js",
+      "_PencilIcon.6676c313.js",
+      "_dialog.3f6d81cd.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_ArrowRightCircleIcon.13827048.js",
-      "_use-controllable.813f3e32.js",
-      "_label.0691f485.js",
-      "_description.19b305b3.js",
+      "_label.7ff9aede.js",
+      "_description.0128158c.js",
+      "_use-controllable.fa0acec4.js",
+      "_ArrowRightCircleIcon.1b6e47c6.js",
       "_micro-task.fe338338.js"
     ],
     "css": [
       "assets/AdressesDrop.489ced18.css"
     ]
   },
-  "_floating-vue.es.4bfe148f.js": {
-    "file": "assets/floating-vue.es.4bfe148f.js",
+  "_floating-vue.es.561bf362.js": {
+    "file": "assets/floating-vue.es.561bf362.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_XMarkIcon.216053aa.js": {
-    "file": "assets/XMarkIcon.216053aa.js",
+  "_XMarkIcon.740c0002.js": {
+    "file": "assets/XMarkIcon.740c0002.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_dialog.8164dc0c.js": {
-    "file": "assets/dialog.8164dc0c.js",
+  "_CheckIcon.3f973ed7.js": {
+    "file": "assets/CheckIcon.3f973ed7.js",
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_PencilIcon.6676c313.js": {
+    "file": "assets/PencilIcon.6676c313.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_dialog.3f6d81cd.js": {
+    "file": "assets/dialog.3f6d81cd.js",
+    "imports": [
+      "_AuthenticatedLayout.872a0e20.js",
       "_micro-task.fe338338.js",
       "resources/js/app.js",
-      "_description.19b305b3.js",
-      "_transition.bba72eae.js"
+      "_description.0128158c.js",
+      "_transition.e1c78aeb.js"
     ]
   },
-  "_Account.40de7194.js": {
-    "file": "assets/Account.40de7194.js",
+  "_Account.72cedee1.js": {
+    "file": "assets/Account.72cedee1.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
@@ -3166,255 +3165,169 @@
     "file": "assets/micro-task.fe338338.js"
   },
   "resources/js/Pages/Auth/Pages/Cart/Validation.vue": {
-    "file": "assets/Validation.b3e2a5cf.js",
+    "file": "assets/Validation.a352f32a.js",
     "src": "resources/js/Pages/Auth/Pages/Cart/Validation.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_EtapeOrder.6756f01e.js",
-      "_BouttonPaiement.e67645b8.js",
-      "_ArrowRightCircleIcon.13827048.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_EtapeOrder.604ef844.js",
+      "_BouttonPaiement.8fde47e9.js",
+      "_ArrowRightCircleIcon.1b6e47c6.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_label.0691f485.js",
-      "_description.19b305b3.js",
-      "_use-controllable.813f3e32.js"
+      "_label.7ff9aede.js",
+      "_description.0128158c.js",
+      "_use-controllable.fa0acec4.js"
     ]
   },
-  "_BouttonPaiement.e67645b8.js": {
-    "file": "assets/BouttonPaiement.e67645b8.js",
+  "_BouttonPaiement.8fde47e9.js": {
+    "file": "assets/BouttonPaiement.8fde47e9.js",
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
-      "_label.0691f485.js",
-      "_description.19b305b3.js",
-      "_use-controllable.813f3e32.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_label.7ff9aede.js",
+      "_description.0128158c.js",
+      "_use-controllable.fa0acec4.js",
       "resources/js/app.js",
-      "_ArrowRightCircleIcon.13827048.js"
+      "_ArrowRightCircleIcon.1b6e47c6.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Cart/ValidationDrop.vue": {
-    "file": "assets/ValidationDrop.cee7250f.js",
+    "file": "assets/ValidationDrop.33f18860.js",
     "src": "resources/js/Pages/Auth/Pages/Cart/ValidationDrop.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_EtapeOrder.6756f01e.js",
-      "_BouttonPaiement.e67645b8.js",
-      "_ArrowRightCircleIcon.13827048.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_EtapeOrder.604ef844.js",
+      "_BouttonPaiement.8fde47e9.js",
+      "_ArrowRightCircleIcon.1b6e47c6.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_label.0691f485.js",
-      "_description.19b305b3.js",
-      "_use-controllable.813f3e32.js"
-    ]
-  },
-  "resources/js/Pages/Auth/Pages/Dropshipping/Clients.vue": {
-    "file": "assets/Clients.10a74a80.js",
-    "src": "resources/js/Pages/Auth/Pages/Dropshipping/Clients.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/app.js",
-      "_Account.40de7194.js",
-      "_Flag.22b620c2.js",
-      "_MicrosoftExcel.d3a36e8f.js",
-      "_Check.1ccd0d76.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_Email.c370b17f.js",
-      "_ModalImportMKP.391041e0.js",
-      "_InputError.62b8dee6.js",
-      "_combobox.5fc38c89.js",
-      "_transition.bba72eae.js",
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "_dialog.8164dc0c.js",
-      "_micro-task.fe338338.js",
-      "_description.19b305b3.js",
-      "_use-controllable.813f3e32.js"
-    ],
-    "assets": [
-      "assets/Template_Vierge_Drop.477843c2.xlsx",
-      "assets/Template_Model_Drop.05dd7258.xlsx"
-    ]
-  },
-  "_MicrosoftExcel.d3a36e8f.js": {
-    "file": "assets/MicrosoftExcel.d3a36e8f.js",
-    "imports": [
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "resources/js/app.js"
-    ]
-  },
-  "_ModalImportMKP.391041e0.js": {
-    "file": "assets/ModalImportMKP.391041e0.js",
-    "imports": [
-      "resources/js/app.js",
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_transition.bba72eae.js",
-      "_dialog.8164dc0c.js"
-    ],
-    "css": [
-      "assets/ModalImportMKP.cb9c8af9.css"
+      "_label.7ff9aede.js",
+      "_description.0128158c.js",
+      "_use-controllable.fa0acec4.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Gammes.vue": {
-    "file": "assets/Gammes.f8a2c839.js",
+    "file": "assets/Gammes.0055b156.js",
     "src": "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Gammes.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Magnify.150ae328.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_MicrosoftExcel.d3a36e8f.js",
-      "_ModalAjoutClient.57c7eef3.js",
-      "_ModalImportMKP.391041e0.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_floating-vue.es.4bfe148f.js",
-      "_InputError.62b8dee6.js",
-      "_BackspaceIcon.90207b58.js",
-      "_ListBulletIcon.2773174e.js",
+      "_Magnify.0c24fa81.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_ModalAjoutClient.29412c9e.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_package.c48a2d2b.js",
-      "_XMarkIcon.216053aa.js",
-      "_combobox.5fc38c89.js",
-      "_use-controllable.813f3e32.js",
-      "_transition.bba72eae.js",
-      "_dialog.8164dc0c.js",
+      "_transition.e1c78aeb.js",
+      "_dialog.3f6d81cd.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_floating-vue.es.561bf362.js",
+      "_InputError.930e3767.js",
+      "_BackspaceIcon.ab49af5b.js",
+      "_ListBulletIcon.7abe640a.js",
+      "_package.eca1c0b0.js",
+      "_CheckIcon.3f973ed7.js",
+      "_TrashIcon.8b16697b.js",
+      "_XMarkIcon.740c0002.js",
+      "_combobox.71d1c2c3.js",
+      "_use-controllable.fa0acec4.js",
       "_micro-task.fe338338.js",
-      "_description.19b305b3.js"
+      "_description.0128158c.js"
+    ],
+    "css": [
+      "assets/Gammes.cb9c8af9.css"
     ],
     "assets": [
       "assets/Template_Vierge_Drop.477843c2.xlsx",
       "assets/Template_Model_Drop.05dd7258.xlsx"
     ]
   },
-  "_Magnify.150ae328.js": {
-    "file": "assets/Magnify.150ae328.js",
+  "_Magnify.0c24fa81.js": {
+    "file": "assets/Magnify.0c24fa81.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
-  "_ModalAjoutClient.57c7eef3.js": {
-    "file": "assets/ModalAjoutClient.57c7eef3.js",
+  "_ModalAjoutClient.29412c9e.js": {
+    "file": "assets/ModalAjoutClient.29412c9e.js",
     "imports": [
       "resources/js/app.js",
-      "_package.c48a2d2b.js",
-      "_InputError.62b8dee6.js",
-      "_XMarkIcon.216053aa.js",
-      "_combobox.5fc38c89.js",
-      "_transition.bba72eae.js",
-      "_dialog.8164dc0c.js"
+      "_package.eca1c0b0.js",
+      "_InputError.930e3767.js",
+      "_CheckIcon.3f973ed7.js",
+      "_TrashIcon.8b16697b.js",
+      "_XMarkIcon.740c0002.js",
+      "_combobox.71d1c2c3.js",
+      "_transition.e1c78aeb.js",
+      "_dialog.3f6d81cd.js"
     ]
   },
-  "_BackspaceIcon.90207b58.js": {
-    "file": "assets/BackspaceIcon.90207b58.js",
+  "_BackspaceIcon.ab49af5b.js": {
+    "file": "assets/BackspaceIcon.ab49af5b.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_ListBulletIcon.2773174e.js": {
-    "file": "assets/ListBulletIcon.2773174e.js",
+  "_ListBulletIcon.7abe640a.js": {
+    "file": "assets/ListBulletIcon.7abe640a.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_TrashIcon.8b16697b.js": {
+    "file": "assets/TrashIcon.8b16697b.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Products.vue": {
-    "file": "assets/Products.2fd2ef16.js",
+    "file": "assets/Products.c4bdf4b6.js",
     "src": "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Products.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_InputNumberProduit.e51edf92.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_floating-vue.es.4bfe148f.js",
-      "_pagination.min.820da807.js",
-      "_index.0b791ced.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_InputError.62b8dee6.js",
-      "_ModalAjoutClient.57c7eef3.js",
-      "_ListBulletIcon.2773174e.js",
-      "_BackspaceIcon.90207b58.js",
-      "_ArrowRightCircleIcon.13827048.js",
-      "_transition.bba72eae.js",
-      "_dialog.8164dc0c.js",
+      "_pagination.min.911e1029.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_floating-vue.es.561bf362.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_InputError.930e3767.js",
+      "_ModalAjoutClient.29412c9e.js",
+      "_ListBulletIcon.7abe640a.js",
+      "_BackspaceIcon.ab49af5b.js",
+      "_ArrowRightCircleIcon.1b6e47c6.js",
+      "_transition.e1c78aeb.js",
+      "_dialog.3f6d81cd.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_package.c48a2d2b.js",
-      "_XMarkIcon.216053aa.js",
-      "_combobox.5fc38c89.js",
-      "_use-controllable.813f3e32.js",
+      "_package.eca1c0b0.js",
+      "_CheckIcon.3f973ed7.js",
+      "_TrashIcon.8b16697b.js",
+      "_XMarkIcon.740c0002.js",
+      "_combobox.71d1c2c3.js",
+      "_use-controllable.fa0acec4.js",
       "_micro-task.fe338338.js",
-      "_description.19b305b3.js"
+      "_description.0128158c.js"
     ]
   },
-  "_InputNumberProduit.e51edf92.js": {
-    "file": "assets/InputNumberProduit.e51edf92.js",
+  "_pagination.min.911e1029.js": {
+    "file": "assets/pagination.min.911e1029.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "css": [
-      "assets/InputNumberProduit.c9ec092f.css"
-    ]
-  },
-  "_pagination.min.820da807.js": {
-    "file": "assets/pagination.min.820da807.js",
-    "imports": [
-      "resources/js/app.js"
-    ],
-    "css": [
-      "assets/pagination.907a0de1.css"
-    ]
-  },
-  "_index.0b791ced.js": {
-    "file": "assets/index.0b791ced.js",
-    "imports": [
-      "resources/js/app.js"
-    ]
-  },
-  "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Validation.vue": {
-    "file": "assets/Validation.954f605a.js",
-    "src": "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Validation.vue",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/app.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_Pencil.99d7d59c.js",
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "_Check.1ccd0d76.js",
-      "_MenuRight.c533ff7c.js",
-      "_InputNumber.334f97ba.js",
-      "_pagination.min.820da807.js",
-      "_ResumeOrder.46a78742.js",
-      "_ResumeOrderVertical.88e5c899.js",
-      "_ArrowRightCircleIcon.13827048.js"
-    ],
-    "css": [
-      "assets/Validation.217ebb88.css"
-    ]
-  },
-  "_Pencil.99d7d59c.js": {
-    "file": "assets/Pencil.99d7d59c.js",
-    "imports": [
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "resources/js/app.js"
-    ]
-  },
-  "_MenuRight.c533ff7c.js": {
-    "file": "assets/MenuRight.c533ff7c.js",
-    "imports": [
-      "__plugin-vue_export-helper.cdc0426e.js",
-      "resources/js/app.js"
+      "assets/pagination.743a52c1.css"
     ]
   },
   "resources/js/Pages/Auth/Pages/FAQ.vue": {
-    "file": "assets/FAQ.9a59dd05.js",
+    "file": "assets/FAQ.36a3fd86.js",
     "src": "resources/js/Pages/Auth/Pages/FAQ.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_ChevronDownIcon.3792a865.js",
-      "_LightBulbIcon.9cf7b48a.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_ChevronDownIcon.49d7442b.js",
+      "_LightBulbIcon.558d94f2.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "assets": [
@@ -3422,11 +3335,11 @@
     ]
   },
   "resources/js/Pages/Auth/Pages/Home.vue": {
-    "file": "assets/Home.7b4d39cb.js",
+    "file": "assets/Home.6790d03e.js",
     "src": "resources/js/Pages/Auth/Pages/Home.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
@@ -3446,14 +3359,14 @@
     ]
   },
   "resources/js/Pages/Auth/Pages/Legales/CGV.vue": {
-    "file": "assets/CGV.eb6c45b3.js",
+    "file": "assets/CGV.821e1ce5.js",
     "src": "resources/js/Pages/Auth/Pages/Legales/CGV.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_LightBulbIcon.9cf7b48a.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_LightBulbIcon.558d94f2.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "css": [
@@ -3461,55 +3374,54 @@
     ]
   },
   "resources/js/Pages/Auth/Pages/Legales/Cookies.vue": {
-    "file": "assets/Cookies.4a0591bb.js",
+    "file": "assets/Cookies.8245d4e2.js",
     "src": "resources/js/Pages/Auth/Pages/Legales/Cookies.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_LightBulbIcon.9cf7b48a.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_LightBulbIcon.558d94f2.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Legales/MentionsLegales.vue": {
-    "file": "assets/MentionsLegales.4c223cf3.js",
+    "file": "assets/MentionsLegales.ff44a3e7.js",
     "src": "resources/js/Pages/Auth/Pages/Legales/MentionsLegales.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_LightBulbIcon.9cf7b48a.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_LightBulbIcon.558d94f2.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Legales/PolitiqueConfidentialite.vue": {
-    "file": "assets/PolitiqueConfidentialite.652d5e6f.js",
+    "file": "assets/PolitiqueConfidentialite.dbb64c0b.js",
     "src": "resources/js/Pages/Auth/Pages/Legales/PolitiqueConfidentialite.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "resources/js/app.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_LightBulbIcon.9cf7b48a.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_LightBulbIcon.558d94f2.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Products.vue": {
-    "file": "assets/Products.cedc89f5.js",
+    "file": "assets/Products.6c215c9c.js",
     "src": "resources/js/Pages/Auth/Pages/Products.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Magnify.150ae328.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_MicrosoftExcel.d3a36e8f.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_floating-vue.es.4bfe148f.js",
-      "_InputError.62b8dee6.js",
-      "_BackspaceIcon.90207b58.js",
-      "_ListBulletIcon.2773174e.js",
+      "_Magnify.0c24fa81.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_floating-vue.es.561bf362.js",
+      "_InputError.930e3767.js",
+      "_BackspaceIcon.ab49af5b.js",
+      "_ListBulletIcon.7abe640a.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ],
     "assets": [
@@ -3518,109 +3430,135 @@
     ]
   },
   "resources/js/Pages/Auth/Pages/Products/Gamme.vue": {
-    "file": "assets/Gamme.50cf3c25.js",
+    "file": "assets/Gamme.e8339d4d.js",
     "src": "resources/js/Pages/Auth/Pages/Products/Gamme.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_InputNumberProduit.e51edf92.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_MenuRight.c533ff7c.js",
-      "_floating-vue.es.4bfe148f.js",
-      "_pagination.min.820da807.js",
-      "_index.0b791ced.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_InputError.62b8dee6.js",
-      "_ListBulletIcon.2773174e.js",
-      "_ArrowRightCircleIcon.13827048.js",
-      "_transition.bba72eae.js",
-      "_dialog.8164dc0c.js",
+      "_pagination.min.911e1029.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "__plugin-vue_export-helper.cdc0426e.js",
+      "_floating-vue.es.561bf362.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_InputError.930e3767.js",
+      "_ListBulletIcon.7abe640a.js",
+      "_ArrowRightCircleIcon.1b6e47c6.js",
+      "_transition.e1c78aeb.js",
+      "_dialog.3f6d81cd.js",
       "_micro-task.fe338338.js",
-      "_description.19b305b3.js"
+      "_description.0128158c.js"
     ],
     "css": [
       "assets/Gamme.217ebb88.css"
     ]
   },
   "resources/js/Pages/Auth/Pages/Shippings.vue": {
-    "file": "assets/Shippings.3558ea9f.js",
+    "file": "assets/Shippings.590b06e6.js",
     "src": "resources/js/Pages/Auth/Pages/Shippings.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
-      "_Pencil.99d7d59c.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_Pencil.002f4e15.js",
       "resources/js/app.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_DocumentTextIcon.1712730b.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_DocumentTextIcon.73dddc24.js",
       "__plugin-vue_export-helper.cdc0426e.js"
     ]
   },
-  "_DocumentTextIcon.1712730b.js": {
-    "file": "assets/DocumentTextIcon.1712730b.js",
+  "_Pencil.002f4e15.js": {
+    "file": "assets/Pencil.002f4e15.js",
+    "imports": [
+      "__plugin-vue_export-helper.cdc0426e.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_DocumentTextIcon.73dddc24.js": {
+    "file": "assets/DocumentTextIcon.73dddc24.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/Shippings/Orders.vue": {
-    "file": "assets/Orders.68de5dd8.js",
+    "file": "assets/Orders.240d3498.js",
     "src": "resources/js/Pages/Auth/Pages/Shippings/Orders.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_AuthenticatedLayout.f865475b.js",
+      "_AuthenticatedLayout.872a0e20.js",
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js",
-      "_index.0b791ced.js",
-      "_Breadcrumbs.34e18b45.js",
-      "_DocumentTextIcon.1712730b.js",
+      "_Breadcrumbs.d6d20c8d.js",
+      "_DocumentTextIcon.73dddc24.js",
       "_micro-task.fe338338.js",
-      "_transition.bba72eae.js"
+      "_transition.e1c78aeb.js"
+    ]
+  },
+  "resources/js/Pages/Auth/Pages/User/Adresses.vue": {
+    "file": "assets/Adresses.7d40f0e1.js",
+    "src": "resources/js/Pages/Auth/Pages/User/Adresses.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_Flag.9de4923b.js",
+      "_Phone.1a49bb41.js",
+      "__plugin-vue_export-helper.cdc0426e.js",
+      "_InputError.930e3767.js",
+      "_TrashIcon.8b16697b.js",
+      "_PencilIcon.6676c313.js",
+      "_XMarkIcon.740c0002.js",
+      "_transition.e1c78aeb.js",
+      "_dialog.3f6d81cd.js",
+      "_combobox.71d1c2c3.js",
+      "_micro-task.fe338338.js",
+      "_description.0128158c.js",
+      "_use-controllable.fa0acec4.js"
     ]
   },
   "resources/js/Pages/Auth/Pages/User/Settings.vue": {
-    "file": "assets/Settings.56db6e45.js",
+    "file": "assets/Settings.d9b7b941.js",
     "src": "resources/js/Pages/Auth/Pages/User/Settings.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Account.40de7194.js",
+      "_Account.72cedee1.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_Domain.27621854.js",
-      "_Pencil.99d7d59c.js",
-      "_AuthenticatedLayout.f865475b.js",
-      "_Email.c370b17f.js",
-      "_Linkedin.bdf4359a.js",
-      "_InputError.62b8dee6.js",
-      "_Breadcrumbs.34e18b45.js"
+      "_Domain.6f0de6f4.js",
+      "_Pencil.002f4e15.js",
+      "_AuthenticatedLayout.872a0e20.js",
+      "_Email.ff3f353c.js",
+      "_Phone.1a49bb41.js",
+      "_Linkedin.89485f9c.js",
+      "_InputError.930e3767.js",
+      "_Breadcrumbs.d6d20c8d.js"
     ]
   },
-  "_Domain.27621854.js": {
-    "file": "assets/Domain.27621854.js",
+  "_Domain.6f0de6f4.js": {
+    "file": "assets/Domain.6f0de6f4.js",
     "imports": [
       "__plugin-vue_export-helper.cdc0426e.js",
       "resources/js/app.js"
     ]
   },
   "resources/js/Pages/Auth/Register.vue": {
-    "file": "assets/Register.fea6720f.js",
+    "file": "assets/Register.7d493874.js",
     "src": "resources/js/Pages/Auth/Register.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js",
-      "_Account.40de7194.js",
-      "_Domain.27621854.js",
-      "_GuestLayout.5dae3127.js",
-      "_Linkedin.bdf4359a.js",
+      "_Account.72cedee1.js",
+      "_Domain.6f0de6f4.js",
+      "_GuestLayout.3fa8858f.js",
+      "_Linkedin.89485f9c.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_InputError.62b8dee6.js",
-      "_floating-vue.es.4bfe148f.js"
+      "_InputError.930e3767.js",
+      "_floating-vue.es.561bf362.js"
     ],
     "assets": [
       "assets/Nazar Logo.42bad03b.svg"
     ]
   },
   "resources/js/Pages/Auth/TypeVente.vue": {
-    "file": "assets/TypeVente.004737d1.js",
+    "file": "assets/TypeVente.43949162.js",
     "src": "resources/js/Pages/Auth/TypeVente.vue",
     "isDynamicEntry": true,
     "imports": [
@@ -3633,16 +3571,16 @@
     ]
   },
   "resources/js/Pages/Welcome.vue": {
-    "file": "assets/Welcome.ff1815b9.js",
+    "file": "assets/Welcome.123f9557.js",
     "src": "resources/js/Pages/Welcome.vue",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/Pages/Auth/Login.vue",
       "resources/js/app.js",
-      "_GuestLayout.5dae3127.js",
+      "_GuestLayout.3fa8858f.js",
       "__plugin-vue_export-helper.cdc0426e.js",
-      "_Linkedin.bdf4359a.js",
-      "_InputError.62b8dee6.js"
+      "_Linkedin.89485f9c.js",
+      "_InputError.930e3767.js"
     ]
   },
   "lang/en.json": {
@@ -3665,52 +3603,44 @@
     "src": "lang/php_fr.json",
     "isDynamicEntry": true
   },
-  "resources/js/app.css": {
-    "file": "assets/app.afe7bed2.css",
-    "src": "resources/js/app.css"
-  },
   "resources/js/Pages/Auth/Pages/Cart/AdressesDrop.css": {
     "file": "assets/AdressesDrop.489ced18.css",
     "src": "resources/js/Pages/Auth/Pages/Cart/AdressesDrop.css"
+  },
+  "resources/js/Pages/Auth/Pages/Cart.css": {
+    "file": "assets/Cart.c9ec092f.css",
+    "src": "resources/js/Pages/Auth/Pages/Cart.css"
   },
   "resources/js/Pages/Auth/Pages/Legales/CGV.css": {
     "file": "assets/CGV.13bca8eb.css",
     "src": "resources/js/Pages/Auth/Pages/Legales/CGV.css"
   },
-  "InputNumberProduit.css": {
-    "file": "assets/InputNumberProduit.c9ec092f.css",
-    "src": "InputNumberProduit.css"
-  },
-  "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Validation.css": {
-    "file": "assets/Validation.217ebb88.css",
-    "src": "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Validation.css"
-  },
   "resources/js/Pages/Auth/Pages/Products/Gamme.css": {
     "file": "assets/Gamme.217ebb88.css",
     "src": "resources/js/Pages/Auth/Pages/Products/Gamme.css"
   },
-  "AuthenticatedLayout.css": {
-    "file": "assets/AuthenticatedLayout.4730623e.css",
-    "src": "AuthenticatedLayout.css"
+  "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Gammes.css": {
+    "file": "assets/Gammes.cb9c8af9.css",
+    "src": "resources/js/Pages/Auth/Pages/Dropshipping/Clients/Gammes.css"
   },
-  "InputNumber.css": {
-    "file": "assets/InputNumber.c9ec092f.css",
-    "src": "InputNumber.css"
-  },
-  "pagination.css": {
-    "file": "assets/pagination.907a0de1.css",
-    "src": "pagination.css"
+  "resources/js/app.css": {
+    "file": "assets/app.77b8f595.css",
+    "src": "resources/js/app.css"
   },
   "resources/js/Pages/Auth/Pages/Home.css": {
     "file": "assets/Home.217ebb88.css",
     "src": "resources/js/Pages/Auth/Pages/Home.css"
   },
+  "AuthenticatedLayout.css": {
+    "file": "assets/AuthenticatedLayout.4730623e.css",
+    "src": "AuthenticatedLayout.css"
+  },
   "GuestLayout.css": {
     "file": "assets/GuestLayout.86319e99.css",
     "src": "GuestLayout.css"
   },
-  "ModalImportMKP.css": {
-    "file": "assets/ModalImportMKP.cb9c8af9.css",
-    "src": "ModalImportMKP.css"
+  "pagination.css": {
+    "file": "assets/pagination.743a52c1.css",
+    "src": "pagination.css"
   }
 }
